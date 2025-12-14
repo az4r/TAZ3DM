@@ -1,0 +1,240 @@
+;; taz_s_section.lsp
+;; Poprawiona wersja: checkboxy zapamiętywane w sesji (flagi "1"/"0")
+
+;; ---------------------------
+;; Baza danych HEA (H BF TW TF R)
+;; ---------------------------
+(setq taz_s_HEA_data
+ '(
+   ("HEA100"  (H 96)   (BF 100) (TW 5)   (TF 8)   (R 12))
+   ("HEA120"  (H 114)  (BF 120) (TW 5)   (TF 8)   (R 12))
+   ("HEA140"  (H 133)  (BF 140) (TW 5.5) (TF 8.5) (R 12))
+   ("HEA160"  (H 152)  (BF 160) (TW 6)   (TF 9)   (R 15))
+   ("HEA180"  (H 171)  (BF 180) (TW 6)   (TF 9.5) (R 15))
+   ("HEA200"  (H 190)  (BF 200) (TW 6.5) (TF 10)  (R 18))
+   ("HEA220"  (H 210)  (BF 220) (TW 7)   (TF 11)  (R 18))
+   ("HEA240"  (H 230)  (BF 240) (TW 7.5) (TF 12)  (R 21))
+   ("HEA260"  (H 250)  (BF 260) (TW 7.5) (TF 12.5)(R 24))
+   ("HEA280"  (H 270)  (BF 280) (TW 8)   (TF 13)  (R 24))
+   ("HEA300"  (H 290)  (BF 300) (TW 8.5) (TF 14)  (R 27))
+   ("HEA320"  (H 310)  (BF 300) (TW 9)   (TF 15.5)(R 27))
+   ("HEA340"  (H 330)  (BF 300) (TW 9.5) (TF 16.5)(R 27))
+   ("HEA360"  (H 350)  (BF 300) (TW 10)  (TF 17.5)(R 27))
+   ("HEA400"  (H 390)  (BF 300) (TW 11)  (TF 19)  (R 27))
+   ("HEA450"  (H 440)  (BF 300) (TW 11.5)(TF 21)  (R 27))
+   ("HEA500"  (H 490)  (BF 300) (TW 12)  (TF 23)  (R 27))
+   ("HEA550"  (H 540)  (BF 300) (TW 12.5)(TF 24)  (R 27))
+   ("HEA600"  (H 590)  (BF 300) (TW 13)  (TF 25)  (R 27))
+   ("HEA650"  (H 640)  (BF 300) (TW 13.5)(TF 26)  (R 27))
+   ("HEA700"  (H 690)  (BF 300) (TW 14.5)(TF 27)  (R 27))
+   ("HEA800"  (H 790)  (BF 300) (TW 15)  (TF 28)  (R 30))
+   ("HEA900"  (H 890)  (BF 300) (TW 16)  (TF 30)  (R 30))
+   ("HEA1000" (H 990)  (BF 300) (TW 16.5)(TF 31)  (R 30))
+ ))
+
+;; ---------------------------
+;; Helper: znajdź indeks wpisu w taz_s_HEA_data po nazwie
+;; ---------------------------
+(defun taz_s_find_index_by_name (name / i)
+  (setq i 0)
+  (while (and (< i (length taz_s_HEA_data))
+              (not (equal (car (nth i taz_s_HEA_data)) name)))
+    (setq i (1+ i))
+  )
+  (if (< i (length taz_s_HEA_data)) i 0)
+)
+
+;; ---------------------------
+;; Pobranie parametru z wpisu
+;; ---------------------------
+(defun taz_s_param_from_entry (sym entry)
+  (if entry
+    (cadr (assoc sym (cdr entry)))
+    nil
+  )
+)
+
+;; ---------------------------
+;; Zastosuj wpis do zmiennych globalnych
+;; ---------------------------
+(defun taz_s_apply_entry (entry)
+  (if entry
+    (progn
+      (setq taz_s_selected_entry entry)
+      (setq taz_s_H  (taz_s_param_from_entry 'H  entry))
+      (setq taz_s_BF (taz_s_param_from_entry 'BF entry))
+      (setq taz_s_TW (taz_s_param_from_entry 'TW entry))
+      (setq taz_s_TF (taz_s_param_from_entry 'TF entry))
+      (setq taz_s_R  (taz_s_param_from_entry 'R  entry))
+      T
+    )
+    nil
+  )
+)
+
+;; ---------------------------
+;; Główny szkic (bez zmian logicznych)
+;; ---------------------------
+(defun c:taz_s_section (/ p s s0 temperr taz_s_echo taz_s_osmode taz_s_clayer
+                         halfBF x_web_left x_web_right x_a x_b x_c x_d
+                         y_tf y_tfR y_hTR y_h)
+  (setq p (getpoint "\nSpecify a point: "))
+  (setq temperr *error*)
+  (setq taz_s_echo (getvar "cmdecho"))
+  (setvar "cmdecho" 0)
+  (command "_.undo" "_group")
+  (setq taz_s_osmode (getvar "osmode"))
+  (setvar "osmode" 0)
+  (setq taz_s_clayer (getvar "clayer"))
+  (setq *error* taz_s_error)
+  (setq s (ssadd))
+
+  (if (not (and (boundp 'taz_s_H) (boundp 'taz_s_BF) (boundp 'taz_s_TW) (boundp 'taz_s_TF) (boundp 'taz_s_R)))
+    (progn (prompt "\nBłąd: profil nie ustawiony. Użyj dialogu wyboru.") (princ) (return))
+  )
+
+  (setq halfBF (/ taz_s_BF 2.0))
+  (setq x_web_left  (- halfBF (/ taz_s_TW 2.0)))
+  (setq x_web_right (+ halfBF (/ taz_s_TW 2.0)))
+  (setq x_a (- x_web_left taz_s_R))
+  (setq x_b x_web_left)
+  (setq x_c x_web_right)
+  (setq x_d (+ x_web_right taz_s_R))
+  (if (< x_a 0) (setq x_a 0))
+  (if (> x_d taz_s_BF) (setq x_d taz_s_BF))
+
+  (setq y_tf taz_s_TF)
+  (setq y_tfR (+ taz_s_TF taz_s_R))
+  (setq y_hTR (- taz_s_H taz_s_TF taz_s_R))
+  (setq y_h (- taz_s_H taz_s_TF))
+
+  (command "_-layer" "_m" "steel_contour" "")
+  (command "_pline"
+           (list 0 y_tf)
+           (list x_a y_tf)
+           "_a" "_r" taz_s_R (list x_b y_tfR)
+           "_l" (list x_b y_hTR)
+           "_a" "_r" taz_s_R (list x_a y_h)
+           "_l" (list 0 y_h)
+           (list 0 taz_s_H)
+           (list taz_s_BF taz_s_H)
+           (list taz_s_BF y_h)
+           (list x_d y_h)
+           "_a" "_r" taz_s_R (list x_c y_hTR)
+           "_l" (list x_c y_tfR)
+           "_a" "_r" taz_s_R (list x_d y_tf)
+           "_l" (list taz_s_BF y_tf)
+           (list taz_s_BF 0)
+           (list 0 0)
+           (list 0 y_tf)
+           ""
+  )
+  (ssadd (entlast) s)
+
+  ;; Hatch (warunkowo)
+  (if (and (boundp 'taz_s_do_hatch) taz_s_do_hatch)
+    (progn
+      (command "_-layer" "_m" "steel_hatch" "")
+      (command "_-hatch" "_s" s "" "_p" "ANSI31" "0.8" "0" "")
+      (ssadd (entlast) s)
+    )
+  )
+
+  ;; Centerlines (warunkowo)
+  (if (and (boundp 'taz_s_draw_center) taz_s_draw_center)
+    (progn
+      (command "_-layer" "_m" "centerline" "")
+      (command "_line" (list (/ taz_s_BF 2.0) (- y_tf 9.6)) (list (/ taz_s_BF 2.0) (+ taz_s_H 9.6)) "")
+      (ssadd (entlast) s)
+      (command "_line" (list -10 (/ taz_s_H 2.0)) (list (+ taz_s_BF 10) (/ taz_s_H 2.0)) "")
+      (ssadd (entlast) s)
+    )
+  )
+
+  (command "_move" s "" (list 0 0) p)
+  (setvar "clayer" taz_s_clayer)
+  (setvar "osmode" taz_s_osmode)
+  (command "_.undo" "_end")
+  (setvar "cmdecho" taz_s_echo)
+  (princ)
+)
+
+;; ---------------------------
+;; Dialog wyboru z poprawnym zapamiętywaniem checkboxów (flagi "1"/"0")
+;; ---------------------------
+(defun c:taz_s_section_dialog (/ dcl_id wynik rodz typ_index entry typ idx default_typ_str draw_center_val do_hatch_val)
+  (setq dcl_id (load_dialog "taz_s_section.dcl"))
+  (if (not dcl_id) (progn (prompt "\nNie można wczytać pliku DCL: taz_s_section.dcl") (princ) (exit)))
+  (if (not (new_dialog "taz_s_section_dialog" dcl_id)) (progn (prompt "\nNie można otworzyć okna dialogowego.") (unload_dialog dcl_id) (princ) (exit)))
+
+  ;; Rodzina
+  (start_list "rodzina") (add_list "HEA") (end_list) (set_tile "rodzina" "HEA")
+
+  ;; Typy
+  (start_list "typ") (foreach e taz_s_HEA_data (add_list (car e))) (end_list)
+
+  ;; Przywróć poprzedni wybór typu (jeśli istnieje)
+  (if (and (boundp 'taz_s_selected_entry) taz_s_selected_entry)
+    (progn
+      (setq typ (car taz_s_selected_entry))
+      (setq idx (taz_s_find_index_by_name typ))
+      (setq default_typ_str (itoa idx))
+      (set_tile "typ" default_typ_str)
+    )
+    (set_tile "typ" "0")
+  )
+
+  ;; Przywróć checkboxy używając flag "1"/"0"
+  ;; Jeśli flaga istnieje, użyj jej; jeśli nie istnieje, ustaw domyślnie "1"
+  (setq draw_center_val (if (boundp 'taz_s_draw_center_flag) taz_s_draw_center_flag "1"))
+  (setq do_hatch_val    (if (boundp 'taz_s_do_hatch_flag)    taz_s_do_hatch_flag    "1"))
+  (set_tile "draw_center" draw_center_val)
+  (set_tile "do_hatch" do_hatch_val)
+
+  ;; action_tile: zapisujemy flagi jako stringi i ustawiamy też zmienne logiczne
+  (action_tile "ok"
+    "(setq rodz (get_tile \"rodzina\")
+           typ_index (atoi (get_tile \"typ\"))
+           taz_s_selected_entry (nth typ_index taz_s_HEA_data)
+           typ (if taz_s_selected_entry (car taz_s_selected_entry) \"\")
+           ;; zapisz flagi jako stringi '1'/'0'
+           taz_s_draw_center_flag (if (= (atoi (get_tile \"draw_center\")) 1) \"1\" \"0\")
+           taz_s_do_hatch_flag    (if (= (atoi (get_tile \"do_hatch\")) 1)    \"1\" \"0\")
+           ;; ustaw zmienne logiczne na podstawie flag
+           taz_s_draw_center (if (= taz_s_draw_center_flag \"1\") T nil)
+           taz_s_do_hatch    (if (= taz_s_do_hatch_flag    \"1\") T nil))
+     (done_dialog 1)"
+  )
+  (action_tile "cancel" "(done_dialog 0)")
+
+  (setq wynik (start_dialog))
+  (unload_dialog dcl_id)
+
+  (if (= wynik 1)
+    (progn
+      (prompt (strcat "\nWybrano: " rodz " - " typ))
+      (if (and (boundp 'taz_s_selected_entry) taz_s_selected_entry)
+        (progn
+          (if (taz_s_apply_entry taz_s_selected_entry)
+            (c:taz_s_section)
+            (prompt "\nBłąd: nie udało się zastosować wpisu.")
+          )
+        )
+        (prompt "\nBłąd: nie znaleziono parametrów dla wybranego typu.")
+      )
+    )
+    (prompt "\nPrzerwano.")
+  )
+  (princ)
+)
+
+;; ---------------------------
+;; Obsługa błędu
+;; ---------------------------
+(defun taz_s_error (errmsg)
+  (setq *error* temperr)
+  (if (boundp 'taz_s_clayer) (setvar "clayer" taz_s_clayer))
+  (if (boundp 'taz_s_osmode) (setvar "osmode" taz_s_osmode))
+  (if (boundp 'taz_s_echo) (setvar "cmdecho" taz_s_echo))
+  (princ)
+)
