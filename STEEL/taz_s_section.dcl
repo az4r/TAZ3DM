@@ -1,5 +1,5 @@
 taz_s_section_dialog : dialog {
-    label = "Wybór profilu HEA";
+    label = "Wybór profilu";
 
     : row {
         : text { label = "Rodzina:"; }
@@ -24,3 +24,4 @@ taz_s_section_dialog : dialog {
         : button { key = "cancel"; label = "Anuluj"; is_cancel = true; }
     }
 }
+
