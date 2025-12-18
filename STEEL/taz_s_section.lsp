@@ -1,9 +1,8 @@
 ;; taz_s_section.lsp
-;; HEA + HEB, dynamiczne przeładowanie listy Typ po zmianie Rodziny
-;; Poprawka: get_tile dla popup_list zwraca indeks (string), więc mapujemy indeks->nazwa
+;; Wersja oryginalna + minimalne dopisanie rodziny IPE
 
 ;; ---------------------------
-;; Bazy danych HEA i HEB (H BF TW TF R)
+;; Baza danych HEA (H BF TW TF R)
 ;; ---------------------------
 (setq taz_s_HEA_data
  '(
@@ -33,6 +32,9 @@
    ("HEA1000" (H 990)  (BF 300) (TW 16.5)(TF 31)  (R 30))
  ))
 
+;; ---------------------------
+;; Baza danych HEB (H BF TW TF R)
+;; ---------------------------
 (setq taz_s_HEB_data
  '(
    ("HEB100"  (H 100)  (BF 100) (TW 6)   (TF 10)  (R 12))
@@ -62,6 +64,31 @@
  ))
 
 ;; ---------------------------
+;; Baza danych IPE (H BF TW TF R) - DODANE minimalnie
+;; ---------------------------
+(setq taz_s_IPE_data
+ '(
+   ("IPE80"  (H 80)   (BF 46)  (TW 3.8)  (TF 5.2)  (R 5))
+   ("IPE100" (H 100)  (BF 55)  (TW 4.1)  (TF 5.7)  (R 7))
+   ("IPE120" (H 120)  (BF 64)  (TW 4.4)  (TF 6.3)  (R 7))
+   ("IPE140" (H 140)  (BF 73)  (TW 4.7)  (TF 6.9)  (R 7))
+   ("IPE160" (H 160)  (BF 82)  (TW 5.0)  (TF 7.4)  (R 9))
+   ("IPE180" (H 180)  (BF 91)  (TW 5.3)  (TF 8.0)  (R 9))
+   ("IPE200" (H 200)  (BF 100) (TW 5.6)  (TF 8.5)  (R 12))
+   ("IPE220" (H 220)  (BF 110) (TW 5.9)  (TF 9.2)  (R 12))
+   ("IPE240" (H 240)  (BF 120) (TW 6.2)  (TF 9.8)  (R 15))
+   ("IPE270" (H 270)  (BF 135) (TW 6.6)  (TF 10.2) (R 15))
+   ("IPE300" (H 300)  (BF 150) (TW 7.1)  (TF 10.7) (R 15))
+   ("IPE330" (H 330)  (BF 160) (TW 7.5)  (TF 11.5) (R 18))
+   ("IPE360" (H 360)  (BF 170) (TW 8.0)  (TF 12.7) (R 18))
+   ("IPE400" (H 400)  (BF 180) (TW 8.6)  (TF 13.5) (R 21))
+   ("IPE450" (H 450)  (BF 190) (TW 9.4)  (TF 14.6) (R 21))
+   ("IPE500" (H 500)  (BF 200) (TW 10.2) (TF 16.0) (R 21))
+   ("IPE550" (H 550)  (BF 210) (TW 11.1) (TF 17.2) (R 24))
+   ("IPE600" (H 600)  (BF 220) (TW 12.0) (TF 19.0) (R 24))
+ ))
+
+;; ---------------------------
 ;; Pobranie parametru z wpisu
 ;; ---------------------------
 (defun taz_s_param_from_entry (sym entry)
@@ -85,11 +112,12 @@
 )
 
 ;; ---------------------------
-;; Wypełnij listę "typ" na podstawie nazwy rodziny ("HEA" lub "HEB")
+;; Wypełnij listę "typ" na podstawie nazwy rodziny ("HEA" lub "HEB" lub "IPE")
 ;; ---------------------------
 (defun taz_s_populate_types (family / list)
   (cond
     ((and family (equal family "HEB")) (setq list taz_s_HEB_data))
+    ((and family (equal family "IPE")) (setq list taz_s_IPE_data))
     (T                                   (setq list taz_s_HEA_data))
   )
   (if list
@@ -180,9 +208,10 @@
 
 ;; ---------------------------
 ;; Dialog: bezpieczne ładowanie DCL i dynamiczne przeładowanie typów
+;; (minimalne zmiany: dodano IPE w listach i wyborze)
 ;; ---------------------------
 (defun c:taz_s_section_dialog (/ dclpath dcl_id wynik rodz typ_index entry typ idx default_typ_str
-                                 draw_center_val do_hatch_val current_family_index current_family)
+                                 draw_center_val do_hatch_val current_family_index current_family idx_str)
   ;; znajdź i załaduj DCL
   (setq dclpath (findfile "taz_s_section.dcl"))
   (if (not dclpath) (progn (prompt "\nBłąd: nie znaleziono taz_s_section.dcl") (princ) (exit)))
@@ -191,20 +220,24 @@
   (if (not (new_dialog "taz_s_section_dialog" dcl_id)) (progn (prompt "\nBłąd: new_dialog nie może otworzyć dialogu") (unload_dialog dcl_id) (princ) (exit)))
 
   ;; Rodzina: wypełnij listę rodzin (indeksy)
-  (start_list "rodzina") (add_list "HEA") (add_list "HEB") (end_list)
+  (start_list "rodzina") (add_list "HEA") (add_list "HEB") (add_list "IPE") (end_list)
 
   ;; Przywróć poprzednią rodzinę jeśli istnieje (ustawiamy indeks)
   (if (and (boundp 'taz_s_selected_entry) taz_s_selected_entry)
     (progn
       (setq current_family (substr (car taz_s_selected_entry) 1 3))
-      (if (equal current_family "HEB") (setq current_family_index "1") (setq current_family_index "0"))
+      (cond
+        ((equal current_family "HEB") (setq current_family_index "1"))
+        ((equal current_family "IPE") (setq current_family_index "2"))
+        (T (setq current_family_index "0"))
+      )
     )
     (setq current_family_index "0")
   )
   (set_tile "rodzina" current_family_index)
 
   ;; Wypełnij typy zgodnie z aktualną rodziną (mapujemy indeks->nazwa)
-  (setq current_family (if (= (atoi (get_tile "rodzina")) 1) "HEB" "HEA"))
+  (setq current_family (if (= (atoi (get_tile "rodzina")) 1) "HEB" (if (= (atoi (get_tile "rodzina")) 2) "IPE" "HEA")))
   (taz_s_populate_types current_family)
 
   ;; Przywróć checkboxy (flagi "1"/"0"), domyślnie "1"
@@ -217,7 +250,7 @@
   (action_tile "rodzina"
     "(progn
        (setq idx (atoi (get_tile \"rodzina\")))
-       (setq fam (if (= idx 1) \"HEB\" \"HEA\"))
+       (setq fam (cond ((= idx 1) \"HEB\") ((= idx 2) \"IPE\") (T \"HEA\")))
        (taz_s_populate_types fam)
        (set_tile \"typ\" \"0\")
      )"
@@ -227,9 +260,9 @@
   (action_tile "ok"
     "(progn
        (setq rodz_idx (atoi (get_tile \"rodzina\")))
-       (setq rodz (if (= rodz_idx 1) \"HEB\" \"HEA\"))
+       (setq rodz (cond ((= rodz_idx 1) \"HEB\") ((= rodz_idx 2) \"IPE\") (T \"HEA\")))
        (setq typ_index (atoi (get_tile \"typ\")))
-       (setq taz_s_selected_entry (nth typ_index (if (equal rodz \"HEB\") taz_s_HEB_data taz_s_HEA_data)))
+       (setq taz_s_selected_entry (nth typ_index (cond ((equal rodz \"HEB\") taz_s_HEB_data) ((equal rodz \"IPE\") taz_s_IPE_data) (T taz_s_HEA_data))))
        ;; zapisz flagi jako stringi '1'/'0' i ustaw zmienne logiczne
        (setq taz_s_draw_center_flag (if (= (atoi (get_tile \"draw_center\")) 1) \"1\" \"0\"))
        (setq taz_s_do_hatch_flag    (if (= (atoi (get_tile \"do_hatch\")) 1)    \"1\" \"0\"))
