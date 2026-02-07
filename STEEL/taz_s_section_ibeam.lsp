@@ -90,7 +90,7 @@
   (setq taz_s_section_ibeam_family_null taz_s_section_ibeam_family)
   (setq taz_s_section_ibeam_family
     (getstring
-      (strcat "\nRodzina profilu (HEA) <" taz_s_section_ibeam_family ">: ")
+      (strcat "\nRodzina profilu (HEA/HEB) <" taz_s_section_ibeam_family ">: ")
     )
   )
 
@@ -101,6 +101,30 @@
 
   ;; wybór typu HEA – domyślnie 200, ale jeśli typ istnieje, użyj poprzedniej wartości
   (if (= taz_s_section_ibeam_family "HEA")
+    (progn
+
+      ;; jeśli typ nie istnieje, ustaw domyślne 200
+      (if (not taz_s_section_ibeam_type)
+        (setq taz_s_section_ibeam_type "200")
+      )
+    
+      (setq taz_s_section_ibeam_type_null taz_s_section_ibeam_type)
+      (setq taz_s_section_ibeam_type
+        (getstring
+          (strcat "\nTyp profilu (100/120/140/160/180/200/220/240/260/280/300/320/340/360/400/450/500/550/600/650/700/800/900/1000) <" taz_s_section_ibeam_type ">: ")
+        )
+      )
+
+      ;; Enter = użyj poprzedniej wartości
+      (if (or (null taz_s_section_ibeam_type) (= taz_s_section_ibeam_type ""))
+        (setq taz_s_section_ibeam_type taz_s_section_ibeam_type_null)
+      )
+    )
+  )
+      
+
+  ;; wybór typu HEB – domyślnie 200, ale jeśli typ istnieje, użyj poprzedniej wartości
+  (if (= taz_s_section_ibeam_family "HEB")
     (progn
 
       ;; jeśli typ nie istnieje, ustaw domyślne 200
@@ -383,6 +407,270 @@
       (setq b 300.0)
       (setq tw 16.5)
       (setq tf 31.0)
+      (setq r 30.0)
+    )
+  )
+  
+  ;; HEB100
+  (if (and (= taz_s_section_ibeam_family "HEB") (= taz_s_section_ibeam_type "100"))
+    (progn
+      (setq h 100.0)
+      (setq b 100.0)
+      (setq tw 6.0)
+      (setq tf 10.0)
+      (setq r 12.0)
+    )
+  )
+
+  ;; HEB120
+  (if (and (= taz_s_section_ibeam_family "HEB") (= taz_s_section_ibeam_type "120"))
+    (progn
+      (setq h 120.0)
+      (setq b 120.0)
+      (setq tw 6.5)
+      (setq tf 11.0)
+      (setq r 12.0)
+    )
+  )
+
+  ;; HEB140
+  (if (and (= taz_s_section_ibeam_family "HEB") (= taz_s_section_ibeam_type "140"))
+    (progn
+      (setq h 140.0)
+      (setq b 140.0)
+      (setq tw 7.0)
+      (setq tf 12.0)
+      (setq r 12.0)
+    )
+  )
+
+  ;; HEB160
+  (if (and (= taz_s_section_ibeam_family "HEB") (= taz_s_section_ibeam_type "160"))
+    (progn
+      (setq h 160.0)
+      (setq b 160.0)
+      (setq tw 8.0)
+      (setq tf 13.0)
+      (setq r 15.0)
+    )
+  )
+
+  ;; HEB180
+  (if (and (= taz_s_section_ibeam_family "HEB") (= taz_s_section_ibeam_type "180"))
+    (progn
+      (setq h 180.0)
+      (setq b 180.0)
+      (setq tw 8.5)
+      (setq tf 14.0)
+      (setq r 15.0)
+    )
+  )
+
+  ;; HEB200
+  (if (and (= taz_s_section_ibeam_family "HEB") (= taz_s_section_ibeam_type "200"))
+    (progn
+      (setq h 200.0)
+      (setq b 200.0)
+      (setq tw 9.0)
+      (setq tf 15.0)
+      (setq r 18.0)
+    )
+  )
+
+  ;; HEB220
+  (if (and (= taz_s_section_ibeam_family "HEB") (= taz_s_section_ibeam_type "220"))
+    (progn
+      (setq h 220.0)
+      (setq b 220.0)
+      (setq tw 9.5)
+      (setq tf 16.0)
+      (setq r 18.0)
+    )
+  )
+
+  ;; HEB240
+  (if (and (= taz_s_section_ibeam_family "HEB") (= taz_s_section_ibeam_type "240"))
+    (progn
+      (setq h 240.0)
+      (setq b 240.0)
+      (setq tw 10.0)
+      (setq tf 17.0)
+      (setq r 21.0)
+    )
+  )
+
+  ;; HEB260
+  (if (and (= taz_s_section_ibeam_family "HEB") (= taz_s_section_ibeam_type "260"))
+    (progn
+      (setq h 260.0)
+      (setq b 260.0)
+      (setq tw 10.0)
+      (setq tf 17.5)
+      (setq r 24.0)
+    )
+  )
+
+  ;; HEB280
+  (if (and (= taz_s_section_ibeam_family "HEB") (= taz_s_section_ibeam_type "280"))
+    (progn
+      (setq h 280.0)
+      (setq b 280.0)
+      (setq tw 10.5)
+      (setq tf 18.0)
+      (setq r 24.0)
+    )
+  )
+
+  ;; HEB300
+  (if (and (= taz_s_section_ibeam_family "HEB") (= taz_s_section_ibeam_type "300"))
+    (progn
+      (setq h 300.0)
+      (setq b 300.0)
+      (setq tw 11.0)
+      (setq tf 19.0)
+      (setq r 27.0)
+    )
+  )
+
+  ;; HEB320
+  (if (and (= taz_s_section_ibeam_family "HEB") (= taz_s_section_ibeam_type "320"))
+    (progn
+      (setq h 320.0)
+      (setq b 300.0)
+      (setq tw 11.5)
+      (setq tf 20.5)
+      (setq r 27.0)
+    )
+  )
+
+  ;; HEB340
+  (if (and (= taz_s_section_ibeam_family "HEB") (= taz_s_section_ibeam_type "340"))
+    (progn
+      (setq h 340.0)
+      (setq b 300.0)
+      (setq tw 12.0)
+      (setq tf 21.5)
+      (setq r 27.0)
+    )
+  )
+
+  ;; HEB360
+  (if (and (= taz_s_section_ibeam_family "HEB") (= taz_s_section_ibeam_type "360"))
+    (progn
+      (setq h 360.0)
+      (setq b 300.0)
+      (setq tw 12.5)
+      (setq tf 22.5)
+      (setq r 27.0)
+    )
+  )
+
+  ;; HEB400
+  (if (and (= taz_s_section_ibeam_family "HEB") (= taz_s_section_ibeam_type "400"))
+    (progn
+      (setq h 400.0)
+      (setq b 300.0)
+      (setq tw 13.5)
+      (setq tf 24.0)
+      (setq r 27.0)
+    )
+  )
+
+  ;; HEB450
+  (if (and (= taz_s_section_ibeam_family "HEB") (= taz_s_section_ibeam_type "450"))
+    (progn
+      (setq h 450.0)
+      (setq b 300.0)
+      (setq tw 14.0)
+      (setq tf 26.0)
+      (setq r 27.0)
+    )
+  )
+
+  ;; HEB500
+  (if (and (= taz_s_section_ibeam_family "HEB") (= taz_s_section_ibeam_type "500"))
+    (progn
+      (setq h 500.0)
+      (setq b 300.0)
+      (setq tw 14.5)
+      (setq tf 28.0)
+      (setq r 27.0)
+    )
+  )
+
+  ;; HEB550
+  (if (and (= taz_s_section_ibeam_family "HEB") (= taz_s_section_ibeam_type "550"))
+    (progn
+      (setq h 550.0)
+      (setq b 300.0)
+      (setq tw 15.0)
+      (setq tf 29.0)
+      (setq r 27.0)
+    )
+  )
+
+  ;; HEB600
+  (if (and (= taz_s_section_ibeam_family "HEB") (= taz_s_section_ibeam_type "600"))
+    (progn
+      (setq h 600.0)
+      (setq b 300.0)
+      (setq tw 15.5)
+      (setq tf 30.0)
+      (setq r 27.0)
+    )
+  )
+
+  ;; HEB650
+  (if (and (= taz_s_section_ibeam_family "HEB") (= taz_s_section_ibeam_type "650"))
+    (progn
+      (setq h 650.0)
+      (setq b 300.0)
+      (setq tw 16.0)
+      (setq tf 31.0)
+      (setq r 27.0)
+    )
+  )
+
+  ;; HEB700
+  (if (and (= taz_s_section_ibeam_family "HEB") (= taz_s_section_ibeam_type "700"))
+    (progn
+      (setq h 700.0)
+      (setq b 300.0)
+      (setq tw 17.0)
+      (setq tf 32.0)
+      (setq r 27.0)
+    )
+  )
+
+  ;; HEB800
+  (if (and (= taz_s_section_ibeam_family "HEB") (= taz_s_section_ibeam_type "800"))
+    (progn
+      (setq h 800.0)
+      (setq b 300.0)
+      (setq tw 17.5)
+      (setq tf 33.0)
+      (setq r 30.0)
+    )
+  )
+
+  ;; HEB900
+  (if (and (= taz_s_section_ibeam_family "HEB") (= taz_s_section_ibeam_type "900"))
+    (progn
+      (setq h 900.0)
+      (setq b 300.0)
+      (setq tw 18.5)
+      (setq tf 35.0)
+      (setq r 30.0)
+    )
+  )
+
+  ;; HEB1000
+  (if (and (= taz_s_section_ibeam_family "HEB") (= taz_s_section_ibeam_type "1000"))
+    (progn
+      (setq h 1000.0)
+      (setq b 300.0)
+      (setq tw 19.0)
+      (setq tf 36.0)
       (setq r 30.0)
     )
   )
