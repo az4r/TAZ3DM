@@ -83,48 +83,48 @@
 
 (defun c:taz_s_section_ibeam ( / h b tw tf r )
 
-  ;; wybór rodziny – domyślnie HEA, ale jeśli fam istnieje, użyj jej
-  (if (not fam)
-    (setq fam "HEA")
+  ;; wybór rodziny – domyślnie HEA, ale jeśli taz_s_section_ibeam_family istnieje, użyj jej
+  (if (not taz_s_section_ibeam_family)
+    (setq taz_s_section_ibeam_family "HEA")
   )
-  (setq famn fam)
-  (setq fam
+  (setq taz_s_section_ibeam_family_null taz_s_section_ibeam_family)
+  (setq taz_s_section_ibeam_family
     (getstring
-      (strcat "\nRodzina profilu (HEA) <" fam ">: ")
+      (strcat "\nRodzina profilu (HEA) <" taz_s_section_ibeam_family ">: ")
     )
   )
 
-  (if (or (null fam) (= fam ""))
-    (setq fam famn)
+  (if (or (null taz_s_section_ibeam_family) (= taz_s_section_ibeam_family ""))
+    (setq taz_s_section_ibeam_family taz_s_section_ibeam_family_null)
   )
 
 
   ;; wybór typu HEA – domyślnie 200, ale jeśli typ istnieje, użyj poprzedniej wartości
-  (if (= fam "HEA")
+  (if (= taz_s_section_ibeam_family "HEA")
     (progn
 
       ;; jeśli typ nie istnieje, ustaw domyślne 200
-      (if (not typ)
-        (setq typ "200")
+      (if (not taz_s_section_ibeam_type)
+        (setq taz_s_section_ibeam_type "200")
       )
     
-      (setq typn typ)
-      (setq typ
+      (setq taz_s_section_ibeam_type_null taz_s_section_ibeam_type)
+      (setq taz_s_section_ibeam_type
         (getstring
-          (strcat "\nTyp profilu (100/120/140/160/180/200/220/240/260/280/300/320/340/360/400/450/500/550/600/650/700/800/900/1000) <" typ ">: ")
+          (strcat "\nTyp profilu (100/120/140/160/180/200/220/240/260/280/300/320/340/360/400/450/500/550/600/650/700/800/900/1000) <" taz_s_section_ibeam_type ">: ")
         )
       )
 
       ;; Enter = użyj poprzedniej wartości
-      (if (or (null typ) (= typ ""))
-        (setq typ typn)
+      (if (or (null taz_s_section_ibeam_type) (= taz_s_section_ibeam_type ""))
+        (setq taz_s_section_ibeam_type taz_s_section_ibeam_type_null)
       )
     )
   )
 
 
   ;; HEA100
-  (if (and (= fam "HEA") (= typ "100"))
+  (if (and (= taz_s_section_ibeam_family "HEA") (= taz_s_section_ibeam_type "100"))
     (progn
       (setq h 96.0)
       (setq b 100.0)
@@ -135,7 +135,7 @@
   )
 
   ;; HEA120
-  (if (and (= fam "HEA") (= typ "120"))
+  (if (and (= taz_s_section_ibeam_family "HEA") (= taz_s_section_ibeam_type "120"))
     (progn
       (setq h 114.0)
       (setq b 120.0)
@@ -146,7 +146,7 @@
   )
 
   ;; HEA140
-  (if (and (= fam "HEA") (= typ "140"))
+  (if (and (= taz_s_section_ibeam_family "HEA") (= taz_s_section_ibeam_type "140"))
     (progn
       (setq h 133.0)
       (setq b 140.0)
@@ -157,7 +157,7 @@
   )
 
   ;; HEA160
-  (if (and (= fam "HEA") (= typ "160"))
+  (if (and (= taz_s_section_ibeam_family "HEA") (= taz_s_section_ibeam_type "160"))
     (progn
       (setq h 152.0)
       (setq b 160.0)
@@ -168,7 +168,7 @@
   )
 
   ;; HEA180
-  (if (and (= fam "HEA") (= typ "180"))
+  (if (and (= taz_s_section_ibeam_family "HEA") (= taz_s_section_ibeam_type "180"))
     (progn
       (setq h 171.0)
       (setq b 180.0)
@@ -179,7 +179,7 @@
   )
 
   ;; HEA200
-  (if (and (= fam "HEA") (= typ "200"))
+  (if (and (= taz_s_section_ibeam_family "HEA") (= taz_s_section_ibeam_type "200"))
     (progn
       (setq h 190.0)
       (setq b 200.0)
@@ -190,7 +190,7 @@
   )
 
   ;; HEA220
-  (if (and (= fam "HEA") (= typ "220"))
+  (if (and (= taz_s_section_ibeam_family "HEA") (= taz_s_section_ibeam_type "220"))
     (progn
       (setq h 210.0)
       (setq b 220.0)
@@ -201,7 +201,7 @@
   )
 
   ;; HEA240
-  (if (and (= fam "HEA") (= typ "240"))
+  (if (and (= taz_s_section_ibeam_family "HEA") (= taz_s_section_ibeam_type "240"))
     (progn
       (setq h 230.0)
       (setq b 240.0)
@@ -212,7 +212,7 @@
   )
 
   ;; HEA260
-  (if (and (= fam "HEA") (= typ "260"))
+  (if (and (= taz_s_section_ibeam_family "HEA") (= taz_s_section_ibeam_type "260"))
     (progn
       (setq h 250.0)
       (setq b 260.0)
@@ -223,7 +223,7 @@
   )
 
   ;; HEA280
-  (if (and (= fam "HEA") (= typ "280"))
+  (if (and (= taz_s_section_ibeam_family "HEA") (= taz_s_section_ibeam_type "280"))
     (progn
       (setq h 270.0)
       (setq b 280.0)
@@ -234,7 +234,7 @@
   )
 
   ;; HEA300
-  (if (and (= fam "HEA") (= typ "300"))
+  (if (and (= taz_s_section_ibeam_family "HEA") (= taz_s_section_ibeam_type "300"))
     (progn
       (setq h 290.0)
       (setq b 300.0)
@@ -245,7 +245,7 @@
   )
 
   ;; HEA320
-  (if (and (= fam "HEA") (= typ "320"))
+  (if (and (= taz_s_section_ibeam_family "HEA") (= taz_s_section_ibeam_type "320"))
     (progn
       (setq h 310.0)
       (setq b 300.0)
@@ -256,7 +256,7 @@
   )
 
   ;; HEA340
-  (if (and (= fam "HEA") (= typ "340"))
+  (if (and (= taz_s_section_ibeam_family "HEA") (= taz_s_section_ibeam_type "340"))
     (progn
       (setq h 330.0)
       (setq b 300.0)
@@ -267,7 +267,7 @@
   )
 
   ;; HEA360
-  (if (and (= fam "HEA") (= typ "360"))
+  (if (and (= taz_s_section_ibeam_family "HEA") (= taz_s_section_ibeam_type "360"))
     (progn
       (setq h 350.0)
       (setq b 300.0)
@@ -278,7 +278,7 @@
   )
 
   ;; HEA400
-  (if (and (= fam "HEA") (= typ "400"))
+  (if (and (= taz_s_section_ibeam_family "HEA") (= taz_s_section_ibeam_type "400"))
     (progn
       (setq h 390.0)
       (setq b 300.0)
@@ -289,7 +289,7 @@
   )
 
   ;; HEA450
-  (if (and (= fam "HEA") (= typ "450"))
+  (if (and (= taz_s_section_ibeam_family "HEA") (= taz_s_section_ibeam_type "450"))
     (progn
       (setq h 440.0)
       (setq b 300.0)
@@ -300,7 +300,7 @@
   )
 
   ;; HEA500
-  (if (and (= fam "HEA") (= typ "500"))
+  (if (and (= taz_s_section_ibeam_family "HEA") (= taz_s_section_ibeam_type "500"))
     (progn
       (setq h 490.0)
       (setq b 300.0)
@@ -311,7 +311,7 @@
   )
 
   ;; HEA550
-  (if (and (= fam "HEA") (= typ "550"))
+  (if (and (= taz_s_section_ibeam_family "HEA") (= taz_s_section_ibeam_type "550"))
     (progn
       (setq h 540.0)
       (setq b 300.0)
@@ -322,7 +322,7 @@
   )
 
   ;; HEA600
-  (if (and (= fam "HEA") (= typ "600"))
+  (if (and (= taz_s_section_ibeam_family "HEA") (= taz_s_section_ibeam_type "600"))
     (progn
       (setq h 590.0)
       (setq b 300.0)
@@ -333,7 +333,7 @@
   )
 
   ;; HEA650
-  (if (and (= fam "HEA") (= typ "650"))
+  (if (and (= taz_s_section_ibeam_family "HEA") (= taz_s_section_ibeam_type "650"))
     (progn
       (setq h 640.0)
       (setq b 300.0)
@@ -344,7 +344,7 @@
   )
 
   ;; HEA700
-  (if (and (= fam "HEA") (= typ "700"))
+  (if (and (= taz_s_section_ibeam_family "HEA") (= taz_s_section_ibeam_type "700"))
     (progn
       (setq h 690.0)
       (setq b 300.0)
@@ -355,7 +355,7 @@
   )
 
   ;; HEA800
-  (if (and (= fam "HEA") (= typ "800"))
+  (if (and (= taz_s_section_ibeam_family "HEA") (= taz_s_section_ibeam_type "800"))
     (progn
       (setq h 790.0)
       (setq b 300.0)
@@ -366,7 +366,7 @@
   )
 
   ;; HEA900
-  (if (and (= fam "HEA") (= typ "900"))
+  (if (and (= taz_s_section_ibeam_family "HEA") (= taz_s_section_ibeam_type "900"))
     (progn
       (setq h 890.0)
       (setq b 300.0)
@@ -377,7 +377,7 @@
   )
 
   ;; HEA1000
-  (if (and (= fam "HEA") (= typ "1000"))
+  (if (and (= taz_s_section_ibeam_family "HEA") (= taz_s_section_ibeam_type "1000"))
     (progn
       (setq h 990.0)
       (setq b 300.0)
