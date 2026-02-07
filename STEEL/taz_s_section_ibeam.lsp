@@ -81,8 +81,6 @@
   (princ)
 )
 
-
-
 (defun c:taz_s_section_ibeam ( / h b tw tf r family type )
 
   ;; wybór rodziny (na razie tylko HEA)
@@ -91,11 +89,13 @@
   (if (null family) (setq family "HEA"))
 
   ;; wybór typu HEA
-  (initget "100 120 140 160 180 200 220 240 260 280 300 320 340 360 400 450 500 550 600 650 700 800 900 1000")
-  (setq type (getkword
-    "\nTyp profilu [100/120/140/160/180/200/220/240/260/280/300/320/340/360/400/450/500/550/600/650/700/800/900/1000]: "
-  ))
-  (if (null type) (setq type "200"))
+  (if (= family "HEA")
+    (progn
+      (initget "100 120 140 160 180 200 220 240 260 280 300 320 340 360 400 450 500 550 600 650 700 800 900 1000")
+      (setq type (getkword "\nTyp profilu [100/120/140/160/180/200/220/240/260/280/300/320/340/360/400/450/500/550/600/650/700/800/900/1000]: "))
+      (if (null type) (setq type "200"))
+	)
+  )
 
   ;; HEA100
   (if (and (= family "HEA") (= type "100"))
