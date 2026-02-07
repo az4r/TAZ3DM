@@ -86,19 +86,36 @@
 (defun c:taz_s_section_ibeam ( / h b tw tf r family type )
 
   ;; wybór rodziny
+  (initget "HEA")
   (setq family (getkword "\nRodzina profilu [HEA]: "))
   (if (null family) (setq family "HEA"))
 
   ;; wybór typu
-  (setq type (getkword "\nTyp profilu [200]: "))
+  (initget "200 220")
+  (setq type (getkword "\nTyp profilu [200/220]: "))
   (if (null type) (setq type "200"))
 
-  ;; na razie HEA200 – później dodamy mapowanie
-  (setq h 190.0)
-  (setq b 200.0)
-  (setq tw 6.5)
-  (setq tf 10.0)
-  (setq r 15.0)
+  ;; HEA200
+  (if (and (= family "HEA") (= type "200"))
+    (progn
+      (setq h 190.0)
+      (setq b 200.0)
+      (setq tw 6.5)
+      (setq tf 10.0)
+      (setq r 18.0)
+    )
+  )
+
+  ;; HEA220
+  (if (and (= family "HEA") (= type "220"))
+    (progn
+      (setq h 210.0)
+      (setq b 220.0)
+      (setq tw 7.0)
+      (setq tf 11.0)
+      (setq r 18.0)
+    )
+  )
 
   (taz_s_section_ibeam_draw h b tw tf r)
   (princ)
