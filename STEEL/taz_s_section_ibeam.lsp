@@ -99,28 +99,28 @@
   )
 
 
-;; wybór typu HEA – domyślnie 200, ale jeśli typ istnieje, użyj poprzedniej wartości
-(if (= fam "HEA")
-  (progn
+  ;; wybór typu HEA – domyślnie 200, ale jeśli typ istnieje, użyj poprzedniej wartości
+  (if (= fam "HEA")
+    (progn
 
-    ;; jeśli typ nie istnieje, ustaw domyślne 200
-    (if (not typ)
-      (setq typ "200")
-    )
+      ;; jeśli typ nie istnieje, ustaw domyślne 200
+      (if (not typ)
+        (setq typ "200")
+      )
     
-    (setq typn typ)
-    (setq typ
-      (getstring
-        (strcat "\nTyp profilu (100/120/140/160/180/200/220/240/260/280/300/320/340/360/400/450/500/550/600/650/700/800/900/1000) <" typ ">: ")
+      (setq typn typ)
+      (setq typ
+        (getstring
+          (strcat "\nTyp profilu (100/120/140/160/180/200/220/240/260/280/300/320/340/360/400/450/500/550/600/650/700/800/900/1000) <" typ ">: ")
+        )
+      )
+
+      ;; Enter = użyj poprzedniej wartości
+      (if (or (null typ) (= typ ""))
+        (setq typ typn)
       )
     )
-
-    ;; Enter = użyj poprzedniej wartości
-    (if (or (null typ) (= typ ""))
-      (setq typ typn)
-    )
   )
-)
 
 
   ;; HEA100
