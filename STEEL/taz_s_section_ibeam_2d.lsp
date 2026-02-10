@@ -1,6 +1,8 @@
-(defun taz_s_section_ibeam_draw (h b tw tf r / p x1 x2 y1 y2 xw1 xw2 yf1 yf2)
+(defun taz_s_section_ibeam_draw (h b tw tf r / p
+      x1 x2 y1 y2 xw1 xw2 yf1 yf2
+      lprev lcurr)
 
-  (setq p '(0 0 0))
+  (setq p (getpoint "\nWskaż punkt środka przekroju: "))
 
   (command "_ZOOM" "_SCALE" "10000X")
 
@@ -14,77 +16,72 @@
 
   (setq yf1 (+ y1 tf))
   (setq yf2 (- y2 tf))
-  
-  (command "_FILLET" "_R" r)
 
   (command "_LINE" (list x1 y1) (list x2 y1) "")
-  (setq l1 (cdr (assoc -1 (entget (entlast)))))
+  (setq lprev (cdr (assoc -1 (entget (entlast)))))
 
   (command "_LINE" (list x2 y1) (list x2 yf1) "")
-  (setq l2 (cdr (assoc -1 (entget (entlast)))))
+  (setq lcurr (cdr (assoc -1 (entget (entlast)))))
+  (setq lprev lcurr)
 
   (command "_LINE" (list x2 yf1) (list xw2 yf1) "")
-  (setq l3 (cdr (assoc -1 (entget (entlast)))))
+  (setq lcurr (cdr (assoc -1 (entget (entlast)))))
+  (setq lprev lcurr)
 
   (command "_LINE" (list xw2 yf1) (list xw2 yf2) "")
-  (setq l4 (cdr (assoc -1 (entget (entlast))))) 
+  (setq lcurr (cdr (assoc -1 (entget (entlast)))))
+
+  (command "_FILLET" "_R" r)
+  (command "_FILLET" lprev lcurr)
+  (setq lprev lcurr)
 
   (command "_LINE" (list xw2 yf2) (list x2 yf2) "")
-  (setq l5 (cdr (assoc -1 (entget (entlast)))))
+  (setq lcurr (cdr (assoc -1 (entget (entlast)))))
+
+  (command "_FILLET" "_R" r)
+  (command "_FILLET" lprev lcurr)
+  (setq lprev lcurr)
 
   (command "_LINE" (list x2 yf2) (list x2 y2) "")
-  (setq l6 (cdr (assoc -1 (entget (entlast)))))
+  (setq lcurr (cdr (assoc -1 (entget (entlast)))))
+  (setq lprev lcurr)
 
   (command "_LINE" (list x2 y2) (list x1 y2) "")
-  (setq l7 (cdr (assoc -1 (entget (entlast)))))
+  (setq lcurr (cdr (assoc -1 (entget (entlast)))))
+  (setq lprev lcurr)
 
   (command "_LINE" (list x1 y2) (list x1 yf2) "")
-  (setq l8 (cdr (assoc -1 (entget (entlast)))))
+  (setq lcurr (cdr (assoc -1 (entget (entlast)))))
+  (setq lprev lcurr)
 
   (command "_LINE" (list x1 yf2) (list xw1 yf2) "")
-  (setq l9 (cdr (assoc -1 (entget (entlast)))))
+  (setq lcurr (cdr (assoc -1 (entget (entlast)))))
+  (setq lprev lcurr)
 
   (command "_LINE" (list xw1 yf2) (list xw1 yf1) "")
-  (setq l10 (cdr (assoc -1 (entget (entlast)))))
+  (setq lcurr (cdr (assoc -1 (entget (entlast)))))
+
+  (command "_FILLET" "_R" r)
+  (command "_FILLET" lprev lcurr)
+  (setq lprev lcurr)
 
   (command "_LINE" (list xw1 yf1) (list x1 yf1) "")
-  (setq l11 (cdr (assoc -1 (entget (entlast)))))
+  (setq lcurr (cdr (assoc -1 (entget (entlast)))))
+
+  (command "_FILLET" "_R" r)
+  (command "_FILLET" lprev lcurr)
+  (setq lprev lcurr)
 
   (command "_LINE" (list x1 yf1) (list x1 y1) "")
-  (setq l12 (cdr (assoc -1 (entget (entlast)))))
-  
-  ;; zapisz widok 
-  (command "-VIEW" "_S" "taz_s_temp_view")
-
-  (command "_PLAN" "_C")
-  
-  (command "_FILLET" l3 l4)
-  
-  (command "_PLAN" "_C")
-  
-  (command "_FILLET" l4 l5)
-    
-  (command "_PLAN" "_C")
-  
-  (command "_FILLET" l9 l10)
-  
-  (command "_PLAN" "_C")
-  
-  (command "_FILLET" l10 l11)
+  (setq lcurr (cdr (assoc -1 (entget (entlast)))))
 
   (command "_PEDIT" "M" "ALL" "" "_Y" "_J" "" "")
-  
-  ;; przywróć widok
-  (command "-VIEW" "_R" "taz_s_temp_view")
-  
-  ;; usuń widok tymczasowy
-  (command "-VIEW" "_D" "taz_s_temp_view")
 
   (command "_ZOOM" "_SCALE" "0.0001X")
   (princ)
 )
 
-(defun taz_s_section_ibeam ( / h b tw tf r )
+(defun c:taz_s_section_ibeam ( / h b tw tf r )
 
   ;; wybór rodziny – domyślnie HEA, ale jeśli taz_s_section_ibeam_family istnieje, użyj jej
   (if (not taz_s_section_ibeam_family)
