@@ -60,19 +60,39 @@
   
   (command "_FILLET" l3 l4)
   
+  (setq f1 (cdr (assoc -1 (entget (entlast)))))
+  
   (command "_PLAN" "_C")
   
   (command "_FILLET" l4 l5)
+  
+  (setq f2 (cdr (assoc -1 (entget (entlast)))))
     
   (command "_PLAN" "_C")
   
   (command "_FILLET" l9 l10)
   
+  (setq f3 (cdr (assoc -1 (entget (entlast)))))
+  
   (command "_PLAN" "_C")
   
   (command "_FILLET" l10 l11)
-
-  (command "_PEDIT" "M" "ALL" "" "_Y" "_J" "" "")
+  
+  (setq f4 (cdr (assoc -1 (entget (entlast)))))
+  
+  (command "_CHPROP" l1 l2 l3 l4 l5 l6 l7 l8 l9 l10 l11 l12 f1 f2 f3 f4 "" "C" "6" "")
+  
+  (command "_PEDIT" "M")
+  
+  (command l1 l2 l3 l4 l5 l6 l7 l8 l9 l10 l11 l12 f1 f2 f3 f4 "")
+  
+  (command "_Y")
+  
+  (command "_J" "" "")
+  
+  (setq taz_s_create_ibeam_profile (ssname (ssget "_X" '((0 . "LWPOLYLINE") (62 . 6))) 0))
+  
+  (command "_SWEEP" taz_s_create_ibeam_profile "" taz_s_create_ibeam_path "")
   
   ;; przywróć widok
   (command "-VIEW" "_R" "taz_s_temp_view")

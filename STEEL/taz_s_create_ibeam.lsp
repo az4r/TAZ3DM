@@ -13,6 +13,8 @@
 
   ;; Rysowanie linii
   (command "_.LINE" taz_s_create_ibeam_p1 taz_s_create_ibeam_p2 "")
+  
+  (setq taz_s_create_ibeam_path (cdr (assoc -1 (entget (entlast)))))
 
   ;; Ustawienie UCS do obiektu – wskazujemy właśnie narysowaną linię
   (command "_.UCS" "_OB" (entlast))
