@@ -32,10 +32,10 @@
   (command "_.UCS" "_NA" "_D" "taz_s_ucs_temp")
   
   (setq taz_s_attribs_object_name (cdr (assoc 5 (entget (entlast)))))
-  ;;(setq taz_s_attribs_object_name_string (rtos taz_s_attribs_object_name 2 0))
-  ;;(setq taz_s_attribs_object_name_string (substr taz_s_attribs_object_name_string 15 (- (strlen taz_s_attribs_object_name_string) 15 1)))
-  ;;(print taz_s_attribs_object_name_string)
   (print taz_s_attribs_object_name)
+  (set (read (strcat "taz_s_" taz_s_attribs_object_name)) "NO_DATA")
+  (print (read (strcat "taz_s_" taz_s_attribs_object_name)))
+  (print (eval (read (strcat "taz_s_" taz_s_attribs_object_name))))
   
   (princ)
 )

@@ -92,6 +92,9 @@
   
   (setq taz_s_create_ibeam_profile (ssname (ssget "_X" '((0 . "LWPOLYLINE") (62 . 6))) 0))
   
+  (command "_ZOOM" "_SCALE" "0.0001X")
+  (command "_ZOOM" "_SCALE" "10000X")
+  
   (command "_SWEEP" taz_s_create_ibeam_profile "" taz_s_create_ibeam_path "")
   
   ;; przywróć widok
