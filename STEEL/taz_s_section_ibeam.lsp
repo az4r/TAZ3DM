@@ -54,7 +54,11 @@
   (setq l12 (cdr (assoc -1 (entget (entlast)))))
   
   ;; zapisz widok 
-  (command "-VIEW" "_S" "taz_s_temp_view")
+  
+  (if (tblsearch "VIEW" "taz_s_temp_view")
+    (command "-VIEW" "_D" "taz_s_temp_view")
+    (command "-VIEW" "_S" "taz_s_temp_view")
+  )
 
   (command "_PLAN" "_C")
   
