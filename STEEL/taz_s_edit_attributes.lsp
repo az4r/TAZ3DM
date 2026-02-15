@@ -1,8 +1,21 @@
 (defun c:taz_s_edit_attributes ( / dcl_id key )
 
-  ;; Pobranie nazwy obiektu (Twoja zmienna)
+  (setq taz_s_attribs_object (ssget "_I"))
+
+  (if (not taz_s_attribs_object)
+    (setq taz_s_attribs_object (ssget "_+.:E:S" '((0 . "*"))))
+  )
+
+  (if (not taz_s_attribs_object)
+    (progn
+      (print "Nie wybrano obiektu.")
+      (exit)
+    )
+  )
+
+  ;; Pobranie nazwy obiektu
   (setq taz_s_attribs_object_name
-        (cdr (assoc 5 (entget (entlast))))
+        (cdr (assoc 5 (entget (ssname taz_s_attribs_object 0))))
   )
 
   ;; Wczytanie DCL
