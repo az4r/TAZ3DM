@@ -53,6 +53,11 @@
   ;;(print taz_s_attribs_object_name)
   ;;(print (read (strcat "taz_s_" taz_s_attribs_object_name "_attr1")))
   ;;(print (eval (read (strcat "taz_s_" taz_s_attribs_object_name "_attr1"))))
+
+  ;;(setq taz_s_attribs_object_name (cdr (assoc 5 (entget (entlast)))))
+
+  (set (read (strcat "taz_s_create_ibeam_" taz_s_attribs_object_name "_sweep_p1")) taz_s_create_ibeam_p1)
+  (set (read (strcat "taz_s_create_ibeam_" taz_s_attribs_object_name "_sweep_p2")) taz_s_create_ibeam_p2)
   
   (princ)
 )

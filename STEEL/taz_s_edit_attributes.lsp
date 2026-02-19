@@ -32,7 +32,7 @@
   ;; ---------------------------------------------------------
 
   (defun taz_s_get_common_value (attr)
-    ;; Zwraca wspólną wartość lub "*rozne*"
+    ;; Zwraca wspólną wartość lub "*ROZNE*"
     (setq taz_s_attribs_count_index 0)
     (setq taz_s_attribs_object_first_value nil)
     (setq taz_s_attribs_object_mixed nil)
@@ -62,7 +62,7 @@
       (setq taz_s_attribs_count_index (1+ taz_s_attribs_count_index))
     )
 
-    (if taz_s_attribs_object_mixed "*rozne*" taz_s_attribs_object_first_value)
+    (if taz_s_attribs_object_mixed "*ROZNE*" taz_s_attribs_object_first_value)
   )
 
   ;; ---------------------------------------------------------
@@ -109,70 +109,70 @@
 
         ;; Atrybut 1
         (setq taz_s_attribs_object_value (get_tile \"attr1\"))
-        (if (/= taz_s_attribs_object_value \"*rozne*\")
+        (if (/= taz_s_attribs_object_value \"*ROZNE*\")
           (set (read (strcat \"taz_s_\" taz_s_attribs_object_name \"_attr1\"))
                taz_s_attribs_object_value)
         )
 
         ;; Atrybut 2
         (setq taz_s_attribs_object_value (get_tile \"attr2\"))
-        (if (/= taz_s_attribs_object_value \"*rozne*\")
+        (if (/= taz_s_attribs_object_value \"*ROZNE*\")
           (set (read (strcat \"taz_s_\" taz_s_attribs_object_name \"_attr2\"))
                taz_s_attribs_object_value)
         )
 
         ;; Atrybut 3
         (setq taz_s_attribs_object_value (get_tile \"attr3\"))
-        (if (/= taz_s_attribs_object_value \"*rozne*\")
+        (if (/= taz_s_attribs_object_value \"*ROZNE*\")
           (set (read (strcat \"taz_s_\" taz_s_attribs_object_name \"_attr3\"))
                taz_s_attribs_object_value)
         )
 
         ;; Atrybut 4
         (setq taz_s_attribs_object_value (get_tile \"attr4\"))
-        (if (/= taz_s_attribs_object_value \"*rozne*\")
+        (if (/= taz_s_attribs_object_value \"*ROZNE*\")
           (set (read (strcat \"taz_s_\" taz_s_attribs_object_name \"_attr4\"))
                taz_s_attribs_object_value)
         )
 
         ;; Atrybut 5
         (setq taz_s_attribs_object_value (get_tile \"attr5\"))
-        (if (/= taz_s_attribs_object_value \"*rozne*\")
+        (if (/= taz_s_attribs_object_value \"*ROZNE*\")
           (set (read (strcat \"taz_s_\" taz_s_attribs_object_name \"_attr5\"))
                taz_s_attribs_object_value)
         )
 
         ;; Atrybut 6
         (setq taz_s_attribs_object_value (get_tile \"attr6\"))
-        (if (/= taz_s_attribs_object_value \"*rozne*\")
+        (if (/= taz_s_attribs_object_value \"*ROZNE*\")
           (set (read (strcat \"taz_s_\" taz_s_attribs_object_name \"_attr6\"))
                taz_s_attribs_object_value)
         )
 
         ;; Atrybut 7
         (setq taz_s_attribs_object_value (get_tile \"attr7\"))
-        (if (/= taz_s_attribs_object_value \"*rozne*\")
+        (if (/= taz_s_attribs_object_value \"*ROZNE*\")
           (set (read (strcat \"taz_s_\" taz_s_attribs_object_name \"_attr7\"))
                taz_s_attribs_object_value)
         )
 
         ;; Atrybut 8
         (setq taz_s_attribs_object_value (get_tile \"attr8\"))
-        (if (/= taz_s_attribs_object_value \"*rozne*\")
+        (if (/= taz_s_attribs_object_value \"*ROZNE*\")
           (set (read (strcat \"taz_s_\" taz_s_attribs_object_name \"_attr8\"))
                taz_s_attribs_object_value)
         )
 
         ;; Atrybut 9
         (setq taz_s_attribs_object_value (get_tile \"attr9\"))
-        (if (/= taz_s_attribs_object_value \"*rozne*\")
+        (if (/= taz_s_attribs_object_value \"*ROZNE*\")
           (set (read (strcat \"taz_s_\" taz_s_attribs_object_name \"_attr9\"))
                taz_s_attribs_object_value)
         )
 
         ;; Atrybut 10
         (setq taz_s_attribs_object_value (get_tile \"attr10\"))
-        (if (/= taz_s_attribs_object_value \"*rozne*\")
+        (if (/= taz_s_attribs_object_value \"*ROZNE*\")
           (set (read (strcat \"taz_s_\" taz_s_attribs_object_name \"_attr10\"))
                taz_s_attribs_object_value)
         )
