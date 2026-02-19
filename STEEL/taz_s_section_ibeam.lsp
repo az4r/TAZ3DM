@@ -118,9 +118,13 @@
     (setq taz_s_section_ibeam_family "HEA")
   )
   (setq taz_s_section_ibeam_family_null taz_s_section_ibeam_family)
-  (setq taz_s_section_ibeam_family
-    (getstring
-      (strcat "\nRodzina profilu (HEA/HEB) <" taz_s_section_ibeam_family ">: ")
+
+  ;; podczas edycji (taz_s_edit_mode = T) nie pytamy użytkownika
+  (if (not taz_s_edit_mode)
+    (setq taz_s_section_ibeam_family
+      (getstring
+        (strcat "\nRodzina profilu (HEA/HEB) <" taz_s_section_ibeam_family ">: ")
+      )
     )
   )
 
@@ -139,9 +143,13 @@
       )
     
       (setq taz_s_section_ibeam_type_null taz_s_section_ibeam_type)
-      (setq taz_s_section_ibeam_type
-        (getstring
-          (strcat "\nTyp profilu (100/120/140/160/180/200/220/240/260/280/300/320/340/360/400/450/500/550/600/650/700/800/900/1000) <" taz_s_section_ibeam_type ">: ")
+
+      ;; podczas edycji nie pytamy użytkownika
+      (if (not taz_s_edit_mode)
+        (setq taz_s_section_ibeam_type
+          (getstring
+            (strcat "\nTyp profilu (100/120/140/160/180/200/220/240/260/280/300/320/340/360/400/450/500/550/600/650/700/800/900/1000) <" taz_s_section_ibeam_type ">: ")
+          )
         )
       )
 
@@ -163,9 +171,13 @@
       )
     
       (setq taz_s_section_ibeam_type_null taz_s_section_ibeam_type)
-      (setq taz_s_section_ibeam_type
-        (getstring
-          (strcat "\nTyp profilu (100/120/140/160/180/200/220/240/260/280/300/320/340/360/400/450/500/550/600/650/700/800/900/1000) <" taz_s_section_ibeam_type ">: ")
+
+      ;; podczas edycji nie pytamy użytkownika
+      (if (not taz_s_edit_mode)
+        (setq taz_s_section_ibeam_type
+          (getstring
+            (strcat "\nTyp profilu (100/120/140/160/180/200/220/240/260/280/300/320/340/360/400/450/500/550/600/650/700/800/900/1000) <" taz_s_section_ibeam_type ">: ")
+          )
         )
       )
 
