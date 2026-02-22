@@ -116,77 +116,75 @@
   (if (and (= taz_s_tmp_family "UPN") (= taz_s_tmp_type "700")) (set_tile "taz_s_typ" "0"))
   (if (and (= taz_s_tmp_family "UPN") (= taz_s_tmp_type "800")) (set_tile "taz_s_typ" "1"))
 
-  ;; ---------------------------
-  ;; Reakcje na zmianę kategorii
-  ;; ---------------------------
-  (action_tile "taz_s_cat"
-    "(progn
-       (if (= $value \"0\") (setq taz_s_tmp_category \"Dwuteowniki\"))
-       (if (= $value \"1\") (setq taz_s_tmp_category \"Ceowniki\"))
+  ;; ============================================================
+  ;; NOWE FUNKCJE OBSŁUGI ZMIAN TILE
+  ;; ============================================================
 
-       (start_list \"taz_s_fam\")
-       (if (= taz_s_tmp_category \"Dwuteowniki\")
-         (progn (add_list \"HEA\") (add_list \"HEB\")))
-       (if (= taz_s_tmp_category \"Ceowniki\")
-         (progn (add_list \"UPE\") (add_list \"UPN\")))
-       (end_list)
+  (defun taz_s_on_cat_change ( / )
+    (if (= $value "0") (setq taz_s_tmp_category "Dwuteowniki"))
+    (if (= $value "1") (setq taz_s_tmp_category "Ceowniki"))
 
-       (if (= taz_s_tmp_category \"Dwuteowniki\") (setq taz_s_tmp_family \"HEA\"))
-       (if (= taz_s_tmp_category \"Ceowniki\")    (setq taz_s_tmp_family \"UPE\"))
+    (start_list "taz_s_fam")
+    (if (= taz_s_tmp_category "Dwuteowniki")
+      (progn (add_list "HEA") (add_list "HEB")))
+    (if (= taz_s_tmp_category "Ceowniki")
+      (progn (add_list "UPE") (add_list "UPN")))
+    (end_list)
 
-       (set_tile \"taz_s_fam\" \"0\")
+    (if (= taz_s_tmp_category "Dwuteowniki") (setq taz_s_tmp_family "HEA"))
+    (if (= taz_s_tmp_category "Ceowniki")    (setq taz_s_tmp_family "UPE"))
 
-       (start_list \"taz_s_typ\")
-       (if (= taz_s_tmp_family \"HEA\") (progn (add_list \"100\") (add_list \"200\")))
-       (if (= taz_s_tmp_family \"HEB\") (progn (add_list \"300\") (add_list \"400\")))
-       (if (= taz_s_tmp_family \"UPE\") (progn (add_list \"500\") (add_list \"600\")))
-       (if (= taz_s_tmp_family \"UPN\") (progn (add_list \"700\") (add_list \"800\")))
-       (end_list)
+    (set_tile "taz_s_fam" "0")
 
-       (setq taz_s_tmp_type \"100\")
-       (set_tile \"taz_s_typ\" \"0\")
-     )"
+    (start_list "taz_s_typ")
+    (if (= taz_s_tmp_family "HEA") (progn (add_list "100") (add_list "200")))
+    (if (= taz_s_tmp_family "HEB") (progn (add_list "300") (add_list "400")))
+    (if (= taz_s_tmp_family "UPE") (progn (add_list "500") (add_list "600")))
+    (if (= taz_s_tmp_family "UPN") (progn (add_list "700") (add_list "800")))
+    (end_list)
+
+    (setq taz_s_tmp_type "100")
+    (set_tile "taz_s_typ" "0")
   )
 
-  ;; ---------------------------
-  ;; Reakcje na zmianę rodziny
-  ;; ---------------------------
-  (action_tile "taz_s_fam"
-    "(progn
-       (if (= (get_tile \"taz_s_cat\") \"0\")
-         (progn
-           (if (= $value \"0\") (setq taz_s_tmp_family \"HEA\"))
-           (if (= $value \"1\") (setq taz_s_tmp_family \"HEB\"))
-         )
-       )
-       (if (= (get_tile \"taz_s_cat\") \"1\")
-         (progn
-           (if (= $value \"0\") (setq taz_s_tmp_family \"UPE\"))
-           (if (= $value \"1\") (setq taz_s_tmp_family \"UPN\"))
-         )
-       )
+  (defun taz_s_on_fam_change ( / )
+    (if (= (get_tile "taz_s_cat") "0")
+      (progn
+        (if (= $value "0") (setq taz_s_tmp_family "HEA"))
+        (if (= $value "1") (setq taz_s_tmp_family "HEB"))
+      )
+    )
 
-       (start_list \"taz_s_typ\")
-       (if (= taz_s_tmp_family \"HEA\") (progn (add_list \"100\") (add_list \"200\")))
-       (if (= taz_s_tmp_family \"HEB\") (progn (add_list \"300\") (add_list \"400\")))
-       (if (= taz_s_tmp_family \"UPE\") (progn (add_list \"500\") (add_list \"600\")))
-       (if (= taz_s_tmp_family \"UPN\") (progn (add_list \"700\") (add_list \"800\")))
-       (end_list)
+    (if (= (get_tile "taz_s_cat") "1")
+      (progn
+        (if (= $value "0") (setq taz_s_tmp_family "UPE"))
+        (if (= $value "1") (setq taz_s_tmp_family "UPN"))
+      )
+    )
 
-       (setq taz_s_tmp_type \"100\")
-       (set_tile \"taz_s_typ\" \"0\")
-     )"
+    (start_list "taz_s_typ")
+    (if (= taz_s_tmp_family "HEA") (progn (add_list "100") (add_list "200")))
+    (if (= taz_s_tmp_family "HEB") (progn (add_list "300") (add_list "400")))
+    (if (= taz_s_tmp_family "UPE") (progn (add_list "500") (add_list "600")))
+    (if (= taz_s_tmp_family "UPN") (progn (add_list "700") (add_list "800")))
+    (end_list)
+
+    (setq taz_s_tmp_type "100")
+    (set_tile "taz_s_typ" "0")
   )
 
-  ;; ---------------------------
-  ;; Reakcje na zmianę typu
-  ;; ---------------------------
-  (action_tile "taz_s_typ"
-    "(progn
-       (if (= $value \"0\") (setq taz_s_tmp_type \"100\"))
-       (if (= $value \"1\") (setq taz_s_tmp_type \"200\"))
-     )"
+  (defun taz_s_on_typ_change ( / )
+    (if (= $value "0") (setq taz_s_tmp_type "100"))
+    (if (= $value "1") (setq taz_s_tmp_type "200"))
   )
+
+  ;; ============================================================
+  ;; PODPIĘCIE FUNKCJI DO TILE — BEZ STRINGÓW
+  ;; ============================================================
+
+  (action_tile "taz_s_cat" "(taz_s_on_cat_change)")
+  (action_tile "taz_s_fam" "(taz_s_on_fam_change)")
+  (action_tile "taz_s_typ" "(taz_s_on_typ_change)")
 
   ;; ---------------------------
   ;; Przycisk OK — zapisujemy zmienne
@@ -223,3 +221,4 @@
   (unload_dialog taz_s_dcl_id)
   (princ)
 )
+
