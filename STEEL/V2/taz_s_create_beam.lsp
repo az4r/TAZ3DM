@@ -1,3 +1,7 @@
+; taz_s_create_beam_toporny_simple.lsp
+; Toporna wersja: wszystko globalne, bez vl-registry, zapis tylko w zmiennych globalnych
+; Uruchamianie tylko przez polecenie: c:taz_s_create_beam
+
 (defun c:taz_s_create_beam ( / taz_s_dcl_id )
 
   ;; ---------------------------
@@ -22,6 +26,35 @@
     (progn
       (alert "Nie mogę otworzyć DCL!")
       (exit)
+    )
+  )
+
+  ;; ---------------------------
+  ;; Funkcja ustawiająca domyślny typ dla danej rodziny
+  ;; ---------------------------
+  (defun taz_s_set_default_type (fam /)
+    (cond
+      ;; Dwuteowniki
+      ((= fam "HEA") (setq taz_s_tmp_type "100") (set_tile "taz_s_typ" "0"))
+      ((= fam "HEB") (setq taz_s_tmp_type "300") (set_tile "taz_s_typ" "0"))
+      ((= fam "IPE") (setq taz_s_tmp_type "220") (set_tile "taz_s_typ" "0"))
+      ((= fam "IPN") (setq taz_s_tmp_type "260") (set_tile "taz_s_typ" "0"))
+
+      ;; Ceowniki
+      ((= fam "UPE") (setq taz_s_tmp_type "500") (set_tile "taz_s_typ" "0"))
+      ((= fam "UPN") (setq taz_s_tmp_type "700") (set_tile "taz_s_typ" "0"))
+
+      ;; Kątowniki
+      ((= fam "Kątownik równoramienny") (setq taz_s_tmp_type "40x40x4") (set_tile "taz_s_typ" "0"))
+      ((= fam "Kątownik nierównoramienny") (setq taz_s_tmp_type "60x70x4") (set_tile "taz_s_typ" "0"))
+
+      ;; Rury
+      ((= fam "Rura kwadratowa") (setq taz_s_tmp_type "60x4") (set_tile "taz_s_typ" "0"))
+      ((= fam "Rura prostokątna") (setq taz_s_tmp_type "40x20x4") (set_tile "taz_s_typ" "0"))
+      ((= fam "Rura okrągła") (setq taz_s_tmp_type "42.4x2.9") (set_tile "taz_s_typ" "0"))
+
+      ;; Domyślnie
+      (T (setq taz_s_tmp_type "100") (set_tile "taz_s_typ" "0"))
     )
   )
 
@@ -177,58 +210,49 @@
   (taz_s_fill_type_list taz_s_tmp_category taz_s_tmp_family)
 
   ;; Ustawienie początkowego indeksu typu w zależności od rodziny
+  ;; Jeśli taz_s_tmp_type pasuje do listy, ustaw odpowiedni indeks, w przeciwnym razie ustaw domyślny
   (cond
     ;; Dwuteowniki
     ((= taz_s_tmp_family "HEA")
-     (if (= taz_s_tmp_type "100") (set_tile "taz_s_typ" "0"))
-     (if (= taz_s_tmp_type "200") (set_tile "taz_s_typ" "1"))
+     (if (= taz_s_tmp_type "100") (set_tile "taz_s_typ" "0") (if (= taz_s_tmp_type "200") (set_tile "taz_s_typ" "1") (taz_s_set_default_type "HEA")))
     )
     ((= taz_s_tmp_family "HEB")
-     (if (= taz_s_tmp_type "300") (set_tile "taz_s_typ" "0"))
-     (if (= taz_s_tmp_type "400") (set_tile "taz_s_typ" "1"))
+     (if (= taz_s_tmp_type "300") (set_tile "taz_s_typ" "0") (if (= taz_s_tmp_type "400") (set_tile "taz_s_typ" "1") (taz_s_set_default_type "HEB")))
     )
     ((= taz_s_tmp_family "IPE")
-     (if (= taz_s_tmp_type "220") (set_tile "taz_s_typ" "0"))
-     (if (= taz_s_tmp_type "240") (set_tile "taz_s_typ" "1"))
+     (if (= taz_s_tmp_type "220") (set_tile "taz_s_typ" "0") (if (= taz_s_tmp_type "240") (set_tile "taz_s_typ" "1") (taz_s_set_default_type "IPE")))
     )
     ((= taz_s_tmp_family "IPN")
-     (if (= taz_s_tmp_type "260") (set_tile "taz_s_typ" "0"))
-     (if (= taz_s_tmp_type "280") (set_tile "taz_s_typ" "1"))
+     (if (= taz_s_tmp_type "260") (set_tile "taz_s_typ" "0") (if (= taz_s_tmp_type "280") (set_tile "taz_s_typ" "1") (taz_s_set_default_type "IPN")))
     )
 
     ;; Ceowniki
     ((= taz_s_tmp_family "UPE")
-     (if (= taz_s_tmp_type "500") (set_tile "taz_s_typ" "0"))
-     (if (= taz_s_tmp_type "600") (set_tile "taz_s_typ" "1"))
+     (if (= taz_s_tmp_type "500") (set_tile "taz_s_typ" "0") (if (= taz_s_tmp_type "600") (set_tile "taz_s_typ" "1") (taz_s_set_default_type "UPE")))
     )
     ((= taz_s_tmp_family "UPN")
-     (if (= taz_s_tmp_type "700") (set_tile "taz_s_typ" "0"))
-     (if (= taz_s_tmp_type "800") (set_tile "taz_s_typ" "1"))
+     (if (= taz_s_tmp_type "700") (set_tile "taz_s_typ" "0") (if (= taz_s_tmp_type "800") (set_tile "taz_s_typ" "1") (taz_s_set_default_type "UPN")))
     )
 
     ;; Kątowniki
     ((= taz_s_tmp_family "Kątownik równoramienny")
-     (if (= taz_s_tmp_type "40x40x4") (set_tile "taz_s_typ" "0"))
-     (if (= taz_s_tmp_type "50x50x4") (set_tile "taz_s_typ" "1"))
+     (if (= taz_s_tmp_type "40x40x4") (set_tile "taz_s_typ" "0") (if (= taz_s_tmp_type "50x50x4") (set_tile "taz_s_typ" "1") (taz_s_set_default_type "Kątownik równoramienny")))
     )
     ((= taz_s_tmp_family "Kątownik nierównoramienny")
-     (if (= taz_s_tmp_type "60x70x4") (set_tile "taz_s_typ" "0"))
-     (if (= taz_s_tmp_type "80x90x4") (set_tile "taz_s_typ" "1"))
+     (if (= taz_s_tmp_type "60x70x4") (set_tile "taz_s_typ" "0") (if (= taz_s_tmp_type "80x90x4") (set_tile "taz_s_typ" "1") (taz_s_set_default_type "Kątownik nierównoramienny")))
     )
 
     ;; Rury
     ((= taz_s_tmp_family "Rura kwadratowa")
-     (if (= taz_s_tmp_type "60x4") (set_tile "taz_s_typ" "0"))
-     (if (= taz_s_tmp_type "100x4") (set_tile "taz_s_typ" "1"))
+     (if (= taz_s_tmp_type "60x4") (set_tile "taz_s_typ" "0") (if (= taz_s_tmp_type "100x4") (set_tile "taz_s_typ" "1") (taz_s_set_default_type "Rura kwadratowa")))
     )
     ((= taz_s_tmp_family "Rura prostokątna")
-     (if (= taz_s_tmp_type "40x20x4") (set_tile "taz_s_typ" "0"))
-     (if (= taz_s_tmp_type "50x40x4") (set_tile "taz_s_typ" "1"))
+     (if (= taz_s_tmp_type "40x20x4") (set_tile "taz_s_typ" "0") (if (= taz_s_tmp_type "50x40x4") (set_tile "taz_s_typ" "1") (taz_s_set_default_type "Rura prostokątna")))
     )
     ((= taz_s_tmp_family "Rura okrągła")
-     (if (= taz_s_tmp_type "42.4x2.9") (set_tile "taz_s_typ" "0"))
-     (if (= taz_s_tmp_type "26.9x2.3") (set_tile "taz_s_typ" "1"))
+     (if (= taz_s_tmp_type "42.4x2.9") (set_tile "taz_s_typ" "0") (if (= taz_s_tmp_type "26.9x2.3") (set_tile "taz_s_typ" "1") (taz_s_set_default_type "Rura okrągła")))
     )
+    (T (taz_s_set_default_type taz_s_tmp_family))
   )
 
   ;; ---------------------------
@@ -273,8 +297,8 @@
        (if (= taz_s_tmp_family \"Rura okrągła\") (progn (add_list \"42.4x2.9\") (add_list \"26.9x2.3\")))
        (end_list)
 
-       (setq taz_s_tmp_type \"100\")
-       (set_tile \"taz_s_typ\" \"0\")
+       ;; ustaw domyślny typ zgodnie z aktualną rodziną
+       (taz_s_set_default_type taz_s_tmp_family)
      )"
   )
 
@@ -326,8 +350,8 @@
        (if (= taz_s_tmp_family \"Rura okrągła\") (progn (add_list \"42.4x2.9\") (add_list \"26.9x2.3\")))
        (end_list)
 
-       (setq taz_s_tmp_type \"100\")
-       (set_tile \"taz_s_typ\" \"0\")
+       ;; ustaw domyślny typ zgodnie z aktualną rodziną
+       (taz_s_set_default_type taz_s_tmp_family)
      )"
   )
 
@@ -377,7 +401,7 @@
   )
 
   ;; ---------------------------
-  ;; Przycisk OK — zapisujemy zmienne
+  ;; Przycisk OK — zapisujemy zmienne (tylko globalne)
   ;; ---------------------------
   (action_tile "ok"
     "(progn
