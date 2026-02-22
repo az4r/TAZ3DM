@@ -1,6 +1,3 @@
-; taz_s_create_beam_toporny_cmd.lsp
-; Wersja rozszerzona o Kątowniki i Rury
-
 (defun c:taz_s_create_beam ( / taz_s_dcl_id )
 
   ;; ---------------------------
@@ -35,7 +32,12 @@
     (start_list "taz_s_fam")
 
     (if (= taz_s_cat_val "Dwuteowniki")
-      (progn (add_list "HEA") (add_list "HEB"))
+      (progn
+        (add_list "HEA")
+        (add_list "HEB")
+        (add_list "IPE")   ;; NOWE
+        (add_list "IPN")   ;; NOWE
+      )
     )
 
     (if (= taz_s_cat_val "Ceowniki")
@@ -72,6 +74,16 @@
     )
     (if (and (= taz_s_cat_val "Dwuteowniki") (= taz_s_fam_val "HEB"))
       (progn (add_list "300") (add_list "400"))
+    )
+
+    ;; NOWE — IPE
+    (if (and (= taz_s_cat_val "Dwuteowniki") (= taz_s_fam_val "IPE"))
+      (progn (add_list "220") (add_list "240"))
+    )
+
+    ;; NOWE — IPN
+    (if (and (= taz_s_cat_val "Dwuteowniki") (= taz_s_fam_val "IPN"))
+      (progn (add_list "260") (add_list "280"))
     )
 
     ;; CEOWNIKI
@@ -129,6 +141,9 @@
 
   (if (= taz_s_tmp_family "HEA") (set_tile "taz_s_fam" "0"))
   (if (= taz_s_tmp_family "HEB") (set_tile "taz_s_fam" "1"))
+  (if (= taz_s_tmp_family "IPE") (set_tile "taz_s_fam" "2"))
+  (if (= taz_s_tmp_family "IPN") (set_tile "taz_s_fam" "3"))
+
   (if (= taz_s_tmp_family "UPE") (set_tile "taz_s_fam" "0"))
   (if (= taz_s_tmp_family "UPN") (set_tile "taz_s_fam" "1"))
 
@@ -148,6 +163,14 @@
 
   (if (and (= taz_s_tmp_family "HEB") (= taz_s_tmp_type "300")) (set_tile "taz_s_typ" "0"))
   (if (and (= taz_s_tmp_family "HEB") (= taz_s_tmp_type "400")) (set_tile "taz_s_typ" "1"))
+
+  ;; NOWE — IPE
+  (if (and (= taz_s_tmp_family "IPE") (= taz_s_tmp_type "220")) (set_tile "taz_s_typ" "0"))
+  (if (and (= taz_s_tmp_family "IPE") (= taz_s_tmp_type "240")) (set_tile "taz_s_typ" "1"))
+
+  ;; NOWE — IPN
+  (if (and (= taz_s_tmp_family "IPN") (= taz_s_tmp_type "260")) (set_tile "taz_s_typ" "0"))
+  (if (and (= taz_s_tmp_family "IPN") (= taz_s_tmp_type "280")) (set_tile "taz_s_typ" "1"))
 
   ;; CEOWNIKI
   (if (and (= taz_s_tmp_family "UPE") (= taz_s_tmp_type "500")) (set_tile "taz_s_typ" "0"))
@@ -207,6 +230,8 @@
       ((= (get_tile "taz_s_cat") "0")
         (if (= fam_index 0) (setq taz_s_tmp_family "HEA"))
         (if (= fam_index 1) (setq taz_s_tmp_family "HEB"))
+        (if (= fam_index 2) (setq taz_s_tmp_family "IPE"))
+        (if (= fam_index 3) (setq taz_s_tmp_family "IPN"))
       )
 
       ;; Ceowniki
@@ -240,12 +265,12 @@
         (cond
           ((= taz_s_tmp_family "HEA") '("100" "200"))
           ((= taz_s_tmp_family "HEB") '("300" "400"))
+          ((= taz_s_tmp_family "IPE") '("220" "240"))
+          ((= taz_s_tmp_family "IPN") '("260" "280"))
           ((= taz_s_tmp_family "UPE") '("500" "600"))
           ((= taz_s_tmp_family "UPN") '("700" "800"))
-
           ((= taz_s_tmp_family "Kątownik równoramienny") '("40x40x4" "50x50x4"))
           ((= taz_s_tmp_family "Kątownik nierównoramienny") '("60x70x4" "80x90x4"))
-
           ((= taz_s_tmp_family "Rura kwadratowa") '("60x4" "100x4"))
           ((= taz_s_tmp_family "Rura prostokątna") '("40x20x4" "50x40x4"))
           ((= taz_s_tmp_family "Rura okrągła") '("42.4x2.9" "26.9x2.3"))
@@ -274,27 +299,26 @@
      )"
   )
 
-  ;; ---------------------------
-  ;; Przycisk Anuluj — nic nie zapisujemy
-  ;; ---------------------------
-  (action_tile "anuluj"
-    "(done_dialog 0)"
-  )
-
-  ;; ---------------------------
-  ;; Uruchomienie dialogu
-  ;; ---------------------------
-  (if (= (start_dialog) 1)
-    (progn
-      (princ "\nWybrane wartości:")
-      (princ (strcat "\nKategoria: " taz_s_category))
-      (princ (strcat "\nRodzina:   " taz_s_family))
-      (princ (strcat "\nTyp:       " taz_s_type))
-    )
-    (princ "\nAnulowano.")
-  )
-
-  (unload_dialog taz_s_dcl_id)
-  (princ)
+;; ---------------------------
+;; Przycisk Anuluj — nic nie zapisujemy
+;; ---------------------------
+(action_tile "anuluj"
+  "(done_dialog 0)"
 )
 
+;; ---------------------------
+;; Uruchomienie dialogu
+;; ---------------------------
+(if (= (start_dialog) 1)
+  (progn
+    (princ "\nWybrane wartości:")
+    (princ (strcat "\nKategoria: " taz_s_category))
+    (princ (strcat "\nRodzina:   " taz_s_family))
+    (princ (strcat "\nTyp:       " taz_s_type))
+  )
+  (princ "\nAnulowano.")
+)
+
+(unload_dialog taz_s_dcl_id)
+(princ)
+)
