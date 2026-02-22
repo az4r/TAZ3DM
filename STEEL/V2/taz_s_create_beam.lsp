@@ -1,7 +1,3 @@
-; taz_s_create_beam_toporny_inline_flat.lsp
-; Toporna wersja: wszystko globalne, bez dodatkowych funkcji pomocniczych
-; Uruchamianie tylko przez polecenie: c:taz_s_create_beam
-
 (defun c:taz_s_create_beam ( / taz_s_dcl_id )
 
   ;; ---------------------------
@@ -318,7 +314,7 @@
               (not (= taz_s_tmp_type "500")) (not (= taz_s_tmp_type "550")) (not (= taz_s_tmp_type "600"))
               (not (= taz_s_tmp_type "750x137")) (not (= taz_s_tmp_type "750x147")) (not (= taz_s_tmp_type "750x173"))
               (not (= taz_s_tmp_type "750x196")))
-       (progn (setq taz_s_tmp_type "220") (set_tile "taz_s_typ" "7"))
+       (progn (setq taz_s_tmp_type "80") (set_tile "taz_s_typ" "0"))
      )
     )
 
@@ -467,7 +463,7 @@
        ;; ustaw pierwszy typ ręcznie w zależności od rodziny (bez funkcji pomocniczej)
        (if (= taz_s_tmp_family \"HEA\") (progn (setq taz_s_tmp_type \"100\") (set_tile \"taz_s_typ\" \"0\")))
        (if (= taz_s_tmp_family \"HEB\") (progn (setq taz_s_tmp_type \"100\") (set_tile \"taz_s_typ\" \"0\")))
-       (if (= taz_s_tmp_family \"IPE\") (progn (setq taz_s_tmp_type \"220\") (set_tile \"taz_s_typ\" \"7\")))
+       (if (= taz_s_tmp_family \"IPE\") (progn (setq taz_s_tmp_type \"80\") (set_tile \"taz_s_typ\" \"0\")))
        (if (= taz_s_tmp_family \"IPN\") (progn (setq taz_s_tmp_type \"260\") (set_tile \"taz_s_typ\" \"0\")))
        (if (= taz_s_tmp_family \"UPE\") (progn (setq taz_s_tmp_type \"500\") (set_tile \"taz_s_typ\" \"0\")))
        (if (= taz_s_tmp_family \"UPN\") (progn (setq taz_s_tmp_type \"700\") (set_tile \"taz_s_typ\" \"0\")))
@@ -551,7 +547,7 @@
        ;; ustaw pierwszy typ ręcznie w zależności od rodziny (bez funkcji pomocniczej)
        (if (= taz_s_tmp_family \"HEA\") (progn (setq taz_s_tmp_type \"100\") (set_tile \"taz_s_typ\" \"0\")))
        (if (= taz_s_tmp_family \"HEB\") (progn (setq taz_s_tmp_type \"100\") (set_tile \"taz_s_typ\" \"0\")))
-       (if (= taz_s_tmp_family \"IPE\") (progn (setq taz_s_tmp_type \"220\") (set_tile \"taz_s_typ\" \"7\")))
+       (if (= taz_s_tmp_family \"IPE\") (progn (setq taz_s_tmp_type \"80\") (set_tile \"taz_s_typ\" \"0\")))
        (if (= taz_s_tmp_family \"IPN\") (progn (setq taz_s_tmp_type \"260\") (set_tile \"taz_s_typ\" \"0\")))
        (if (= taz_s_tmp_family \"UPE\") (progn (setq taz_s_tmp_type \"500\") (set_tile \"taz_s_typ\" \"0\")))
        (if (= taz_s_tmp_family \"UPN\") (progn (setq taz_s_tmp_type \"700\") (set_tile \"taz_s_typ\" \"0\")))
