@@ -5,17 +5,17 @@ taz_s_create_beam : dialog {
 
         : row {
             : text { label = "Kategoria:"; width = 20; fixed_width = true; }
-            : popup_list { key = "taz_s_cat"; width = 20; fixed_width = true; }
+            : popup_list { key = "taz_s_cat"; width = 30; fixed_width = true; }
         }
 
         : row {
             : text { label = "Rodzina:"; width = 20; fixed_width = true; }
-            : popup_list { key = "taz_s_fam"; width = 20; fixed_width = true; }
+            : popup_list { key = "taz_s_fam"; width = 30; fixed_width = true; }
         }
 
         : row {
             : text { label = "Typ:"; width = 20; fixed_width = true; }
-            : popup_list { key = "taz_s_typ"; width = 20; fixed_width = true; }
+            : popup_list { key = "taz_s_typ"; width = 30; fixed_width = true; }
         }
     }
 
