@@ -139,10 +139,36 @@
       )
     )
 
-    ;; Kątowniki
+    ;; Kątowniki równoramienne – pełna lista wg L-equal
     (if (and (= taz_s_cat_val "Kątowniki") (= taz_s_fam_val "Kątownik równoramienny"))
-      (progn (add_list "40x40x4") (add_list "50x50x4"))
+      (progn
+        (add_list "20x3")
+        (add_list "25x3") (add_list "25x4")
+        (add_list "30x3") (add_list "30x4") (add_list "30x5")
+        (add_list "35x4") (add_list "35x5")
+        (add_list "40x4") (add_list "40x5")
+        (add_list "45x4") (add_list "45x5")
+        (add_list "50x5") (add_list "50x6") (add_list "50x7")
+        (add_list "55x6")
+        (add_list "60x5") (add_list "60x6") (add_list "60x8")
+        (add_list "65x7")
+        (add_list "70x6") (add_list "70x7") (add_list "70x9")
+        (add_list "75x7") (add_list "75x8")
+        (add_list "80x6") (add_list "80x8") (add_list "80x10")
+        (add_list "90x7") (add_list "90x8") (add_list "90x9")
+        (add_list "100x8") (add_list "100x10") (add_list "100x12") (add_list "100x14")
+        (add_list "110x10") (add_list "110x12")
+        (add_list "120x10") (add_list "120x11") (add_list "120x12") (add_list "120x13") (add_list "120x15")
+        (add_list "130x12")
+        (add_list "140x10") (add_list "140x13") (add_list "140x15")
+        (add_list "150x10") (add_list "150x12") (add_list "150x14") (add_list "150x15") (add_list "150x16") (add_list "150x18") (add_list "150x20")
+        (add_list "160x15") (add_list "160x17") (add_list "160x19")
+        (add_list "180x16") (add_list "180x18") (add_list "180x20") (add_list "180x22")
+        (add_list "200x16") (add_list "200x18") (add_list "200x20") (add_list "200x22") (add_list "200x24") (add_list "200x26") (add_list "200x28") (add_list "200x30")
+        (add_list "250x18") (add_list "250x20") (add_list "250x22") (add_list "250x24") (add_list "250x26") (add_list "250x28")
+      )
     )
+
     (if (and (= taz_s_cat_val "Kątowniki") (= taz_s_fam_val "Kątownik nierównoramienny"))
       (progn (add_list "60x70x4") (add_list "80x90x4"))
     )
@@ -421,12 +447,134 @@
 
     ;; Kątownik równoramienny
     ((= taz_s_tmp_family "Kątownik równoramienny")
-     (if (= taz_s_tmp_type "40x40x4") (set_tile "taz_s_typ" "0"))
-     (if (= taz_s_tmp_type "50x50x4") (set_tile "taz_s_typ" "1"))
-     (if (and (not (= taz_s_tmp_type "40x40x4")) (not (= taz_s_tmp_type "50x50x4")))
-       (progn (setq taz_s_tmp_type "40x40x4") (set_tile "taz_s_typ" "0"))
-     )
+      (if (= taz_s_tmp_type "20x3")   (set_tile "taz_s_typ" "0"))
+
+      (if (= taz_s_tmp_type "25x3")   (set_tile "taz_s_typ" "1"))
+      (if (= taz_s_tmp_type "25x4")   (set_tile "taz_s_typ" "2"))
+
+      (if (= taz_s_tmp_type "30x3")   (set_tile "taz_s_typ" "3"))
+      (if (= taz_s_tmp_type "30x4")   (set_tile "taz_s_typ" "4"))
+      (if (= taz_s_tmp_type "30x5")   (set_tile "taz_s_typ" "5"))
+
+      (if (= taz_s_tmp_type "35x4")   (set_tile "taz_s_typ" "6"))
+      (if (= taz_s_tmp_type "35x5")   (set_tile "taz_s_typ" "7"))
+
+      (if (= taz_s_tmp_type "40x4")   (set_tile "taz_s_typ" "8"))
+      (if (= taz_s_tmp_type "40x5")   (set_tile "taz_s_typ" "9"))
+
+      (if (= taz_s_tmp_type "45x4")   (set_tile "taz_s_typ" "10"))
+      (if (= taz_s_tmp_type "45x5")   (set_tile "taz_s_typ" "11"))
+
+      (if (= taz_s_tmp_type "50x5")   (set_tile "taz_s_typ" "12"))
+      (if (= taz_s_tmp_type "50x6")   (set_tile "taz_s_typ" "13"))
+      (if (= taz_s_tmp_type "50x7")   (set_tile "taz_s_typ" "14"))
+
+      (if (= taz_s_tmp_type "55x6")   (set_tile "taz_s_typ" "15"))
+
+      (if (= taz_s_tmp_type "60x5")   (set_tile "taz_s_typ" "16"))
+      (if (= taz_s_tmp_type "60x6")   (set_tile "taz_s_typ" "17"))
+      (if (= taz_s_tmp_type "60x8")   (set_tile "taz_s_typ" "18"))
+
+      (if (= taz_s_tmp_type "65x7")   (set_tile "taz_s_typ" "19"))
+
+      (if (= taz_s_tmp_type "70x6")   (set_tile "taz_s_typ" "20"))
+      (if (= taz_s_tmp_type "70x7")   (set_tile "taz_s_typ" "21"))
+      (if (= taz_s_tmp_type "70x9")   (set_tile "taz_s_typ" "22"))
+
+      (if (= taz_s_tmp_type "75x7")   (set_tile "taz_s_typ" "23"))
+      (if (= taz_s_tmp_type "75x8")   (set_tile "taz_s_typ" "24"))
+
+      (if (= taz_s_tmp_type "80x6")   (set_tile "taz_s_typ" "25"))
+      (if (= taz_s_tmp_type "80x8")   (set_tile "taz_s_typ" "26"))
+      (if (= taz_s_tmp_type "80x10")  (set_tile "taz_s_typ" "27"))
+
+      (if (= taz_s_tmp_type "90x7")   (set_tile "taz_s_typ" "28"))
+      (if (= taz_s_tmp_type "90x8")   (set_tile "taz_s_typ" "29"))
+      (if (= taz_s_tmp_type "90x9")   (set_tile "taz_s_typ" "30"))
+
+      (if (= taz_s_tmp_type "100x8")  (set_tile "taz_s_typ" "31"))
+      (if (= taz_s_tmp_type "100x10") (set_tile "taz_s_typ" "32"))
+      (if (= taz_s_tmp_type "100x12") (set_tile "taz_s_typ" "33"))
+      (if (= taz_s_tmp_type "100x14") (set_tile "taz_s_typ" "34"))
+
+      (if (= taz_s_tmp_type "110x10") (set_tile "taz_s_typ" "35"))
+      (if (= taz_s_tmp_type "110x12") (set_tile "taz_s_typ" "36"))
+
+      (if (= taz_s_tmp_type "120x10") (set_tile "taz_s_typ" "37"))
+      (if (= taz_s_tmp_type "120x11") (set_tile "taz_s_typ" "38"))
+      (if (= taz_s_tmp_type "120x12") (set_tile "taz_s_typ" "39"))
+      (if (= taz_s_tmp_type "120x13") (set_tile "taz_s_typ" "40"))
+      (if (= taz_s_tmp_type "120x15") (set_tile "taz_s_typ" "41"))
+
+      (if (= taz_s_tmp_type "130x12") (set_tile "taz_s_typ" "42"))
+
+      (if (= taz_s_tmp_type "140x10") (set_tile "taz_s_typ" "43"))
+      (if (= taz_s_tmp_type "140x13") (set_tile "taz_s_typ" "44"))
+      (if (= taz_s_tmp_type "140x15") (set_tile "taz_s_typ" "45"))
+
+      (if (= taz_s_tmp_type "150x10") (set_tile "taz_s_typ" "46"))
+      (if (= taz_s_tmp_type "150x12") (set_tile "taz_s_typ" "47"))
+      (if (= taz_s_tmp_type "150x14") (set_tile "taz_s_typ" "48"))
+      (if (= taz_s_tmp_type "150x15") (set_tile "taz_s_typ" "49"))
+      (if (= taz_s_tmp_type "150x16") (set_tile "taz_s_typ" "50"))
+      (if (= taz_s_tmp_type "150x18") (set_tile "taz_s_typ" "51"))
+      (if (= taz_s_tmp_type "150x20") (set_tile "taz_s_typ" "52"))
+
+      (if (= taz_s_tmp_type "160x15") (set_tile "taz_s_typ" "53"))
+      (if (= taz_s_tmp_type "160x17") (set_tile "taz_s_typ" "54"))
+      (if (= taz_s_tmp_type "160x19") (set_tile "taz_s_typ" "55"))
+
+      (if (= taz_s_tmp_type "180x16") (set_tile "taz_s_typ" "56"))
+      (if (= taz_s_tmp_type "180x18") (set_tile "taz_s_typ" "57"))
+      (if (= taz_s_tmp_type "180x20") (set_tile "taz_s_typ" "58"))
+      (if (= taz_s_tmp_type "180x22") (set_tile "taz_s_typ" "59"))
+
+      (if (= taz_s_tmp_type "200x16") (set_tile "taz_s_typ" "60"))
+      (if (= taz_s_tmp_type "200x18") (set_tile "taz_s_typ" "61"))
+      (if (= taz_s_tmp_type "200x20") (set_tile "taz_s_typ" "62"))
+      (if (= taz_s_tmp_type "200x22") (set_tile "taz_s_typ" "63"))
+      (if (= taz_s_tmp_type "200x24") (set_tile "taz_s_typ" "64"))
+      (if (= taz_s_tmp_type "200x26") (set_tile "taz_s_typ" "65"))
+      (if (= taz_s_tmp_type "200x28") (set_tile "taz_s_typ" "66"))
+      (if (= taz_s_tmp_type "200x30") (set_tile "taz_s_typ" "67"))
+
+      (if (= taz_s_tmp_type "250x18") (set_tile "taz_s_typ" "68"))
+      (if (= taz_s_tmp_type "250x20") (set_tile "taz_s_typ" "69"))
+      (if (= taz_s_tmp_type "250x22") (set_tile "taz_s_typ" "70"))
+      (if (= taz_s_tmp_type "250x24") (set_tile "taz_s_typ" "71"))
+      (if (= taz_s_tmp_type "250x26") (set_tile "taz_s_typ" "72"))
+      (if (= taz_s_tmp_type "250x28") (set_tile "taz_s_typ" "73"))
+
+      ;; fallback
+      (if (not (member taz_s_tmp_type
+            '("20x3"
+              "25x3" "25x4"
+              "30x3" "30x4" "30x5"
+              "35x4" "35x5"
+              "40x4" "40x5"
+              "45x4" "45x5"
+              "50x5" "50x6" "50x7"
+              "55x6"
+              "60x5" "60x6" "60x8"
+              "65x7"
+              "70x6" "70x7" "70x9"
+              "75x7" "75x8"
+              "80x6" "80x8" "80x10"
+              "90x7" "90x8" "90x9"
+              "100x8" "100x10" "100x12" "100x14"
+              "110x10" "110x12"
+              "120x10" "120x11" "120x12" "120x13" "120x15"
+              "130x12"
+              "140x10" "140x13" "140x15"
+              "150x10" "150x12" "150x14" "150x15" "150x16" "150x18" "150x20"
+              "160x15" "160x17" "160x19"
+              "180x16" "180x18" "180x20" "180x22"
+              "200x16" "200x18" "200x20" "200x22" "200x24" "200x26" "200x28" "200x30"
+              "250x18" "250x20" "250x22" "250x24" "250x26" "250x28")))
+        (progn (setq taz_s_tmp_type "20x3") (set_tile "taz_s_typ" "0"))
+      )
     )
+
 
     ;; Kątownik nierównoramienny
     ((= taz_s_tmp_family "Kątownik nierównoramienny")
@@ -547,7 +695,35 @@
          (add_list \"380\") (add_list \"400\")
        ))
 
-       (if (= taz_s_tmp_family \"Kątownik równoramienny\") (progn (add_list \"40x40x4\") (add_list \"50x50x4\")))
+       (if (= taz_s_tmp_family \"Kątownik równoramienny\")
+        (progn
+          (add_list \"20x3\")
+          (add_list \"25x3\") (add_list \"25x4\")
+          (add_list \"30x3\") (add_list \"30x4\") (add_list \"30x5\")
+          (add_list \"35x4\") (add_list \"35x5\")
+          (add_list \"40x4\") (add_list \"40x5\")
+          (add_list \"45x4\") (add_list \"45x5\")
+          (add_list \"50x5\") (add_list \"50x6\") (add_list \"50x7\")
+          (add_list \"55x6\")
+          (add_list \"60x5\") (add_list \"60x6\") (add_list \"60x8\")
+          (add_list \"65x7\")
+          (add_list \"70x6\") (add_list \"70x7\") (add_list \"70x9\")
+          (add_list \"75x7\") (add_list \"75x8\")
+          (add_list \"80x6\") (add_list \"80x8\") (add_list \"80x10\")
+          (add_list \"90x7\") (add_list \"90x8\") (add_list \"90x9\")
+          (add_list \"100x8\") (add_list \"100x10\") (add_list \"100x12\") (add_list \"100x14\")
+          (add_list \"110x10\") (add_list \"110x12\")
+          (add_list \"120x10\") (add_list \"120x11\") (add_list \"120x12\") (add_list \"120x13\") (add_list \"120x15\")
+          (add_list \"130x12\")
+          (add_list \"140x10\") (add_list \"140x13\") (add_list \"140x15\")
+          (add_list \"150x10\") (add_list \"150x12\") (add_list \"150x14\") (add_list \"150x15\") (add_list \"150x16\") (add_list \"150x18\") (add_list \"150x20\")
+          (add_list \"160x15\") (add_list \"160x17\") (add_list \"160x19\")
+          (add_list \"180x16\") (add_list \"180x18\") (add_list \"180x20\") (add_list \"180x22\")
+          (add_list \"200x16\") (add_list \"200x18\") (add_list \"200x20\") (add_list \"200x22\") (add_list \"200x24\") (add_list \"200x26\") (add_list \"200x28\") (add_list \"200x30\")
+          (add_list \"250x18\") (add_list \"250x20\") (add_list \"250x22\") (add_list \"250x24\") (add_list \"250x26\") (add_list \"250x28\")
+        )
+      )
+
        (if (= taz_s_tmp_family \"Kątownik nierównoramienny\") (progn (add_list \"60x70x4\") (add_list \"80x90x4\")))
        (if (= taz_s_tmp_family \"Rura kwadratowa\") (progn (add_list \"60x4\") (add_list \"100x4\")))
        (if (= taz_s_tmp_family \"Rura prostokątna\") (progn (add_list \"40x20x4\") (add_list \"50x40x4\")))
@@ -561,7 +737,7 @@
        (if (= taz_s_tmp_family \"IPN\") (progn (setq taz_s_tmp_type \"80\") (set_tile \"taz_s_typ\" \"0\")))
        (if (= taz_s_tmp_family \"UPE\") (progn (setq taz_s_tmp_type \"80\") (set_tile \"taz_s_typ\" \"0\")))
        (if (= taz_s_tmp_family \"UPN\") (progn (setq taz_s_tmp_type \"50\") (set_tile \"taz_s_typ\" \"0\")))
-       (if (= taz_s_tmp_family \"Kątownik równoramienny\") (progn (setq taz_s_tmp_type \"40x40x4\") (set_tile \"taz_s_typ\" \"0\")))
+       (if (= taz_s_tmp_family \"Kątownik równoramienny\") (progn (setq taz_s_tmp_type \"20x3\") (set_tile \"taz_s_typ\" \"0\")))
        (if (= taz_s_tmp_family \"Kątownik nierównoramienny\") (progn (setq taz_s_tmp_type \"60x70x4\") (set_tile \"taz_s_typ\" \"0\")))
        (if (= taz_s_tmp_family \"Rura kwadratowa\") (progn (setq taz_s_tmp_type \"60x4\") (set_tile \"taz_s_typ\" \"0\")))
        (if (= taz_s_tmp_family \"Rura prostokątna\") (progn (setq taz_s_tmp_type \"40x20x4\") (set_tile \"taz_s_typ\" \"0\")))
@@ -651,7 +827,59 @@
          (add_list \"380\") (add_list \"400\")
        ))
 
-       (if (= taz_s_tmp_family \"Kątownik równoramienny\") (progn (add_list \"40x40x4\") (add_list \"50x50x4\")))
+       (if (= taz_s_tmp_family \"Kątownik równoramienny\") (progn
+          (add_list \"20x3\")
+
+          (add_list \"25x3\") (add_list \"25x4\")
+
+          (add_list \"30x3\") (add_list \"30x4\") (add_list \"30x5\")
+
+          (add_list \"35x4\") (add_list \"35x5\")
+
+          (add_list \"40x4\") (add_list \"40x5\")
+
+          (add_list \"45x4\") (add_list \"45x5\")
+
+          (add_list \"50x5\") (add_list \"50x6\") (add_list \"50x7\")
+
+          (add_list \"55x6\")
+
+          (add_list \"60x5\") (add_list \"60x6\") (add_list \"60x8\")
+
+          (add_list \"65x7\")
+
+          (add_list \"70x6\") (add_list \"70x7\") (add_list \"70x9\")
+
+          (add_list \"75x7\") (add_list \"75x8\")
+
+          (add_list \"80x6\") (add_list \"80x8\") (add_list \"80x10\")
+
+          (add_list \"90x7\") (add_list \"90x8\") (add_list \"90x9\")
+
+          (add_list \"100x8\") (add_list \"100x10\") (add_list \"100x12\") (add_list \"100x14\")
+
+          (add_list \"110x10\") (add_list \"110x12\")
+
+          (add_list \"120x10\") (add_list \"120x11\") (add_list \"120x12\") (add_list \"120x13\") (add_list \"120x15\")
+
+          (add_list \"130x12\")
+
+          (add_list \"140x10\") (add_list \"140x13\") (add_list \"140x15\")
+
+          (add_list \"150x10\") (add_list \"150x12\") (add_list \"150x14\") (add_list \"150x15\")
+          (add_list \"150x16\") (add_list \"150x18\") (add_list \"150x20\")
+
+          (add_list \"160x15\") (add_list \"160x17\") (add_list \"160x19\")
+
+          (add_list \"180x16\") (add_list \"180x18\") (add_list \"180x20\") (add_list \"180x22\")
+
+          (add_list \"200x16\") (add_list \"200x18\") (add_list \"200x20\") (add_list \"200x22\")
+          (add_list \"200x24\") (add_list \"200x26\") (add_list \"200x28\") (add_list \"200x30\")
+
+          (add_list \"250x18\") (add_list \"250x20\") (add_list \"250x22\") (add_list \"250x24\")
+          (add_list \"250x26\") (add_list \"250x28\")
+        ))
+
        (if (= taz_s_tmp_family \"Kątownik nierównoramienny\") (progn (add_list \"60x70x4\") (add_list \"80x90x4\")))
        (if (= taz_s_tmp_family \"Rura kwadratowa\") (progn (add_list \"60x4\") (add_list \"100x4\")))
        (if (= taz_s_tmp_family \"Rura prostokątna\") (progn (add_list \"40x20x4\") (add_list \"50x40x4\")))
@@ -665,7 +893,7 @@
        (if (= taz_s_tmp_family \"IPN\") (progn (setq taz_s_tmp_type \"80\") (set_tile \"taz_s_typ\" \"0\")))
        (if (= taz_s_tmp_family \"UPE\") (progn (setq taz_s_tmp_type \"80\") (set_tile \"taz_s_typ\" \"0\")))
        (if (= taz_s_tmp_family \"UPN\") (progn (setq taz_s_tmp_type \"50\") (set_tile \"taz_s_typ\" \"0\")))
-       (if (= taz_s_tmp_family \"Kątownik równoramienny\") (progn (setq taz_s_tmp_type \"40x40x4\") (set_tile \"taz_s_typ\" \"0\")))
+       (if (= taz_s_tmp_family \"Kątownik równoramienny\") (progn (setq taz_s_tmp_type \"20x3\") (set_tile \"taz_s_typ\" \"0\")))
        (if (= taz_s_tmp_family \"Kątownik nierównoramienny\") (progn (setq taz_s_tmp_type \"60x70x4\") (set_tile \"taz_s_typ\" \"0\")))
        (if (= taz_s_tmp_family \"Rura kwadratowa\") (progn (setq taz_s_tmp_type \"60x4\") (set_tile \"taz_s_typ\" \"0\")))
        (if (= taz_s_tmp_family \"Rura prostokątna\") (progn (setq taz_s_tmp_type \"40x20x4\") (set_tile \"taz_s_typ\" \"0\")))
@@ -676,178 +904,283 @@
   ;; ---------------------------
   ;; Reakcje na zmianę typu
   ;; ---------------------------
-  (action_tile "taz_s_typ"
-    "(progn
-       ;; Ustawienie taz_s_tmp_type w zależności od aktualnej rodziny i indeksu typu
-       (if (= taz_s_tmp_family \"HEA\")
-         (progn
-           (if (= $value \"0\") (setq taz_s_tmp_type \"100\"))
-           (if (= $value \"1\") (setq taz_s_tmp_type \"120\"))
-           (if (= $value \"2\") (setq taz_s_tmp_type \"140\"))
-           (if (= $value \"3\") (setq taz_s_tmp_type \"160\"))
-           (if (= $value \"4\") (setq taz_s_tmp_type \"180\"))
-           (if (= $value \"5\") (setq taz_s_tmp_type \"200\"))
-           (if (= $value \"6\") (setq taz_s_tmp_type \"220\"))
-           (if (= $value \"7\") (setq taz_s_tmp_type \"240\"))
-           (if (= $value \"8\") (setq taz_s_tmp_type \"260\"))
-           (if (= $value \"9\") (setq taz_s_tmp_type \"280\"))
-           (if (= $value \"10\") (setq taz_s_tmp_type \"300\"))
-           (if (= $value \"11\") (setq taz_s_tmp_type \"320\"))
-           (if (= $value \"12\") (setq taz_s_tmp_type \"340\"))
-           (if (= $value \"13\") (setq taz_s_tmp_type \"360\"))
-           (if (= $value \"14\") (setq taz_s_tmp_type \"400\"))
-           (if (= $value \"15\") (setq taz_s_tmp_type \"450\"))
-           (if (= $value \"16\") (setq taz_s_tmp_type \"500\"))
-           (if (= $value \"17\") (setq taz_s_tmp_type \"550\"))
-           (if (= $value \"18\") (setq taz_s_tmp_type \"600\"))
-           (if (= $value \"19\") (setq taz_s_tmp_type \"650\"))
-           (if (= $value \"20\") (setq taz_s_tmp_type \"700\"))
-           (if (= $value \"21\") (setq taz_s_tmp_type \"800\"))
-           (if (= $value \"22\") (setq taz_s_tmp_type \"900\"))
-           (if (= $value \"23\") (setq taz_s_tmp_type \"1000\"))
-         )
-       )
-       (if (= taz_s_tmp_family \"HEB\")
-         (progn
-           (if (= $value \"0\") (setq taz_s_tmp_type \"100\"))
-           (if (= $value \"1\") (setq taz_s_tmp_type \"120\"))
-           (if (= $value \"2\") (setq taz_s_tmp_type \"140\"))
-           (if (= $value \"3\") (setq taz_s_tmp_type \"160\"))
-           (if (= $value \"4\") (setq taz_s_tmp_type \"180\"))
-           (if (= $value \"5\") (setq taz_s_tmp_type \"200\"))
-           (if (= $value \"6\") (setq taz_s_tmp_type \"220\"))
-           (if (= $value \"7\") (setq taz_s_tmp_type \"240\"))
-           (if (= $value \"8\") (setq taz_s_tmp_type \"260\"))
-           (if (= $value \"9\") (setq taz_s_tmp_type \"280\"))
-           (if (= $value \"10\") (setq taz_s_tmp_type \"300\"))
-           (if (= $value \"11\") (setq taz_s_tmp_type \"320\"))
-           (if (= $value \"12\") (setq taz_s_tmp_type \"340\"))
-           (if (= $value \"13\") (setq taz_s_tmp_type \"360\"))
-           (if (= $value \"14\") (setq taz_s_tmp_type \"400\"))
-           (if (= $value \"15\") (setq taz_s_tmp_type \"450\"))
-           (if (= $value \"16\") (setq taz_s_tmp_type \"500\"))
-           (if (= $value \"17\") (setq taz_s_tmp_type \"550\"))
-           (if (= $value \"18\") (setq taz_s_tmp_type \"600\"))
-           (if (= $value \"19\") (setq taz_s_tmp_type \"650\"))
-           (if (= $value \"20\") (setq taz_s_tmp_type \"700\"))
-           (if (= $value \"21\") (setq taz_s_tmp_type \"800\"))
-           (if (= $value \"22\") (setq taz_s_tmp_type \"900\"))
-           (if (= $value \"23\") (setq taz_s_tmp_type \"1000\"))
-         )
-       )
-       (if (= taz_s_tmp_family \"IPE\")
-         (progn
-           (if (= $value \"0\") (setq taz_s_tmp_type \"80\"))
-           (if (= $value \"1\") (setq taz_s_tmp_type \"100\"))
-           (if (= $value \"2\") (setq taz_s_tmp_type \"120\"))
-           (if (= $value \"3\") (setq taz_s_tmp_type \"140\"))
-           (if (= $value \"4\") (setq taz_s_tmp_type \"160\"))
-           (if (= $value \"5\") (setq taz_s_tmp_type \"180\"))
-           (if (= $value \"6\") (setq taz_s_tmp_type \"200\"))
-           (if (= $value \"7\") (setq taz_s_tmp_type \"220\"))
-           (if (= $value \"8\") (setq taz_s_tmp_type \"240\"))
-           (if (= $value \"9\") (setq taz_s_tmp_type \"270\"))
-           (if (= $value \"10\") (setq taz_s_tmp_type \"300\"))
-           (if (= $value \"11\") (setq taz_s_tmp_type \"330\"))
-           (if (= $value \"12\") (setq taz_s_tmp_type \"360\"))
-           (if (= $value \"13\") (setq taz_s_tmp_type \"400\"))
-           (if (= $value \"14\") (setq taz_s_tmp_type \"450\"))
-           (if (= $value \"15\") (setq taz_s_tmp_type \"500\"))
-           (if (= $value \"16\") (setq taz_s_tmp_type \"550\"))
-           (if (= $value \"17\") (setq taz_s_tmp_type \"600\"))
-           (if (= $value \"18\") (setq taz_s_tmp_type \"750x137\"))
-           (if (= $value \"19\") (setq taz_s_tmp_type \"750x147\"))
-           (if (= $value \"20\") (setq taz_s_tmp_type \"750x173\"))
-           (if (= $value \"21\") (setq taz_s_tmp_type \"750x196\"))
-         )
-       )
-       (if (= taz_s_tmp_family \"IPN\")
-         (progn
-           (if (= $value \"0\")  (setq taz_s_tmp_type \"80\"))
-           (if (= $value \"1\")  (setq taz_s_tmp_type \"100\"))
-           (if (= $value \"2\")  (setq taz_s_tmp_type \"120\"))
-           (if (= $value \"3\")  (setq taz_s_tmp_type \"140\"))
-           (if (= $value \"4\")  (setq taz_s_tmp_type \"160\"))
-           (if (= $value \"5\")  (setq taz_s_tmp_type \"180\"))
-           (if (= $value \"6\")  (setq taz_s_tmp_type \"200\"))
-           (if (= $value \"7\")  (setq taz_s_tmp_type \"220\"))
-           (if (= $value \"8\")  (setq taz_s_tmp_type \"240\"))
-           (if (= $value \"9\")  (setq taz_s_tmp_type \"260\"))
-           (if (= $value \"10\") (setq taz_s_tmp_type \"280\"))
-           (if (= $value \"11\") (setq taz_s_tmp_type \"300\"))
-           (if (= $value \"12\") (setq taz_s_tmp_type \"320\"))
-           (if (= $value \"13\") (setq taz_s_tmp_type \"340\"))
-           (if (= $value \"14\") (setq taz_s_tmp_type \"360\"))
-           (if (= $value \"15\") (setq taz_s_tmp_type \"380\"))
-           (if (= $value \"16\") (setq taz_s_tmp_type \"400\"))
-           (if (= $value \"17\") (setq taz_s_tmp_type \"450\"))
-           (if (= $value \"18\") (setq taz_s_tmp_type \"500\"))
-           (if (= $value \"19\") (setq taz_s_tmp_type \"550\"))
-           (if (= $value \"20\") (setq taz_s_tmp_type \"600\"))
-         )
-       )
+  (defun taz_s_on_type_change ( / )
 
-        (if (= taz_s_tmp_family \"UPE\")
-          (progn
-            (if (= $value \"0\")  (setq taz_s_tmp_type \"80\"))
-            (if (= $value \"1\")  (setq taz_s_tmp_type \"100\"))
-            (if (= $value \"2\")  (setq taz_s_tmp_type \"120\"))
-            (if (= $value \"3\")  (setq taz_s_tmp_type \"140\"))
-            (if (= $value \"4\")  (setq taz_s_tmp_type \"160\"))
-            (if (= $value \"5\")  (setq taz_s_tmp_type \"180\"))
-            (if (= $value \"6\")  (setq taz_s_tmp_type \"200\"))
-            (if (= $value \"7\")  (setq taz_s_tmp_type \"220\"))
-            (if (= $value \"8\")  (setq taz_s_tmp_type \"240\"))
-            (if (= $value \"9\")  (setq taz_s_tmp_type \"270\"))
-            (if (= $value \"10\") (setq taz_s_tmp_type \"300\"))
-            (if (= $value \"11\") (setq taz_s_tmp_type \"330\"))
-            (if (= $value \"12\") (setq taz_s_tmp_type \"360\"))
-            (if (= $value \"13\") (setq taz_s_tmp_type \"400\"))
-          )
-        )
-
-        (if (= taz_s_tmp_family \"UPN\")
-          (progn
-            (if (= $value \"0\")  (setq taz_s_tmp_type \"50\"))
-            (if (= $value \"1\")  (setq taz_s_tmp_type \"65\"))
-            (if (= $value \"2\")  (setq taz_s_tmp_type \"80\"))
-            (if (= $value \"3\")  (setq taz_s_tmp_type \"100\"))
-            (if (= $value \"4\")  (setq taz_s_tmp_type \"120\"))
-            (if (= $value \"5\")  (setq taz_s_tmp_type \"140\"))
-            (if (= $value \"6\")  (setq taz_s_tmp_type \"160\"))
-            (if (= $value \"7\")  (setq taz_s_tmp_type \"180\"))
-            (if (= $value \"8\")  (setq taz_s_tmp_type \"200\"))
-            (if (= $value \"9\")  (setq taz_s_tmp_type \"220\"))
-            (if (= $value \"10\") (setq taz_s_tmp_type \"240\"))
-            (if (= $value \"11\") (setq taz_s_tmp_type \"260\"))
-            (if (= $value \"12\") (setq taz_s_tmp_type \"280\"))
-            (if (= $value \"13\") (setq taz_s_tmp_type \"300\"))
-            (if (= $value \"14\") (setq taz_s_tmp_type \"320\"))
-            (if (= $value \"15\") (setq taz_s_tmp_type \"350\"))
-            (if (= $value \"16\") (setq taz_s_tmp_type \"380\"))
-            (if (= $value \"17\") (setq taz_s_tmp_type \"400\"))
-          )
-        )
-
-
-       (if (= taz_s_tmp_family \"Kątownik równoramienny\")
-         (progn (if (= $value \"0\") (setq taz_s_tmp_type \"40x40x4\")) (if (= $value \"1\") (setq taz_s_tmp_type \"50x50x4\")))
-       )
-       (if (= taz_s_tmp_family \"Kątownik nierównoramienny\")
-         (progn (if (= $value \"0\") (setq taz_s_tmp_type \"60x70x4\")) (if (= $value \"1\") (setq taz_s_tmp_type \"80x90x4\")))
-       )
-
-       (if (= taz_s_tmp_family \"Rura kwadratowa\")
-         (progn (if (= $value \"0\") (setq taz_s_tmp_type \"60x4\")) (if (= $value \"1\") (setq taz_s_tmp_type \"100x4\")))
-       )
-       (if (= taz_s_tmp_family \"Rura prostokątna\")
-         (progn (if (= $value \"0\") (setq taz_s_tmp_type \"40x20x4\")) (if (= $value \"1\") (setq taz_s_tmp_type \"50x40x4\")))
-       )
-       (if (= taz_s_tmp_family \"Rura okrągła\")
-         (progn (if (= $value \"0\") (setq taz_s_tmp_type \"42.4x2.9\")) (if (= $value \"1\") (setq taz_s_tmp_type \"26.9x2.3\")))
-       )
-     )"
+  ;; HEA
+  (if (= taz_s_tmp_family "HEA")
+    (progn
+      (if (= $value "0") (setq taz_s_tmp_type "100"))
+      (if (= $value "1") (setq taz_s_tmp_type "120"))
+      (if (= $value "2") (setq taz_s_tmp_type "140"))
+      (if (= $value "3") (setq taz_s_tmp_type "160"))
+      (if (= $value "4") (setq taz_s_tmp_type "180"))
+      (if (= $value "5") (setq taz_s_tmp_type "200"))
+      (if (= $value "6") (setq taz_s_tmp_type "220"))
+      (if (= $value "7") (setq taz_s_tmp_type "240"))
+      (if (= $value "8") (setq taz_s_tmp_type "260"))
+      (if (= $value "9") (setq taz_s_tmp_type "280"))
+      (if (= $value "10") (setq taz_s_tmp_type "300"))
+      (if (= $value "11") (setq taz_s_tmp_type "320"))
+      (if (= $value "12") (setq taz_s_tmp_type "340"))
+      (if (= $value "13") (setq taz_s_tmp_type "360"))
+      (if (= $value "14") (setq taz_s_tmp_type "400"))
+      (if (= $value "15") (setq taz_s_tmp_type "450"))
+      (if (= $value "16") (setq taz_s_tmp_type "500"))
+      (if (= $value "17") (setq taz_s_tmp_type "550"))
+      (if (= $value "18") (setq taz_s_tmp_type "600"))
+      (if (= $value "19") (setq taz_s_tmp_type "650"))
+      (if (= $value "20") (setq taz_s_tmp_type "700"))
+      (if (= $value "21") (setq taz_s_tmp_type "800"))
+      (if (= $value "22") (setq taz_s_tmp_type "900"))
+      (if (= $value "23") (setq taz_s_tmp_type "1000"))
+    )
   )
+
+  ;; HEB
+  (if (= taz_s_tmp_family "HEB")
+    (progn
+      (if (= $value "0") (setq taz_s_tmp_type "100"))
+      (if (= $value "1") (setq taz_s_tmp_type "120"))
+      (if (= $value "2") (setq taz_s_tmp_type "140"))
+      (if (= $value "3") (setq taz_s_tmp_type "160"))
+      (if (= $value "4") (setq taz_s_tmp_type "180"))
+      (if (= $value "5") (setq taz_s_tmp_type "200"))
+      (if (= $value "6") (setq taz_s_tmp_type "220"))
+      (if (= $value "7") (setq taz_s_tmp_type "240"))
+      (if (= $value "8") (setq taz_s_tmp_type "260"))
+      (if (= $value "9") (setq taz_s_tmp_type "280"))
+      (if (= $value "10") (setq taz_s_tmp_type "300"))
+      (if (= $value "11") (setq taz_s_tmp_type "320"))
+      (if (= $value "12") (setq taz_s_tmp_type "340"))
+      (if (= $value "13") (setq taz_s_tmp_type "360"))
+      (if (= $value "14") (setq taz_s_tmp_type "400"))
+      (if (= $value "15") (setq taz_s_tmp_type "450"))
+      (if (= $value "16") (setq taz_s_tmp_type "500"))
+      (if (= $value "17") (setq taz_s_tmp_type "550"))
+      (if (= $value "18") (setq taz_s_tmp_type "600"))
+      (if (= $value "19") (setq taz_s_tmp_type "650"))
+      (if (= $value "20") (setq taz_s_tmp_type "700"))
+      (if (= $value "21") (setq taz_s_tmp_type "800"))
+      (if (= $value "22") (setq taz_s_tmp_type "900"))
+      (if (= $value "23") (setq taz_s_tmp_type "1000"))
+    )
+  )
+
+  ;; IPE
+  (if (= taz_s_tmp_family "IPE")
+    (progn
+      (if (= $value "0") (setq taz_s_tmp_type "80"))
+      (if (= $value "1") (setq taz_s_tmp_type "100"))
+      (if (= $value "2") (setq taz_s_tmp_type "120"))
+      (if (= $value "3") (setq taz_s_tmp_type "140"))
+      (if (= $value "4") (setq taz_s_tmp_type "160"))
+      (if (= $value "5") (setq taz_s_tmp_type "180"))
+      (if (= $value "6") (setq taz_s_tmp_type "200"))
+      (if (= $value "7") (setq taz_s_tmp_type "220"))
+      (if (= $value "8") (setq taz_s_tmp_type "240"))
+      (if (= $value "9") (setq taz_s_tmp_type "270"))
+      (if (= $value "10") (setq taz_s_tmp_type "300"))
+      (if (= $value "11") (setq taz_s_tmp_type "330"))
+      (if (= $value "12") (setq taz_s_tmp_type "360"))
+      (if (= $value "13") (setq taz_s_tmp_type "400"))
+      (if (= $value "14") (setq taz_s_tmp_type "450"))
+      (if (= $value "15") (setq taz_s_tmp_type "500"))
+      (if (= $value "16") (setq taz_s_tmp_type "550"))
+      (if (= $value "17") (setq taz_s_tmp_type "600"))
+      (if (= $value "18") (setq taz_s_tmp_type "750x137"))
+      (if (= $value "19") (setq taz_s_tmp_type "750x147"))
+      (if (= $value "20") (setq taz_s_tmp_type "750x173"))
+      (if (= $value "21") (setq taz_s_tmp_type "750x196"))
+    )
+  )
+
+  ;; IPN
+  (if (= taz_s_tmp_family "IPN")
+    (progn
+      (if (= $value "0")  (setq taz_s_tmp_type "80"))
+      (if (= $value "1")  (setq taz_s_tmp_type "100"))
+      (if (= $value "2")  (setq taz_s_tmp_type "120"))
+      (if (= $value "3")  (setq taz_s_tmp_type "140"))
+      (if (= $value "4")  (setq taz_s_tmp_type "160"))
+      (if (= $value "5")  (setq taz_s_tmp_type "180"))
+      (if (= $value "6")  (setq taz_s_tmp_type "200"))
+      (if (= $value "7")  (setq taz_s_tmp_type "220"))
+      (if (= $value "8")  (setq taz_s_tmp_type "240"))
+      (if (= $value "9")  (setq taz_s_tmp_type "260"))
+      (if (= $value "10") (setq taz_s_tmp_type "280"))
+      (if (= $value "11") (setq taz_s_tmp_type "300"))
+      (if (= $value "12") (setq taz_s_tmp_type "320"))
+      (if (= $value "13") (setq taz_s_tmp_type "340"))
+      (if (= $value "14") (setq taz_s_tmp_type "360"))
+      (if (= $value "15") (setq taz_s_tmp_type "380"))
+      (if (= $value "16") (setq taz_s_tmp_type "400"))
+      (if (= $value "17") (setq taz_s_tmp_type "450"))
+      (if (= $value "18") (setq taz_s_tmp_type "500"))
+      (if (= $value "19") (setq taz_s_tmp_type "550"))
+      (if (= $value "20") (setq taz_s_tmp_type "600"))
+    )
+  )
+
+  ;; UPE
+  (if (= taz_s_tmp_family "UPE")
+    (progn
+      (if (= $value "0")  (setq taz_s_tmp_type "80"))
+      (if (= $value "1")  (setq taz_s_tmp_type "100"))
+      (if (= $value "2")  (setq taz_s_tmp_type "120"))
+      (if (= $value "3")  (setq taz_s_tmp_type "140"))
+      (if (= $value "4")  (setq taz_s_tmp_type "160"))
+      (if (= $value "5")  (setq taz_s_tmp_type "180"))
+      (if (= $value "6")  (setq taz_s_tmp_type "200"))
+      (if (= $value "7")  (setq taz_s_tmp_type "220"))
+      (if (= $value "8")  (setq taz_s_tmp_type "240"))
+      (if (= $value "9")  (setq taz_s_tmp_type "270"))
+      (if (= $value "10") (setq taz_s_tmp_type "300"))
+      (if (= $value "11") (setq taz_s_tmp_type "330"))
+      (if (= $value "12") (setq taz_s_tmp_type "360"))
+      (if (= $value "13") (setq taz_s_tmp_type "400"))
+    )
+  )
+
+  ;; UPN
+  (if (= taz_s_tmp_family "UPN")
+    (progn
+      (if (= $value "0")  (setq taz_s_tmp_type "50"))
+      (if (= $value "1")  (setq taz_s_tmp_type "65"))
+      (if (= $value "2")  (setq taz_s_tmp_type "80"))
+      (if (= $value "3")  (setq taz_s_tmp_type "100"))
+      (if (= $value "4")  (setq taz_s_tmp_type "120"))
+      (if (= $value "5")  (setq taz_s_tmp_type "140"))
+      (if (= $value "6")  (setq taz_s_tmp_type "160"))
+      (if (= $value "7")  (setq taz_s_tmp_type "180"))
+      (if (= $value "8")  (setq taz_s_tmp_type "200"))
+      (if (= $value "9")  (setq taz_s_tmp_type "220"))
+      (if (= $value "10") (setq taz_s_tmp_type "240"))
+      (if (= $value "11") (setq taz_s_tmp_type "260"))
+      (if (= $value "12") (setq taz_s_tmp_type "280"))
+      (if (= $value "13") (setq taz_s_tmp_type "300"))
+      (if (= $value "14") (setq taz_s_tmp_type "320"))
+      (if (= $value "15") (setq taz_s_tmp_type "350"))
+      (if (= $value "16") (setq taz_s_tmp_type "380"))
+      (if (= $value "17") (setq taz_s_tmp_type "400"))
+    )
+  )
+
+  ;; Kątownik równoramienny
+  (if (= taz_s_tmp_family "Kątownik równoramienny")
+    (progn
+      (if (= $value "0") (setq taz_s_tmp_type "20x3"))
+      (if (= $value "1") (setq taz_s_tmp_type "25x3"))
+      (if (= $value "2") (setq taz_s_tmp_type "25x4"))
+      (if (= $value "3") (setq taz_s_tmp_type "30x3"))
+      (if (= $value "4") (setq taz_s_tmp_type "30x4"))
+      (if (= $value "5") (setq taz_s_tmp_type "30x5"))
+      (if (= $value "6") (setq taz_s_tmp_type "35x4"))
+      (if (= $value "7") (setq taz_s_tmp_type "35x5"))
+      (if (= $value "8") (setq taz_s_tmp_type "40x4"))
+      (if (= $value "9") (setq taz_s_tmp_type "40x5"))
+      (if (= $value "10") (setq taz_s_tmp_type "45x4"))
+      (if (= $value "11") (setq taz_s_tmp_type "45x5"))
+      (if (= $value "12") (setq taz_s_tmp_type "50x5"))
+      (if (= $value "13") (setq taz_s_tmp_type "50x6"))
+      (if (= $value "14") (setq taz_s_tmp_type "50x7"))
+      (if (= $value "15") (setq taz_s_tmp_type "55x6"))
+      (if (= $value "16") (setq taz_s_tmp_type "60x5"))
+      (if (= $value "17") (setq taz_s_tmp_type "60x6"))
+      (if (= $value "18") (setq taz_s_tmp_type "60x8"))
+      (if (= $value "19") (setq taz_s_tmp_type "65x7"))
+      (if (= $value "20") (setq taz_s_tmp_type "70x6"))
+      (if (= $value "21") (setq taz_s_tmp_type "70x7"))
+      (if (= $value "22") (setq taz_s_tmp_type "70x9"))
+      (if (= $value "23") (setq taz_s_tmp_type "75x7"))
+      (if (= $value "24") (setq taz_s_tmp_type "75x8"))
+      (if (= $value "25") (setq taz_s_tmp_type "80x6"))
+      (if (= $value "26") (setq taz_s_tmp_type "80x8"))
+      (if (= $value "27") (setq taz_s_tmp_type "80x10"))
+      (if (= $value "28") (setq taz_s_tmp_type "90x7"))
+      (if (= $value "29") (setq taz_s_tmp_type "90x8"))
+      (if (= $value "30") (setq taz_s_tmp_type "90x9"))
+      (if (= $value "31") (setq taz_s_tmp_type "100x8"))
+      (if (= $value "32") (setq taz_s_tmp_type "100x10"))
+      (if (= $value "33") (setq taz_s_tmp_type "100x12"))
+      (if (= $value "34") (setq taz_s_tmp_type "100x14"))
+      (if (= $value "35") (setq taz_s_tmp_type "110x10"))
+      (if (= $value "36") (setq taz_s_tmp_type "110x12"))
+      (if (= $value "37") (setq taz_s_tmp_type "120x10"))
+      (if (= $value "38") (setq taz_s_tmp_type "120x11"))
+      (if (= $value "39") (setq taz_s_tmp_type "120x12"))
+      (if (= $value "40") (setq taz_s_tmp_type "120x13"))
+      (if (= $value "41") (setq taz_s_tmp_type "120x15"))
+      (if (= $value "42") (setq taz_s_tmp_type "130x12"))
+      (if (= $value "43") (setq taz_s_tmp_type "140x10"))
+      (if (= $value "44") (setq taz_s_tmp_type "140x13"))
+      (if (= $value "45") (setq taz_s_tmp_type "140x15"))
+      (if (= $value "46") (setq taz_s_tmp_type "150x10"))
+      (if (= $value "47") (setq taz_s_tmp_type "150x12"))
+      (if (= $value "48") (setq taz_s_tmp_type "150x14"))
+      (if (= $value "49") (setq taz_s_tmp_type "150x15"))
+      (if (= $value "50") (setq taz_s_tmp_type "150x16"))
+      (if (= $value "51") (setq taz_s_tmp_type "150x18"))
+      (if (= $value "52") (setq taz_s_tmp_type "150x20"))
+      (if (= $value "53") (setq taz_s_tmp_type "160x15"))
+      (if (= $value "54") (setq taz_s_tmp_type "160x17"))
+      (if (= $value "55") (setq taz_s_tmp_type "160x19"))
+      (if (= $value "56") (setq taz_s_tmp_type "180x16"))
+      (if (= $value "57") (setq taz_s_tmp_type "180x18"))
+      (if (= $value "58") (setq taz_s_tmp_type "180x20"))
+      (if (= $value "59") (setq taz_s_tmp_type "180x22"))
+      (if (= $value "60") (setq taz_s_tmp_type "200x16"))
+      (if (= $value "61") (setq taz_s_tmp_type "200x18"))
+      (if (= $value "62") (setq taz_s_tmp_type "200x20"))
+      (if (= $value "63") (setq taz_s_tmp_type "200x22"))
+      (if (= $value "64") (setq taz_s_tmp_type "200x24"))
+      (if (= $value "65") (setq taz_s_tmp_type "200x26"))
+      (if (= $value "66") (setq taz_s_tmp_type "200x28"))
+      (if (= $value "67") (setq taz_s_tmp_type "200x30"))
+      (if (= $value "68") (setq taz_s_tmp_type "250x18"))
+      (if (= $value "69") (setq taz_s_tmp_type "250x20"))
+      (if (= $value "70") (setq taz_s_tmp_type "250x22"))
+      (if (= $value "71") (setq taz_s_tmp_type "250x24"))
+      (if (= $value "72") (setq taz_s_tmp_type "250x26"))
+      (if (= $value "73") (setq taz_s_tmp_type "250x28"))
+    )
+  )
+
+  ;; Kątownik nierównoramienny
+  (if (= taz_s_tmp_family "Kątownik nierównoramienny")
+    (progn
+      (if (= $value "0") (setq taz_s_tmp_type "60x70x4"))
+      (if (= $value "1") (setq taz_s_tmp_type "80x90x4"))
+    )
+  )
+
+  ;; Rura kwadratowa
+  (if (= taz_s_tmp_family "Rura kwadratowa")
+    (progn
+      (if (= $value "0") (setq taz_s_tmp_type "60x4"))
+      (if (= $value "1") (setq taz_s_tmp_type "100x4"))
+    )
+  )
+
+  ;; Rura prostokątna
+  (if (= taz_s_tmp_family "Rura prostokątna")
+    (progn
+      (if (= $value "0") (setq taz_s_tmp_type "40x20x4"))
+      (if (= $value "1") (setq taz_s_tmp_type "50x40x4"))
+    )
+  )
+
+  ;; Rura okrągła
+  (if (= taz_s_tmp_family "Rura okrągła")
+    (progn
+      (if (= $value "0") (setq taz_s_tmp_type "42.4x2.9"))
+      (if (= $value "1") (setq taz_s_tmp_type "26.9x2.3"))
+    )
+  )
+
+)
+
+(action_tile "taz_s_typ" "(taz_s_on_type_change)")
+
 
   ;; ---------------------------
   ;; Przycisk OK — zapisujemy zmienne (tylko globalne)
