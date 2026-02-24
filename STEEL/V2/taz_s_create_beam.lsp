@@ -359,8 +359,169 @@
       )
     )
 
+    ;; Rura okrągła (CHS)
     (if (and (= taz_s_cat_val "Rury") (= taz_s_fam_val "Rura okrągła"))
-      (progn (add_list "42.4x2.9") (add_list "26.9x2.3"))
+      (progn
+        (add_list "508x12.7")
+        (add_list "508x9.5")
+
+        (add_list "457.2x12.7")
+        (add_list "457.2x9.5")
+
+        (add_list "406.4x12.7")
+        (add_list "406.4x11.1")
+        (add_list "406.4x9.5")
+        (add_list "406.4x7.9")
+
+        (add_list "355.6x12.7")
+        (add_list "355.6x9.5")
+        (add_list "355.6x7.9")
+
+        (add_list "323.9x12.7")
+        (add_list "323.9x9.5")
+        (add_list "323.9x6.4")
+
+        (add_list "317.5x15.9")
+        (add_list "317.5x12.7")
+        (add_list "317.5x9.5")
+        (add_list "317.5x7.9")
+        (add_list "317.5x6.4")
+        (add_list "317.5x4.8")
+
+        (add_list "312.8x15.9")
+        (add_list "312.8x12.7")
+        (add_list "312.8x9.5")
+        (add_list "312.8x7.9")
+        (add_list "312.8x6.4")
+        (add_list "312.8x4.8")
+
+        (add_list "311.2x15.9")
+        (add_list "311.2x12.7")
+        (add_list "311.2x9.5")
+        (add_list "311.2x7.9")
+        (add_list "311.2x6.4")
+        (add_list "311.2x4.8")
+
+        (add_list "285.8x15.9")
+        (add_list "285.8x12.7")
+        (add_list "285.8x9.5")
+        (add_list "285.8x7.9")
+        (add_list "285.8x6.4")
+        (add_list "285.8x4.8")
+
+        (add_list "273.1x12.7")
+        (add_list "273.1x9.3")
+        (add_list "273.1x6.4")
+
+        (add_list "254x15.9")
+        (add_list "254x12.7")
+        (add_list "254x9.5")
+        (add_list "254x7.9")
+        (add_list "254x6.4")
+        (add_list "254x4.8")
+
+        (add_list "244.5x12.7")
+        (add_list "244.5x9.5")
+        (add_list "244.5x7.9")
+        (add_list "244.5x6.4")
+
+        (add_list "222.3x12.7")
+        (add_list "222.3x9.5")
+        (add_list "222.3x7.9")
+        (add_list "222.3x6.4")
+        (add_list "222.3x4.8")
+
+        (add_list "219.1x12.7")
+        (add_list "219.1x9.5")
+        (add_list "219.1x8.2")
+        (add_list "219.1x6.4")
+        (add_list "219.1x4.8")
+
+        (add_list "193.7x9.5")
+        (add_list "193.7x8.3")
+        (add_list "193.7x3.2")
+
+        (add_list "190.5x12.7")
+        (add_list "190.5x9.5")
+        (add_list "190.5x7.9")
+        (add_list "190.5x6.4")
+        (add_list "190.5x4.8")
+
+        (add_list "177.8x12.7")
+        (add_list "177.8x9.5")
+        (add_list "177.8x7.9")
+        (add_list "177.8x6.4")
+        (add_list "177.8x4.8")
+        (add_list "177.8x3.2")
+
+        (add_list "174.6x12.7")
+        (add_list "174.6x9.5")
+        (add_list "174.6x7.9")
+        (add_list "174.6x6.4")
+        (add_list "174.6x4.8")
+
+        (add_list "168.3x12.7")
+        (add_list "168.3x11")
+        (add_list "168.3x9.5")
+        (add_list "168.3x7.9")
+        (add_list "168.3x7.1")
+        (add_list "168.3x6.4")
+        (add_list "168.3x4.8")
+        (add_list "168.3x3.2")
+
+        (add_list "155.6x12.7")
+        (add_list "155.6x9.5")
+        (add_list "155.6x7.9")
+        (add_list "155.6x6.4")
+        (add_list "155.6x4.8")
+
+        (add_list "152.4x12.7")
+        (add_list "152.4x9.5")
+        (add_list "152.4x7.9")
+        (add_list "152.4x7.1")
+        (add_list "152.4x6.4")
+        (add_list "152.4x4.8")
+        (add_list "152.4x3.2")
+
+        (add_list "141.3x9.5")
+        (add_list "141.3x6.6")
+        (add_list "141.3x4.8")
+        (add_list "141.3x3.4")
+
+        (add_list "139.7x12.7")
+        (add_list "139.7x9.5")
+        (add_list "139.7x6.6")
+
+        (add_list "127x12.7")
+        (add_list "127x9.5")
+        (add_list "127x7.9")
+        (add_list "127x6.6")
+        (add_list "127x6.4")
+        (add_list "127x4.8")
+        (add_list "127x3.2")
+
+        (add_list "114.3x8.6")
+        (add_list "114.3x6")
+        (add_list "114.3x4.8")
+        (add_list "114.3x3.2")
+
+        (add_list "101.6x8.6")
+        (add_list "101.6x8")
+        (add_list "101.6x6.4")
+        (add_list "101.6x6")
+        (add_list "101.6x5.7")
+        (add_list "101.6x5.6")
+        (add_list "101.6x4.8")
+        (add_list "101.6x3.2")
+
+        (add_list "88.9x8")
+        (add_list "88.9x7.6")
+        (add_list "88.9x6.4")
+        (add_list "88.9x5.5")
+        (add_list "88.9x5.2")
+        (add_list "88.9x4.8")
+        (add_list "88.9x3.2")
+      )
     )
 
     (end_list)
@@ -1070,13 +1231,202 @@
 
 
 
-    ;; Rura okrągła
+    ;; Rura okrągła (CHS) – mapowanie indeksów
     ((= taz_s_tmp_family "Rura okrągła")
-     (if (= taz_s_tmp_type "42.4x2.9") (set_tile "taz_s_typ" "0"))
-     (if (= taz_s_tmp_type "26.9x2.3") (set_tile "taz_s_typ" "1"))
-     (if (and (not (= taz_s_tmp_type "42.4x2.9")) (not (= taz_s_tmp_type "26.9x2.3")))
-       (progn (setq taz_s_tmp_type "42.4x2.9") (set_tile "taz_s_typ" "0"))
-     )
+
+      (if (= taz_s_tmp_type "508x12.7") (set_tile "taz_s_typ" "0"))
+      (if (= taz_s_tmp_type "508x9.5")  (set_tile "taz_s_typ" "1"))
+
+      (if (= taz_s_tmp_type "457.2x12.7") (set_tile "taz_s_typ" "2"))
+      (if (= taz_s_tmp_type "457.2x9.5")  (set_tile "taz_s_typ" "3"))
+
+      (if (= taz_s_tmp_type "406.4x12.7") (set_tile "taz_s_typ" "4"))
+      (if (= taz_s_tmp_type "406.4x11.1") (set_tile "taz_s_typ" "5"))
+      (if (= taz_s_tmp_type "406.4x9.5")  (set_tile "taz_s_typ" "6"))
+      (if (= taz_s_tmp_type "406.4x7.9")  (set_tile "taz_s_typ" "7"))
+
+      (if (= taz_s_tmp_type "355.6x12.7") (set_tile "taz_s_typ" "8"))
+      (if (= taz_s_tmp_type "355.6x9.5")  (set_tile "taz_s_typ" "9"))
+      (if (= taz_s_tmp_type "355.6x7.9")  (set_tile "taz_s_typ" "10"))
+
+      (if (= taz_s_tmp_type "323.9x12.7") (set_tile "taz_s_typ" "11"))
+      (if (= taz_s_tmp_type "323.9x9.5")  (set_tile "taz_s_typ" "12"))
+      (if (= taz_s_tmp_type "323.9x6.4")  (set_tile "taz_s_typ" "13"))
+
+      (if (= taz_s_tmp_type "317.5x15.9") (set_tile "taz_s_typ" "14"))
+      (if (= taz_s_tmp_type "317.5x12.7") (set_tile "taz_s_typ" "15"))
+      (if (= taz_s_tmp_type "317.5x9.5")  (set_tile "taz_s_typ" "16"))
+      (if (= taz_s_tmp_type "317.5x7.9")  (set_tile "taz_s_typ" "17"))
+      (if (= taz_s_tmp_type "317.5x6.4")  (set_tile "taz_s_typ" "18"))
+      (if (= taz_s_tmp_type "317.5x4.8")  (set_tile "taz_s_typ" "19"))
+
+      (if (= taz_s_tmp_type "312.8x15.9") (set_tile "taz_s_typ" "20"))
+      (if (= taz_s_tmp_type "312.8x12.7") (set_tile "taz_s_typ" "21"))
+      (if (= taz_s_tmp_type "312.8x9.5")  (set_tile "taz_s_typ" "22"))
+      (if (= taz_s_tmp_type "312.8x7.9")  (set_tile "taz_s_typ" "23"))
+      (if (= taz_s_tmp_type "312.8x6.4")  (set_tile "taz_s_typ" "24"))
+      (if (= taz_s_tmp_type "312.8x4.8")  (set_tile "taz_s_typ" "25"))
+      (if (= taz_s_tmp_type "311.2x15.9") (set_tile "taz_s_typ" "26"))
+      (if (= taz_s_tmp_type "311.2x12.7") (set_tile "taz_s_typ" "27"))
+      (if (= taz_s_tmp_type "311.2x9.5")  (set_tile "taz_s_typ" "28"))
+      (if (= taz_s_tmp_type "311.2x7.9")  (set_tile "taz_s_typ" "29"))
+      (if (= taz_s_tmp_type "311.2x6.4")  (set_tile "taz_s_typ" "30"))
+      (if (= taz_s_tmp_type "311.2x4.8")  (set_tile "taz_s_typ" "31"))
+
+      (if (= taz_s_tmp_type "285.8x15.9") (set_tile "taz_s_typ" "32"))
+      (if (= taz_s_tmp_type "285.8x12.7") (set_tile "taz_s_typ" "33"))
+      (if (= taz_s_tmp_type "285.8x9.5")  (set_tile "taz_s_typ" "34"))
+      (if (= taz_s_tmp_type "285.8x7.9")  (set_tile "taz_s_typ" "35"))
+      (if (= taz_s_tmp_type "285.8x6.4")  (set_tile "taz_s_typ" "36"))
+      (if (= taz_s_tmp_type "285.8x4.8")  (set_tile "taz_s_typ" "37"))
+
+      (if (= taz_s_tmp_type "273.1x12.7") (set_tile "taz_s_typ" "38"))
+      (if (= taz_s_tmp_type "273.1x9.3")  (set_tile "taz_s_typ" "39"))
+      (if (= taz_s_tmp_type "273.1x6.4")  (set_tile "taz_s_typ" "40"))
+
+      (if (= taz_s_tmp_type "254x15.9")   (set_tile "taz_s_typ" "41"))
+      (if (= taz_s_tmp_type "254x12.7")   (set_tile "taz_s_typ" "42"))
+      (if (= taz_s_tmp_type "254x9.5")    (set_tile "taz_s_typ" "43"))
+      (if (= taz_s_tmp_type "254x7.9")    (set_tile "taz_s_typ" "44"))
+      (if (= taz_s_tmp_type "254x6.4")    (set_tile "taz_s_typ" "45"))
+      (if (= taz_s_tmp_type "254x4.8")    (set_tile "taz_s_typ" "46"))
+
+      (if (= taz_s_tmp_type "244.5x12.7") (set_tile "taz_s_typ" "47"))
+      (if (= taz_s_tmp_type "244.5x9.5")  (set_tile "taz_s_typ" "48"))
+      (if (= taz_s_tmp_type "244.5x7.9")  (set_tile "taz_s_typ" "49"))
+      (if (= taz_s_tmp_type "244.5x6.4")  (set_tile "taz_s_typ" "50"))
+
+      (if (= taz_s_tmp_type "222.3x12.7") (set_tile "taz_s_typ" "51"))
+      (if (= taz_s_tmp_type "222.3x9.5")  (set_tile "taz_s_typ" "52"))
+      (if (= taz_s_tmp_type "222.3x7.9")  (set_tile "taz_s_typ" "53"))
+      (if (= taz_s_tmp_type "222.3x6.4")  (set_tile "taz_s_typ" "54"))
+      (if (= taz_s_tmp_type "222.3x4.8")  (set_tile "taz_s_typ" "55"))
+
+      (if (= taz_s_tmp_type "219.1x12.7") (set_tile "taz_s_typ" "56"))
+      (if (= taz_s_tmp_type "219.1x9.5")  (set_tile "taz_s_typ" "57"))
+      (if (= taz_s_tmp_type "219.1x8.2")  (set_tile "taz_s_typ" "58"))
+      (if (= taz_s_tmp_type "219.1x6.4")  (set_tile "taz_s_typ" "59"))
+      (if (= taz_s_tmp_type "219.1x4.8")  (set_tile "taz_s_typ" "60"))
+
+      (if (= taz_s_tmp_type "193.7x9.5")  (set_tile "taz_s_typ" "61"))
+      (if (= taz_s_tmp_type "193.7x8.3")  (set_tile "taz_s_typ" "62"))
+      (if (= taz_s_tmp_type "193.7x3.2")  (set_tile "taz_s_typ" "63"))
+
+      (if (= taz_s_tmp_type "190.5x12.7") (set_tile "taz_s_typ" "64"))
+      (if (= taz_s_tmp_type "190.5x9.5")  (set_tile "taz_s_typ" "65"))
+      (if (= taz_s_tmp_type "190.5x7.9")  (set_tile "taz_s_typ" "66"))
+      (if (= taz_s_tmp_type "190.5x6.4")  (set_tile "taz_s_typ" "67"))
+      (if (= taz_s_tmp_type "190.5x4.8")  (set_tile "taz_s_typ" "68"))
+      (if (= taz_s_tmp_type "177.8x12.7") (set_tile "taz_s_typ" "69"))
+      (if (= taz_s_tmp_type "177.8x9.5")  (set_tile "taz_s_typ" "70"))
+      (if (= taz_s_tmp_type "177.8x7.9")  (set_tile "taz_s_typ" "71"))
+      (if (= taz_s_tmp_type "177.8x6.4")  (set_tile "taz_s_typ" "72"))
+      (if (= taz_s_tmp_type "177.8x4.8")  (set_tile "taz_s_typ" "73"))
+      (if (= taz_s_tmp_type "177.8x3.2")  (set_tile "taz_s_typ" "74"))
+
+      (if (= taz_s_tmp_type "174.6x12.7") (set_tile "taz_s_typ" "75"))
+      (if (= taz_s_tmp_type "174.6x9.5")  (set_tile "taz_s_typ" "76"))
+      (if (= taz_s_tmp_type "174.6x7.9")  (set_tile "taz_s_typ" "77"))
+      (if (= taz_s_tmp_type "174.6x6.4")  (set_tile "taz_s_typ" "78"))
+      (if (= taz_s_tmp_type "174.6x4.8")  (set_tile "taz_s_typ" "79"))
+
+      (if (= taz_s_tmp_type "168.3x12.7") (set_tile "taz_s_typ" "80"))
+      (if (= taz_s_tmp_type "168.3x11")   (set_tile "taz_s_typ" "81"))
+      (if (= taz_s_tmp_type "168.3x9.5")  (set_tile "taz_s_typ" "82"))
+      (if (= taz_s_tmp_type "168.3x7.9")  (set_tile "taz_s_typ" "83"))
+      (if (= taz_s_tmp_type "168.3x7.1")  (set_tile "taz_s_typ" "84"))
+      (if (= taz_s_tmp_type "168.3x6.4")  (set_tile "taz_s_typ" "85"))
+      (if (= taz_s_tmp_type "168.3x4.8")  (set_tile "taz_s_typ" "86"))
+      (if (= taz_s_tmp_type "168.3x3.2")  (set_tile "taz_s_typ" "87"))
+
+      (if (= taz_s_tmp_type "155.6x12.7") (set_tile "taz_s_typ" "88"))
+      (if (= taz_s_tmp_type "155.6x9.5")  (set_tile "taz_s_typ" "89"))
+      (if (= taz_s_tmp_type "155.6x7.9")  (set_tile "taz_s_typ" "90"))
+      (if (= taz_s_tmp_type "155.6x6.4")  (set_tile "taz_s_typ" "91"))
+      (if (= taz_s_tmp_type "155.6x4.8")  (set_tile "taz_s_typ" "92"))
+
+      (if (= taz_s_tmp_type "152.4x12.7") (set_tile "taz_s_typ" "93"))
+      (if (= taz_s_tmp_type "152.4x9.5")  (set_tile "taz_s_typ" "94"))
+      (if (= taz_s_tmp_type "152.4x7.9")  (set_tile "taz_s_typ" "95"))
+      (if (= taz_s_tmp_type "152.4x7.1")  (set_tile "taz_s_typ" "96"))
+      (if (= taz_s_tmp_type "152.4x6.4")  (set_tile "taz_s_typ" "97"))
+      (if (= taz_s_tmp_type "152.4x4.8")  (set_tile "taz_s_typ" "98"))
+      (if (= taz_s_tmp_type "152.4x3.2")  (set_tile "taz_s_typ" "99"))
+
+      (if (= taz_s_tmp_type "141.3x9.5")  (set_tile "taz_s_typ" "100"))
+      (if (= taz_s_tmp_type "141.3x6.6")  (set_tile "taz_s_typ" "101"))
+      (if (= taz_s_tmp_type "141.3x4.8")  (set_tile "taz_s_typ" "102"))
+      (if (= taz_s_tmp_type "141.3x3.4")  (set_tile "taz_s_typ" "103"))
+
+      (if (= taz_s_tmp_type "139.7x12.7") (set_tile "taz_s_typ" "104"))
+      (if (= taz_s_tmp_type "139.7x9.5")  (set_tile "taz_s_typ" "105"))
+      (if (= taz_s_tmp_type "139.7x6.6")  (set_tile "taz_s_typ" "106"))
+
+      (if (= taz_s_tmp_type "127x12.7")   (set_tile "taz_s_typ" "107"))
+      (if (= taz_s_tmp_type "127x9.5")    (set_tile "taz_s_typ" "108"))
+      (if (= taz_s_tmp_type "127x7.9")    (set_tile "taz_s_typ" "109"))
+      (if (= taz_s_tmp_type "127x6.6")    (set_tile "taz_s_typ" "110"))
+      (if (= taz_s_tmp_type "127x6.4")    (set_tile "taz_s_typ" "111"))
+      (if (= taz_s_tmp_type "127x4.8")    (set_tile "taz_s_typ" "112"))
+      (if (= taz_s_tmp_type "127x3.2")    (set_tile "taz_s_typ" "113"))
+
+      (if (= taz_s_tmp_type "114.3x8.6")  (set_tile "taz_s_typ" "114"))
+      (if (= taz_s_tmp_type "114.3x6")    (set_tile "taz_s_typ" "115"))
+      (if (= taz_s_tmp_type "114.3x4.8")  (set_tile "taz_s_typ" "116"))
+      (if (= taz_s_tmp_type "114.3x3.2")  (set_tile "taz_s_typ" "117"))
+
+      (if (= taz_s_tmp_type "101.6x8.6")  (set_tile "taz_s_typ" "118"))
+      (if (= taz_s_tmp_type "101.6x8")    (set_tile "taz_s_typ" "119"))
+      (if (= taz_s_tmp_type "101.6x6.4")  (set_tile "taz_s_typ" "120"))
+      (if (= taz_s_tmp_type "101.6x6")    (set_tile "taz_s_typ" "121"))
+      (if (= taz_s_tmp_type "101.6x5.7")  (set_tile "taz_s_typ" "122"))
+      (if (= taz_s_tmp_type "101.6x5.6")  (set_tile "taz_s_typ" "123"))
+      (if (= taz_s_tmp_type "101.6x4.8")  (set_tile "taz_s_typ" "124"))
+      (if (= taz_s_tmp_type "101.6x3.2")  (set_tile "taz_s_typ" "125"))
+
+      (if (= taz_s_tmp_type "88.9x8")     (set_tile "taz_s_typ" "126"))
+      (if (= taz_s_tmp_type "88.9x7.6")   (set_tile "taz_s_typ" "127"))
+      (if (= taz_s_tmp_type "88.9x6.4")   (set_tile "taz_s_typ" "128"))
+      (if (= taz_s_tmp_type "88.9x5.5")   (set_tile "taz_s_typ" "129"))
+      (if (= taz_s_tmp_type "88.9x5.2")   (set_tile "taz_s_typ" "130"))
+      (if (= taz_s_tmp_type "88.9x4.8")   (set_tile "taz_s_typ" "131"))
+      (if (= taz_s_tmp_type "88.9x3.2")   (set_tile "taz_s_typ" "132"))
+      ;; fallback: jeśli typ nie jest na liście, ustaw pierwszy element
+      (if (not (member taz_s_tmp_type
+            '(
+              "508x12.7" "508x9.5"
+              "457.2x12.7" "457.2x9.5"
+              "406.4x12.7" "406.4x11.1" "406.4x9.5" "406.4x7.9"
+              "355.6x12.7" "355.6x9.5" "355.6x7.9"
+              "323.9x12.7" "323.9x9.5" "323.9x6.4"
+              "317.5x15.9" "317.5x12.7" "317.5x9.5" "317.5x7.9" "317.5x6.4" "317.5x4.8"
+              "312.8x15.9" "312.8x12.7" "312.8x9.5" "312.8x7.9" "312.8x6.4" "312.8x4.8"
+              "311.2x15.9" "311.2x12.7" "311.2x9.5" "311.2x7.9" "311.2x6.4" "311.2x4.8"
+              "285.8x15.9" "285.8x12.7" "285.8x9.5" "285.8x7.9" "285.8x6.4" "285.8x4.8"
+              "273.1x12.7" "273.1x9.3" "273.1x6.4"
+              "254x15.9" "254x12.7" "254x9.5" "254x7.9" "254x6.4" "254x4.8"
+              "244.5x12.7" "244.5x9.5" "244.5x7.9" "244.5x6.4"
+              "222.3x12.7" "222.3x9.5" "222.3x7.9" "222.3x6.4" "222.3x4.8"
+              "219.1x12.7" "219.1x9.5" "219.1x8.2" "219.1x6.4" "219.1x4.8"
+              "193.7x9.5" "193.7x8.3" "193.7x3.2"
+              "190.5x12.7" "190.5x9.5" "190.5x7.9" "190.5x6.4" "190.5x4.8"
+              "177.8x12.7" "177.8x9.5" "177.8x7.9" "177.8x6.4" "177.8x4.8" "177.8x3.2"
+              "174.6x12.7" "174.6x9.5" "174.6x7.9" "174.6x6.4" "174.6x4.8"
+              "168.3x12.7" "168.3x11" "168.3x9.5" "168.3x7.9" "168.3x7.1" "168.3x6.4" "168.3x4.8" "168.3x3.2"
+              "155.6x12.7" "155.6x9.5" "155.6x7.9" "155.6x6.4" "155.6x4.8"
+              "152.4x12.7" "152.4x9.5" "152.4x7.9" "152.4x7.1" "152.4x6.4" "152.4x4.8" "152.4x3.2"
+              "141.3x9.5" "141.3x6.6" "141.3x4.8" "141.3x3.4"
+              "139.7x12.7" "139.7x9.5" "139.7x6.6"
+              "127x12.7" "127x9.5" "127x7.9" "127x6.6" "127x6.4" "127x4.8" "127x3.2"
+              "114.3x8.6" "114.3x6" "114.3x4.8" "114.3x3.2"
+              "101.6x8.6" "101.6x8" "101.6x6.4" "101.6x6" "101.6x5.7" "101.6x5.6" "101.6x4.8" "101.6x3.2"
+              "88.9x8" "88.9x7.6" "88.9x6.4" "88.9x5.5" "88.9x5.2" "88.9x4.8" "88.9x3.2"
+            )))
+        (progn
+          (setq taz_s_tmp_type "508x12.7")
+          (set_tile "taz_s_typ" "0")
+        )
+      )
     )
 
     ;; Domyślnie pierwszy typ (bez rozpoznania rodziny)
@@ -1507,11 +1857,168 @@
   )
 
 
-  ;; Rura okrągła
+  ;; Rura okrągła (CHS)
   (if (= taz_s_tmp_family "Rura okrągła")
     (progn
-      (add_list "42.4x2.9")
-      (add_list "26.9x2.3")
+      (add_list "508x12.7")
+      (add_list "508x9.5")
+
+      (add_list "457.2x12.7")
+      (add_list "457.2x9.5")
+
+      (add_list "406.4x12.7")
+      (add_list "406.4x11.1")
+      (add_list "406.4x9.5")
+      (add_list "406.4x7.9")
+
+      (add_list "355.6x12.7")
+      (add_list "355.6x9.5")
+      (add_list "355.6x7.9")
+
+      (add_list "323.9x12.7")
+      (add_list "323.9x9.5")
+      (add_list "323.9x6.4")
+
+      (add_list "317.5x15.9")
+      (add_list "317.5x12.7")
+      (add_list "317.5x9.5")
+      (add_list "317.5x7.9")
+      (add_list "317.5x6.4")
+      (add_list "317.5x4.8")
+
+      (add_list "312.8x15.9")
+      (add_list "312.8x12.7")
+      (add_list "312.8x9.5")
+      (add_list "312.8x7.9")
+      (add_list "312.8x6.4")
+      (add_list "312.8x4.8")
+
+      (add_list "311.2x15.9")
+      (add_list "311.2x12.7")
+      (add_list "311.2x9.5")
+      (add_list "311.2x7.9")
+      (add_list "311.2x6.4")
+      (add_list "311.2x4.8")
+
+      (add_list "285.8x15.9")
+      (add_list "285.8x12.7")
+      (add_list "285.8x9.5")
+      (add_list "285.8x7.9")
+      (add_list "285.8x6.4")
+      (add_list "285.8x4.8")
+
+      (add_list "273.1x12.7")
+      (add_list "273.1x9.3")
+      (add_list "273.1x6.4")
+
+      (add_list "254x15.9")
+      (add_list "254x12.7")
+      (add_list "254x9.5")
+      (add_list "254x7.9")
+      (add_list "254x6.4")
+      (add_list "254x4.8")
+
+      (add_list "244.5x12.7")
+      (add_list "244.5x9.5")
+      (add_list "244.5x7.9")
+      (add_list "244.5x6.4")
+
+      (add_list "222.3x12.7")
+      (add_list "222.3x9.5")
+      (add_list "222.3x7.9")
+      (add_list "222.3x6.4")
+      (add_list "222.3x4.8")
+
+      (add_list "219.1x12.7")
+      (add_list "219.1x9.5")
+      (add_list "219.1x8.2")
+      (add_list "219.1x6.4")
+      (add_list "219.1x4.8")
+
+      (add_list "193.7x9.5")
+      (add_list "193.7x8.3")
+      (add_list "193.7x3.2")
+
+      (add_list "190.5x12.7")
+      (add_list "190.5x9.5")
+      (add_list "190.5x7.9")
+      (add_list "190.5x6.4")
+      (add_list "190.5x4.8")
+
+      (add_list "177.8x12.7")
+      (add_list "177.8x9.5")
+      (add_list "177.8x7.9")
+      (add_list "177.8x6.4")
+      (add_list "177.8x4.8")
+      (add_list "177.8x3.2")
+
+      (add_list "174.6x12.7")
+      (add_list "174.6x9.5")
+      (add_list "174.6x7.9")
+      (add_list "174.6x6.4")
+      (add_list "174.6x4.8")
+
+      (add_list "168.3x12.7")
+      (add_list "168.3x11")
+      (add_list "168.3x9.5")
+      (add_list "168.3x7.9")
+      (add_list "168.3x7.1")
+      (add_list "168.3x6.4")
+      (add_list "168.3x4.8")
+      (add_list "168.3x3.2")
+
+      (add_list "155.6x12.7")
+      (add_list "155.6x9.5")
+      (add_list "155.6x7.9")
+      (add_list "155.6x6.4")
+      (add_list "155.6x4.8")
+
+      (add_list "152.4x12.7")
+      (add_list "152.4x9.5")
+      (add_list "152.4x7.9")
+      (add_list "152.4x7.1")
+      (add_list "152.4x6.4")
+      (add_list "152.4x4.8")
+      (add_list "152.4x3.2")
+
+      (add_list "141.3x9.5")
+      (add_list "141.3x6.6")
+      (add_list "141.3x4.8")
+      (add_list "141.3x3.4")
+
+      (add_list "139.7x12.7")
+      (add_list "139.7x9.5")
+      (add_list "139.7x6.6")
+
+      (add_list "127x12.7")
+      (add_list "127x9.5")
+      (add_list "127x7.9")
+      (add_list "127x6.6")
+      (add_list "127x6.4")
+      (add_list "127x4.8")
+      (add_list "127x3.2")
+
+      (add_list "114.3x8.6")
+      (add_list "114.3x6")
+      (add_list "114.3x4.8")
+      (add_list "114.3x3.2")
+
+      (add_list "101.6x8.6")
+      (add_list "101.6x8")
+      (add_list "101.6x6.4")
+      (add_list "101.6x6")
+      (add_list "101.6x5.7")
+      (add_list "101.6x5.6")
+      (add_list "101.6x4.8")
+      (add_list "101.6x3.2")
+
+      (add_list "88.9x8")
+      (add_list "88.9x7.6")
+      (add_list "88.9x6.4")
+      (add_list "88.9x5.5")
+      (add_list "88.9x5.2")
+      (add_list "88.9x4.8")
+      (add_list "88.9x3.2")
     )
   )
 
@@ -1560,7 +2067,7 @@
   )
 
   (if (= taz_s_tmp_family "Rura okrągła")
-    (progn (setq taz_s_tmp_type "42.4x2.9") (set_tile "taz_s_typ" "0"))
+    (progn (setq taz_s_tmp_type "508x12.7") (set_tile "taz_s_typ" "0"))
   )
 
 )
@@ -1968,11 +2475,168 @@
   )
 
 
-  ;; Rura okrągła
+  ;; Rura okrągła (CHS)
   (if (= taz_s_tmp_family "Rura okrągła")
     (progn
-      (add_list "42.4x2.9")
-      (add_list "26.9x2.3")
+      (add_list "508x12.7")
+      (add_list "508x9.5")
+
+      (add_list "457.2x12.7")
+      (add_list "457.2x9.5")
+
+      (add_list "406.4x12.7")
+      (add_list "406.4x11.1")
+      (add_list "406.4x9.5")
+      (add_list "406.4x7.9")
+
+      (add_list "355.6x12.7")
+      (add_list "355.6x9.5")
+      (add_list "355.6x7.9")
+
+      (add_list "323.9x12.7")
+      (add_list "323.9x9.5")
+      (add_list "323.9x6.4")
+
+      (add_list "317.5x15.9")
+      (add_list "317.5x12.7")
+      (add_list "317.5x9.5")
+      (add_list "317.5x7.9")
+      (add_list "317.5x6.4")
+      (add_list "317.5x4.8")
+
+      (add_list "312.8x15.9")
+      (add_list "312.8x12.7")
+      (add_list "312.8x9.5")
+      (add_list "312.8x7.9")
+      (add_list "312.8x6.4")
+      (add_list "312.8x4.8")
+
+      (add_list "311.2x15.9")
+      (add_list "311.2x12.7")
+      (add_list "311.2x9.5")
+      (add_list "311.2x7.9")
+      (add_list "311.2x6.4")
+      (add_list "311.2x4.8")
+
+      (add_list "285.8x15.9")
+      (add_list "285.8x12.7")
+      (add_list "285.8x9.5")
+      (add_list "285.8x7.9")
+      (add_list "285.8x6.4")
+      (add_list "285.8x4.8")
+
+      (add_list "273.1x12.7")
+      (add_list "273.1x9.3")
+      (add_list "273.1x6.4")
+
+      (add_list "254x15.9")
+      (add_list "254x12.7")
+      (add_list "254x9.5")
+      (add_list "254x7.9")
+      (add_list "254x6.4")
+      (add_list "254x4.8")
+
+      (add_list "244.5x12.7")
+      (add_list "244.5x9.5")
+      (add_list "244.5x7.9")
+      (add_list "244.5x6.4")
+
+      (add_list "222.3x12.7")
+      (add_list "222.3x9.5")
+      (add_list "222.3x7.9")
+      (add_list "222.3x6.4")
+      (add_list "222.3x4.8")
+
+      (add_list "219.1x12.7")
+      (add_list "219.1x9.5")
+      (add_list "219.1x8.2")
+      (add_list "219.1x6.4")
+      (add_list "219.1x4.8")
+
+      (add_list "193.7x9.5")
+      (add_list "193.7x8.3")
+      (add_list "193.7x3.2")
+
+      (add_list "190.5x12.7")
+      (add_list "190.5x9.5")
+      (add_list "190.5x7.9")
+      (add_list "190.5x6.4")
+      (add_list "190.5x4.8")
+
+      (add_list "177.8x12.7")
+      (add_list "177.8x9.5")
+      (add_list "177.8x7.9")
+      (add_list "177.8x6.4")
+      (add_list "177.8x4.8")
+      (add_list "177.8x3.2")
+
+      (add_list "174.6x12.7")
+      (add_list "174.6x9.5")
+      (add_list "174.6x7.9")
+      (add_list "174.6x6.4")
+      (add_list "174.6x4.8")
+
+      (add_list "168.3x12.7")
+      (add_list "168.3x11")
+      (add_list "168.3x9.5")
+      (add_list "168.3x7.9")
+      (add_list "168.3x7.1")
+      (add_list "168.3x6.4")
+      (add_list "168.3x4.8")
+      (add_list "168.3x3.2")
+
+      (add_list "155.6x12.7")
+      (add_list "155.6x9.5")
+      (add_list "155.6x7.9")
+      (add_list "155.6x6.4")
+      (add_list "155.6x4.8")
+
+      (add_list "152.4x12.7")
+      (add_list "152.4x9.5")
+      (add_list "152.4x7.9")
+      (add_list "152.4x7.1")
+      (add_list "152.4x6.4")
+      (add_list "152.4x4.8")
+      (add_list "152.4x3.2")
+
+      (add_list "141.3x9.5")
+      (add_list "141.3x6.6")
+      (add_list "141.3x4.8")
+      (add_list "141.3x3.4")
+
+      (add_list "139.7x12.7")
+      (add_list "139.7x9.5")
+      (add_list "139.7x6.6")
+
+      (add_list "127x12.7")
+      (add_list "127x9.5")
+      (add_list "127x7.9")
+      (add_list "127x6.6")
+      (add_list "127x6.4")
+      (add_list "127x4.8")
+      (add_list "127x3.2")
+
+      (add_list "114.3x8.6")
+      (add_list "114.3x6")
+      (add_list "114.3x4.8")
+      (add_list "114.3x3.2")
+
+      (add_list "101.6x8.6")
+      (add_list "101.6x8")
+      (add_list "101.6x6.4")
+      (add_list "101.6x6")
+      (add_list "101.6x5.7")
+      (add_list "101.6x5.6")
+      (add_list "101.6x4.8")
+      (add_list "101.6x3.2")
+
+      (add_list "88.9x8")
+      (add_list "88.9x7.6")
+      (add_list "88.9x6.4")
+      (add_list "88.9x5.5")
+      (add_list "88.9x5.2")
+      (add_list "88.9x4.8")
+      (add_list "88.9x3.2")
     )
   )
 
@@ -2021,7 +2685,7 @@
   )
 
   (if (= taz_s_tmp_family "Rura okrągła")
-    (progn (setq taz_s_tmp_type "42.4x2.9") (set_tile "taz_s_typ" "0"))
+    (progn (setq taz_s_tmp_type "508x12.7") (set_tile "taz_s_typ" "0"))
   )
 
 )
@@ -2532,13 +3196,168 @@
   )
 
 
-  ;; Rura okrągła
+  ;; Rura okrągła (CHS) – reakcja na zmianę typu
   (if (= taz_s_tmp_family "Rura okrągła")
     (progn
-      (if (= $value "0") (setq taz_s_tmp_type "42.4x2.9"))
-      (if (= $value "1") (setq taz_s_tmp_type "26.9x2.3"))
+    (if (= $value "0")  (setq taz_s_tmp_type "508x12.7"))
+    (if (= $value "1")  (setq taz_s_tmp_type "508x9.5"))
+
+    (if (= $value "2")  (setq taz_s_tmp_type "457.2x12.7"))
+    (if (= $value "3")  (setq taz_s_tmp_type "457.2x9.5"))
+
+    (if (= $value "4")  (setq taz_s_tmp_type "406.4x12.7"))
+    (if (= $value "5")  (setq taz_s_tmp_type "406.4x11.1"))
+    (if (= $value "6")  (setq taz_s_tmp_type "406.4x9.5"))
+    (if (= $value "7")  (setq taz_s_tmp_type "406.4x7.9"))
+
+    (if (= $value "8")  (setq taz_s_tmp_type "355.6x12.7"))
+    (if (= $value "9")  (setq taz_s_tmp_type "355.6x9.5"))
+    (if (= $value "10") (setq taz_s_tmp_type "355.6x7.9"))
+
+    (if (= $value "11") (setq taz_s_tmp_type "323.9x12.7"))
+    (if (= $value "12") (setq taz_s_tmp_type "323.9x9.5"))
+    (if (= $value "13") (setq taz_s_tmp_type "323.9x6.4"))
+
+    (if (= $value "14") (setq taz_s_tmp_type "317.5x15.9"))
+    (if (= $value "15") (setq taz_s_tmp_type "317.5x12.7"))
+    (if (= $value "16") (setq taz_s_tmp_type "317.5x9.5"))
+    (if (= $value "17") (setq taz_s_tmp_type "317.5x7.9"))
+    (if (= $value "18") (setq taz_s_tmp_type "317.5x6.4"))
+    (if (= $value "19") (setq taz_s_tmp_type "317.5x4.8"))
+
+    (if (= $value "20") (setq taz_s_tmp_type "312.8x15.9"))
+    (if (= $value "21") (setq taz_s_tmp_type "312.8x12.7"))
+    (if (= $value "22") (setq taz_s_tmp_type "312.8x9.5"))
+    (if (= $value "23") (setq taz_s_tmp_type "312.8x7.9"))
+    (if (= $value "24") (setq taz_s_tmp_type "312.8x6.4"))
+    (if (= $value "25") (setq taz_s_tmp_type "312.8x4.8"))
+    (if (= $value "26") (setq taz_s_tmp_type "311.2x15.9"))
+    (if (= $value "27") (setq taz_s_tmp_type "311.2x12.7"))
+    (if (= $value "28") (setq taz_s_tmp_type "311.2x9.5"))
+    (if (= $value "29") (setq taz_s_tmp_type "311.2x7.9"))
+    (if (= $value "30") (setq taz_s_tmp_type "311.2x6.4"))
+    (if (= $value "31") (setq taz_s_tmp_type "311.2x4.8"))
+
+    (if (= $value "32") (setq taz_s_tmp_type "285.8x15.9"))
+    (if (= $value "33") (setq taz_s_tmp_type "285.8x12.7"))
+    (if (= $value "34") (setq taz_s_tmp_type "285.8x9.5"))
+    (if (= $value "35") (setq taz_s_tmp_type "285.8x7.9"))
+    (if (= $value "36") (setq taz_s_tmp_type "285.8x6.4"))
+    (if (= $value "37") (setq taz_s_tmp_type "285.8x4.8"))
+
+    (if (= $value "38") (setq taz_s_tmp_type "273.1x12.7"))
+    (if (= $value "39") (setq taz_s_tmp_type "273.1x9.3"))
+    (if (= $value "40") (setq taz_s_tmp_type "273.1x6.4"))
+
+    (if (= $value "41") (setq taz_s_tmp_type "254x15.9"))
+    (if (= $value "42") (setq taz_s_tmp_type "254x12.7"))
+    (if (= $value "43") (setq taz_s_tmp_type "254x9.5"))
+    (if (= $value "44") (setq taz_s_tmp_type "254x7.9"))
+    (if (= $value "45") (setq taz_s_tmp_type "254x6.4"))
+    (if (= $value "46") (setq taz_s_tmp_type "254x4.8"))
+
+    (if (= $value "47") (setq taz_s_tmp_type "244.5x12.7"))
+    (if (= $value "48") (setq taz_s_tmp_type "244.5x9.5"))
+    (if (= $value "49") (setq taz_s_tmp_type "244.5x7.9"))
+    (if (= $value "50") (setq taz_s_tmp_type "244.5x6.4"))
+
+    (if (= $value "51") (setq taz_s_tmp_type "222.3x12.7"))
+    (if (= $value "52") (setq taz_s_tmp_type "222.3x9.5"))
+    (if (= $value "53") (setq taz_s_tmp_type "222.3x7.9"))
+    (if (= $value "54") (setq taz_s_tmp_type "222.3x6.4"))
+    (if (= $value "55") (setq taz_s_tmp_type "222.3x4.8"))
+
+    (if (= $value "56") (setq taz_s_tmp_type "219.1x12.7"))
+    (if (= $value "57") (setq taz_s_tmp_type "219.1x9.5"))
+    (if (= $value "58") (setq taz_s_tmp_type "219.1x8.2"))
+    (if (= $value "59") (setq taz_s_tmp_type "219.1x6.4"))
+    (if (= $value "60") (setq taz_s_tmp_type "219.1x4.8"))
+
+    (if (= $value "61") (setq taz_s_tmp_type "193.7x9.5"))
+    (if (= $value "62") (setq taz_s_tmp_type "193.7x8.3"))
+    (if (= $value "63") (setq taz_s_tmp_type "193.7x3.2"))
+
+    (if (= $value "64") (setq taz_s_tmp_type "190.5x12.7"))
+    (if (= $value "65") (setq taz_s_tmp_type "190.5x9.5"))
+    (if (= $value "66") (setq taz_s_tmp_type "190.5x7.9"))
+    (if (= $value "67") (setq taz_s_tmp_type "190.5x6.4"))
+    (if (= $value "68") (setq taz_s_tmp_type "190.5x4.8"))
+    (if (= $value "69") (setq taz_s_tmp_type "177.8x12.7"))
+    (if (= $value "70") (setq taz_s_tmp_type "177.8x9.5"))
+    (if (= $value "71") (setq taz_s_tmp_type "177.8x7.9"))
+    (if (= $value "72") (setq taz_s_tmp_type "177.8x6.4"))
+    (if (= $value "73") (setq taz_s_tmp_type "177.8x4.8"))
+    (if (= $value "74") (setq taz_s_tmp_type "177.8x3.2"))
+
+    (if (= $value "75") (setq taz_s_tmp_type "174.6x12.7"))
+    (if (= $value "76") (setq taz_s_tmp_type "174.6x9.5"))
+    (if (= $value "77") (setq taz_s_tmp_type "174.6x7.9"))
+    (if (= $value "78") (setq taz_s_tmp_type "174.6x6.4"))
+    (if (= $value "79") (setq taz_s_tmp_type "174.6x4.8"))
+
+    (if (= $value "80") (setq taz_s_tmp_type "168.3x12.7"))
+    (if (= $value "81") (setq taz_s_tmp_type "168.3x11"))
+    (if (= $value "82") (setq taz_s_tmp_type "168.3x9.5"))
+    (if (= $value "83") (setq taz_s_tmp_type "168.3x7.9"))
+    (if (= $value "84") (setq taz_s_tmp_type "168.3x7.1"))
+    (if (= $value "85") (setq taz_s_tmp_type "168.3x6.4"))
+    (if (= $value "86") (setq taz_s_tmp_type "168.3x4.8"))
+    (if (= $value "87") (setq taz_s_tmp_type "168.3x3.2"))
+
+    (if (= $value "88") (setq taz_s_tmp_type "155.6x12.7"))
+    (if (= $value "89") (setq taz_s_tmp_type "155.6x9.5"))
+    (if (= $value "90") (setq taz_s_tmp_type "155.6x7.9"))
+    (if (= $value "91") (setq taz_s_tmp_type "155.6x6.4"))
+    (if (= $value "92") (setq taz_s_tmp_type "155.6x4.8"))
+
+    (if (= $value "93") (setq taz_s_tmp_type "152.4x12.7"))
+    (if (= $value "94") (setq taz_s_tmp_type "152.4x9.5"))
+    (if (= $value "95") (setq taz_s_tmp_type "152.4x7.9"))
+    (if (= $value "96") (setq taz_s_tmp_type "152.4x7.1"))
+    (if (= $value "97") (setq taz_s_tmp_type "152.4x6.4"))
+    (if (= $value "98") (setq taz_s_tmp_type "152.4x4.8"))
+    (if (= $value "99") (setq taz_s_tmp_type "152.4x3.2"))
+
+    (if (= $value "100") (setq taz_s_tmp_type "141.3x9.5"))
+    (if (= $value "101") (setq taz_s_tmp_type "141.3x6.6"))
+    (if (= $value "102") (setq taz_s_tmp_type "141.3x4.8"))
+    (if (= $value "103") (setq taz_s_tmp_type "141.3x3.4"))
+
+    (if (= $value "104") (setq taz_s_tmp_type "139.7x12.7"))
+    (if (= $value "105") (setq taz_s_tmp_type "139.7x9.5"))
+    (if (= $value "106") (setq taz_s_tmp_type "139.7x6.6"))
+
+    (if (= $value "107") (setq taz_s_tmp_type "127x12.7"))
+    (if (= $value "108") (setq taz_s_tmp_type "127x9.5"))
+    (if (= $value "109") (setq taz_s_tmp_type "127x7.9"))
+    (if (= $value "110") (setq taz_s_tmp_type "127x6.6"))
+    (if (= $value "111") (setq taz_s_tmp_type "127x6.4"))
+    (if (= $value "112") (setq taz_s_tmp_type "127x4.8"))
+    (if (= $value "113") (setq taz_s_tmp_type "127x3.2"))
+
+    (if (= $value "114") (setq taz_s_tmp_type "114.3x8.6"))
+    (if (= $value "115") (setq taz_s_tmp_type "114.3x6"))
+    (if (= $value "116") (setq taz_s_tmp_type "114.3x4.8"))
+    (if (= $value "117") (setq taz_s_tmp_type "114.3x3.2"))
+
+    (if (= $value "118") (setq taz_s_tmp_type "101.6x8.6"))
+    (if (= $value "119") (setq taz_s_tmp_type "101.6x8"))
+    (if (= $value "120") (setq taz_s_tmp_type "101.6x6.4"))
+    (if (= $value "121") (setq taz_s_tmp_type "101.6x6"))
+    (if (= $value "122") (setq taz_s_tmp_type "101.6x5.7"))
+    (if (= $value "123") (setq taz_s_tmp_type "101.6x5.6"))
+    (if (= $value "124") (setq taz_s_tmp_type "101.6x4.8"))
+    (if (= $value "125") (setq taz_s_tmp_type "101.6x3.2"))
+
+    (if (= $value "126") (setq taz_s_tmp_type "88.9x8"))
+    (if (= $value "127") (setq taz_s_tmp_type "88.9x7.6"))
+    (if (= $value "128") (setq taz_s_tmp_type "88.9x6.4"))
+    (if (= $value "129") (setq taz_s_tmp_type "88.9x5.5"))
+    (if (= $value "130") (setq taz_s_tmp_type "88.9x5.2"))
+    (if (= $value "131") (setq taz_s_tmp_type "88.9x4.8"))
+    (if (= $value "132") (setq taz_s_tmp_type "88.9x3.2"))
     )
-  )
+)
 
 )
 
