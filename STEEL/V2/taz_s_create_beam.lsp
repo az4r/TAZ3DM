@@ -269,9 +269,96 @@
         (add_list "285x285x8") (add_list "285x285x10")
       )
     )
+    ;; Rura prostokątna (RHS)
     (if (and (= taz_s_cat_val "Rury") (= taz_s_fam_val "Rura prostokątna"))
-      (progn (add_list "40x20x4") (add_list "50x40x4"))
+      (progn
+        (add_list "50x25x2.5")
+        (add_list "50x25x3")
+        (add_list "50x25x3.5")
+
+        (add_list "60x40x2.5")
+        (add_list "60x40x3")
+        (add_list "60x40x3.5")
+        (add_list "60x40x4")
+        (add_list "60x40x4.5")
+
+        (add_list "76x38x2.5")
+        (add_list "76x38x3")
+        (add_list "76x38x3.5")
+        (add_list "76x38x4")
+        (add_list "76x38x4.5")
+
+        (add_list "80x40x2.5")
+        (add_list "80x40x3")
+        (add_list "80x40x3.5")
+        (add_list "80x40x4")
+        (add_list "80x40x4.5")
+
+        (add_list "100x50x2.5")
+        (add_list "100x50x3")
+        (add_list "100x50x3.5")
+        (add_list "100x50x4")
+        (add_list "100x50x4.5")
+        (add_list "100x50x5")
+        (add_list "100x50x6")
+
+        (add_list "120x60x3")
+        (add_list "120x60x3.5")
+        (add_list "120x60x4")
+        (add_list "120x60x4.5")
+        (add_list "120x60x5")
+        (add_list "120x60x6")
+
+        (add_list "150x100x3")
+        (add_list "150x100x3.5")
+        (add_list "150x100x4")
+        (add_list "150x100x4.5")
+        (add_list "150x100x5")
+        (add_list "150x100x6")
+
+        (add_list "160x80x3")
+        (add_list "160x80x3.5")
+        (add_list "160x80x4")
+        (add_list "160x80x4.5")
+        (add_list "160x80x5")
+        (add_list "160x80x6")
+
+        (add_list "200x100x4")
+        (add_list "200x100x4.5")
+        (add_list "200x100x6")
+        (add_list "200x100x8")
+        (add_list "200x100x10")
+
+        (add_list "200x150x4")
+        (add_list "200x150x4.5")
+        (add_list "200x150x6")
+        (add_list "200x150x8")
+        (add_list "200x150x10")
+
+        (add_list "250x100x4")
+        (add_list "250x100x4.5")
+        (add_list "250x100x6")
+        (add_list "250x100x8")
+        (add_list "250x100x10")
+
+        (add_list "250x150x6")
+        (add_list "250x150x8")
+        (add_list "250x150x10")
+
+        (add_list "300x140x6")
+        (add_list "300x140x8")
+        (add_list "300x140x10")
+
+        (add_list "320x200x6")
+        (add_list "320x200x8")
+        (add_list "320x200x10")
+
+        (add_list "340x180x6")
+        (add_list "340x180x8")
+        (add_list "340x180x10")
+      )
     )
+
     (if (and (= taz_s_cat_val "Rury") (= taz_s_fam_val "Rura okrągła"))
       (progn (add_list "42.4x2.9") (add_list "26.9x2.3"))
     )
@@ -868,15 +955,120 @@
       )
     )
 
-
-    ;; Rura prostokątna
+    ;; Rura prostokątna (RHS)
     ((= taz_s_tmp_family "Rura prostokątna")
-     (if (= taz_s_tmp_type "40x20x4") (set_tile "taz_s_typ" "0"))
-     (if (= taz_s_tmp_type "50x40x4") (set_tile "taz_s_typ" "1"))
-     (if (and (not (= taz_s_tmp_type "40x20x4")) (not (= taz_s_tmp_type "50x40x4")))
-       (progn (setq taz_s_tmp_type "40x20x4") (set_tile "taz_s_typ" "0"))
-     )
-    )
+        (if (= taz_s_tmp_type "50x25x2.5") (set_tile "taz_s_typ" "0"))
+        (if (= taz_s_tmp_type "50x25x3")   (set_tile "taz_s_typ" "1"))
+        (if (= taz_s_tmp_type "50x25x3.5") (set_tile "taz_s_typ" "2"))
+
+        (if (= taz_s_tmp_type "60x40x2.5") (set_tile "taz_s_typ" "3"))
+        (if (= taz_s_tmp_type "60x40x3")   (set_tile "taz_s_typ" "4"))
+        (if (= taz_s_tmp_type "60x40x3.5") (set_tile "taz_s_typ" "5"))
+        (if (= taz_s_tmp_type "60x40x4")   (set_tile "taz_s_typ" "6"))
+        (if (= taz_s_tmp_type "60x40x4.5") (set_tile "taz_s_typ" "7"))
+
+        (if (= taz_s_tmp_type "76x38x2.5") (set_tile "taz_s_typ" "8"))
+        (if (= taz_s_tmp_type "76x38x3")   (set_tile "taz_s_typ" "9"))
+        (if (= taz_s_tmp_type "76x38x3.5") (set_tile "taz_s_typ" "10"))
+        (if (= taz_s_tmp_type "76x38x4")   (set_tile "taz_s_typ" "11"))
+        (if (= taz_s_tmp_type "76x38x4.5") (set_tile "taz_s_typ" "12"))
+
+        (if (= taz_s_tmp_type "80x40x2.5") (set_tile "taz_s_typ" "13"))
+        (if (= taz_s_tmp_type "80x40x3")   (set_tile "taz_s_typ" "14"))
+        (if (= taz_s_tmp_type "80x40x3.5") (set_tile "taz_s_typ" "15"))
+        (if (= taz_s_tmp_type "80x40x4")   (set_tile "taz_s_typ" "16"))
+        (if (= taz_s_tmp_type "80x40x4.5") (set_tile "taz_s_typ" "17"))
+
+        (if (= taz_s_tmp_type "100x50x2.5") (set_tile "taz_s_typ" "18"))
+        (if (= taz_s_tmp_type "100x50x3")   (set_tile "taz_s_typ" "19"))
+        (if (= taz_s_tmp_type "100x50x3.5") (set_tile "taz_s_typ" "20"))
+        (if (= taz_s_tmp_type "100x50x4")   (set_tile "taz_s_typ" "21"))
+        (if (= taz_s_tmp_type "100x50x4.5") (set_tile "taz_s_typ" "22"))
+        (if (= taz_s_tmp_type "100x50x5")   (set_tile "taz_s_typ" "23"))
+        (if (= taz_s_tmp_type "100x50x6")   (set_tile "taz_s_typ" "24"))
+
+        (if (= taz_s_tmp_type "120x60x3")   (set_tile "taz_s_typ" "25"))
+        (if (= taz_s_tmp_type "120x60x3.5") (set_tile "taz_s_typ" "26"))
+        (if (= taz_s_tmp_type "120x60x4")   (set_tile "taz_s_typ" "27"))
+        (if (= taz_s_tmp_type "120x60x4.5") (set_tile "taz_s_typ" "28"))
+        (if (= taz_s_tmp_type "120x60x5")   (set_tile "taz_s_typ" "29"))
+        (if (= taz_s_tmp_type "120x60x6")   (set_tile "taz_s_typ" "30"))
+
+        (if (= taz_s_tmp_type "150x100x3")   (set_tile "taz_s_typ" "31"))
+        (if (= taz_s_tmp_type "150x100x3.5") (set_tile "taz_s_typ" "32"))
+        (if (= taz_s_tmp_type "150x100x4")   (set_tile "taz_s_typ" "33"))
+        (if (= taz_s_tmp_type "150x100x4.5") (set_tile "taz_s_typ" "34"))
+        (if (= taz_s_tmp_type "150x100x5")   (set_tile "taz_s_typ" "35"))
+        (if (= taz_s_tmp_type "150x100x6")   (set_tile "taz_s_typ" "36"))
+
+        (if (= taz_s_tmp_type "160x80x3")   (set_tile "taz_s_typ" "37"))
+        (if (= taz_s_tmp_type "160x80x3.5") (set_tile "taz_s_typ" "38"))
+        (if (= taz_s_tmp_type "160x80x4")   (set_tile "taz_s_typ" "39"))
+        (if (= taz_s_tmp_type "160x80x4.5") (set_tile "taz_s_typ" "40"))
+        (if (= taz_s_tmp_type "160x80x5")   (set_tile "taz_s_typ" "41"))
+        (if (= taz_s_tmp_type "160x80x6")   (set_tile "taz_s_typ" "42"))
+
+        (if (= taz_s_tmp_type "200x100x4")   (set_tile "taz_s_typ" "43"))
+        (if (= taz_s_tmp_type "200x100x4.5") (set_tile "taz_s_typ" "44"))
+        (if (= taz_s_tmp_type "200x100x6")   (set_tile "taz_s_typ" "45"))
+        (if (= taz_s_tmp_type "200x100x8")   (set_tile "taz_s_typ" "46"))
+        (if (= taz_s_tmp_type "200x100x10")  (set_tile "taz_s_typ" "47"))
+
+        (if (= taz_s_tmp_type "200x150x4")   (set_tile "taz_s_typ" "48"))
+        (if (= taz_s_tmp_type "200x150x4.5") (set_tile "taz_s_typ" "49"))
+        (if (= taz_s_tmp_type "200x150x6")   (set_tile "taz_s_typ" "50"))
+        (if (= taz_s_tmp_type "200x150x8")   (set_tile "taz_s_typ" "51"))
+        (if (= taz_s_tmp_type "200x150x10")  (set_tile "taz_s_typ" "52"))
+
+        (if (= taz_s_tmp_type "250x100x4")   (set_tile "taz_s_typ" "53"))
+        (if (= taz_s_tmp_type "250x100x4.5") (set_tile "taz_s_typ" "54"))
+        (if (= taz_s_tmp_type "250x100x6")   (set_tile "taz_s_typ" "55"))
+        (if (= taz_s_tmp_type "250x100x8")   (set_tile "taz_s_typ" "56"))
+        (if (= taz_s_tmp_type "250x100x10")  (set_tile "taz_s_typ" "57"))
+
+        (if (= taz_s_tmp_type "250x150x6")   (set_tile "taz_s_typ" "58"))
+        (if (= taz_s_tmp_type "250x150x8")   (set_tile "taz_s_typ" "59"))
+        (if (= taz_s_tmp_type "250x150x10")  (set_tile "taz_s_typ" "60"))
+
+        (if (= taz_s_tmp_type "300x140x6")   (set_tile "taz_s_typ" "61"))
+        (if (= taz_s_tmp_type "300x140x8")   (set_tile "taz_s_typ" "62"))
+        (if (= taz_s_tmp_type "300x140x10")  (set_tile "taz_s_typ" "63"))
+
+        (if (= taz_s_tmp_type "320x200x6")   (set_tile "taz_s_typ" "64"))
+        (if (= taz_s_tmp_type "320x200x8")   (set_tile "taz_s_typ" "65"))
+        (if (= taz_s_tmp_type "320x200x10")  (set_tile "taz_s_typ" "66"))
+
+        (if (= taz_s_tmp_type "340x180x6")   (set_tile "taz_s_typ" "67"))
+        (if (= taz_s_tmp_type "340x180x8")   (set_tile "taz_s_typ" "68"))
+        (if (= taz_s_tmp_type "340x180x10")  (set_tile "taz_s_typ" "69"))
+
+      ;; fallback: jeśli typ nie jest na liście, ustaw pierwszy element
+      (if (not (member taz_s_tmp_type
+            '(
+              "50x25x2.5" "50x25x3" "50x25x3.5"
+              "60x40x2.5" "60x40x3" "60x40x3.5" "60x40x4" "60x40x4.5"
+              "76x38x2.5" "76x38x3" "76x38x3.5" "76x38x4" "76x38x4.5"
+              "80x40x2.5" "80x40x3" "80x40x3.5" "80x40x4" "80x40x4.5"
+              "100x50x2.5" "100x50x3" "100x50x3.5" "100x50x4" "100x50x4.5" "100x50x5" "100x50x6"
+              "120x60x3" "120x60x3.5" "120x60x4" "120x60x4.5" "120x60x5" "120x60x6"
+              "150x100x3" "150x100x3.5" "150x100x4" "150x100x4.5" "150x100x5" "150x100x6"
+              "160x80x3" "160x80x3.5" "160x80x4" "160x80x4.5" "160x80x5" "160x80x6"
+              "200x100x4" "200x100x4.5" "200x100x6" "200x100x8" "200x100x10"
+              "200x150x4" "200x150x4.5" "200x150x6" "200x150x8" "200x150x10"
+              "250x100x4" "250x100x4.5" "250x100x6" "250x100x8" "250x100x10"
+              "250x150x6" "250x150x8" "250x150x10"
+              "300x140x6" "300x140x8" "300x140x10"
+              "320x200x6" "320x200x8" "320x200x10"
+              "340x180x6" "340x180x8" "340x180x10"
+            )))
+        (progn
+          (setq taz_s_tmp_type "50x25x2.5")
+          (set_tile "taz_s_typ" "0")
+        )
+      )
+      )
+
+
 
     ;; Rura okrągła
     ((= taz_s_tmp_family "Rura okrągła")
@@ -1224,13 +1416,96 @@
   )
 
 
-  ;; Rura prostokątna
+  ;; Rura prostokątna (RHS)
   (if (= taz_s_tmp_family "Rura prostokątna")
     (progn
-      (add_list "40x20x4")
-      (add_list "50x40x4")
+      (add_list "50x25x2.5")
+      (add_list "50x25x3")
+      (add_list "50x25x3.5")
+
+      (add_list "60x40x2.5")
+      (add_list "60x40x3")
+      (add_list "60x40x3.5")
+      (add_list "60x40x4")
+      (add_list "60x40x4.5")
+
+      (add_list "76x38x2.5")
+      (add_list "76x38x3")
+      (add_list "76x38x3.5")
+      (add_list "76x38x4")
+      (add_list "76x38x4.5")
+
+      (add_list "80x40x2.5")
+      (add_list "80x40x3")
+      (add_list "80x40x3.5")
+      (add_list "80x40x4")
+      (add_list "80x40x4.5")
+
+      (add_list "100x50x2.5")
+      (add_list "100x50x3")
+      (add_list "100x50x3.5")
+      (add_list "100x50x4")
+      (add_list "100x50x4.5")
+      (add_list "100x50x5")
+      (add_list "100x50x6")
+
+      (add_list "120x60x3")
+      (add_list "120x60x3.5")
+      (add_list "120x60x4")
+      (add_list "120x60x4.5")
+      (add_list "120x60x5")
+      (add_list "120x60x6")
+
+      (add_list "150x100x3")
+      (add_list "150x100x3.5")
+      (add_list "150x100x4")
+      (add_list "150x100x4.5")
+      (add_list "150x100x5")
+      (add_list "150x100x6")
+
+      (add_list "160x80x3")
+      (add_list "160x80x3.5")
+      (add_list "160x80x4")
+      (add_list "160x80x4.5")
+      (add_list "160x80x5")
+      (add_list "160x80x6")
+
+      (add_list "200x100x4")
+      (add_list "200x100x4.5")
+      (add_list "200x100x6")
+      (add_list "200x100x8")
+      (add_list "200x100x10")
+
+      (add_list "200x150x4")
+      (add_list "200x150x4.5")
+      (add_list "200x150x6")
+      (add_list "200x150x8")
+      (add_list "200x150x10")
+
+      (add_list "250x100x4")
+      (add_list "250x100x4.5")
+      (add_list "250x100x6")
+      (add_list "250x100x8")
+      (add_list "250x100x10")
+
+      (add_list "250x150x6")
+      (add_list "250x150x8")
+      (add_list "250x150x10")
+
+      (add_list "300x140x6")
+      (add_list "300x140x8")
+      (add_list "300x140x10")
+
+      (add_list "320x200x6")
+      (add_list "320x200x8")
+      (add_list "320x200x10")
+
+      (add_list "340x180x6")
+      (add_list "340x180x8")
+      (add_list "340x180x10")
     )
   )
+
 
   ;; Rura okrągła
   (if (= taz_s_tmp_family "Rura okrągła")
@@ -1281,7 +1556,7 @@
   )
 
   (if (= taz_s_tmp_family "Rura prostokątna")
-    (progn (setq taz_s_tmp_type "40x20x4") (set_tile "taz_s_typ" "0"))
+    (progn (setq taz_s_tmp_type "50x25x2.5") (set_tile "taz_s_typ" "0"))
   )
 
   (if (= taz_s_tmp_family "Rura okrągła")
@@ -1602,14 +1877,96 @@
     )
   )
 
-
-  ;; Rura prostokątna
+  ;; Rura prostokątna (RHS)
   (if (= taz_s_tmp_family "Rura prostokątna")
     (progn
-      (add_list "40x20x4")
-      (add_list "50x40x4")
+      (add_list "50x25x2.5")
+      (add_list "50x25x3")
+      (add_list "50x25x3.5")
+
+      (add_list "60x40x2.5")
+      (add_list "60x40x3")
+      (add_list "60x40x3.5")
+      (add_list "60x40x4")
+      (add_list "60x40x4.5")
+
+      (add_list "76x38x2.5")
+      (add_list "76x38x3")
+      (add_list "76x38x3.5")
+      (add_list "76x38x4")
+      (add_list "76x38x4.5")
+
+      (add_list "80x40x2.5")
+      (add_list "80x40x3")
+      (add_list "80x40x3.5")
+      (add_list "80x40x4")
+      (add_list "80x40x4.5")
+
+      (add_list "100x50x2.5")
+      (add_list "100x50x3")
+      (add_list "100x50x3.5")
+      (add_list "100x50x4")
+      (add_list "100x50x4.5")
+      (add_list "100x50x5")
+      (add_list "100x50x6")
+
+      (add_list "120x60x3")
+      (add_list "120x60x3.5")
+      (add_list "120x60x4")
+      (add_list "120x60x4.5")
+      (add_list "120x60x5")
+      (add_list "120x60x6")
+
+      (add_list "150x100x3")
+      (add_list "150x100x3.5")
+      (add_list "150x100x4")
+      (add_list "150x100x4.5")
+      (add_list "150x100x5")
+      (add_list "150x100x6")
+
+      (add_list "160x80x3")
+      (add_list "160x80x3.5")
+      (add_list "160x80x4")
+      (add_list "160x80x4.5")
+      (add_list "160x80x5")
+      (add_list "160x80x6")
+
+      (add_list "200x100x4")
+      (add_list "200x100x4.5")
+      (add_list "200x100x6")
+      (add_list "200x100x8")
+      (add_list "200x100x10")
+
+      (add_list "200x150x4")
+      (add_list "200x150x4.5")
+      (add_list "200x150x6")
+      (add_list "200x150x8")
+      (add_list "200x150x10")
+
+      (add_list "250x100x4")
+      (add_list "250x100x4.5")
+      (add_list "250x100x6")
+      (add_list "250x100x8")
+      (add_list "250x100x10")
+
+      (add_list "250x150x6")
+      (add_list "250x150x8")
+      (add_list "250x150x10")
+
+      (add_list "300x140x6")
+      (add_list "300x140x8")
+      (add_list "300x140x10")
+
+      (add_list "320x200x6")
+      (add_list "320x200x8")
+      (add_list "320x200x10")
+
+      (add_list "340x180x6")
+      (add_list "340x180x8")
+      (add_list "340x180x10")
     )
   )
+
 
   ;; Rura okrągła
   (if (= taz_s_tmp_family "Rura okrągła")
@@ -1660,7 +2017,7 @@
   )
 
   (if (= taz_s_tmp_family "Rura prostokątna")
-    (progn (setq taz_s_tmp_type "40x20x4") (set_tile "taz_s_typ" "0"))
+    (progn (setq taz_s_tmp_type "50x25x2.5") (set_tile "taz_s_typ" "0"))
   )
 
   (if (= taz_s_tmp_family "Rura okrągła")
@@ -2084,14 +2441,96 @@
     )
   )
 
-
-  ;; Rura prostokątna
+  ;; Rura prostokątna (RHS)
   (if (= taz_s_tmp_family "Rura prostokątna")
     (progn
-      (if (= $value "0") (setq taz_s_tmp_type "40x20x4"))
-      (if (= $value "1") (setq taz_s_tmp_type "50x40x4"))
+      (if (= $value "0")  (setq taz_s_tmp_type "50x25x2.5"))
+      (if (= $value "1")  (setq taz_s_tmp_type "50x25x3"))
+      (if (= $value "2")  (setq taz_s_tmp_type "50x25x3.5"))
+
+      (if (= $value "3")  (setq taz_s_tmp_type "60x40x2.5"))
+      (if (= $value "4")  (setq taz_s_tmp_type "60x40x3"))
+      (if (= $value "5")  (setq taz_s_tmp_type "60x40x3.5"))
+      (if (= $value "6")  (setq taz_s_tmp_type "60x40x4"))
+      (if (= $value "7")  (setq taz_s_tmp_type "60x40x4.5"))
+
+      (if (= $value "8")  (setq taz_s_tmp_type "76x38x2.5"))
+      (if (= $value "9")  (setq taz_s_tmp_type "76x38x3"))
+      (if (= $value "10") (setq taz_s_tmp_type "76x38x3.5"))
+      (if (= $value "11") (setq taz_s_tmp_type "76x38x4"))
+      (if (= $value "12") (setq taz_s_tmp_type "76x38x4.5"))
+
+      (if (= $value "13") (setq taz_s_tmp_type "80x40x2.5"))
+      (if (= $value "14") (setq taz_s_tmp_type "80x40x3"))
+      (if (= $value "15") (setq taz_s_tmp_type "80x40x3.5"))
+      (if (= $value "16") (setq taz_s_tmp_type "80x40x4"))
+      (if (= $value "17") (setq taz_s_tmp_type "80x40x4.5"))
+
+      (if (= $value "18") (setq taz_s_tmp_type "100x50x2.5"))
+      (if (= $value "19") (setq taz_s_tmp_type "100x50x3"))
+      (if (= $value "20") (setq taz_s_tmp_type "100x50x3.5"))
+      (if (= $value "21") (setq taz_s_tmp_type "100x50x4"))
+      (if (= $value "22") (setq taz_s_tmp_type "100x50x4.5"))
+      (if (= $value "23") (setq taz_s_tmp_type "100x50x5"))
+      (if (= $value "24") (setq taz_s_tmp_type "100x50x6"))
+
+      (if (= $value "25") (setq taz_s_tmp_type "120x60x3"))
+      (if (= $value "26") (setq taz_s_tmp_type "120x60x3.5"))
+      (if (= $value "27") (setq taz_s_tmp_type "120x60x4"))
+      (if (= $value "28") (setq taz_s_tmp_type "120x60x4.5"))
+      (if (= $value "29") (setq taz_s_tmp_type "120x60x5"))
+      (if (= $value "30") (setq taz_s_tmp_type "120x60x6"))
+
+      (if (= $value "31") (setq taz_s_tmp_type "150x100x3"))
+      (if (= $value "32") (setq taz_s_tmp_type "150x100x3.5"))
+      (if (= $value "33") (setq taz_s_tmp_type "150x100x4"))
+      (if (= $value "34") (setq taz_s_tmp_type "150x100x4.5"))
+      (if (= $value "35") (setq taz_s_tmp_type "150x100x5"))
+      (if (= $value "36") (setq taz_s_tmp_type "150x100x6"))
+
+      (if (= $value "37") (setq taz_s_tmp_type "160x80x3"))
+      (if (= $value "38") (setq taz_s_tmp_type "160x80x3.5"))
+      (if (= $value "39") (setq taz_s_tmp_type "160x80x4"))
+      (if (= $value "40") (setq taz_s_tmp_type "160x80x4.5"))
+      (if (= $value "41") (setq taz_s_tmp_type "160x80x5"))
+      (if (= $value "42") (setq taz_s_tmp_type "160x80x6"))
+
+      (if (= $value "43") (setq taz_s_tmp_type "200x100x4"))
+      (if (= $value "44") (setq taz_s_tmp_type "200x100x4.5"))
+      (if (= $value "45") (setq taz_s_tmp_type "200x100x6"))
+      (if (= $value "46") (setq taz_s_tmp_type "200x100x8"))
+      (if (= $value "47") (setq taz_s_tmp_type "200x100x10"))
+
+      (if (= $value "48") (setq taz_s_tmp_type "200x150x4"))
+      (if (= $value "49") (setq taz_s_tmp_type "200x150x4.5"))
+      (if (= $value "50") (setq taz_s_tmp_type "200x150x6"))
+      (if (= $value "51") (setq taz_s_tmp_type "200x150x8"))
+      (if (= $value "52") (setq taz_s_tmp_type "200x150x10"))
+
+      (if (= $value "53") (setq taz_s_tmp_type "250x100x4"))
+      (if (= $value "54") (setq taz_s_tmp_type "250x100x4.5"))
+      (if (= $value "55") (setq taz_s_tmp_type "250x100x6"))
+      (if (= $value "56") (setq taz_s_tmp_type "250x100x8"))
+      (if (= $value "57") (setq taz_s_tmp_type "250x100x10"))
+
+      (if (= $value "58") (setq taz_s_tmp_type "250x150x6"))
+      (if (= $value "59") (setq taz_s_tmp_type "250x150x8"))
+      (if (= $value "60") (setq taz_s_tmp_type "250x150x10"))
+
+      (if (= $value "61") (setq taz_s_tmp_type "300x140x6"))
+      (if (= $value "62") (setq taz_s_tmp_type "300x140x8"))
+      (if (= $value "63") (setq taz_s_tmp_type "300x140x10"))
+
+      (if (= $value "64") (setq taz_s_tmp_type "320x200x6"))
+      (if (= $value "65") (setq taz_s_tmp_type "320x200x8"))
+      (if (= $value "66") (setq taz_s_tmp_type "320x200x10"))
+
+      (if (= $value "67") (setq taz_s_tmp_type "340x180x6"))
+      (if (= $value "68") (setq taz_s_tmp_type "340x180x8"))
+      (if (= $value "69") (setq taz_s_tmp_type "340x180x10"))
     )
   )
+
 
   ;; Rura okrągła
   (if (= taz_s_tmp_family "Rura okrągła")
