@@ -748,158 +748,229 @@
   ;; ---------------------------
   ;; Reakcje na zmianę rodziny
   ;; ---------------------------
-  (action_tile "taz_s_fam"
-    "(progn
-       ;; Mapowanie indeksu rodziny w zależności od aktualnej kategorii
-       (if (= (get_tile \"taz_s_cat\") \"0\")
-         (progn
-           (if (= $value \"0\") (setq taz_s_tmp_family \"HEA\"))
-           (if (= $value \"1\") (setq taz_s_tmp_family \"HEB\"))
-           (if (= $value \"2\") (setq taz_s_tmp_family \"IPE\"))
-           (if (= $value \"3\") (setq taz_s_tmp_family \"IPN\"))
-         )
-       )
-       (if (= (get_tile \"taz_s_cat\") \"1\")
-         (progn
-           (if (= $value \"0\") (setq taz_s_tmp_family \"UPE\"))
-           (if (= $value \"1\") (setq taz_s_tmp_family \"UPN\"))
-         )
-       )
-       (if (= (get_tile \"taz_s_cat\") \"2\")
-         (progn
-           (if (= $value \"0\") (setq taz_s_tmp_family \"Kątownik równoramienny\"))
-           (if (= $value \"1\") (setq taz_s_tmp_family \"Kątownik nierównoramienny\"))
-         )
-       )
-       (if (= (get_tile \"taz_s_cat\") \"3\")
-         (progn
-           (if (= $value \"0\") (setq taz_s_tmp_family \"Rura kwadratowa\"))
-           (if (= $value \"1\") (setq taz_s_tmp_family \"Rura prostokątna\"))
-           (if (= $value \"2\") (setq taz_s_tmp_family \"Rura okrągła\"))
-         )
-       )
+  
+  (defun taz_s_on_family_change ( / )
 
-       (start_list \"taz_s_typ\")
-       (if (= taz_s_tmp_family \"HEA\") (progn
-         (add_list \"100\") (add_list \"120\") (add_list \"140\") (add_list \"160\")
-         (add_list \"180\") (add_list \"200\") (add_list \"220\") (add_list \"240\")
-         (add_list \"260\") (add_list \"280\") (add_list \"300\") (add_list \"320\")
-         (add_list \"340\") (add_list \"360\") (add_list \"400\") (add_list \"450\")
-         (add_list \"500\") (add_list \"550\") (add_list \"600\") (add_list \"650\")
-         (add_list \"700\") (add_list \"800\") (add_list \"900\") (add_list \"1000\")
-       ))
-       (if (= taz_s_tmp_family \"HEB\") (progn
-         (add_list \"100\") (add_list \"120\") (add_list \"140\") (add_list \"160\")
-         (add_list \"180\") (add_list \"200\") (add_list \"220\") (add_list \"240\")
-         (add_list \"260\") (add_list \"280\") (add_list \"300\") (add_list \"320\")
-         (add_list \"340\") (add_list \"360\") (add_list \"400\") (add_list \"450\")
-         (add_list \"500\") (add_list \"550\") (add_list \"600\") (add_list \"650\")
-         (add_list \"700\") (add_list \"800\") (add_list \"900\") (add_list \"1000\")
-       ))
-       (if (= taz_s_tmp_family \"IPE\") (progn
-         (add_list \"80\") (add_list \"100\") (add_list \"120\") (add_list \"140\")
-         (add_list \"160\") (add_list \"180\") (add_list \"200\") (add_list \"220\")
-         (add_list \"240\") (add_list \"270\") (add_list \"300\") (add_list \"330\")
-         (add_list \"360\") (add_list \"400\") (add_list \"450\") (add_list \"500\")
-         (add_list \"550\") (add_list \"600\") (add_list \"750x137\") (add_list \"750x147\")
-         (add_list \"750x173\") (add_list \"750x196\")
-       ))
-       (if (= taz_s_tmp_family \"IPN\") (progn
-         (add_list \"80\") (add_list \"100\") (add_list \"120\") (add_list \"140\")
-         (add_list \"160\") (add_list \"180\") (add_list \"200\") (add_list \"220\")
-         (add_list \"240\") (add_list \"260\") (add_list \"280\") (add_list \"300\")
-         (add_list \"320\") (add_list \"340\") (add_list \"360\") (add_list \"380\")
-         (add_list \"400\") (add_list \"450\") (add_list \"500\") (add_list \"550\")
-         (add_list \"600\")
-       ))
-        (if (= taz_s_tmp_family \"UPE\") (progn
-          (add_list \"80\") (add_list \"100\") (add_list \"120\") (add_list \"140\")
-          (add_list \"160\") (add_list \"180\") (add_list \"200\") (add_list \"220\")
-          (add_list \"240\") (add_list \"270\") (add_list \"300\") (add_list \"330\")
-          (add_list \"360\") (add_list \"400\")
-        ))
-
-       (if (= taz_s_tmp_family \"UPN\") (progn
-         (add_list \"50\") (add_list \"65\") (add_list \"80\") (add_list \"100\")
-         (add_list \"120\") (add_list \"140\") (add_list \"160\") (add_list \"180\")
-         (add_list \"200\") (add_list \"220\") (add_list \"240\") (add_list \"260\")
-         (add_list \"280\") (add_list \"300\") (add_list \"320\") (add_list \"350\")
-         (add_list \"380\") (add_list \"400\")
-       ))
-
-       (if (= taz_s_tmp_family \"Kątownik równoramienny\") (progn
-          (add_list \"20x3\")
-
-          (add_list \"25x3\") (add_list \"25x4\")
-
-          (add_list \"30x3\") (add_list \"30x4\") (add_list \"30x5\")
-
-          (add_list \"35x4\") (add_list \"35x5\")
-
-          (add_list \"40x4\") (add_list \"40x5\")
-
-          (add_list \"45x4\") (add_list \"45x5\")
-
-          (add_list \"50x5\") (add_list \"50x6\") (add_list \"50x7\")
-
-          (add_list \"55x6\")
-
-          (add_list \"60x5\") (add_list \"60x6\") (add_list \"60x8\")
-
-          (add_list \"65x7\")
-
-          (add_list \"70x6\") (add_list \"70x7\") (add_list \"70x9\")
-
-          (add_list \"75x7\") (add_list \"75x8\")
-
-          (add_list \"80x6\") (add_list \"80x8\") (add_list \"80x10\")
-
-          (add_list \"90x7\") (add_list \"90x8\") (add_list \"90x9\")
-
-          (add_list \"100x8\") (add_list \"100x10\") (add_list \"100x12\") (add_list \"100x14\")
-
-          (add_list \"110x10\") (add_list \"110x12\")
-
-          (add_list \"120x10\") (add_list \"120x11\") (add_list \"120x12\") (add_list \"120x13\") (add_list \"120x15\")
-
-          (add_list \"130x12\")
-
-          (add_list \"140x10\") (add_list \"140x13\") (add_list \"140x15\")
-
-          (add_list \"150x10\") (add_list \"150x12\") (add_list \"150x14\") (add_list \"150x15\")
-          (add_list \"150x16\") (add_list \"150x18\") (add_list \"150x20\")
-
-          (add_list \"160x15\") (add_list \"160x17\") (add_list \"160x19\")
-
-          (add_list \"180x16\") (add_list \"180x18\") (add_list \"180x20\") (add_list \"180x22\")
-
-          (add_list \"200x16\") (add_list \"200x18\") (add_list \"200x20\") (add_list \"200x22\")
-          (add_list \"200x24\") (add_list \"200x26\") (add_list \"200x28\") (add_list \"200x30\")
-
-          (add_list \"250x18\") (add_list \"250x20\") (add_list \"250x22\") (add_list \"250x24\")
-          (add_list \"250x26\") (add_list \"250x28\")
-        ))
-
-       (if (= taz_s_tmp_family \"Kątownik nierównoramienny\") (progn (add_list \"60x70x4\") (add_list \"80x90x4\")))
-       (if (= taz_s_tmp_family \"Rura kwadratowa\") (progn (add_list \"60x4\") (add_list \"100x4\")))
-       (if (= taz_s_tmp_family \"Rura prostokątna\") (progn (add_list \"40x20x4\") (add_list \"50x40x4\")))
-       (if (= taz_s_tmp_family \"Rura okrągła\") (progn (add_list \"42.4x2.9\") (add_list \"26.9x2.3\")))
-       (end_list)
-
-       ;; ustaw pierwszy typ ręcznie w zależności od rodziny (bez funkcji pomocniczej)
-       (if (= taz_s_tmp_family \"HEA\") (progn (setq taz_s_tmp_type \"100\") (set_tile \"taz_s_typ\" \"0\")))
-       (if (= taz_s_tmp_family \"HEB\") (progn (setq taz_s_tmp_type \"100\") (set_tile \"taz_s_typ\" \"0\")))
-       (if (= taz_s_tmp_family \"IPE\") (progn (setq taz_s_tmp_type \"80\") (set_tile \"taz_s_typ\" \"0\")))
-       (if (= taz_s_tmp_family \"IPN\") (progn (setq taz_s_tmp_type \"80\") (set_tile \"taz_s_typ\" \"0\")))
-       (if (= taz_s_tmp_family \"UPE\") (progn (setq taz_s_tmp_type \"80\") (set_tile \"taz_s_typ\" \"0\")))
-       (if (= taz_s_tmp_family \"UPN\") (progn (setq taz_s_tmp_type \"50\") (set_tile \"taz_s_typ\" \"0\")))
-       (if (= taz_s_tmp_family \"Kątownik równoramienny\") (progn (setq taz_s_tmp_type \"20x3\") (set_tile \"taz_s_typ\" \"0\")))
-       (if (= taz_s_tmp_family \"Kątownik nierównoramienny\") (progn (setq taz_s_tmp_type \"60x70x4\") (set_tile \"taz_s_typ\" \"0\")))
-       (if (= taz_s_tmp_family \"Rura kwadratowa\") (progn (setq taz_s_tmp_type \"60x4\") (set_tile \"taz_s_typ\" \"0\")))
-       (if (= taz_s_tmp_family \"Rura prostokątna\") (progn (setq taz_s_tmp_type \"40x20x4\") (set_tile \"taz_s_typ\" \"0\")))
-       (if (= taz_s_tmp_family \"Rura okrągła\") (progn (setq taz_s_tmp_type \"42.4x2.9\") (set_tile \"taz_s_typ\" \"0\")))
-     )"
+  ;; Mapowanie indeksu rodziny w zależności od kategorii
+  (if (= (get_tile "taz_s_cat") "0")
+    (progn
+      (if (= $value "0") (setq taz_s_tmp_family "HEA"))
+      (if (= $value "1") (setq taz_s_tmp_family "HEB"))
+      (if (= $value "2") (setq taz_s_tmp_family "IPE"))
+      (if (= $value "3") (setq taz_s_tmp_family "IPN"))
+    )
   )
+
+  (if (= (get_tile "taz_s_cat") "1")
+    (progn
+      (if (= $value "0") (setq taz_s_tmp_family "UPE"))
+      (if (= $value "1") (setq taz_s_tmp_family "UPN"))
+    )
+  )
+
+  (if (= (get_tile "taz_s_cat") "2")
+    (progn
+      (if (= $value "0") (setq taz_s_tmp_family "Kątownik równoramienny"))
+      (if (= $value "1") (setq taz_s_tmp_family "Kątownik nierównoramienny"))
+    )
+  )
+
+  (if (= (get_tile "taz_s_cat") "3")
+    (progn
+      (if (= $value "0") (setq taz_s_tmp_family "Rura kwadratowa"))
+      (if (= $value "1") (setq taz_s_tmp_family "Rura prostokątna"))
+      (if (= $value "2") (setq taz_s_tmp_family "Rura okrągła"))
+    )
+  )
+
+  ;; Start listy typów
+  (start_list "taz_s_typ")
+    
+  ;; HEA
+  (if (= taz_s_tmp_family "HEA")
+    (progn
+      (add_list "100") (add_list "120") (add_list "140") (add_list "160")
+      (add_list "180") (add_list "200") (add_list "220") (add_list "240")
+      (add_list "260") (add_list "280") (add_list "300") (add_list "320")
+      (add_list "340") (add_list "360") (add_list "400") (add_list "450")
+      (add_list "500") (add_list "550") (add_list "600") (add_list "650")
+      (add_list "700") (add_list "800") (add_list "900") (add_list "1000")
+    )
+  )
+
+  ;; HEB
+  (if (= taz_s_tmp_family "HEB")
+    (progn
+      (add_list "100") (add_list "120") (add_list "140") (add_list "160")
+      (add_list "180") (add_list "200") (add_list "220") (add_list "240")
+      (add_list "260") (add_list "280") (add_list "300") (add_list "320")
+      (add_list "340") (add_list "360") (add_list "400") (add_list "450")
+      (add_list "500") (add_list "550") (add_list "600") (add_list "650")
+      (add_list "700") (add_list "800") (add_list "900") (add_list "1000")
+    )
+  )
+
+  ;; IPE
+  (if (= taz_s_tmp_family "IPE")
+    (progn
+      (add_list "80") (add_list "100") (add_list "120") (add_list "140")
+      (add_list "160") (add_list "180") (add_list "200") (add_list "220")
+      (add_list "240") (add_list "270") (add_list "300") (add_list "330")
+      (add_list "360") (add_list "400") (add_list "450") (add_list "500")
+      (add_list "550") (add_list "600")
+      (add_list "750x137") (add_list "750x147") (add_list "750x173") (add_list "750x196")
+    )
+  )
+
+  ;; IPN
+  (if (= taz_s_tmp_family "IPN")
+    (progn
+      (add_list "80") (add_list "100") (add_list "120") (add_list "140")
+      (add_list "160") (add_list "180") (add_list "200") (add_list "220")
+      (add_list "240") (add_list "260") (add_list "280") (add_list "300")
+      (add_list "320") (add_list "340") (add_list "360") (add_list "380")
+      (add_list "400") (add_list "450") (add_list "500") (add_list "550")
+      (add_list "600")
+    )
+  )
+
+  ;; UPE
+  (if (= taz_s_tmp_family "UPE")
+    (progn
+      (add_list "80") (add_list "100") (add_list "120") (add_list "140")
+      (add_list "160") (add_list "180") (add_list "200") (add_list "220")
+      (add_list "240") (add_list "270") (add_list "300") (add_list "330")
+      (add_list "360") (add_list "400")
+    )
+  )
+
+  ;; UPN
+  (if (= taz_s_tmp_family "UPN")
+    (progn
+      (add_list "50") (add_list "65") (add_list "80") (add_list "100")
+      (add_list "120") (add_list "140") (add_list "160") (add_list "180")
+      (add_list "200") (add_list "220") (add_list "240") (add_list "260")
+      (add_list "280") (add_list "300") (add_list "320") (add_list "350")
+      (add_list "380") (add_list "400")
+    )
+  )
+
+  ;; Kątownik równoramienny
+  (if (= taz_s_tmp_family "Kątownik równoramienny")
+    (progn
+      (add_list "20x3")
+      (add_list "25x3") (add_list "25x4")
+      (add_list "30x3") (add_list "30x4") (add_list "30x5")
+      (add_list "35x4") (add_list "35x5")
+      (add_list "40x4") (add_list "40x5")
+      (add_list "45x4") (add_list "45x5")
+      (add_list "50x5") (add_list "50x6") (add_list "50x7")
+      (add_list "55x6")
+      (add_list "60x5") (add_list "60x6") (add_list "60x8")
+      (add_list "65x7")
+      (add_list "70x6") (add_list "70x7") (add_list "70x9")
+      (add_list "75x7") (add_list "75x8")
+      (add_list "80x6") (add_list "80x8") (add_list "80x10")
+      (add_list "90x7") (add_list "90x8") (add_list "90x9")
+      (add_list "100x8") (add_list "100x10") (add_list "100x12") (add_list "100x14")
+      (add_list "110x10") (add_list "110x12")
+      (add_list "120x10") (add_list "120x11") (add_list "120x12") (add_list "120x13") (add_list "120x15")
+      (add_list "130x12")
+      (add_list "140x10") (add_list "140x13") (add_list "140x15")
+      (add_list "150x10") (add_list "150x12") (add_list "150x14") (add_list "150x15")
+      (add_list "150x16") (add_list "150x18") (add_list "150x20")
+      (add_list "160x15") (add_list "160x17") (add_list "160x19")
+      (add_list "180x16") (add_list "180x18") (add_list "180x20") (add_list "180x22")
+      (add_list "200x16") (add_list "200x18") (add_list "200x20") (add_list "200x22")
+      (add_list "200x24") (add_list "200x26") (add_list "200x28") (add_list "200x30")
+      (add_list "250x18") (add_list "250x20") (add_list "250x22") (add_list "250x24")
+      (add_list "250x26") (add_list "250x28")
+    )
+  )
+
+  ;; Kątownik nierównoramienny
+  (if (= taz_s_tmp_family "Kątownik nierównoramienny")
+    (progn
+      (add_list "60x70x4")
+      (add_list "80x90x4")
+    )
+  )
+
+  ;; Rura kwadratowa
+  (if (= taz_s_tmp_family "Rura kwadratowa")
+    (progn
+      (add_list "60x4")
+      (add_list "100x4")
+    )
+  )
+
+  ;; Rura prostokątna
+  (if (= taz_s_tmp_family "Rura prostokątna")
+    (progn
+      (add_list "40x20x4")
+      (add_list "50x40x4")
+    )
+  )
+
+  ;; Rura okrągła
+  (if (= taz_s_tmp_family "Rura okrągła")
+    (progn
+      (add_list "42.4x2.9")
+      (add_list "26.9x2.3")
+    )
+  )
+
+  (end_list)
+    
+  ;; ustaw pierwszy typ ręcznie w zależności od rodziny (bez funkcji pomocniczej)
+
+  (if (= taz_s_tmp_family "HEA")
+    (progn (setq taz_s_tmp_type "100") (set_tile "taz_s_typ" "0"))
+  )
+
+  (if (= taz_s_tmp_family "HEB")
+    (progn (setq taz_s_tmp_type "100") (set_tile "taz_s_typ" "0"))
+  )
+
+  (if (= taz_s_tmp_family "IPE")
+    (progn (setq taz_s_tmp_type "80") (set_tile "taz_s_typ" "0"))
+  )
+
+  (if (= taz_s_tmp_family "IPN")
+    (progn (setq taz_s_tmp_type "80") (set_tile "taz_s_typ" "0"))
+  )
+
+  (if (= taz_s_tmp_family "UPE")
+    (progn (setq taz_s_tmp_type "80") (set_tile "taz_s_typ" "0"))
+  )
+
+  (if (= taz_s_tmp_family "UPN")
+    (progn (setq taz_s_tmp_type "50") (set_tile "taz_s_typ" "0"))
+  )
+
+  (if (= taz_s_tmp_family "Kątownik równoramienny")
+    (progn (setq taz_s_tmp_type "20x3") (set_tile "taz_s_typ" "0"))
+  )
+
+  (if (= taz_s_tmp_family "Kątownik nierównoramienny")
+    (progn (setq taz_s_tmp_type "60x70x4") (set_tile "taz_s_typ" "0"))
+  )
+
+  (if (= taz_s_tmp_family "Rura kwadratowa")
+    (progn (setq taz_s_tmp_type "60x4") (set_tile "taz_s_typ" "0"))
+  )
+
+  (if (= taz_s_tmp_family "Rura prostokątna")
+    (progn (setq taz_s_tmp_type "40x20x4") (set_tile "taz_s_typ" "0"))
+  )
+
+  (if (= taz_s_tmp_family "Rura okrągła")
+    (progn (setq taz_s_tmp_type "42.4x2.9") (set_tile "taz_s_typ" "0"))
+  )
+
+)
+
+(action_tile "taz_s_fam" "(taz_s_on_family_change)")
 
   ;; ---------------------------
   ;; Reakcje na zmianę typu
