@@ -170,7 +170,73 @@
     )
 
     (if (and (= taz_s_cat_val "Kątowniki") (= taz_s_fam_val "Kątownik nierównoramienny"))
-      (progn (add_list "60x70x4") (add_list "80x90x4"))
+      (progn
+        (add_list "30x20x3")
+        (add_list "30x20x4")
+        (add_list "40x20x3")
+        (add_list "40x20x4")
+        (add_list "40x25x4")
+        (add_list "45x30x3")
+        (add_list "45x30x4")
+        (add_list "45x30x5")
+        (add_list "50x30x4")
+        (add_list "50x30x5")
+        (add_list "50x40x4")
+        (add_list "50x40x5")
+        (add_list "60x30x5")
+        (add_list "60x40x5")
+        (add_list "60x40x6")
+        (add_list "60x40x7")
+        (add_list "65x50x5")
+        (add_list "65x50x7")
+        (add_list "65x50x9")
+        (add_list "70x50x6")
+        (add_list "75x50x7")
+        (add_list "75x50x9")
+        (add_list "75x55x5")
+        (add_list "75x55x7")
+        (add_list "75x55x9")
+        (add_list "80x40x6")
+        (add_list "80x40x8")
+        (add_list "80x60x7")
+        (add_list "80x65x8")
+        (add_list "80x65x10")
+        (add_list "90x60x6")
+        (add_list "90x60x8")
+        (add_list "100x50x6")
+        (add_list "100x50x8")
+        (add_list "100x50x10")
+        (add_list "100x65x7")
+        (add_list "100x65x9")
+        (add_list "100x65x11")
+        (add_list "100x75x7")
+        (add_list "100x75x9")
+        (add_list "100x75x11")
+        (add_list "120x80x8")
+        (add_list "120x80x10")
+        (add_list "120x80x12")
+        (add_list "120x80x14")
+        (add_list "130x65x8")
+        (add_list "130x65x10")
+        (add_list "130x65x12")
+        (add_list "130x90x12")
+        (add_list "150x75x9")
+        (add_list "150x75x11")
+        (add_list "150x100x10")
+        (add_list "150x100x12")
+        (add_list "150x100x14")
+        (add_list "160x80x12")
+        (add_list "180x90x10")
+        (add_list "180x90x12")
+        (add_list "200x100x10")
+        (add_list "200x100x12")
+        (add_list "200x100x14")
+        (add_list "200x100x16")
+        (add_list "250x90x10")
+        (add_list "250x90x12")
+        (add_list "250x90x14")
+        (add_list "250x90x16")
+      )
     )
 
     ;; Rury
@@ -576,14 +642,110 @@
     )
 
 
-    ;; Kątownik nierównoramienny
+    ;; Kątownik nierównoramienny – pełna lista wg PDF L
     ((= taz_s_tmp_family "Kątownik nierównoramienny")
-     (if (= taz_s_tmp_type "60x70x4") (set_tile "taz_s_typ" "0"))
-     (if (= taz_s_tmp_type "80x90x4") (set_tile "taz_s_typ" "1"))
-     (if (and (not (= taz_s_tmp_type "60x70x4")) (not (= taz_s_tmp_type "80x90x4")))
-       (progn (setq taz_s_tmp_type "60x70x4") (set_tile "taz_s_typ" "0"))
+     (if (= taz_s_tmp_type "30x20x3")  (set_tile "taz_s_typ" "0"))
+     (if (= taz_s_tmp_type "30x20x4")  (set_tile "taz_s_typ" "1"))
+     (if (= taz_s_tmp_type "40x20x3")  (set_tile "taz_s_typ" "2"))
+     (if (= taz_s_tmp_type "40x20x4")  (set_tile "taz_s_typ" "3"))
+     (if (= taz_s_tmp_type "40x25x4")  (set_tile "taz_s_typ" "4"))
+     (if (= taz_s_tmp_type "45x30x3")  (set_tile "taz_s_typ" "5"))
+     (if (= taz_s_tmp_type "45x30x4")  (set_tile "taz_s_typ" "6"))
+     (if (= taz_s_tmp_type "45x30x5")  (set_tile "taz_s_typ" "7"))
+     (if (= taz_s_tmp_type "50x30x4")  (set_tile "taz_s_typ" "8"))
+     (if (= taz_s_tmp_type "50x30x5")  (set_tile "taz_s_typ" "9"))
+     (if (= taz_s_tmp_type "50x40x4")  (set_tile "taz_s_typ" "10"))
+     (if (= taz_s_tmp_type "50x40x5")  (set_tile "taz_s_typ" "11"))
+     (if (= taz_s_tmp_type "60x30x5")  (set_tile "taz_s_typ" "12"))
+     (if (= taz_s_tmp_type "60x40x5")  (set_tile "taz_s_typ" "13"))
+     (if (= taz_s_tmp_type "60x40x6")  (set_tile "taz_s_typ" "14"))
+     (if (= taz_s_tmp_type "60x40x7")  (set_tile "taz_s_typ" "15"))
+     (if (= taz_s_tmp_type "65x50x5")  (set_tile "taz_s_typ" "16"))
+     (if (= taz_s_tmp_type "65x50x7")  (set_tile "taz_s_typ" "17"))
+     (if (= taz_s_tmp_type "65x50x9")  (set_tile "taz_s_typ" "18"))
+     (if (= taz_s_tmp_type "70x50x6")  (set_tile "taz_s_typ" "19"))
+     (if (= taz_s_tmp_type "75x50x7")  (set_tile "taz_s_typ" "20"))
+     (if (= taz_s_tmp_type "75x50x9")  (set_tile "taz_s_typ" "21"))
+     (if (= taz_s_tmp_type "75x55x5")  (set_tile "taz_s_typ" "22"))
+     (if (= taz_s_tmp_type "75x55x7")  (set_tile "taz_s_typ" "23"))
+     (if (= taz_s_tmp_type "75x55x9")  (set_tile "taz_s_typ" "24"))
+     (if (= taz_s_tmp_type "80x40x6")  (set_tile "taz_s_typ" "25"))
+     (if (= taz_s_tmp_type "80x40x8")  (set_tile "taz_s_typ" "26"))
+     (if (= taz_s_tmp_type "80x60x7")  (set_tile "taz_s_typ" "27"))
+     (if (= taz_s_tmp_type "80x65x8")  (set_tile "taz_s_typ" "28"))
+     (if (= taz_s_tmp_type "80x65x10") (set_tile "taz_s_typ" "29"))
+     (if (= taz_s_tmp_type "90x60x6")  (set_tile "taz_s_typ" "30"))
+     (if (= taz_s_tmp_type "90x60x8")  (set_tile "taz_s_typ" "31"))
+     (if (= taz_s_tmp_type "100x50x6") (set_tile "taz_s_typ" "32"))
+     (if (= taz_s_tmp_type "100x50x8") (set_tile "taz_s_typ" "33"))
+     (if (= taz_s_tmp_type "100x50x10")(set_tile "taz_s_typ" "34"))
+     (if (= taz_s_tmp_type "100x65x7") (set_tile "taz_s_typ" "35"))
+     (if (= taz_s_tmp_type "100x65x9") (set_tile "taz_s_typ" "36"))
+     (if (= taz_s_tmp_type "100x65x11")(set_tile "taz_s_typ" "37"))
+     (if (= taz_s_tmp_type "100x75x7") (set_tile "taz_s_typ" "38"))
+     (if (= taz_s_tmp_type "100x75x9") (set_tile "taz_s_typ" "39"))
+     (if (= taz_s_tmp_type "100x75x11")(set_tile "taz_s_typ" "40"))
+     (if (= taz_s_tmp_type "120x80x8") (set_tile "taz_s_typ" "41"))
+     (if (= taz_s_tmp_type "120x80x10")(set_tile "taz_s_typ" "42"))
+     (if (= taz_s_tmp_type "120x80x12")(set_tile "taz_s_typ" "43"))
+     (if (= taz_s_tmp_type "120x80x14")(set_tile "taz_s_typ" "44"))
+     (if (= taz_s_tmp_type "130x65x8") (set_tile "taz_s_typ" "45"))
+     (if (= taz_s_tmp_type "130x65x10")(set_tile "taz_s_typ" "46"))
+     (if (= taz_s_tmp_type "130x65x12")(set_tile "taz_s_typ" "47"))
+     (if (= taz_s_tmp_type "130x90x12")(set_tile "taz_s_typ" "48"))
+     (if (= taz_s_tmp_type "150x75x9") (set_tile "taz_s_typ" "49"))
+     (if (= taz_s_tmp_type "150x75x11")(set_tile "taz_s_typ" "50"))
+     (if (= taz_s_tmp_type "150x100x10")(set_tile "taz_s_typ" "51"))
+     (if (= taz_s_tmp_type "150x100x12")(set_tile "taz_s_typ" "52"))
+     (if (= taz_s_tmp_type "150x100x14")(set_tile "taz_s_typ" "53"))
+     (if (= taz_s_tmp_type "160x80x12")(set_tile "taz_s_typ" "54"))
+     (if (= taz_s_tmp_type "180x90x10")(set_tile "taz_s_typ" "55"))
+     (if (= taz_s_tmp_type "180x90x12")(set_tile "taz_s_typ" "56"))
+     (if (= taz_s_tmp_type "200x100x10")(set_tile "taz_s_typ" "57"))
+     (if (= taz_s_tmp_type "200x100x12")(set_tile "taz_s_typ" "58"))
+     (if (= taz_s_tmp_type "200x100x14")(set_tile "taz_s_typ" "59"))
+     (if (= taz_s_tmp_type "200x100x16")(set_tile "taz_s_typ" "60"))
+     (if (= taz_s_tmp_type "250x90x10")(set_tile "taz_s_typ" "61"))
+     (if (= taz_s_tmp_type "250x90x12")(set_tile "taz_s_typ" "62"))
+     (if (= taz_s_tmp_type "250x90x14")(set_tile "taz_s_typ" "63"))
+     (if (= taz_s_tmp_type "250x90x16")(set_tile "taz_s_typ" "64"))
+
+     ;; fallback – jeśli typ spoza listy, ustaw pierwszy z tabeli
+     (if (not (member taz_s_tmp_type
+           '("30x20x3" "30x20x4"
+             "40x20x3" "40x20x4" "40x25x4"
+             "45x30x3" "45x30x4" "45x30x5"
+             "50x30x4" "50x30x5"
+             "50x40x4" "50x40x5"
+             "60x30x5"
+             "60x40x5" "60x40x6" "60x40x7"
+             "65x50x5" "65x50x7" "65x50x9"
+             "70x50x6"
+             "75x50x7" "75x50x9"
+             "75x55x5" "75x55x7" "75x55x9"
+             "80x40x6" "80x40x8"
+             "80x60x7"
+             "80x65x8" "80x65x10"
+             "90x60x6" "90x60x8"
+             "100x50x6" "100x50x8" "100x50x10"
+             "100x65x7" "100x65x9" "100x65x11"
+             "100x75x7" "100x75x9" "100x75x11"
+             "120x80x8" "120x80x10" "120x80x12" "120x80x14"
+             "130x65x8" "130x65x10" "130x65x12"
+             "130x90x12"
+             "150x75x9" "150x75x11"
+             "150x100x10" "150x100x12" "150x100x14"
+             "160x80x12"
+             "180x90x10" "180x90x12"
+             "200x100x10" "200x100x12" "200x100x14" "200x100x16"
+             "250x90x10" "250x90x12" "250x90x14" "250x90x16")))
+       (progn
+         (setq taz_s_tmp_type "30x20x3")
+         (set_tile "taz_s_typ" "0")
+       )
      )
     )
+
 
     ;; Rura kwadratowa
     ((= taz_s_tmp_family "Rura kwadratowa")
@@ -780,13 +942,94 @@
     )
   )
 
-  ;; Kątownik nierównoramienny
-  (if (= taz_s_tmp_family "Kątownik nierównoramienny")
-    (progn
-      (add_list "60x70x4")
-      (add_list "80x90x4")
-    )
+;; Kątownik nierównoramienny – pełna lista wg PDF
+(if (= taz_s_tmp_family "Kątownik nierównoramienny")
+  (progn
+    (add_list "30x20x3")
+    (add_list "30x20x4")
+
+    (add_list "40x20x3")
+    (add_list "40x20x4")
+    (add_list "40x25x4")
+
+    (add_list "45x30x3")
+    (add_list "45x30x4")
+    (add_list "45x30x5")
+
+    (add_list "50x30x4")
+    (add_list "50x30x5")
+    (add_list "50x40x4")
+    (add_list "50x40x5")
+
+    (add_list "60x30x5")
+    (add_list "60x40x5")
+    (add_list "60x40x6")
+    (add_list "60x40x7")
+
+    (add_list "65x50x5")
+    (add_list "65x50x7")
+    (add_list "65x50x9")
+
+    (add_list "70x50x6")
+
+    (add_list "75x50x7")
+    (add_list "75x50x9")
+    (add_list "75x55x5")
+    (add_list "75x55x7")
+    (add_list "75x55x9")
+
+    (add_list "80x40x6")
+    (add_list "80x40x8")
+    (add_list "80x60x7")
+    (add_list "80x65x8")
+    (add_list "80x65x10")
+
+    (add_list "90x60x6")
+    (add_list "90x60x8")
+
+    (add_list "100x50x6")
+    (add_list "100x50x8")
+    (add_list "100x50x10")
+    (add_list "100x65x7")
+    (add_list "100x65x9")
+    (add_list "100x65x11")
+    (add_list "100x75x7")
+    (add_list "100x75x9")
+    (add_list "100x75x11")
+
+    (add_list "120x80x8")
+    (add_list "120x80x10")
+    (add_list "120x80x12")
+    (add_list "120x80x14")
+
+    (add_list "130x65x8")
+    (add_list "130x65x10")
+    (add_list "130x65x12")
+    (add_list "130x90x12")
+
+    (add_list "150x75x9")
+    (add_list "150x75x11")
+    (add_list "150x100x10")
+    (add_list "150x100x12")
+    (add_list "150x100x14")
+
+    (add_list "160x80x12")
+
+    (add_list "180x90x10")
+    (add_list "180x90x12")
+
+    (add_list "200x100x10")
+    (add_list "200x100x12")
+    (add_list "200x100x14")
+    (add_list "200x100x16")
+
+    (add_list "250x90x10")
+    (add_list "250x90x12")
+    (add_list "250x90x14")
+    (add_list "250x90x16")
   )
+)
+
 
   ;; Rura kwadratowa
   (if (= taz_s_tmp_family "Rura kwadratowa")
@@ -845,7 +1088,7 @@
   )
 
   (if (= taz_s_tmp_family "Kątownik nierównoramienny")
-    (progn (setq taz_s_tmp_type "60x70x4") (set_tile "taz_s_typ" "0"))
+    (progn (setq taz_s_tmp_type "30x20x3") (set_tile "taz_s_typ" "0"))
   )
 
   (if (= taz_s_tmp_family "Rura kwadratowa")
@@ -1006,13 +1249,94 @@
     )
   )
 
-  ;; Kątownik nierównoramienny
-  (if (= taz_s_tmp_family "Kątownik nierównoramienny")
-    (progn
-      (add_list "60x70x4")
-      (add_list "80x90x4")
-    )
+;; Kątownik nierównoramienny – pełna lista wg PDF
+(if (= taz_s_tmp_family "Kątownik nierównoramienny")
+  (progn
+    (add_list "30x20x3")
+    (add_list "30x20x4")
+
+    (add_list "40x20x3")
+    (add_list "40x20x4")
+    (add_list "40x25x4")
+
+    (add_list "45x30x3")
+    (add_list "45x30x4")
+    (add_list "45x30x5")
+
+    (add_list "50x30x4")
+    (add_list "50x30x5")
+    (add_list "50x40x4")
+    (add_list "50x40x5")
+
+    (add_list "60x30x5")
+    (add_list "60x40x5")
+    (add_list "60x40x6")
+    (add_list "60x40x7")
+
+    (add_list "65x50x5")
+    (add_list "65x50x7")
+    (add_list "65x50x9")
+
+    (add_list "70x50x6")
+
+    (add_list "75x50x7")
+    (add_list "75x50x9")
+    (add_list "75x55x5")
+    (add_list "75x55x7")
+    (add_list "75x55x9")
+
+    (add_list "80x40x6")
+    (add_list "80x40x8")
+    (add_list "80x60x7")
+    (add_list "80x65x8")
+    (add_list "80x65x10")
+
+    (add_list "90x60x6")
+    (add_list "90x60x8")
+
+    (add_list "100x50x6")
+    (add_list "100x50x8")
+    (add_list "100x50x10")
+    (add_list "100x65x7")
+    (add_list "100x65x9")
+    (add_list "100x65x11")
+    (add_list "100x75x7")
+    (add_list "100x75x9")
+    (add_list "100x75x11")
+
+    (add_list "120x80x8")
+    (add_list "120x80x10")
+    (add_list "120x80x12")
+    (add_list "120x80x14")
+
+    (add_list "130x65x8")
+    (add_list "130x65x10")
+    (add_list "130x65x12")
+    (add_list "130x90x12")
+
+    (add_list "150x75x9")
+    (add_list "150x75x11")
+    (add_list "150x100x10")
+    (add_list "150x100x12")
+    (add_list "150x100x14")
+
+    (add_list "160x80x12")
+
+    (add_list "180x90x10")
+    (add_list "180x90x12")
+
+    (add_list "200x100x10")
+    (add_list "200x100x12")
+    (add_list "200x100x14")
+    (add_list "200x100x16")
+
+    (add_list "250x90x10")
+    (add_list "250x90x12")
+    (add_list "250x90x14")
+    (add_list "250x90x16")
   )
+)
+
 
   ;; Rura kwadratowa
   (if (= taz_s_tmp_family "Rura kwadratowa")
@@ -1071,7 +1395,7 @@
   )
 
   (if (= taz_s_tmp_family "Kątownik nierównoramienny")
-    (progn (setq taz_s_tmp_type "60x70x4") (set_tile "taz_s_typ" "0"))
+    (progn (setq taz_s_tmp_type "30x20x3") (set_tile "taz_s_typ" "0"))
   )
 
   (if (= taz_s_tmp_family "Rura kwadratowa")
@@ -1334,13 +1658,94 @@
     )
   )
 
-  ;; Kątownik nierównoramienny
+  ;; Kątownik nierównoramienny – pełne mapowanie indeksów
   (if (= taz_s_tmp_family "Kątownik nierównoramienny")
     (progn
-      (if (= $value "0") (setq taz_s_tmp_type "60x70x4"))
-      (if (= $value "1") (setq taz_s_tmp_type "80x90x4"))
+      (if (= $value "0")  (setq taz_s_tmp_type "30x20x3"))
+      (if (= $value "1")  (setq taz_s_tmp_type "30x20x4"))
+
+      (if (= $value "2")  (setq taz_s_tmp_type "40x20x3"))
+      (if (= $value "3")  (setq taz_s_tmp_type "40x20x4"))
+      (if (= $value "4")  (setq taz_s_tmp_type "40x25x4"))
+
+      (if (= $value "5")  (setq taz_s_tmp_type "45x30x3"))
+      (if (= $value "6")  (setq taz_s_tmp_type "45x30x4"))
+      (if (= $value "7")  (setq taz_s_tmp_type "45x30x5"))
+
+      (if (= $value "8")  (setq taz_s_tmp_type "50x30x4"))
+      (if (= $value "9")  (setq taz_s_tmp_type "50x30x5"))
+      (if (= $value "10") (setq taz_s_tmp_type "50x40x4"))
+      (if (= $value "11") (setq taz_s_tmp_type "50x40x5"))
+
+      (if (= $value "12") (setq taz_s_tmp_type "60x30x5"))
+      (if (= $value "13") (setq taz_s_tmp_type "60x40x5"))
+      (if (= $value "14") (setq taz_s_tmp_type "60x40x6"))
+      (if (= $value "15") (setq taz_s_tmp_type "60x40x7"))
+
+      (if (= $value "16") (setq taz_s_tmp_type "65x50x5"))
+      (if (= $value "17") (setq taz_s_tmp_type "65x50x7"))
+      (if (= $value "18") (setq taz_s_tmp_type "65x50x9"))
+
+      (if (= $value "19") (setq taz_s_tmp_type "70x50x6"))
+
+      (if (= $value "20") (setq taz_s_tmp_type "75x50x7"))
+      (if (= $value "21") (setq taz_s_tmp_type "75x50x9"))
+      (if (= $value "22") (setq taz_s_tmp_type "75x55x5"))
+      (if (= $value "23") (setq taz_s_tmp_type "75x55x7"))
+      (if (= $value "24") (setq taz_s_tmp_type "75x55x9"))
+
+      (if (= $value "25") (setq taz_s_tmp_type "80x40x6"))
+      (if (= $value "26") (setq taz_s_tmp_type "80x40x8"))
+      (if (= $value "27") (setq taz_s_tmp_type "80x60x7"))
+      (if (= $value "28") (setq taz_s_tmp_type "80x65x8"))
+      (if (= $value "29") (setq taz_s_tmp_type "80x65x10"))
+
+      (if (= $value "30") (setq taz_s_tmp_type "90x60x6"))
+      (if (= $value "31") (setq taz_s_tmp_type "90x60x8"))
+
+      (if (= $value "32") (setq taz_s_tmp_type "100x50x6"))
+      (if (= $value "33") (setq taz_s_tmp_type "100x50x8"))
+      (if (= $value "34") (setq taz_s_tmp_type "100x50x10"))
+      (if (= $value "35") (setq taz_s_tmp_type "100x65x7"))
+      (if (= $value "36") (setq taz_s_tmp_type "100x65x9"))
+      (if (= $value "37") (setq taz_s_tmp_type "100x65x11"))
+      (if (= $value "38") (setq taz_s_tmp_type "100x75x7"))
+      (if (= $value "39") (setq taz_s_tmp_type "100x75x9"))
+      (if (= $value "40") (setq taz_s_tmp_type "100x75x11"))
+
+      (if (= $value "41") (setq taz_s_tmp_type "120x80x8"))
+      (if (= $value "42") (setq taz_s_tmp_type "120x80x10"))
+      (if (= $value "43") (setq taz_s_tmp_type "120x80x12"))
+      (if (= $value "44") (setq taz_s_tmp_type "120x80x14"))
+
+      (if (= $value "45") (setq taz_s_tmp_type "130x65x8"))
+      (if (= $value "46") (setq taz_s_tmp_type "130x65x10"))
+      (if (= $value "47") (setq taz_s_tmp_type "130x65x12"))
+      (if (= $value "48") (setq taz_s_tmp_type "130x90x12"))
+
+      (if (= $value "49") (setq taz_s_tmp_type "150x75x9"))
+      (if (= $value "50") (setq taz_s_tmp_type "150x75x11"))
+      (if (= $value "51") (setq taz_s_tmp_type "150x100x10"))
+      (if (= $value "52") (setq taz_s_tmp_type "150x100x12"))
+      (if (= $value "53") (setq taz_s_tmp_type "150x100x14"))
+
+      (if (= $value "54") (setq taz_s_tmp_type "160x80x12"))
+
+      (if (= $value "55") (setq taz_s_tmp_type "180x90x10"))
+      (if (= $value "56") (setq taz_s_tmp_type "180x90x12"))
+
+      (if (= $value "57") (setq taz_s_tmp_type "200x100x10"))
+      (if (= $value "58") (setq taz_s_tmp_type "200x100x12"))
+      (if (= $value "59") (setq taz_s_tmp_type "200x100x14"))
+      (if (= $value "60") (setq taz_s_tmp_type "200x100x16"))
+
+      (if (= $value "61") (setq taz_s_tmp_type "250x90x10"))
+      (if (= $value "62") (setq taz_s_tmp_type "250x90x12"))
+      (if (= $value "63") (setq taz_s_tmp_type "250x90x14"))
+      (if (= $value "64") (setq taz_s_tmp_type "250x90x16"))
     )
   )
+
 
   ;; Rura kwadratowa
   (if (= taz_s_tmp_family "Rura kwadratowa")
