@@ -1254,40 +1254,72 @@
      (if (= taz_s_tmp_type "250x90x12")(set_tile "taz_s_typ" "62"))
      (if (= taz_s_tmp_type "250x90x14")(set_tile "taz_s_typ" "63"))
      (if (= taz_s_tmp_type "250x90x16")(set_tile "taz_s_typ" "64"))
-
-     ;; fallback – jeśli typ spoza listy, ustaw pierwszy z tabeli
-     (if (not (member taz_s_tmp_type
-           '("30x20x3" "30x20x4"
-             "40x20x3" "40x20x4" "40x25x4"
-             "45x30x3" "45x30x4" "45x30x5"
-             "50x30x4" "50x30x5"
-             "50x40x4" "50x40x5"
-             "60x30x5"
-             "60x40x5" "60x40x6" "60x40x7"
-             "65x50x5" "65x50x7" "65x50x9"
-             "70x50x6"
-             "75x50x7" "75x50x9"
-             "75x55x5" "75x55x7" "75x55x9"
-             "80x40x6" "80x40x8"
-             "80x60x7"
-             "80x65x8" "80x65x10"
-             "90x60x6" "90x60x8"
-             "100x50x6" "100x50x8" "100x50x10"
-             "100x65x7" "100x65x9" "100x65x11"
-             "100x75x7" "100x75x9" "100x75x11"
-             "120x80x8" "120x80x10" "120x80x12" "120x80x14"
-             "130x65x8" "130x65x10" "130x65x12"
-             "130x90x12"
-             "150x75x9" "150x75x11"
-             "150x100x10" "150x100x12" "150x100x14"
-             "160x80x12"
-             "180x90x10" "180x90x12"
-             "200x100x10" "200x100x12" "200x100x14" "200x100x16"
-             "250x90x10" "250x90x12" "250x90x14" "250x90x16")))
-       (progn
-         (setq taz_s_tmp_type "30x20x3")
-         (set_tile "taz_s_typ" "0")
-       )
+     (if (and (not (= taz_s_tmp_type "30x20x3"))
+              (not (= taz_s_tmp_type "30x20x4"))
+              (not (= taz_s_tmp_type "40x20x3"))
+              (not (= taz_s_tmp_type "40x20x4"))
+              (not (= taz_s_tmp_type "40x25x4"))
+              (not (= taz_s_tmp_type "45x30x3"))
+              (not (= taz_s_tmp_type "45x30x4"))
+              (not (= taz_s_tmp_type "45x30x5"))
+              (not (= taz_s_tmp_type "50x30x4"))
+              (not (= taz_s_tmp_type "50x30x5"))
+              (not (= taz_s_tmp_type "50x40x4"))
+              (not (= taz_s_tmp_type "50x40x5"))
+              (not (= taz_s_tmp_type "60x30x5"))
+              (not (= taz_s_tmp_type "60x40x5"))
+              (not (= taz_s_tmp_type "60x40x6"))
+              (not (= taz_s_tmp_type "60x40x7"))
+              (not (= taz_s_tmp_type "65x50x5"))
+              (not (= taz_s_tmp_type "65x50x7"))
+              (not (= taz_s_tmp_type "65x50x9"))
+              (not (= taz_s_tmp_type "70x50x6"))
+              (not (= taz_s_tmp_type "75x50x7"))
+              (not (= taz_s_tmp_type "75x50x9"))
+              (not (= taz_s_tmp_type "75x55x5"))
+              (not (= taz_s_tmp_type "75x55x7"))
+              (not (= taz_s_tmp_type "75x55x9"))
+              (not (= taz_s_tmp_type "80x40x6"))
+              (not (= taz_s_tmp_type "80x40x8"))
+              (not (= taz_s_tmp_type "80x60x7"))
+              (not (= taz_s_tmp_type "80x65x8"))
+              (not (= taz_s_tmp_type "80x65x10"))
+              (not (= taz_s_tmp_type "90x60x6"))
+              (not (= taz_s_tmp_type "90x60x8"))
+              (not (= taz_s_tmp_type "100x50x6"))
+              (not (= taz_s_tmp_type "100x50x8"))
+              (not (= taz_s_tmp_type "100x50x10"))
+              (not (= taz_s_tmp_type "100x65x7"))
+              (not (= taz_s_tmp_type "100x65x9"))
+              (not (= taz_s_tmp_type "100x65x11"))
+              (not (= taz_s_tmp_type "100x75x7"))
+              (not (= taz_s_tmp_type "100x75x9"))
+              (not (= taz_s_tmp_type "100x75x11"))
+              (not (= taz_s_tmp_type "120x80x8"))
+              (not (= taz_s_tmp_type "120x80x10"))
+              (not (= taz_s_tmp_type "120x80x12"))
+              (not (= taz_s_tmp_type "120x80x14"))
+              (not (= taz_s_tmp_type "130x65x8"))
+              (not (= taz_s_tmp_type "130x65x10"))
+              (not (= taz_s_tmp_type "130x65x12"))
+              (not (= taz_s_tmp_type "130x90x12"))
+              (not (= taz_s_tmp_type "150x75x9"))
+              (not (= taz_s_tmp_type "150x75x11"))
+              (not (= taz_s_tmp_type "150x100x10"))
+              (not (= taz_s_tmp_type "150x100x12"))
+              (not (= taz_s_tmp_type "150x100x14"))
+              (not (= taz_s_tmp_type "160x80x12"))
+              (not (= taz_s_tmp_type "180x90x10"))
+              (not (= taz_s_tmp_type "180x90x12"))
+              (not (= taz_s_tmp_type "200x100x10"))
+              (not (= taz_s_tmp_type "200x100x12"))
+              (not (= taz_s_tmp_type "200x100x14"))
+              (not (= taz_s_tmp_type "200x100x16"))
+              (not (= taz_s_tmp_type "250x90x10"))
+              (not (= taz_s_tmp_type "250x90x12"))
+              (not (= taz_s_tmp_type "250x90x14"))
+              (not (= taz_s_tmp_type "250x90x16")))
+       (progn (setq taz_s_tmp_type "30x20x3") (set_tile "taz_s_typ" "0"))
      )
     )
 
