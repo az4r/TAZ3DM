@@ -1,7 +1,7 @@
 (defun c:taz_s_select_section ( / taz_s_dcl_id )
 
   ;; ---------------------------
-  ;; DOMYŚLNE WARTOŚCI
+  ;; DOMYsLNE WARTOsCI
   ;; ---------------------------
   (if (not taz_s_category) (setq taz_s_category "Dwuteowniki"))
   (if (not taz_s_family)   (setq taz_s_family   "HEA"))
@@ -20,13 +20,13 @@
   (setq taz_s_dcl_id (load_dialog "taz_s_select_section.dcl"))
   (if (not (new_dialog "taz_s_select_section" taz_s_dcl_id))
     (progn
-      (alert "Nie mogę otworzyć DCL!")
+      (alert "Nie moge otworzyc DCL!")
       (exit)
     )
   )
 
   ;; ---------------------------
-  ;; Funkcja uzupełniająca listę rodzin
+  ;; Funkcja uzupelniajaca liste rodzin
   ;; ---------------------------
   (defun taz_s_fill_family_list (taz_s_cat_val /)
     (start_list "taz_s_fam")
@@ -47,18 +47,18 @@
       )
     )
 
-    (if (= taz_s_cat_val "Kątowniki")
+    (if (= taz_s_cat_val "Katowniki")
       (progn
-        (add_list "Kątownik równoramienny")
-        (add_list "Kątownik nierównoramienny")
+        (add_list "Katownik rownoramienny")
+        (add_list "Katownik nierownoramienny")
       )
     )
 
     (if (= taz_s_cat_val "Rury")
       (progn
         (add_list "Rura kwadratowa")
-        (add_list "Rura prostokątna")
-        (add_list "Rura okrągła")
+        (add_list "Rura prostokatna")
+        (add_list "Rura okragla")
       )
     )
 
@@ -66,7 +66,7 @@
   )
 
   ;; ---------------------------
-  ;; Funkcja uzupełniająca listę typów
+  ;; Funkcja uzupelniajaca liste typow
   ;; ---------------------------
   (defun taz_s_fill_type_list (taz_s_cat_val taz_s_fam_val /)
     (start_list "taz_s_typ")
@@ -229,8 +229,8 @@
       )
     )
 
-    ;; Kątowniki równoramienne
-    (if (and (= taz_s_cat_val "Kątowniki") (= taz_s_fam_val "Kątownik równoramienny"))
+    ;; Katowniki rownoramienne
+    (if (and (= taz_s_cat_val "Katowniki") (= taz_s_fam_val "Katownik rownoramienny"))
       (progn
         (add_list "20x3")
         (add_list "25x3")
@@ -309,8 +309,8 @@
       )
     )
 
-    ;; Kątowniki nierównoramienne
-    (if (and (= taz_s_cat_val "Kątowniki") (= taz_s_fam_val "Kątownik nierównoramienny"))
+    ;; Katowniki nierownoramienne
+    (if (and (= taz_s_cat_val "Katowniki") (= taz_s_fam_val "Katownik nierownoramienny"))
       (progn
         (add_list "30x20x3")
         (add_list "30x20x4")
@@ -447,8 +447,8 @@
         (add_list "285x285x10")
       )
     )
-    ;; Rury - Rura prostokątna (RHS)
-    (if (and (= taz_s_cat_val "Rury") (= taz_s_fam_val "Rura prostokątna"))
+    ;; Rury - Rura prostokatna (RHS)
+    (if (and (= taz_s_cat_val "Rury") (= taz_s_fam_val "Rura prostokatna"))
       (progn
         (add_list "50x25x2.5")
         (add_list "50x25x3")
@@ -523,8 +523,8 @@
       )
     )
 
-    ;; Rury - Rura okrągła (CHS)
-(if (and (= taz_s_cat_val "Rury") (= taz_s_fam_val "Rura okrągła"))
+    ;; Rury - Rura okragla (CHS)
+(if (and (= taz_s_cat_val "Rury") (= taz_s_fam_val "Rura okragla"))
   (progn
     (add_list "508x12.7")
     (add_list "508x9.5")
@@ -694,18 +694,18 @@
   (start_list "taz_s_cat")
   (add_list "Dwuteowniki")
   (add_list "Ceowniki")
-  (add_list "Kątowniki")
+  (add_list "Katowniki")
   (add_list "Rury")
   (end_list)
 
   ;; ---------------------------
-  ;; Ustawienie początkowych wartości
+  ;; Ustawienie poczatkowych wartosci
   ;; ---------------------------
 
   ;; Kategoria
   (if (= taz_s_tmp_category "Dwuteowniki") (set_tile "taz_s_cat" "0"))
   (if (= taz_s_tmp_category "Ceowniki")    (set_tile "taz_s_cat" "1"))
-  (if (= taz_s_tmp_category "Kątowniki")   (set_tile "taz_s_cat" "2"))
+  (if (= taz_s_tmp_category "Katowniki")   (set_tile "taz_s_cat" "2"))
   (if (= taz_s_tmp_category "Rury")        (set_tile "taz_s_cat" "3"))
 
   ;; Rodziny
@@ -729,11 +729,11 @@
     )
   )
 
-  ;; Kątowniki
-  (if (= taz_s_tmp_category "Kątowniki")
+  ;; Katowniki
+  (if (= taz_s_tmp_category "Katowniki")
     (progn
-      (if (= taz_s_tmp_family "Kątownik równoramienny") (set_tile "taz_s_fam" "0"))
-      (if (= taz_s_tmp_family "Kątownik nierównoramienny") (set_tile "taz_s_fam" "1"))
+      (if (= taz_s_tmp_family "Katownik rownoramienny") (set_tile "taz_s_fam" "0"))
+      (if (= taz_s_tmp_family "Katownik nierownoramienny") (set_tile "taz_s_fam" "1"))
     )
   )
 
@@ -741,8 +741,8 @@
   (if (= taz_s_tmp_category "Rury")
     (progn
       (if (= taz_s_tmp_family "Rura kwadratowa") (set_tile "taz_s_fam" "0"))
-      (if (= taz_s_tmp_family "Rura prostokątna") (set_tile "taz_s_fam" "1"))
-      (if (= taz_s_tmp_family "Rura okrągła") (set_tile "taz_s_fam" "2"))
+      (if (= taz_s_tmp_family "Rura prostokatna") (set_tile "taz_s_fam" "1"))
+      (if (= taz_s_tmp_family "Rura okragla") (set_tile "taz_s_fam" "2"))
     )
   )
 
@@ -1032,8 +1032,8 @@
      )
     )
 
-    ;; Kątowniki równoramienne
-    ((= taz_s_tmp_family "Kątownik równoramienny")
+    ;; Katowniki rownoramienne
+    ((= taz_s_tmp_family "Katownik rownoramienny")
       (if (= taz_s_tmp_type "20x3")   (set_tile "taz_s_typ" "0"))
       (if (= taz_s_tmp_type "25x3")   (set_tile "taz_s_typ" "1"))
       (if (= taz_s_tmp_type "25x4")   (set_tile "taz_s_typ" "2"))
@@ -1187,8 +1187,8 @@
      )
 
 
-    ;; Kątowniki nierównoramienne
-    ((= taz_s_tmp_family "Kątownik nierównoramienny")
+    ;; Katowniki nierownoramienne
+    ((= taz_s_tmp_family "Katownik nierownoramienny")
      (if (= taz_s_tmp_type "30x20x3")  (set_tile "taz_s_typ" "0"))
      (if (= taz_s_tmp_type "30x20x4")  (set_tile "taz_s_typ" "1"))
      (if (= taz_s_tmp_type "40x20x3")  (set_tile "taz_s_typ" "2"))
@@ -1453,8 +1453,8 @@
       )
      )
 
-    ;; Rury - Rura prostokątna (RHS)
-    ((= taz_s_tmp_family "Rura prostokątna")
+    ;; Rury - Rura prostokatna (RHS)
+    ((= taz_s_tmp_family "Rura prostokatna")
         (if (= taz_s_tmp_type "50x25x2.5") (set_tile "taz_s_typ" "0"))
         (if (= taz_s_tmp_type "50x25x3")   (set_tile "taz_s_typ" "1"))
         (if (= taz_s_tmp_type "50x25x3.5") (set_tile "taz_s_typ" "2"))
@@ -1600,8 +1600,8 @@
           )
         )
 
-    ;; Rury - Rura okrągła (CHS)
-    ((= taz_s_tmp_family "Rura okrągła")
+    ;; Rury - Rura okragla (CHS)
+    ((= taz_s_tmp_family "Rura okragla")
       (if (= taz_s_tmp_type "508x12.7") (set_tile "taz_s_typ" "0"))
       (if (= taz_s_tmp_type "508x9.5")  (set_tile "taz_s_typ" "1"))
       (if (= taz_s_tmp_type "457.2x12.7") (set_tile "taz_s_typ" "2"))
@@ -1919,14 +1919,14 @@
 )
 
   ;; ---------------------------
-  ;; Reakcje na zmianę kategorii
+  ;; Reakcje na zmiane kategorii
   ;; ---------------------------
   (defun taz_s_on_category_change ( / )
 
   ;; Ustawienie kategorii na podstawie indeksu
   (if (= $value "0") (setq taz_s_tmp_category "Dwuteowniki"))
   (if (= $value "1") (setq taz_s_tmp_category "Ceowniki"))
-  (if (= $value "2") (setq taz_s_tmp_category "Kątowniki"))
+  (if (= $value "2") (setq taz_s_tmp_category "Katowniki"))
   (if (= $value "3") (setq taz_s_tmp_category "Rury"))
 
   ;; Lista rodzin
@@ -1948,33 +1948,33 @@
     )
   )
 
-  (if (= taz_s_tmp_category "Kątowniki")
+  (if (= taz_s_tmp_category "Katowniki")
     (progn
-      (add_list "Kątownik równoramienny")
-      (add_list "Kątownik nierównoramienny")
+      (add_list "Katownik rownoramienny")
+      (add_list "Katownik nierownoramienny")
     )
   )
 
   (if (= taz_s_tmp_category "Rury")
     (progn
       (add_list "Rura kwadratowa")
-      (add_list "Rura prostokątna")
-      (add_list "Rura okrągła")
+      (add_list "Rura prostokatna")
+      (add_list "Rura okragla")
     )
   )
 
   (end_list)
 
-  ;; Ustawienie domyślnej rodziny
+  ;; Ustawienie domyslnej rodziny
   (if (= taz_s_tmp_category "Dwuteowniki") (setq taz_s_tmp_family "HEA"))
   (if (= taz_s_tmp_category "Ceowniki")    (setq taz_s_tmp_family "UPE"))
-  (if (= taz_s_tmp_category "Kątowniki")   (setq taz_s_tmp_family "Kątownik równoramienny"))
+  (if (= taz_s_tmp_category "Katowniki")   (setq taz_s_tmp_family "Katownik rownoramienny"))
   (if (= taz_s_tmp_category "Rury")        (setq taz_s_tmp_family "Rura kwadratowa"))
 
   ;; Ustawienie indeksu rodziny na 0
   (set_tile "taz_s_fam" "0")
 
-  ;; Start listy typów
+  ;; Start listy typow
   (start_list "taz_s_typ")
     
   ;; Dwuteowniki - HEA
@@ -2136,8 +2136,8 @@
     )
   )
 
-  ;; Kątowniki równoramienne
-  (if (= taz_s_tmp_family "Kątownik równoramienny")
+  ;; Katowniki rownoramienne
+  (if (= taz_s_tmp_family "Katownik rownoramienny")
     (progn
       (add_list "20x3")
       (add_list "25x3")
@@ -2216,8 +2216,8 @@
     )
   )
 
-;; Kątowniki nierównoramienne
-(if (= taz_s_tmp_family "Kątownik nierównoramienny")
+;; Katowniki nierownoramienne
+(if (= taz_s_tmp_family "Katownik nierownoramienny")
   (progn
     (add_list "30x20x3")
     (add_list "30x20x4")
@@ -2356,8 +2356,8 @@
   )
 
 
-  ;; Rury - Rura prostokątna (RHS)
-  (if (= taz_s_tmp_family "Rura prostokątna")
+  ;; Rury - Rura prostokatna (RHS)
+  (if (= taz_s_tmp_family "Rura prostokatna")
     (progn
       (add_list "50x25x2.5")
       (add_list "50x25x3")
@@ -2433,8 +2433,8 @@
   )
 
 
-  ;; Rury - Rura okrągła (CHS)
-  (if (= taz_s_tmp_family "Rura okrągła")
+  ;; Rury - Rura okragla (CHS)
+  (if (= taz_s_tmp_family "Rura okragla")
     (progn
       (add_list "508x12.7")
       (add_list "508x9.5")
@@ -2596,7 +2596,7 @@
 
   (end_list)
     
-  ;; ustaw pierwszy typ ręcznie w zależności od rodziny (bez funkcji pomocniczej)
+  ;; Ustaw pierwszy typ recznie w zależnosci od rodziny
 
   (if (= taz_s_tmp_family "HEA")
     (progn (setq taz_s_tmp_type "100") (set_tile "taz_s_typ" "0"))
@@ -2622,11 +2622,11 @@
     (progn (setq taz_s_tmp_type "50") (set_tile "taz_s_typ" "0"))
   )
 
-  (if (= taz_s_tmp_family "Kątownik równoramienny")
+  (if (= taz_s_tmp_family "Katownik rownoramienny")
     (progn (setq taz_s_tmp_type "20x3") (set_tile "taz_s_typ" "0"))
   )
 
-  (if (= taz_s_tmp_family "Kątownik nierównoramienny")
+  (if (= taz_s_tmp_family "Katownik nierownoramienny")
     (progn (setq taz_s_tmp_type "30x20x3") (set_tile "taz_s_typ" "0"))
   )
 
@@ -2634,11 +2634,11 @@
     (progn (setq taz_s_tmp_type "38x38x2.5") (set_tile "taz_s_typ" "0"))
   )
 
-  (if (= taz_s_tmp_family "Rura prostokątna")
+  (if (= taz_s_tmp_family "Rura prostokatna")
     (progn (setq taz_s_tmp_type "50x25x2.5") (set_tile "taz_s_typ" "0"))
   )
 
-  (if (= taz_s_tmp_family "Rura okrągła")
+  (if (= taz_s_tmp_family "Rura okragla")
     (progn (setq taz_s_tmp_type "508x12.7") (set_tile "taz_s_typ" "0"))
   )
 
@@ -2647,11 +2647,11 @@
 (action_tile "taz_s_cat" "(taz_s_on_category_change)")
 
   ;; ---------------------------
-  ;; Reakcje na zmianę rodziny
+  ;; Reakcje na zmiane rodziny
   ;; ---------------------------
   (defun taz_s_on_family_change ( / )
 
-  ;; Mapowanie indeksu rodziny w zależności od kategorii
+  ;; Mapowanie indeksu rodziny w zależnosci od kategorii
   (if (= (get_tile "taz_s_cat") "0")
     (progn
       (if (= $value "0") (setq taz_s_tmp_family "HEA"))
@@ -2670,20 +2670,20 @@
 
   (if (= (get_tile "taz_s_cat") "2")
     (progn
-      (if (= $value "0") (setq taz_s_tmp_family "Kątownik równoramienny"))
-      (if (= $value "1") (setq taz_s_tmp_family "Kątownik nierównoramienny"))
+      (if (= $value "0") (setq taz_s_tmp_family "Katownik rownoramienny"))
+      (if (= $value "1") (setq taz_s_tmp_family "Katownik nierownoramienny"))
     )
   )
 
   (if (= (get_tile "taz_s_cat") "3")
     (progn
       (if (= $value "0") (setq taz_s_tmp_family "Rura kwadratowa"))
-      (if (= $value "1") (setq taz_s_tmp_family "Rura prostokątna"))
-      (if (= $value "2") (setq taz_s_tmp_family "Rura okrągła"))
+      (if (= $value "1") (setq taz_s_tmp_family "Rura prostokatna"))
+      (if (= $value "2") (setq taz_s_tmp_family "Rura okragla"))
     )
   )
 
-  ;; Start listy typów
+  ;; Start listy typow
   (start_list "taz_s_typ")
     
   ;; Dwuteowniki - HEA
@@ -2845,8 +2845,8 @@
     )
   )
 
-  ;; Kątowniki równoramienne
-  (if (= taz_s_tmp_family "Kątownik równoramienny")
+  ;; Katowniki rownoramienne
+  (if (= taz_s_tmp_family "Katownik rownoramienny")
     (progn
       (add_list "20x3")
       (add_list "25x3")
@@ -2925,8 +2925,8 @@
     )
   )
 
-;; Kątowniki nierównoramienne
-(if (= taz_s_tmp_family "Kątownik nierównoramienny")
+;; Katowniki nierownoramienne
+(if (= taz_s_tmp_family "Katownik nierownoramienny")
   (progn
     (add_list "30x20x3")
     (add_list "30x20x4")
@@ -3064,8 +3064,8 @@
     )
   )
 
-  ;; Rury - Rura prostokątna (RHS)
-  (if (= taz_s_tmp_family "Rura prostokątna")
+  ;; Rury - Rura prostokatna (RHS)
+  (if (= taz_s_tmp_family "Rura prostokatna")
     (progn
       (add_list "50x25x2.5")
       (add_list "50x25x3")
@@ -3141,8 +3141,8 @@
   )
 
 
-  ;; Rury - Rura okrągła (CHS)
-  (if (= taz_s_tmp_family "Rura okrągła")
+  ;; Rury - Rura okragla (CHS)
+  (if (= taz_s_tmp_family "Rura okragla")
     (progn
       (add_list "508x12.7")
       (add_list "508x9.5")
@@ -3304,7 +3304,7 @@
 
   (end_list)
     
-  ;; ustaw pierwszy typ ręcznie w zależności od rodziny (bez funkcji pomocniczej)
+  ;; Ustaw pierwszy typ recznie w zależnosci od rodziny
 
   (if (= taz_s_tmp_family "HEA")
     (progn (setq taz_s_tmp_type "100") (set_tile "taz_s_typ" "0"))
@@ -3330,11 +3330,11 @@
     (progn (setq taz_s_tmp_type "50") (set_tile "taz_s_typ" "0"))
   )
 
-  (if (= taz_s_tmp_family "Kątownik równoramienny")
+  (if (= taz_s_tmp_family "Katownik rownoramienny")
     (progn (setq taz_s_tmp_type "20x3") (set_tile "taz_s_typ" "0"))
   )
 
-  (if (= taz_s_tmp_family "Kątownik nierównoramienny")
+  (if (= taz_s_tmp_family "Katownik nierownoramienny")
     (progn (setq taz_s_tmp_type "30x20x3") (set_tile "taz_s_typ" "0"))
   )
 
@@ -3342,11 +3342,11 @@
     (progn (setq taz_s_tmp_type "38x38x2.5") (set_tile "taz_s_typ" "0"))
   )
 
-  (if (= taz_s_tmp_family "Rura prostokątna")
+  (if (= taz_s_tmp_family "Rura prostokatna")
     (progn (setq taz_s_tmp_type "50x25x2.5") (set_tile "taz_s_typ" "0"))
   )
 
-  (if (= taz_s_tmp_family "Rura okrągła")
+  (if (= taz_s_tmp_family "Rura okragla")
     (progn (setq taz_s_tmp_type "508x12.7") (set_tile "taz_s_typ" "0"))
   )
 
@@ -3355,7 +3355,7 @@
 (action_tile "taz_s_fam" "(taz_s_on_family_change)")
 
   ;; ---------------------------
-  ;; Reakcje na zmianę typu
+  ;; Reakcje na zmiane typu
   ;; ---------------------------
   (defun taz_s_on_type_change ( / )
 
@@ -3518,8 +3518,8 @@
     )
   )
 
-  ;; Kątowniki równoramienne
-  (if (= taz_s_tmp_family "Kątownik równoramienny")
+  ;; Katowniki rownoramienne
+  (if (= taz_s_tmp_family "Katownik rownoramienny")
     (progn
       (if (= $value "0") (setq taz_s_tmp_type "20x3"))
       (if (= $value "1") (setq taz_s_tmp_type "25x3"))
@@ -3598,8 +3598,8 @@
     )
   )
 
-  ;; Kątowniki nierównoramienne
-  (if (= taz_s_tmp_family "Kątownik nierównoramienny")
+  ;; Katowniki nierownoramienne
+  (if (= taz_s_tmp_family "Katownik nierownoramienny")
     (progn
       (if (= $value "0")  (setq taz_s_tmp_type "30x20x3"))
       (if (= $value "1")  (setq taz_s_tmp_type "30x20x4"))
@@ -3738,8 +3738,8 @@
     )
   )
 
-  ;; Rury - Rura prostokątna (RHS)
-  (if (= taz_s_tmp_family "Rura prostokątna")
+  ;; Rury - Rura prostokatna (RHS)
+  (if (= taz_s_tmp_family "Rura prostokatna")
     (progn
       (if (= $value "0")  (setq taz_s_tmp_type "50x25x2.5"))
       (if (= $value "1")  (setq taz_s_tmp_type "50x25x3"))
@@ -3815,8 +3815,8 @@
   )
 
 
-  ;; Rury - Rura okrągła (CHS)
-  (if (= taz_s_tmp_family "Rura okrągła")
+  ;; Rury - Rura okragla (CHS)
+  (if (= taz_s_tmp_family "Rura okragla")
     (progn
     (if (= $value "0")  (setq taz_s_tmp_type "508x12.7"))
     (if (= $value "1")  (setq taz_s_tmp_type "508x9.5"))
@@ -4005,7 +4005,7 @@
   ;; ---------------------------
   (if (= (start_dialog) 1)
     (progn
-      (princ "\nWybrane wartości:")
+      (princ "\nWybrane wartosci:")
       (princ (strcat "\nKategoria: " taz_s_category))
       (princ (strcat "\nRodzina:   " taz_s_family))
       (princ (strcat "\nTyp:       " taz_s_type))
