@@ -699,7 +699,7 @@
   (end_list)
 
   ;; ---------------------------
-  ;; Ustawienie początkowych wartości TILE
+  ;; Ustawienie początkowych wartości
   ;; ---------------------------
 
   ;; Kategoria
@@ -711,7 +711,7 @@
   ;; Rodziny
   (taz_s_fill_family_list taz_s_tmp_category)
 
-  ;; Dwuteowniki families mapping
+  ;; Dwuteowniki
   (if (= taz_s_tmp_category "Dwuteowniki")
     (progn
       (if (= taz_s_tmp_family "HEA") (set_tile "taz_s_fam" "0"))
@@ -721,7 +721,7 @@
     )
   )
 
-  ;; Ceowniki mapping
+  ;; Ceowniki
   (if (= taz_s_tmp_category "Ceowniki")
     (progn
       (if (= taz_s_tmp_family "UPE") (set_tile "taz_s_fam" "0"))
@@ -729,7 +729,7 @@
     )
   )
 
-  ;; Kątowniki mapping
+  ;; Kątowniki
   (if (= taz_s_tmp_category "Kątowniki")
     (progn
       (if (= taz_s_tmp_family "Kątownik równoramienny") (set_tile "taz_s_fam" "0"))
@@ -737,7 +737,7 @@
     )
   )
 
-  ;; Rury mapping
+  ;; Rury
   (if (= taz_s_tmp_category "Rury")
     (progn
       (if (= taz_s_tmp_family "Rura kwadratowa") (set_tile "taz_s_fam" "0"))
@@ -749,7 +749,7 @@
   ;; Typy
   (taz_s_fill_type_list taz_s_tmp_category taz_s_tmp_family)
   (cond
-    ;; Dwuteowniki HEA
+    ;; Dwuteowniki - HEA
     ((= taz_s_tmp_family "HEA")
      (if (= taz_s_tmp_type "100") (set_tile "taz_s_typ" "0"))
      (if (= taz_s_tmp_type "120") (set_tile "taz_s_typ" "1"))
@@ -803,7 +803,7 @@
      )
     )
 
-    ;; Dwuteowniki HEB
+    ;; Dwuteowniki - HEB
     ((= taz_s_tmp_family "HEB")
      (if (= taz_s_tmp_type "100") (set_tile "taz_s_typ" "0"))
      (if (= taz_s_tmp_type "120") (set_tile "taz_s_typ" "1"))
@@ -857,7 +857,7 @@
      )
     )
 
-    ;; Dwuteowniki IPE
+    ;; Dwuteowniki - IPE
     ((= taz_s_tmp_family "IPE")
      (if (= taz_s_tmp_type "80") (set_tile "taz_s_typ" "0"))
      (if (= taz_s_tmp_type "100") (set_tile "taz_s_typ" "1"))
@@ -907,7 +907,7 @@
      )
     )
 
-    ;; Dwuteowniki IPN
+    ;; Dwuteowniki - IPN
     ((= taz_s_tmp_family "IPN")
       (if (= taz_s_tmp_type "80")  (set_tile "taz_s_typ" "0"))
       (if (= taz_s_tmp_type "100") (set_tile "taz_s_typ" "1"))
@@ -956,7 +956,7 @@
       )
     )
 
-    ;; Ceowniki UPE
+    ;; Ceowniki - UPE
     ((= taz_s_tmp_family "UPE")
       (if (= taz_s_tmp_type "80")  (set_tile "taz_s_typ" "0"))
       (if (= taz_s_tmp_type "100") (set_tile "taz_s_typ" "1"))
@@ -990,7 +990,7 @@
       )
      )
 
-    ;; Ceowniki UPN
+    ;; Ceowniki - UPN
     ((= taz_s_tmp_family "UPN")
      (if (= taz_s_tmp_type "50")  (set_tile "taz_s_typ" "0"))
      (if (= taz_s_tmp_type "65")  (set_tile "taz_s_typ" "1"))
@@ -1032,7 +1032,7 @@
      )
     )
 
-    ;; Kątownik równoramienny
+    ;; Kątowniki równoramienne
     ((= taz_s_tmp_family "Kątownik równoramienny")
       (if (= taz_s_tmp_type "20x3")   (set_tile "taz_s_typ" "0"))
       (if (= taz_s_tmp_type "25x3")   (set_tile "taz_s_typ" "1"))
@@ -1187,7 +1187,7 @@
      )
 
 
-    ;; Kątownik nierównoramienny
+    ;; Kątowniki nierównoramienne
     ((= taz_s_tmp_family "Kątownik nierównoramienny")
      (if (= taz_s_tmp_type "30x20x3")  (set_tile "taz_s_typ" "0"))
      (if (= taz_s_tmp_type "30x20x4")  (set_tile "taz_s_typ" "1"))
@@ -1323,7 +1323,7 @@
      )
     )
 
-    ;; Rura kwadratowa - mapowanie indeksów dla typów SHS
+    ;; Rury - Rura kwadratowa (SHS)
     ((= taz_s_tmp_family "Rura kwadratowa")
       (if (= taz_s_tmp_type "38x38x2.5") (set_tile "taz_s_typ" "0"))
       (if (= taz_s_tmp_type "38x38x3")   (set_tile "taz_s_typ" "1"))
@@ -1453,7 +1453,7 @@
       )
      )
 
-    ;; Rura prostokątna (RHS)
+    ;; Rury - Rura prostokątna (RHS)
     ((= taz_s_tmp_family "Rura prostokątna")
         (if (= taz_s_tmp_type "50x25x2.5") (set_tile "taz_s_typ" "0"))
         (if (= taz_s_tmp_type "50x25x3")   (set_tile "taz_s_typ" "1"))
@@ -1600,7 +1600,7 @@
           )
         )
 
-    ;; Rura okrągła (CHS) – mapowanie indeksów
+    ;; Rury - Rura okrągła (CHS)
     ((= taz_s_tmp_family "Rura okrągła")
       (if (= taz_s_tmp_type "508x12.7") (set_tile "taz_s_typ" "0"))
       (if (= taz_s_tmp_type "508x9.5")  (set_tile "taz_s_typ" "1"))
@@ -1977,7 +1977,7 @@
   ;; Start listy typów
   (start_list "taz_s_typ")
     
-  ;; HEA
+  ;; Dwuteowniki - HEA
   (if (= taz_s_tmp_family "HEA")
     (progn
       (add_list "100")
@@ -2007,7 +2007,7 @@
     )
   )
 
-  ;; HEB
+  ;; Dwuteowniki - HEB
   (if (= taz_s_tmp_family "HEB")
     (progn
       (add_list "100")
@@ -2037,7 +2037,7 @@
     )
   )
 
-  ;; IPE
+  ;; Dwuteowniki - IPE
   (if (= taz_s_tmp_family "IPE")
     (progn
       (add_list "80")
@@ -2065,7 +2065,7 @@
     )
   )
 
-  ;; IPN
+  ;; Dwuteowniki - IPN
   (if (= taz_s_tmp_family "IPN")
     (progn
       (add_list "80")
@@ -2092,7 +2092,7 @@
     )
   )
 
-  ;; UPE
+  ;; Ceowniki – UPE
   (if (= taz_s_tmp_family "UPE")
     (progn
       (add_list "80")
@@ -2112,7 +2112,7 @@
     )
   )
 
-  ;; UPN
+  ;; Ceowniki – UPN
   (if (= taz_s_tmp_family "UPN")
     (progn
       (add_list "50")
@@ -2136,7 +2136,7 @@
     )
   )
 
-  ;; Kątownik równoramienny
+  ;; Kątowniki równoramienne
   (if (= taz_s_tmp_family "Kątownik równoramienny")
     (progn
       (add_list "20x3")
@@ -2216,7 +2216,7 @@
     )
   )
 
-;; Kątownik nierównoramienny
+;; Kątowniki nierównoramienne
 (if (= taz_s_tmp_family "Kątownik nierównoramienny")
   (progn
     (add_list "30x20x3")
@@ -2287,7 +2287,7 @@
   )
 )
 
-  ;; Rura kwadratowa
+  ;; Rury - Rura kwadratowa (SHS)
   (if (= taz_s_tmp_family "Rura kwadratowa")
     (progn
       (add_list "38x38x2.5")
@@ -2356,7 +2356,7 @@
   )
 
 
-  ;; Rura prostokątna
+  ;; Rury - Rura prostokątna (RHS)
   (if (= taz_s_tmp_family "Rura prostokątna")
     (progn
       (add_list "50x25x2.5")
@@ -2433,7 +2433,7 @@
   )
 
 
-  ;; Rura okrągła
+  ;; Rury - Rura okrągła (CHS)
   (if (= taz_s_tmp_family "Rura okrągła")
     (progn
       (add_list "508x12.7")
@@ -2686,7 +2686,7 @@
   ;; Start listy typów
   (start_list "taz_s_typ")
     
-  ;; HEA
+  ;; Dwuteowniki - HEA
   (if (= taz_s_tmp_family "HEA")
     (progn
       (add_list "100")
@@ -2716,7 +2716,7 @@
     )
   )
 
-  ;; HEB
+  ;; Dwuteowniki - HEB
   (if (= taz_s_tmp_family "HEB")
     (progn
       (add_list "100")
@@ -2746,7 +2746,7 @@
     )
   )
 
-  ;; IPE
+  ;; Dwuteowniki - IPE
   (if (= taz_s_tmp_family "IPE")
     (progn
       (add_list "80")
@@ -2774,7 +2774,7 @@
     )
   )
 
-  ;; IPN
+  ;; Dwuteowniki - IPN
   (if (= taz_s_tmp_family "IPN")
     (progn
       (add_list "80")
@@ -2801,7 +2801,7 @@
     )
   )
 
-  ;; UPE
+  ;; Ceowniki – UPE
   (if (= taz_s_tmp_family "UPE")
     (progn
       (add_list "80")
@@ -2821,7 +2821,7 @@
     )
   )
 
-  ;; UPN
+  ;; Ceowniki – UPN
   (if (= taz_s_tmp_family "UPN")
     (progn
       (add_list "50")
@@ -2845,7 +2845,7 @@
     )
   )
 
-  ;; Kątownik równoramienny
+  ;; Kątowniki równoramienne
   (if (= taz_s_tmp_family "Kątownik równoramienny")
     (progn
       (add_list "20x3")
@@ -2925,7 +2925,7 @@
     )
   )
 
-;; Kątownik nierównoramienny
+;; Kątowniki nierównoramienne
 (if (= taz_s_tmp_family "Kątownik nierównoramienny")
   (progn
     (add_list "30x20x3")
@@ -2996,7 +2996,7 @@
   )
 )
 
-  ;; Rura kwadratowa
+  ;; Rury - Rura kwadratowa (SHS)
   (if (= taz_s_tmp_family "Rura kwadratowa")
     (progn
       (add_list "38x38x2.5")
@@ -3064,7 +3064,7 @@
     )
   )
 
-  ;; Rura prostokątna
+  ;; Rury - Rura prostokątna (RHS)
   (if (= taz_s_tmp_family "Rura prostokątna")
     (progn
       (add_list "50x25x2.5")
@@ -3141,7 +3141,7 @@
   )
 
 
-  ;; Rura okrągła (CHS)
+  ;; Rury - Rura okrągła (CHS)
   (if (= taz_s_tmp_family "Rura okrągła")
     (progn
       (add_list "508x12.7")
@@ -3359,7 +3359,7 @@
   ;; ---------------------------
   (defun taz_s_on_type_change ( / )
 
-  ;; HEA
+  ;; Dwuteowniki - HEA
   (if (= taz_s_tmp_family "HEA")
     (progn
       (if (= $value "0") (setq taz_s_tmp_type "100"))
@@ -3389,7 +3389,7 @@
     )
   )
 
-  ;; HEB
+  ;; Dwuteowniki - HEB
   (if (= taz_s_tmp_family "HEB")
     (progn
       (if (= $value "0") (setq taz_s_tmp_type "100"))
@@ -3419,7 +3419,7 @@
     )
   )
 
-  ;; IPE
+  ;; Dwuteowniki - IPE
   (if (= taz_s_tmp_family "IPE")
     (progn
       (if (= $value "0") (setq taz_s_tmp_type "80"))
@@ -3447,7 +3447,7 @@
     )
   )
 
-  ;; IPN
+  ;; Dwuteowniki - IPN
   (if (= taz_s_tmp_family "IPN")
     (progn
       (if (= $value "0")  (setq taz_s_tmp_type "80"))
@@ -3474,7 +3474,7 @@
     )
   )
 
-  ;; UPE
+  ;; Ceowniki – UPE
   (if (= taz_s_tmp_family "UPE")
     (progn
       (if (= $value "0")  (setq taz_s_tmp_type "80"))
@@ -3494,7 +3494,7 @@
     )
   )
 
-  ;; UPN
+  ;; Ceowniki – UPN
   (if (= taz_s_tmp_family "UPN")
     (progn
       (if (= $value "0")  (setq taz_s_tmp_type "50"))
@@ -3518,7 +3518,7 @@
     )
   )
 
-  ;; Kątownik równoramienny
+  ;; Kątowniki równoramienne
   (if (= taz_s_tmp_family "Kątownik równoramienny")
     (progn
       (if (= $value "0") (setq taz_s_tmp_type "20x3"))
@@ -3598,7 +3598,7 @@
     )
   )
 
-  ;; Kątownik nierównoramienny
+  ;; Kątowniki nierównoramienne
   (if (= taz_s_tmp_family "Kątownik nierównoramienny")
     (progn
       (if (= $value "0")  (setq taz_s_tmp_type "30x20x3"))
@@ -3669,7 +3669,7 @@
     )
   )
 
-  ;; Rura kwadratowa
+  ;; Rury - Rura kwadratowa (SHS)
   (if (= taz_s_tmp_family "Rura kwadratowa")
     (progn
       (if (= $value "0")  (setq taz_s_tmp_type "38x38x2.5"))
@@ -3738,7 +3738,7 @@
     )
   )
 
-  ;; Rura prostokątna
+  ;; Rury - Rura prostokątna (RHS)
   (if (= taz_s_tmp_family "Rura prostokątna")
     (progn
       (if (= $value "0")  (setq taz_s_tmp_type "50x25x2.5"))
@@ -3815,7 +3815,7 @@
   )
 
 
-  ;; Rura okrągła
+  ;; Rury - Rura okrągła (CHS)
   (if (= taz_s_tmp_family "Rura okrągła")
     (progn
     (if (= $value "0")  (setq taz_s_tmp_type "508x12.7"))
@@ -3982,7 +3982,7 @@
 
 
   ;; ---------------------------
-  ;; Przycisk OK — zapisujemy zmienne (tylko globalne)
+  ;; Przycisk OK
   ;; ---------------------------
   (action_tile "ok"
     "(progn
@@ -3994,7 +3994,7 @@
   )
 
   ;; ---------------------------
-  ;; Przycisk Anuluj — nic nie zapisujemy
+  ;; Przycisk Anuluj
   ;; ---------------------------
   (action_tile "anuluj"
     "(done_dialog 0)"
