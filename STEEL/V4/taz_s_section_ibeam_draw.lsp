@@ -1,4 +1,4 @@
-(defun taz_s_section_ibeam_draw (h b tw tf r / p x1 x2 y1 y2 xw1 xw2 yf1 yf2)
+(defun taz_s_section_ibeam_draw (taz_s_h taz_s_b taz_s_tw taz_s_tf taz_s_r / p x1 x2 y1 y2 xw1 xw2 yf1 yf2)
   
   (if (= taz_s_family "HEA")
     (taz_s_section_ibeam_draw_parametres_hea)
@@ -21,18 +21,18 @@
 
   (command "_ZOOM" "_SCALE" "10000X")
 
-  (setq x1 (- (car p) (/ b 2.0)))
-  (setq x2 (+ (car p) (/ b 2.0)))
-  (setq y1 (- (cadr p) (/ h 2.0)))
-  (setq y2 (+ (cadr p) (/ h 2.0)))
+  (setq x1 (- (car p) (/ taz_s_b 2.0)))
+  (setq x2 (+ (car p) (/ taz_s_b 2.0)))
+  (setq y1 (- (cadr p) (/ taz_s_h 2.0)))
+  (setq y2 (+ (cadr p) (/ taz_s_h 2.0)))
 
-  (setq xw1 (- (car p) (/ tw 2.0)))
-  (setq xw2 (+ (car p) (/ tw 2.0)))
+  (setq xw1 (- (car p) (/ taz_s_tw 2.0)))
+  (setq xw2 (+ (car p) (/ taz_s_tw 2.0)))
 
-  (setq yf1 (+ y1 tf))
-  (setq yf2 (- y2 tf))
+  (setq yf1 (+ y1 taz_s_tf))
+  (setq yf2 (- y2 taz_s_tf))
   
-  (command "_FILLET" "_R" r)
+  (command "_FILLET" "_R" taz_s_r)
 
   (command "_LINE" (list x1 y1) (list x2 y1) "")
   (setq l1 (cdr (assoc -1 (entget (entlast)))))
