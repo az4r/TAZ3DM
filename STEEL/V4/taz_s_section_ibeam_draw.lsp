@@ -1,4 +1,4 @@
-(defun taz_s_section_ibeam_draw (taz_s_h taz_s_b taz_s_tw taz_s_tf taz_s_r / p x1 x2 y1 y2 xw1 xw2 yf1 yf2)
+(defun taz_s_section_ibeam_draw (taz_s_h taz_s_b taz_s_tw taz_s_tf taz_s_r / taz_s_p taz_s_x1 taz_s_x2 taz_s_y1 taz_s_y2 taz_s_xw1 taz_s_xw2 taz_s_yf1 taz_s_yf2)
   
   (if (= taz_s_family "HEA")
     (taz_s_section_ibeam_draw_parametres_hea)
@@ -17,57 +17,57 @@
     (princ)
   )
 
-  (setq p '(0 0 0))
+  (setq taz_s_p '(0 0 0))
 
   (command "_ZOOM" "_SCALE" "10000X")
 
-  (setq x1 (- (car p) (/ taz_s_b 2.0)))
-  (setq x2 (+ (car p) (/ taz_s_b 2.0)))
-  (setq y1 (- (cadr p) (/ taz_s_h 2.0)))
-  (setq y2 (+ (cadr p) (/ taz_s_h 2.0)))
+  (setq taz_s_x1 (- (car taz_s_p) (/ taz_s_b 2.0)))
+  (setq taz_s_x2 (+ (car taz_s_p) (/ taz_s_b 2.0)))
+  (setq taz_s_y1 (- (cadr taz_s_p) (/ taz_s_h 2.0)))
+  (setq taz_s_y2 (+ (cadr taz_s_p) (/ taz_s_h 2.0)))
 
-  (setq xw1 (- (car p) (/ taz_s_tw 2.0)))
-  (setq xw2 (+ (car p) (/ taz_s_tw 2.0)))
+  (setq taz_s_xw1 (- (car taz_s_p) (/ taz_s_tw 2.0)))
+  (setq taz_s_xw2 (+ (car taz_s_p) (/ taz_s_tw 2.0)))
 
-  (setq yf1 (+ y1 taz_s_tf))
-  (setq yf2 (- y2 taz_s_tf))
+  (setq taz_s_yf1 (+ taz_s_y1 taz_s_tf))
+  (setq taz_s_yf2 (- taz_s_y2 taz_s_tf))
   
   (command "_FILLET" "_R" taz_s_r)
 
-  (command "_LINE" (list x1 y1) (list x2 y1) "")
+  (command "_LINE" (list taz_s_x1 taz_s_y1) (list taz_s_x2 taz_s_y1) "")
   (setq l1 (cdr (assoc -1 (entget (entlast)))))
 
-  (command "_LINE" (list x2 y1) (list x2 yf1) "")
+  (command "_LINE" (list taz_s_x2 taz_s_y1) (list taz_s_x2 taz_s_yf1) "")
   (setq l2 (cdr (assoc -1 (entget (entlast)))))
 
-  (command "_LINE" (list x2 yf1) (list xw2 yf1) "")
+  (command "_LINE" (list taz_s_x2 taz_s_yf1) (list taz_s_xw2 taz_s_yf1) "")
   (setq l3 (cdr (assoc -1 (entget (entlast)))))
 
-  (command "_LINE" (list xw2 yf1) (list xw2 yf2) "")
+  (command "_LINE" (list taz_s_xw2 taz_s_yf1) (list taz_s_xw2 taz_s_yf2) "")
   (setq l4 (cdr (assoc -1 (entget (entlast))))) 
 
-  (command "_LINE" (list xw2 yf2) (list x2 yf2) "")
+  (command "_LINE" (list taz_s_xw2 taz_s_yf2) (list taz_s_x2 taz_s_yf2) "")
   (setq l5 (cdr (assoc -1 (entget (entlast)))))
 
-  (command "_LINE" (list x2 yf2) (list x2 y2) "")
+  (command "_LINE" (list taz_s_x2 taz_s_yf2) (list taz_s_x2 taz_s_y2) "")
   (setq l6 (cdr (assoc -1 (entget (entlast)))))
 
-  (command "_LINE" (list x2 y2) (list x1 y2) "")
+  (command "_LINE" (list taz_s_x2 taz_s_y2) (list taz_s_x1 taz_s_y2) "")
   (setq l7 (cdr (assoc -1 (entget (entlast)))))
 
-  (command "_LINE" (list x1 y2) (list x1 yf2) "")
+  (command "_LINE" (list taz_s_x1 taz_s_y2) (list taz_s_x1 taz_s_yf2) "")
   (setq l8 (cdr (assoc -1 (entget (entlast)))))
 
-  (command "_LINE" (list x1 yf2) (list xw1 yf2) "")
+  (command "_LINE" (list taz_s_x1 taz_s_yf2) (list taz_s_xw1 taz_s_yf2) "")
   (setq l9 (cdr (assoc -1 (entget (entlast)))))
 
-  (command "_LINE" (list xw1 yf2) (list xw1 yf1) "")
+  (command "_LINE" (list taz_s_xw1 taz_s_yf2) (list taz_s_xw1 taz_s_yf1) "")
   (setq l10 (cdr (assoc -1 (entget (entlast)))))
 
-  (command "_LINE" (list xw1 yf1) (list x1 yf1) "")
+  (command "_LINE" (list taz_s_xw1 taz_s_yf1) (list taz_s_x1 taz_s_yf1) "")
   (setq l11 (cdr (assoc -1 (entget (entlast)))))
 
-  (command "_LINE" (list x1 yf1) (list x1 y1) "")
+  (command "_LINE" (list taz_s_x1 taz_s_yf1) (list taz_s_x1 taz_s_y1) "")
   (setq l12 (cdr (assoc -1 (entget (entlast)))))
   
   ;; zapisz widok 
@@ -111,12 +111,12 @@
   
   (command "_J" "" "")
   
-  (setq taz_s_create_ibeam_profile (ssname (ssget "_X" '((0 . "LWPOLYLINE") (62 . 6))) 0))
+  (setq taz_s_create_beam_profile (ssname (ssget "_X" '((0 . "LWPOLYLINE") (62 . 6))) 0))
   
   (command "_ZOOM" "_SCALE" "0.0001X")
   (command "_ZOOM" "_SCALE" "10000X")
   
-  (command "_SWEEP" taz_s_create_ibeam_profile "" taz_s_create_ibeam_path "")
+  (command "_SWEEP" taz_s_create_beam_profile "" taz_s_create_beam_path "")
   
   ;; przywróć widok
   (command "-VIEW" "_R" "taz_s_temp_view")
