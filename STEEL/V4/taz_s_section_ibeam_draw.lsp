@@ -1,4 +1,4 @@
-(defun taz_s_section_ibeam_draw (taz_s_h taz_s_b taz_s_tw taz_s_tf taz_s_r / taz_s_p taz_s_x1 taz_s_x2 taz_s_y1 taz_s_y2 taz_s_xw1 taz_s_xw2 taz_s_yf1 taz_s_yf2)
+(defun taz_s_section_ibeam_draw ()
   
   (if (= taz_s_family "HEA")
     (taz_s_section_ibeam_draw_parametres_hea)
