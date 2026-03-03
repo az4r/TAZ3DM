@@ -35,40 +35,40 @@
   (command "_FILLET" "_R" taz_s_r)
 
   (command "_LINE" (list taz_s_x1 taz_s_y1) (list taz_s_x2 taz_s_y1) "")
-  (setq l1 (cdr (assoc -1 (entget (entlast)))))
+  (setq taz_s_l1 (cdr (assoc -1 (entget (entlast)))))
 
   (command "_LINE" (list taz_s_x2 taz_s_y1) (list taz_s_x2 taz_s_yf1) "")
-  (setq l2 (cdr (assoc -1 (entget (entlast)))))
+  (setq taz_s_l2 (cdr (assoc -1 (entget (entlast)))))
 
   (command "_LINE" (list taz_s_x2 taz_s_yf1) (list taz_s_xw2 taz_s_yf1) "")
-  (setq l3 (cdr (assoc -1 (entget (entlast)))))
+  (setq taz_s_l3 (cdr (assoc -1 (entget (entlast)))))
 
   (command "_LINE" (list taz_s_xw2 taz_s_yf1) (list taz_s_xw2 taz_s_yf2) "")
-  (setq l4 (cdr (assoc -1 (entget (entlast))))) 
+  (setq taz_s_l4 (cdr (assoc -1 (entget (entlast))))) 
 
   (command "_LINE" (list taz_s_xw2 taz_s_yf2) (list taz_s_x2 taz_s_yf2) "")
-  (setq l5 (cdr (assoc -1 (entget (entlast)))))
+  (setq taz_s_l5 (cdr (assoc -1 (entget (entlast)))))
 
   (command "_LINE" (list taz_s_x2 taz_s_yf2) (list taz_s_x2 taz_s_y2) "")
-  (setq l6 (cdr (assoc -1 (entget (entlast)))))
+  (setq taz_s_l6 (cdr (assoc -1 (entget (entlast)))))
 
   (command "_LINE" (list taz_s_x2 taz_s_y2) (list taz_s_x1 taz_s_y2) "")
-  (setq l7 (cdr (assoc -1 (entget (entlast)))))
+  (setq taz_s_l7 (cdr (assoc -1 (entget (entlast)))))
 
   (command "_LINE" (list taz_s_x1 taz_s_y2) (list taz_s_x1 taz_s_yf2) "")
-  (setq l8 (cdr (assoc -1 (entget (entlast)))))
+  (setq taz_s_l8 (cdr (assoc -1 (entget (entlast)))))
 
   (command "_LINE" (list taz_s_x1 taz_s_yf2) (list taz_s_xw1 taz_s_yf2) "")
-  (setq l9 (cdr (assoc -1 (entget (entlast)))))
+  (setq taz_s_l9 (cdr (assoc -1 (entget (entlast)))))
 
   (command "_LINE" (list taz_s_xw1 taz_s_yf2) (list taz_s_xw1 taz_s_yf1) "")
-  (setq l10 (cdr (assoc -1 (entget (entlast)))))
+  (setq taz_s_l10 (cdr (assoc -1 (entget (entlast)))))
 
   (command "_LINE" (list taz_s_xw1 taz_s_yf1) (list taz_s_x1 taz_s_yf1) "")
-  (setq l11 (cdr (assoc -1 (entget (entlast)))))
+  (setq taz_s_l11 (cdr (assoc -1 (entget (entlast)))))
 
   (command "_LINE" (list taz_s_x1 taz_s_yf1) (list taz_s_x1 taz_s_y1) "")
-  (setq l12 (cdr (assoc -1 (entget (entlast)))))
+  (setq taz_s_l12 (cdr (assoc -1 (entget (entlast)))))
   
   ;; zapisz widok 
   
@@ -79,33 +79,33 @@
 
   (command "_PLAN" "_C")
   
-  (command "_FILLET" l3 l4)
+  (command "_FILLET" taz_s_l3 taz_s_l4)
   
-  (setq f1 (cdr (assoc -1 (entget (entlast)))))
+  (setq taz_s_f1 (cdr (assoc -1 (entget (entlast)))))
   
   (command "_PLAN" "_C")
   
-  (command "_FILLET" l4 l5)
+  (command "_FILLET" taz_s_l4 taz_s_l5)
   
-  (setq f2 (cdr (assoc -1 (entget (entlast)))))
+  (setq taz_s_f2 (cdr (assoc -1 (entget (entlast)))))
     
   (command "_PLAN" "_C")
   
-  (command "_FILLET" l9 l10)
+  (command "_FILLET" taz_s_l9 taz_s_l10)
   
-  (setq f3 (cdr (assoc -1 (entget (entlast)))))
+  (setq taz_s_f3 (cdr (assoc -1 (entget (entlast)))))
   
   (command "_PLAN" "_C")
   
-  (command "_FILLET" l10 l11)
+  (command "_FILLET" taz_s_l10 taz_s_l11)
   
-  (setq f4 (cdr (assoc -1 (entget (entlast)))))
+  (setq taz_s_f4 (cdr (assoc -1 (entget (entlast)))))
   
-  (command "_CHPROP" l1 l2 l3 l4 l5 l6 l7 l8 l9 l10 l11 l12 f1 f2 f3 f4 "" "C" "6" "")
+  (command "_CHPROP" taz_s_l1 taz_s_l2 taz_s_l3 taz_s_l4 taz_s_l5 taz_s_l6 taz_s_l7 taz_s_l8 taz_s_l9 taz_s_l10 taz_s_l11 taz_s_l12 taz_s_f1 taz_s_f2 taz_s_f3 taz_s_f4 "" "C" "6" "")
   
   (command "_PEDIT" "M")
   
-  (command l1 l2 l3 l4 l5 l6 l7 l8 l9 l10 l11 l12 f1 f2 f3 f4 "")
+  (command taz_s_l1 taz_s_l2 taz_s_l3 taz_s_l4 taz_s_l5 taz_s_l6 taz_s_l7 taz_s_l8 taz_s_l9 taz_s_l10 taz_s_l11 taz_s_l12 taz_s_f1 taz_s_f2 taz_s_f3 taz_s_f4 "")
   
   (command "_Y")
   
