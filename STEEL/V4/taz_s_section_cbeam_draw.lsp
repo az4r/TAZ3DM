@@ -1,14 +1,14 @@
 (defun taz_s_section_cbeam_draw ()
 
-  ;; pobranie parametrów UPE
+  ;; pobranie parametrów UPE – baza jak dla HEA, tylko UPE
   (if (= taz_s_family "UPE")
-    (taz_s_section_cbeam_draw_parametres_upe)
+    (taz_s_section_cbeam_draw_parametres_upe) ; UWAGA: nazwa jak w bazie UPE
     (princ)
   )
-  
+
   ;; pobranie parametrów UPN
   (if (= taz_s_family "UPN")
-    (taz_s_section_cbeam_draw_parametres_upn)
+    (taz_s_section_cbeam_draw_parametres_upn) ; analogicznie jak dla UPE
     (princ)
   )
 
@@ -24,16 +24,15 @@
   (setq taz_s_y1 (- (cadr taz_s_p) (/ taz_s_h 2.0)))    ;; dół
   (setq taz_s_y2 (+ (cadr taz_s_p) (/ taz_s_h 2.0)))    ;; góra
 
-  ;; położenie środnika UPE (asymetria!)
-  (setq taz_s_xw1 (+ taz_s_x1 taz_s_tf))                ;; lewa strona środnika
+  ;; położenie środnika UPE – web przy lewej krawędzi, bez przesunięcia o tf
+  (setq taz_s_xw1 taz_s_x1)                             ;; lewa strona środnika
   (setq taz_s_xw2 (+ taz_s_xw1 taz_s_tw))               ;; prawa strona środnika
 
   ;; wysokości półek
   (setq taz_s_yf1 (+ taz_s_y1 taz_s_tf))
   (setq taz_s_yf2 (- taz_s_y2 taz_s_tf))
 
-  ;; promień zaokrąglenia
-  ;;command "_FILLET" "_R" taz_s_r)
+  ;; promień zaokrąglenia – 0, żeby nie wywalało błędu
   (command "_FILLET" "_R" 0)
 
   ;; rysowanie konturu – identyczna kolejność jak w HEA
@@ -73,7 +72,8 @@
   (command "_LINE" (list taz_s_x1 taz_s_yf1) (list taz_s_x1 taz_s_y1) "")
   (setq taz_s_l12 (cdr (assoc -1 (entget (entlast)))))
 
-  ;; zapis widoku
+  ;; zapisz widok 
+  
   (if (tblsearch "VIEW" "taz_s_temp_view")
     (command "-VIEW" "_D" "taz_s_temp_view")
     (command "-VIEW" "_S" "taz_s_temp_view")
@@ -81,7 +81,7 @@
 
   (command "_PLAN" "_C")
 
-  ;; fillet – identycznie jak w HEA
+  ;; fillet – identycznie jak w HEA (ale promień = 0, więc tylko łączy)
   (command "_FILLET" taz_s_l3 taz_s_l4)
   (setq taz_s_f1 (cdr (assoc -1 (entget (entlast)))))
 
