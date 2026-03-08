@@ -32,8 +32,8 @@
   (setq taz_s_yf1 (+ taz_s_y1 taz_s_tf))
   (setq taz_s_yf2 (- taz_s_y2 taz_s_tf))
 
-  ;; promień zaokrąglenia – 0, żeby nie wywalało błędu
-  (command "_FILLET" "_R" 0)
+  ;; promień zaokrąglenia – 1, żeby nie wywalało błędu
+  (command "_FILLET" "_R" 1)
 
   ;; rysowanie konturu – identyczna kolejność jak w HEA
   (command "_LINE" (list taz_s_x1 taz_s_y1) (list taz_s_x2 taz_s_y1) "")
@@ -81,23 +81,23 @@
 
   (command "_PLAN" "_C")
 
-  ;; fillet – identycznie jak w HEA (ale promień = 0, więc tylko łączy)
-  (command "_FILLET" taz_s_l3 taz_s_l4)
+  ;; fillet
+  (command "_FILLET" taz_s_l2 taz_s_l3)
   (setq taz_s_f1 (cdr (assoc -1 (entget (entlast)))))
 
   (command "_PLAN" "_C")
 
-  (command "_FILLET" taz_s_l4 taz_s_l5)
+  (command "_FILLET" taz_s_l3 taz_s_l4)
   (setq taz_s_f2 (cdr (assoc -1 (entget (entlast)))))
 
   (command "_PLAN" "_C")
 
-  (command "_FILLET" taz_s_l9 taz_s_l10)
+  (command "_FILLET" taz_s_l4 taz_s_l5)
   (setq taz_s_f3 (cdr (assoc -1 (entget (entlast)))))
 
   (command "_PLAN" "_C")
 
-  (command "_FILLET" taz_s_l10 taz_s_l11)
+  (command "_FILLET" taz_s_l5 taz_s_l6)
   (setq taz_s_f4 (cdr (assoc -1 (entget (entlast)))))
 
   ;; kolorowanie
