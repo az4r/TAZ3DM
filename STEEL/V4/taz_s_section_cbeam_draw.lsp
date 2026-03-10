@@ -31,46 +31,69 @@
   ;; wysokości półek
   (setq taz_s_yf1 (+ taz_s_y1 taz_s_tf))
   (setq taz_s_yf2 (- taz_s_y2 taz_s_tf))
+  
+  (setq taz_s_x_inner (- taz_s_x2 taz_s_tw))   ;; prawa krawędź półki wewnętrznej
 
   ;; promień zaokrąglenia – 1, żeby nie wywalało błędu
-  (command "_FILLET" "_R" 1)
+  (command "_FILLET" "_R" 0)
 
   ;; rysowanie konturu – identyczna kolejność jak w HEA
-  (command "_LINE" (list taz_s_x1 taz_s_y1) (list taz_s_x2 taz_s_y1) "")
-  (setq taz_s_l1 (cdr (assoc -1 (entget (entlast)))))
+  ;; 1: dół zewnętrzny  P1 → P2
+  (command "_LINE"
+          (list taz_s_x1 taz_s_y1)
+          (list taz_s_x2 taz_s_y1)
+          "")
+  (setq taz_s_l1 (entlast))
 
-  (command "_LINE" (list taz_s_x2 taz_s_y1) (list taz_s_x2 taz_s_yf1) "")
-  (setq taz_s_l2 (cdr (assoc -1 (entget (entlast)))))
+  ;; 2: prawa pionowa  P2 → P3
+  (command "_LINE"
+          (list taz_s_x2 taz_s_y1)
+          (list taz_s_x2 taz_s_y2)
+          "")
+  (setq taz_s_l2 (entlast))
 
-  (command "_LINE" (list taz_s_x2 taz_s_yf1) (list taz_s_xw2 taz_s_yf1) "")
-  (setq taz_s_l3 (cdr (assoc -1 (entget (entlast)))))
+  ;; 3: góra zewnętrzna  P3 → P4
+  (command "_LINE"
+          (list taz_s_x2 taz_s_y2)
+          (list taz_s_x1 taz_s_y2)
+          "")
+  (setq taz_s_l3 (entlast))
 
-  (command "_LINE" (list taz_s_xw2 taz_s_yf1) (list taz_s_xw2 taz_s_yf2) "")
-  (setq taz_s_l4 (cdr (assoc -1 (entget (entlast)))))
+  ;; 4: lewa pionowa zewnętrzna (góra → dół półki)  P4 → P3'
+  (command "_LINE"
+          (list taz_s_x1 taz_s_y2)
+          (list taz_s_x1 taz_s_yf2)
+          "")
+  (setq taz_s_l4 (entlast))
 
-  (command "_LINE" (list taz_s_xw2 taz_s_yf2) (list taz_s_x2 taz_s_yf2) "")
-  (setq taz_s_l5 (cdr (assoc -1 (entget (entlast)))))
+  ;; 5: półka wewnętrzna (góra)  P3' → P4'
+  (command "_LINE"
+          (list taz_s_x1 taz_s_yf2)
+          (list taz_s_x_inner taz_s_yf2)
+          "")
+  (setq taz_s_l5 (entlast))
 
-  (command "_LINE" (list taz_s_x2 taz_s_yf2) (list taz_s_x2 taz_s_y2) "")
-  (setq taz_s_l6 (cdr (assoc -1 (entget (entlast)))))
+  ;; 6: pion środnika  P4' → P5'
+  (command "_LINE"
+          (list taz_s_x_inner taz_s_yf2)
+          (list taz_s_x_inner taz_s_yf1)
+          "")
+  (setq taz_s_l6 (entlast))
 
-  (command "_LINE" (list taz_s_x2 taz_s_y2) (list taz_s_x1 taz_s_y2) "")
-  (setq taz_s_l7 (cdr (assoc -1 (entget (entlast)))))
+  ;; 7: półka wewnętrzna (dół)  P5' → P6'
+  (command "_LINE"
+          (list taz_s_x_inner taz_s_yf1)
+          (list taz_s_x1 taz_s_yf1)
+          "")
+  (setq taz_s_l7 (entlast))
 
-  (command "_LINE" (list taz_s_x1 taz_s_y2) (list taz_s_x1 taz_s_yf2) "")
-  (setq taz_s_l8 (cdr (assoc -1 (entget (entlast)))))
+  ;; 8: lewa pionowa zewnętrzna (dół półki → dół)  P6' → P7
+  (command "_LINE"
+          (list taz_s_x1 taz_s_yf1)
+          (list taz_s_x1 taz_s_y1)
+          "")
+  (setq taz_s_l8 (entlast))
 
-  (command "_LINE" (list taz_s_x1 taz_s_yf2) (list taz_s_xw1 taz_s_yf2) "")
-  (setq taz_s_l9 (cdr (assoc -1 (entget (entlast)))))
-
-  (command "_LINE" (list taz_s_xw1 taz_s_yf2) (list taz_s_xw1 taz_s_yf1) "")
-  (setq taz_s_l10 (cdr (assoc -1 (entget (entlast)))))
-
-  (command "_LINE" (list taz_s_xw1 taz_s_yf1) (list taz_s_x1 taz_s_yf1) "")
-  (setq taz_s_l11 (cdr (assoc -1 (entget (entlast)))))
-
-  (command "_LINE" (list taz_s_x1 taz_s_yf1) (list taz_s_x1 taz_s_y1) "")
-  (setq taz_s_l12 (cdr (assoc -1 (entget (entlast)))))
 
   ;; zapisz widok 
   
@@ -101,20 +124,11 @@
   (setq taz_s_f4 (cdr (assoc -1 (entget (entlast)))))
 
   ;; kolorowanie
-  (command "_CHPROP"
-           taz_s_l1 taz_s_l2 taz_s_l3 taz_s_l4 taz_s_l5 taz_s_l6
-           taz_s_l7 taz_s_l8 taz_s_l9 taz_s_l10 taz_s_l11 taz_s_l12
-           taz_s_f1 taz_s_f2 taz_s_f3 taz_s_f4
-           ""
-           "C" "6" "")
+  (command "_CHPROP" taz_s_l1 taz_s_l2 taz_s_l3 taz_s_l4 taz_s_l5 taz_s_l6 taz_s_l7 taz_s_l8 taz_s_f1 taz_s_f2 taz_s_f3 taz_s_f4 "" "C" "6" "")
 
   ;; PEDIT + JOIN – identycznie jak w HEA
   (command "_PEDIT" "M")
-  (command
-    taz_s_l1 taz_s_l2 taz_s_l3 taz_s_l4 taz_s_l5 taz_s_l6
-    taz_s_l7 taz_s_l8 taz_s_l9 taz_s_l10 taz_s_l11 taz_s_l12
-    taz_s_f1 taz_s_f2 taz_s_f3 taz_s_f4
-    "")
+  (command taz_s_l1 taz_s_l2 taz_s_l3 taz_s_l4 taz_s_l5 taz_s_l6 taz_s_l7 taz_s_l8 taz_s_f1 taz_s_f2 taz_s_f3 taz_s_f4 "")
   (command "_Y")
   (command "_J" "" "")
 
