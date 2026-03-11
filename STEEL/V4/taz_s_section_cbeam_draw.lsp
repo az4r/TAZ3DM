@@ -35,7 +35,7 @@
   (setq taz_s_x_inner (- taz_s_x2 taz_s_tw))   ;; prawa krawędź półki wewnętrznej
 
   ;; promień zaokrąglenia – 1, żeby nie wywalało błędu
-  (command "_FILLET" "_R" taz_s_r)
+  (command "_FILLET" "_R" taz_s_r1)
 
   ;; rysowanie konturu – identyczna kolejność jak w HEA
   ;; 1: dół zewnętrzny  P1 → P2
@@ -116,7 +116,7 @@
   
   (progn
   
-  (command "_FILLET" "_R" 1)
+  (command "_FILLET" "_R" taz_s_r2)
 
   (command "_PLAN" "_C")
 

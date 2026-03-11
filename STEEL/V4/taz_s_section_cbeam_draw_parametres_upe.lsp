@@ -14,7 +14,7 @@
       (setq taz_s_b 50.0)
       (setq taz_s_tw 4.0)
       (setq taz_s_tf 7.0)
-      (setq taz_s_r 10.0)
+      (setq taz_s_r1 10.0)
     )
   )
 
@@ -26,7 +26,7 @@
       (setq taz_s_b 55.0)
       (setq taz_s_tw 4.5)
       (setq taz_s_tf 7.5)
-      (setq taz_s_r 10.0)
+      (setq taz_s_r1 10.0)
     )
   )
 
@@ -38,7 +38,7 @@
       (setq taz_s_b 60.0)
       (setq taz_s_tw 5.0)
       (setq taz_s_tf 8.0)
-      (setq taz_s_r 12.0)
+      (setq taz_s_r1 12.0)
     )
   )
 
@@ -50,7 +50,7 @@
       (setq taz_s_b 65.0)
       (setq taz_s_tw 5.0)
       (setq taz_s_tf 9.0)
-      (setq taz_s_r 12.0)
+      (setq taz_s_r1 12.0)
     )
   )
 
@@ -62,7 +62,7 @@
       (setq taz_s_b 70.0)
       (setq taz_s_tw 5.5)
       (setq taz_s_tf 9.5)
-      (setq taz_s_r 12.0)
+      (setq taz_s_r1 12.0)
     )
   )
 
@@ -74,7 +74,7 @@
       (setq taz_s_b 75.0)
       (setq taz_s_tw 5.5)
       (setq taz_s_tf 10.5)
-      (setq taz_s_r 12.0)
+      (setq taz_s_r1 12.0)
     )
   )
 
@@ -86,7 +86,7 @@
       (setq taz_s_b 80.0)
       (setq taz_s_tw 6.0)
       (setq taz_s_tf 11.0)
-      (setq taz_s_r 13.0)
+      (setq taz_s_r1 13.0)
     )
   )
 
@@ -98,7 +98,7 @@
       (setq taz_s_b 85.0)
       (setq taz_s_tw 6.5)
       (setq taz_s_tf 12.0)
-      (setq taz_s_r 13.0)
+      (setq taz_s_r1 13.0)
     )
   )
 
@@ -110,7 +110,7 @@
       (setq taz_s_b 90.0)
       (setq taz_s_tw 7.0)
       (setq taz_s_tf 12.5)
-      (setq taz_s_r 15.0)
+      (setq taz_s_r1 15.0)
     )
   )
 
@@ -122,7 +122,7 @@
       (setq taz_s_b 95.0)
       (setq taz_s_tw 7.5)
       (setq taz_s_tf 13.5)
-      (setq taz_s_r 15.0)
+      (setq taz_s_r1 15.0)
     )
   )
 
@@ -134,7 +134,7 @@
       (setq taz_s_b 100.0)
       (setq taz_s_tw 9.5)
       (setq taz_s_tf 15.0)
-      (setq taz_s_r 15.0)
+      (setq taz_s_r1 15.0)
     )
   )
 
@@ -146,7 +146,7 @@
       (setq taz_s_b 105.0)
       (setq taz_s_tw 11.0)
       (setq taz_s_tf 16.0)
-      (setq taz_s_r 18.0)
+      (setq taz_s_r1 18.0)
     )
   )
 
@@ -158,7 +158,7 @@
       (setq taz_s_b 110.0)
       (setq taz_s_tw 12.0)
       (setq taz_s_tf 17.0)
-      (setq taz_s_r 18.0)
+      (setq taz_s_r1 18.0)
     )
   )
 
@@ -170,7 +170,7 @@
       (setq taz_s_b 115.0)
       (setq taz_s_tw 13.5)
       (setq taz_s_tf 18.0)
-      (setq taz_s_r 18.0)
+      (setq taz_s_r1 18.0)
     )
   )
 
