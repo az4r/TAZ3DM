@@ -35,7 +35,7 @@
   (setq taz_s_x_inner (- taz_s_x2 taz_s_tw))   ;; prawa krawędź półki wewnętrznej
 
   ;; promień zaokrąglenia – 1, żeby nie wywalało błędu
-  (command "_FILLET" "_R" 0)
+  (command "_FILLET" "_R" 1)
 
   ;; rysowanie konturu – identyczna kolejność jak w HEA
   ;; 1: dół zewnętrzny  P1 → P2
@@ -104,14 +104,15 @@
 
   (command "_PLAN" "_C")
 
-  ;; fillet
-  (command "_FILLET" taz_s_l2 taz_s_l3)
+  (command "_FILLET" taz_s_l5 taz_s_l6)
   (setq taz_s_f1 (cdr (assoc -1 (entget (entlast)))))
 
   (command "_PLAN" "_C")
 
-  (command "_FILLET" taz_s_l3 taz_s_l4)
+  (command "_FILLET" taz_s_l6 taz_s_l7)
   (setq taz_s_f2 (cdr (assoc -1 (entget (entlast)))))
+  
+  (command "_FILLET" "_R" 0)
 
   (command "_PLAN" "_C")
 
@@ -120,7 +121,7 @@
 
   (command "_PLAN" "_C")
 
-  (command "_FILLET" taz_s_l5 taz_s_l6)
+  (command "_FILLET" taz_s_l7 taz_s_l8)
   (setq taz_s_f4 (cdr (assoc -1 (entget (entlast)))))
 
   ;; kolorowanie
