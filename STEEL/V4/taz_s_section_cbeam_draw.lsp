@@ -35,7 +35,7 @@
   (setq taz_s_x_inner (- taz_s_x2 taz_s_tw))   ;; prawa krawędź półki wewnętrznej
 
   ;; promień zaokrąglenia – 1, żeby nie wywalało błędu
-  (command "_FILLET" "_R" 1)
+  (command "_FILLET" "_R" taz_s_r)
 
   ;; rysowanie konturu – identyczna kolejność jak w HEA
   ;; 1: dół zewnętrzny  P1 → P2
@@ -112,7 +112,11 @@
   (command "_FILLET" taz_s_l6 taz_s_l7)
   (setq taz_s_f2 (cdr (assoc -1 (entget (entlast)))))
   
-  (command "_FILLET" "_R" 0)
+  (if (= taz_s_family "UPN")
+  
+  (progn
+  
+  (command "_FILLET" "_R" 1)
 
   (command "_PLAN" "_C")
 
@@ -132,6 +136,23 @@
   (command taz_s_l1 taz_s_l2 taz_s_l3 taz_s_l4 taz_s_l5 taz_s_l6 taz_s_l7 taz_s_l8 taz_s_f1 taz_s_f2 taz_s_f3 taz_s_f4 "")
   (command "_Y")
   (command "_J" "" "")
+  
+  )
+  (progn
+  
+  ;; kolorowanie
+  (command "_CHPROP" taz_s_l1 taz_s_l2 taz_s_l3 taz_s_l4 taz_s_l5 taz_s_l6 taz_s_l7 taz_s_l8 taz_s_f1 taz_s_f2 "" "C" "6" "")
+
+  ;; PEDIT + JOIN – identycznie jak w HEA
+  (command "_PEDIT" "M")
+  (command taz_s_l1 taz_s_l2 taz_s_l3 taz_s_l4 taz_s_l5 taz_s_l6 taz_s_l7 taz_s_l8 taz_s_f1 taz_s_f2 "")
+  (command "_Y")
+  (command "_J" "" "")
+  
+  )
+  )
+  
+  
 
   ;; wybór profilu
   (setq taz_s_create_beam_profile (ssname (ssget "_X" '((0 . "LWPOLYLINE") (62 . 6))) 0))
