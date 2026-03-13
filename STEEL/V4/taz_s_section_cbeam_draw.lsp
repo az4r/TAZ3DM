@@ -44,10 +44,10 @@
       (setq taz_s_dy (* taz_s_dx (tan taz_s_alpha)))      ;; różnica wysokości
 
       ;; górna półka wyżej przy środniku
-      (setq taz_s_yf2_in (+ taz_s_yf2 taz_s_dy))
+      (setq taz_s_yf2_in (- taz_s_yf2 taz_s_dy))
 
       ;; dolna półka niżej przy środniku
-      (setq taz_s_yf1_in (- taz_s_yf1 taz_s_dy))
+      (setq taz_s_yf1_in (+ taz_s_yf1 taz_s_dy))
     )
     (progn
       ;; inne profile – półki poziome
