@@ -59,7 +59,7 @@
 
 
   ;; promień zaokrąglenia
-  (command "_FILLET" "_R" taz_s_r1)
+  (command "_FILLET" "R" taz_s_r1)
 
   ;; rysowanie konturu
   (command "_LINE" (list taz_s_x1 taz_s_y1) (list taz_s_x2 taz_s_y1) "")
@@ -106,7 +106,7 @@
 
   (if (= taz_s_family "UPN")
     (progn
-      (command "_FILLET" "_R" taz_s_r2)
+      (command "_FILLET" "R" taz_s_r2)
 
       (command "_PLAN" "_C")
       (command "_FILLET" taz_s_l4 taz_s_l5)
