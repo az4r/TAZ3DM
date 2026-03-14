@@ -82,25 +82,25 @@
   )
 
   (command "_PLAN" "_C")
-  
+  (command "_ZOOM" "_OBJECT" taz_s_l3 taz_s_l4 "")
   (command "_FILLET" taz_s_l3 taz_s_l4)
   
   (setq taz_s_f1 (cdr (assoc -1 (entget (entlast)))))
   
   (command "_PLAN" "_C")
-  
+  (command "_ZOOM" "_OBJECT" taz_s_l4 taz_s_l5 "")
   (command "_FILLET" taz_s_l4 taz_s_l5)
   
   (setq taz_s_f2 (cdr (assoc -1 (entget (entlast)))))
     
   (command "_PLAN" "_C")
-  
+  (command "_ZOOM" "_OBJECT" taz_s_l9 taz_s_l10 "")
   (command "_FILLET" taz_s_l9 taz_s_l10)
   
   (setq taz_s_f3 (cdr (assoc -1 (entget (entlast)))))
   
   (command "_PLAN" "_C")
-  
+  (command "_ZOOM" "_OBJECT" taz_s_10 taz_s_11 "")
   (command "_FILLET" taz_s_l10 taz_s_l11)
   
   (setq taz_s_f4 (cdr (assoc -1 (entget (entlast)))))
@@ -122,10 +122,8 @@
   
   (command "_SWEEP" taz_s_create_beam_profile "" taz_s_create_beam_path "")
   
-  ;; przywróć widok
+  ;; przywrócenie widoku
   (command "-VIEW" "_R" "taz_s_temp_view")
-  
-  ;; usuń widok tymczasowy
   (command "-VIEW" "_D" "taz_s_temp_view")
 
   (command "_ZOOM" "_SCALE" "0.0001X")
