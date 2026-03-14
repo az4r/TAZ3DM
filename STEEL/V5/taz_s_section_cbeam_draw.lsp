@@ -100,14 +100,16 @@
   )
 
   (command "_PLAN" "_C")
-  (command "_ZOOM" "_SCALE" "0.0001X")
-  (command "_ZOOM" "_SCALE" "10000X")
+  ;;(command "_ZOOM" "_SCALE" "0.0001X")
+  ;;(command "_ZOOM" "_SCALE" "10000X")
+  (command "_ZOOM" "_OBJECT" taz_s_l5 taz_s_l6 "")
   (command "_FILLET" taz_s_l5 taz_s_l6)
   (setq taz_s_f1 (cdr (assoc -1 (entget (entlast)))))
 
   (command "_PLAN" "_C")
-  (command "_ZOOM" "_SCALE" "0.0001X")
-  (command "_ZOOM" "_SCALE" "10000X")
+  ;;(command "_ZOOM" "_SCALE" "0.0001X")
+  ;;(command "_ZOOM" "_SCALE" "10000X")
+  (command "_ZOOM" "_OBJECT" taz_s_l6 taz_s_l7 "")
   (command "_FILLET" taz_s_l6 taz_s_l7)
   (setq taz_s_f2 (cdr (assoc -1 (entget (entlast)))))
 
@@ -118,14 +120,16 @@
       (command)
 
       (command "_PLAN" "_C")
-      (command "_ZOOM" "_SCALE" "0.0001X")
-      (command "_ZOOM" "_SCALE" "10000X")
+      ;;(command "_ZOOM" "_SCALE" "0.0001X")
+      ;;(command "_ZOOM" "_SCALE" "10000X")
+      (command "_ZOOM" "_OBJECT" taz_s_l4 taz_s_l5 "")
       (command "_FILLET" taz_s_l4 taz_s_l5)
       (setq taz_s_f3 (cdr (assoc -1 (entget (entlast)))))
 
       (command "_PLAN" "_C")
-      (command "_ZOOM" "_SCALE" "0.0001X")
-      (command "_ZOOM" "_SCALE" "10000X")
+      ;;(command "_ZOOM" "_SCALE" "0.0001X")
+      ;;(command "_ZOOM" "_SCALE" "10000X")
+      (command "_ZOOM" "_OBJECT" taz_s_l7 taz_s_l8 "")
       (command "_FILLET" taz_s_l7 taz_s_l8)
       (setq taz_s_f4 (cdr (assoc -1 (entget (entlast)))))
 
