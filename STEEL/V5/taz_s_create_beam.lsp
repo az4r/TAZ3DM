@@ -148,9 +148,11 @@
   ;; ---------------------------------------------------------
   ;; PRZYWRÓCENIE POPRZEDNIEGO UCS
   ;; ---------------------------------------------------------
-
-  (command "_.UCS" "_NA" "_R" "taz_s_ucs_temp")
-  ;;(command "_.UCS" "_NA" "_D" "taz_s_ucs_temp")
+  
+  (if taz_s_ucs_exist
+    (command "_.UCS" "_NA" "_R" "taz_s_ucs_temp")
+    (princ)
+  )
 
   ;; ---------------------------------------------------------
   ;; WYCZYSZCZENIE ZMIENNYCH EDYCJI
