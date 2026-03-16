@@ -290,8 +290,7 @@
   (setq taz_s_create_beam_profile
         (ssname (ssget "_X" '((0 . "LWPOLYLINE") (62 . 6))) 0))
 
-  (command "_ZOOM" "_SCALE" "0.0001X")
-  (command "_ZOOM" "_SCALE" "10000X")
+  (command "REGEN")
 
   ;; SWEEP
   (command "_SWEEP" taz_s_create_beam_profile "" taz_s_create_beam_path "")
