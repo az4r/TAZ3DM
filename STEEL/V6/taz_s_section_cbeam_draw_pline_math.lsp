@@ -106,6 +106,35 @@
       (+ (cadr taz_s_plp6) (* (/ taz_s_dy2 taz_s_len2) taz_s_r1))
     )
   )
+  
+  ;; ===== dodatkowe punkty dla wyokrąglenia przy plp7 =====
+
+  ;; wektor od plp7 do plp6
+  (setq taz_s_dx3 (- (car taz_s_plp6) (car taz_s_plp7)))
+  (setq taz_s_dy3 (- (cadr taz_s_plp6) (cadr taz_s_plp7)))
+
+  (setq taz_s_len3 (sqrt (+ (* taz_s_dx3 taz_s_dx3) (* taz_s_dy3 taz_s_dy3))))
+
+  (setq taz_s_plp7_before
+    (list
+      (+ (car taz_s_plp7) (* (/ taz_s_dx3 taz_s_len3) taz_s_r1))
+      (+ (cadr taz_s_plp7) (* (/ taz_s_dy3 taz_s_len3) taz_s_r1))
+    )
+  )
+
+  ;; wektor od plp7 do plp8
+  (setq taz_s_dx4 (- (car taz_s_plp8) (car taz_s_plp7)))
+  (setq taz_s_dy4 (- (cadr taz_s_plp8) (cadr taz_s_plp7)))
+
+  (setq taz_s_len4 (sqrt (+ (* taz_s_dx4 taz_s_dx4) (* taz_s_dy4 taz_s_dy4))))
+
+  (setq taz_s_plp7_after
+    (list
+      (+ (car taz_s_plp7) (* (/ taz_s_dx4 taz_s_len4) taz_s_r1))
+      (+ (cadr taz_s_plp7) (* (/ taz_s_dy4 taz_s_len4) taz_s_r1))
+    )
+  )
+
 
   
   ;; rysowanie
@@ -117,15 +146,20 @@
     taz_s_plp5
 
     taz_s_plp6_before
-
     "A"
     taz_s_plp6_after
     "L"
 
-    taz_s_plp7
+    ;; NOWE
+    taz_s_plp7_before
+    "A"
+    taz_s_plp7_after
+    "L"
+
     taz_s_plp8
     "C"
   )
+
 
 
   (command "_CHPROP" (entlast) "" "C" "6" "")
