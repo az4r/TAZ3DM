@@ -135,6 +135,40 @@
     )
   )
 
+  ;; ===== dodatkowe punkty dla wyokrąglenia przy plp5 (tylko UPN) =====
+
+  (if (= taz_s_family "UPN")
+    (progn
+
+      ;; wektor od plp5 do plp4
+      (setq taz_s_dx5 (- (car taz_s_plp4) (car taz_s_plp5)))
+      (setq taz_s_dy5 (- (cadr taz_s_plp4) (cadr taz_s_plp5)))
+
+      (setq taz_s_len5 (sqrt (+ (* taz_s_dx5 taz_s_dx5) (* taz_s_dy5 taz_s_dy5))))
+
+      (setq taz_s_plp5_before
+        (list
+          (+ (car taz_s_plp5) (* (/ taz_s_dx5 taz_s_len5) taz_s_r2))
+          (+ (cadr taz_s_plp5) (* (/ taz_s_dy5 taz_s_len5) taz_s_r2))
+        )
+      )
+
+      ;; wektor od plp5 do plp6
+      (setq taz_s_dx6 (- (car taz_s_plp6) (car taz_s_plp5)))
+      (setq taz_s_dy6 (- (cadr taz_s_plp6) (cadr taz_s_plp5)))
+
+      (setq taz_s_len6 (sqrt (+ (* taz_s_dx6 taz_s_dx6) (* taz_s_dy6 taz_s_dy6))))
+
+      (setq taz_s_plp5_after
+        (list
+          (+ (car taz_s_plp5) (* (/ taz_s_dx6 taz_s_len6) taz_s_r2))
+          (+ (cadr taz_s_plp5) (* (/ taz_s_dy6 taz_s_len6) taz_s_r2))
+        )
+      )
+
+    )
+  )
+
 
   
   ;; rysowanie
@@ -143,7 +177,23 @@
     taz_s_plp2
     taz_s_plp3
     taz_s_plp4
-    taz_s_plp5
+    
+    (if (= taz_s_family "UPN")
+      taz_s_plp5_before
+      taz_s_plp5
+    )
+
+    (if (= taz_s_family "UPN")
+      "A"
+    )
+
+    (if (= taz_s_family "UPN")
+      taz_s_plp5_after
+    )
+
+    (if (= taz_s_family "UPN")
+      "L"
+    )      
 
     taz_s_plp6_before
     "A"
