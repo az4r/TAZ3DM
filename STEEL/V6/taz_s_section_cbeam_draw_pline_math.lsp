@@ -167,6 +167,7 @@
       )
 
     )
+    (princ)
   )
   
   ;; ===== dodatkowe punkty dla wyokrąglenia przy plp8 (tylko UPN) =====
@@ -201,72 +202,71 @@
       )
 
     )
+    (princ)
   )
-
-
-
   
-  ;; rysowanie
-  (command "_PLINE"
-    taz_s_plp1
-    taz_s_plp2
-    taz_s_plp3
-    taz_s_plp4
-    
-    (if (= taz_s_family "UPN")
-      taz_s_plp5_before
-      taz_s_plp5
+  ;; rysowanie UPE
+  (if (= taz_s_family "UPE")
+    (progn
+      (command "_PLINE"
+        taz_s_plp1
+        taz_s_plp2
+        taz_s_plp3
+        taz_s_plp4
+        taz_s_plp5
+        
+        taz_s_plp6_before
+        "A"
+        taz_s_plp6_after
+        "L"
+
+        taz_s_plp7_before
+        "A"
+        taz_s_plp7_after
+        "L"
+               
+        taz_s_plp8
+        
+        "C"
+        )
     )
-
-    (if (= taz_s_family "UPN")
-      "A"
-    )
-
-    (if (= taz_s_family "UPN")
-      taz_s_plp5_after
-    )
-
-    (if (= taz_s_family "UPN")
-      "L"
-    )      
-
-    taz_s_plp6_before
-    "A"
-    taz_s_plp6_after
-    "L"
-
-    ;; NOWE
-    taz_s_plp7_before
-    "A"
-    taz_s_plp7_after
-    "L"
-
-    (if (= taz_s_family "UPN")
-      taz_s_plp7_after
-      taz_s_plp7
-    )
-
-    (if (= taz_s_family "UPN")
-      taz_s_plp8_before
-      taz_s_plp8
-    )
-
-    (if (= taz_s_family "UPN")
-      "A"
-    )
-
-    (if (= taz_s_family "UPN")
-      taz_s_plp8_after
-    )
-
-    (if (= taz_s_family "UPN")
-      "L"
-    )
-
-    "C"
+    (princ)
   )
+  
+  ;; rysowanie UPN
+  (if (= taz_s_family "UPN")
+    (progn
+      (command "_PLINE"
+        taz_s_plp1
+        taz_s_plp2
+        taz_s_plp3
+        taz_s_plp4
+        
+        taz_s_plp5_before
+        "A"
+        taz_s_plp5_after
+        "L"
+                
+        taz_s_plp6_before
+        "A"
+        taz_s_plp6_after
+        "L"
 
-
+        taz_s_plp7_before
+        "A"
+        taz_s_plp7_after
+        "L"
+               
+        taz_s_plp8_before
+        "A"
+        taz_s_plp8_after
+        "L"
+        
+        "C"
+        )
+    )
+    (princ)
+  )
 
   (command "_CHPROP" (entlast) "" "C" "6" "")
 
