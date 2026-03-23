@@ -31,8 +31,15 @@
 (setq _V_Y (/ V_Y LEN_V))
 
 ;; 3. KAT MIEDZY PROSTYMI
-(setq cos_phi (+ (* _U_X _V_X) (* _U_Y _V_Y)))
-(setq phi (acos cos_phi))
+;; ILOCZYN SKALARNY
+(setq dot (+ (* _U_X _V_X) (* _U_Y _V_Y)))
+
+;; ILOCZYN WEKTOROWY
+(setq cross (abs (- (* _U_X _V_Y) (* _U_Y _V_X))))
+
+;; KĄT MIĘDZY PROSTYMI
+(setq phi (atan (/ cross (abs dot))))
+
 
 (setq TE (/ R (tan (/ phi 2))))
 
