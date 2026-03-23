@@ -38,10 +38,10 @@
 ;; 3. KAT MIEDZY PROSTYMI
 ;; ILOCZYN SKALARNY WEKTOROW JEDNOSTKOWYCH
 (setq cos_phi (+ (* _U_X _V_X) (* _U_Y _V_Y )))
-(setq phi acos(cos_phi)) ;; TU PEWNIE BEDZIE BLAD
+(setq phi acos(cos_phi)) ;; SS
 
 ;; ODLEGLOSC OD WIERZCHOLKA DO PUNKTU STYCZNOSCI
-(setq TE (/ R tan(/ phi 2))) ;; TU SPRAWDZIC
+(setq TE (/ R tan(/ phi 2))) ;; SS
 
 (setq X_T1 (+ X_S (* _U_X TE)))
 (setq Y_T1 (+ Y_S (* _U_Y TE)))
@@ -53,3 +53,59 @@
 
 ;; 4. ŚRODEK OKRĘGU ŁUKU
 ;; WEKTOR DWUSIECZNEJ
+(setq W_X (+ _U_X _V_X))
+(setq W_Y (+ _U_Y _V_Y))
+
+;; DŁUGOŚC WEKTORA
+(setq LEN_W (sqrt (+ (* W_X W_X) (* W_Y W_Y))))
+
+;; WEKTOR JEDNOSTKOWY DWUSIECZNEJ
+(setq _B_X (/ W_X LEN_W))
+(setq _B_Y (/ W_Y LEN_W))
+
+;; ODLEGŁOŚĆ ŚRODKA OKRĘGU OD PUNKTU S
+(setq D (/ R sin(/ phi 2))) ;; SS
+
+;; ŚRODEK OKRĘGU 
+(setq X_C (+ X_S (* _B_X D)))
+(setq Y_C (+ Y_S (* _B_Y D)))
+
+(setq C (list X_C Y_C))
+
+;; 5. PUNKT ŚRODKOWY ŁUKU
+;; WEKTORY OD ŚRODKA DO PUNKTÓW STYCZNOŚCI
+(setq E_1X (- X_T1 X_C))
+(setq E_1Y (- Y_T1 X_C))
+(setq E_2X (- X_T2 X_C))
+(setq E_2Y (- Y_T2 X_C))
+
+;; DŁUGOŚCI WEKTORÓW
+(setq LEN_E1 (sqrt (+ (* E_1X E_1X) (* E_1Y E_1Y))))
+(setq LEN_E2 (sqrt (+ (* E_2X E_2X) (* E_2Y E_2Y))))
+
+;; WEKTORY JEDNOSTKOWE
+(setq _E_1X (/ E_1X LEN_E1))
+(setq _E_1Y (/ E_1Y LEN_E1))
+(setq _E_2X (/ E_2X LEN_E2))
+(setq _E_2Y (/ E_2Y LEN_E2))
+
+;; WEKTOR ŚRODKOWY
+(setq M_X (+ _E_1X _E_2X))
+(setq M_Y (+ _E_1Y _E_2Y))
+
+(setq LEN_M (sqrt (+ (* M_X M_X) (* M_Y M_Y))))
+
+(setq _M_X (/ M_X LEN_M))
+(setq _M_Y (/ M_Y LEN_M))
+
+(setq X_M (+ X_C (* R _M_X)))
+(setq Y_M (+ Y_C (* R _M_Y)))
+
+(setq M (list X_M Y_M))
+
+(print "POCZĄTEK ŁUKU:")
+(print TE1)
+(print "ŚRODEK ŁUKU:")
+(print M)
+(print "KONIEC ŁUKU:")
+(print TE2)
