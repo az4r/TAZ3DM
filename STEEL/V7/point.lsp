@@ -24,33 +24,49 @@
 
 ;; 2. WEKTORY KIERUNKOWE PROSTYCH
 ;; DLA PROSTEJ 1
-(setq U_X (- X_A2 X_A1))
-(setq U_Y (- Y_A2 Y_A1))
+(setq U_X (- X_A1 S_X))
+(setq U_Y (- Y_A1 S_Y))
 
 (setq LEN_U (sqrt (+ (* U_X U_X) (* U_Y U_Y))))
 
 (setq _U_X (/ U_X LEN_U))
 (setq _U_Y (/ U_Y LEN_U))
 
-;; DLA PROSTEJ 2
-(setq V_X (- X_B2 X_B1))
-(setq V_Y (- Y_B2 Y_B1))
+;; DLA PROSTEJ 2 (ZABEZPIECZENIE + KOREKTA KIERUNKU)
+;; WYBÓR PUNKTU (ABY UNIKNĄĆ WEKTORA ZEROWEGO)
+(if (and (= X_B1 S_X) (= Y_B1 S_Y))
+  (progn
+    (setq V_X (- X_B2 S_X))
+    (setq V_Y (- Y_B2 S_Y))
+  )
+  (progn
+    (setq V_X (- X_B1 S_X))
+    (setq V_Y (- Y_B1 S_Y))
+  )
+)
 
+;; NORMALIZACJA
 (setq LEN_V (sqrt (+ (* V_X V_X) (* V_Y V_Y))))
-
 (setq _V_X (/ V_X LEN_V))
 (setq _V_Y (/ V_Y LEN_V))
 
+;; KOREKTA KIERUNKU
+(setq cross_raw (- (* _U_X _V_Y) (* _U_Y _V_X)))
+
+(if (< cross_raw 0)
+  (progn
+    (setq _V_X (- _V_X))
+    (setq _V_Y (- _V_Y))
+  )
+)
+
 ;; 3. KAT MIEDZY PROSTYMI
-;; ILOCZYN SKALARNY
 (setq dot (+ (* _U_X _V_X) (* _U_Y _V_Y)))
 
-;; ILOCZYN WEKTOROWY
 (setq cross (abs (- (* _U_X _V_Y) (* _U_Y _V_X))))
 
-;; KĄT MIĘDZY PROSTYMI
 (if (= dot 0)
-  (setq phi (/ pi 2))   ;; kąt prosty
+  (setq phi (/ pi 2))
   (setq phi (atan (/ cross (abs dot))))
 )
 
