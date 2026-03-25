@@ -1,4 +1,15 @@
+(defun c:pointt ()
 ;; 1. DANE WEJSCIOWE
+(setq X_A1 0)
+(setq Y_A1 0)
+(setq X_A2 0)
+(setq Y_A2 100)
+
+(setq X_B1 0)
+(setq Y_B1 100)
+(setq X_B2 100)
+(setq Y_B2 100)
+  
 (setq A_1 (list X_A1 Y_A1)) 
 (setq A_2 (list X_A2 Y_A2)) 
 (setq B_1 (list X_B1 Y_B1)) 
@@ -38,8 +49,10 @@
 (setq cross (abs (- (* _U_X _V_Y) (* _U_Y _V_X))))
 
 ;; KĄT MIĘDZY PROSTYMI
-(setq phi (atan (/ cross (abs dot))))
-
+(if (= dot 0)
+  (setq phi (/ pi 2))   ;; kąt prosty
+  (setq phi (atan (/ cross (abs dot))))
+)
 
 (setq TE (/ R (tan (/ phi 2))))
 
@@ -100,3 +113,4 @@
 (print M)
 (print "KONIEC ŁUKU:")
 (print TE2)
+)
