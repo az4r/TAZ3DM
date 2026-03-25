@@ -129,4 +129,7 @@
 (print M)
 (print "KONIEC ŁUKU:")
 (print TE2)
+(command "_ZOOM" "_SCALE" "10000X")
+(command "_PLINE" A_1 TE1 M TE2 B_2 "")
+(command "_ZOOM" "_SCALE" "0.0001X")
 )
