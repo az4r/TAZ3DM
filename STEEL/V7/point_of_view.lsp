@@ -109,4 +109,50 @@
 (command "_PLINE" B1_minus B2_minus "")
 (command "_ZOOM" "_SCALE" "0.0001X")
 
+;; PUNKT PRZECIECIA OFFSETOW +R
+(setq x1 (car A1_plus))  (setq y1 (cadr A1_plus))
+(setq x2 (car A2_plus))  (setq y2 (cadr A2_plus))
+(setq x3 (car B1_plus))  (setq y3 (cadr B1_plus))
+(setq x4 (car B2_plus))  (setq y4 (cadr B2_plus))
+
+(setq denom (- (* (- x1 x2) (- y3 y4)) (* (- y1 y2) (- x3 x4))))
+
+(if (= denom 0)
+  (setq P_plus nil)  ;; równoległe
+  (progn
+    (setq t (/ (- (* (- x1 x3) (- y3 y4)) (* (- y1 y3) (- x3 x4))) denom))
+    (setq Px (+ x1 (* t (- x2 x1))))
+    (setq Py (+ y1 (* t (- y2 y1))))
+    (setq P_plus (list Px Py))
+  )
+)
+
+(print "Przecięcie offsetów +R:")
+(print P_plus)
+
+(setq x1 (car A1_minus))  (setq y1 (cadr A1_minus))
+(setq x2 (car A2_minus))  (setq y2 (cadr A2_minus))
+(setq x3 (car B1_minus))  (setq y3 (cadr B1_minus))
+(setq x4 (car B2_minus))  (setq y4 (cadr B2_minus))
+
+(setq denom (- (* (- x1 x2) (- y3 y4)) (* (- y1 y2) (- x3 x4))))
+
+(if (= denom 0)
+  (setq P_minus nil)
+  (progn
+    (setq t (/ (- (* (- x1 x3) (- y3 y4)) (* (- y1 y3) (- x3 x4))) denom))
+    (setq Px (+ x1 (* t (- x2 x1))))
+    (setq Py (+ y1 (* t (- y2 y1))))
+    (setq P_minus (list Px Py))
+  )
+)
+
+(print "Przecięcie offsetów -R:")
+(print P_minus)
+
+(command "_ZOOM" "_SCALE" "10000X")
+(command "_PLINE" P_plus P_minus "")
+(command "_ZOOM" "_SCALE" "0.0001X")
+
+
 )
