@@ -150,9 +150,31 @@
 (print "Przecięcie offsetów -R:")
 (print P_minus)
 
-(command "_ZOOM" "_SCALE" "10000X")
-(command "_PLINE" P_plus P_minus "")
-(command "_ZOOM" "_SCALE" "0.0001X")
+;;(command "_ZOOM" "_SCALE" "10000X")
+;;(command "_PLINE" P_plus P_minus "")
+;;(command "_ZOOM" "_SCALE" "0.0001X")
 
+;; długość łuku A_1 -> P_plus -> B_2
+(if P_plus
+  (setq L_plus (+ (distance A_1 P_plus) (distance P_plus B_2)))
+)
+(print "Dlugosc luku A_1 -> P_plus -> B_2:")
+(print L_plus)
+
+;; długość łuku A_1 -> P_minus -> B_2
+(if P_minus
+  (setq L_minus (+ (distance A_1 P_minus) (distance P_minus B_2)))
+)
+(print "Dlugosc luku A_1 -> P_minus -> B_2:")
+(print L_minus)
+
+(if (> L_plus L_minus)
+  (setq P_plusminus P_minus)
+  (setq P_plusminus P_plus)
+)
+  
+(command "_ZOOM" "_SCALE" "10000X")
+(command "_PLINE" P_plusminus (list S_X S_Y) "")
+(command "_ZOOM" "_SCALE" "0.0001X")
 
 )
