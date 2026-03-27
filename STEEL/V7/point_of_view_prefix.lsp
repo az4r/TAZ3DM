@@ -221,5 +221,36 @@
 (command "_ZOOM" "_SCALE" "10000X")
 (command "_PLINE" taz_s_arc_P_plusminus taz_s_arc_P2 "")
 (command "_ZOOM" "_SCALE" "0.0001X")
+  
+;; ----------------------------------------------------
+;; PUNKT W KIERUNKU S NA ODLEGŁOŚĆ R
+;; ----------------------------------------------------
+
+;; wektor od P_plusminus do S
+(setq taz_s_arc_vx (- taz_s_arc_S_X (car taz_s_arc_P_plusminus)))
+(setq taz_s_arc_vy (- taz_s_arc_S_Y (cadr taz_s_arc_P_plusminus)))
+
+;; długość wektora
+(setq taz_s_arc_vlen (sqrt (+ (* taz_s_arc_vx taz_s_arc_vx)
+                              (* taz_s_arc_vy taz_s_arc_vy))))
+
+;; współczynnik skalujący
+(setq taz_s_arc_k (/ taz_s_arc_R taz_s_arc_vlen))
+
+;; nowy punkt
+(setq taz_s_arc_P3
+  (list (+ (car taz_s_arc_P_plusminus) (* taz_s_arc_vx taz_s_arc_k))
+        (+ (cadr taz_s_arc_P_plusminus) (* taz_s_arc_vy taz_s_arc_k)))
+)
+
+(print "Punkt w kierunku S o długości R:")
+(print taz_s_arc_P3)
+
+;; rysowanie
+(command "_ZOOM" "_SCALE" "10000X")
+(command "_PLINE" taz_s_arc_P_plusminus taz_s_arc_P3 "")
+(command "_ZOOM" "_SCALE" "0.0001X")
+
+ 
 
 )
