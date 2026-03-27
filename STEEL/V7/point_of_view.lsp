@@ -177,4 +177,39 @@
 (command "_PLINE" P_plusminus (list S_X S_Y) "")
 (command "_ZOOM" "_SCALE" "0.0001X")
 
+;; ----------------------------------------------------
+;; PUNKTY ODDALONE O R WZDŁUŻ NORMALNYCH
+;; ----------------------------------------------------
+
+;; normalna A (jednostkowa)
+(setq nAx (/ ANX ALEN))
+(setq nAy (/ ANY ALEN))
+
+;; normalna B (jednostkowa)
+(setq nBx (/ BNX BLEN))
+(setq nBy (/ BNY BLEN))
+
+;; punkt 1 (od prostej A)
+(setq P1 (list (+ (car P_plusminus) (* nAx R))
+               (+ (cadr P_plusminus) (* nAy R))))
+
+;; punkt 2 (od prostej B)
+(setq P2 (list (+ (car P_plusminus) (* nBx R))
+               (+ (cadr P_plusminus) (* nBy R))))
+
+(print "Punkt od A:")
+(print P1)
+
+(print "Punkt od B:")
+(print P2)
+
+(command "_ZOOM" "_SCALE" "10000X")
+(command "_PLINE" P_plusminus P1 "")
+(command "_ZOOM" "_SCALE" "0.0001X")
+
+(command "_ZOOM" "_SCALE" "10000X")
+(command "_PLINE" P_plusminus P2 "")
+(command "_ZOOM" "_SCALE" "0.0001X")
+
+
 )
