@@ -178,30 +178,49 @@
 (command "_ZOOM" "_SCALE" "0.0001X")
 
 ;; ----------------------------------------------------
-;; PUNKTY ODDALONE O R WZDŁUŻ NORMALNYCH
+;; PUNKTY ODDALONE O R WZDŁUŻ NORMALNYCH (Z WYBOREM ZWROTU)
 ;; ----------------------------------------------------
 
-;; normalna A (jednostkowa)
+;; normalna A
 (setq nAx (/ ANX ALEN))
 (setq nAy (/ ANY ALEN))
 
-;; normalna B (jednostkowa)
+;; dwie opcje punktu dla A
+(setq P1a (list (+ (car P_plusminus) (* nAx R))
+                (+ (cadr P_plusminus) (* nAy R))))
+
+(setq P1b (list (- (car P_plusminus) (* nAx R))
+                (- (cadr P_plusminus) (* nAy R))))
+
+;; wybór bliższego do prostej A (czyli do A_2)
+(if (< (distance P1a A_2) (distance P1b A_2))
+  (setq P1 P1a)
+  (setq P1 P1b)
+)
+
+;; normalna B
 (setq nBx (/ BNX BLEN))
 (setq nBy (/ BNY BLEN))
 
-;; punkt 1 (od prostej A)
-(setq P1 (list (+ (car P_plusminus) (* nAx R))
-               (+ (cadr P_plusminus) (* nAy R))))
+;; dwie opcje punktu dla B
+(setq P2a (list (+ (car P_plusminus) (* nBx R))
+                (+ (cadr P_plusminus) (* nBy R))))
 
-;; punkt 2 (od prostej B)
-(setq P2 (list (+ (car P_plusminus) (* nBx R))
-               (+ (cadr P_plusminus) (* nBy R))))
+(setq P2b (list (- (car P_plusminus) (* nBx R))
+                (- (cadr P_plusminus) (* nBy R))))
+
+;; wybór bliższego do prostej B (czyli do B_1)
+(if (< (distance P2a B_1) (distance P2b B_1))
+  (setq P2 P2a)
+  (setq P2 P2b)
+)
 
 (print "Punkt od A:")
 (print P1)
 
 (print "Punkt od B:")
 (print P2)
+
 
 (command "_ZOOM" "_SCALE" "10000X")
 (command "_PLINE" P_plusminus P1 "")
