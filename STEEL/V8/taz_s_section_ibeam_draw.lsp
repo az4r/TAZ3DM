@@ -2099,62 +2099,21 @@
     )
     (princ)
   )
-  (exit)
+  
+(command "_CHPROP" (entlast) "" "C" "6" "")
 
-  ;; zapisz widok
-  (if (tblsearch "VIEW" "taz_s_temp_view")
-    (progn
-    (command "-VIEW" "_D" "taz_s_temp_view")
-    (command "-VIEW" "_S" "taz_s_temp_view")
-    )
-    (command "-VIEW" "_S" "taz_s_temp_view")
-  )
+  ;; wybór profilu
+  (setq taz_s_create_beam_profile
+        (ssname (ssget "_X" '((0 . "LWPOLYLINE") (62 . 6))) 0))
 
-  (command "_PLAN" "_C")
-  (command "_ZOOM" "_OBJECT" taz_s_l3 taz_s_l4 "")
-  (command "_FILLET" taz_s_l3 taz_s_l4)
-  
-  (setq taz_s_f1 (cdr (assoc -1 (entget (entlast)))))
-  
-  (command "_PLAN" "_C")
-  (command "_ZOOM" "_OBJECT" taz_s_l4 taz_s_l5 "")
-  (command "_FILLET" taz_s_l4 taz_s_l5)
-  
-  (setq taz_s_f2 (cdr (assoc -1 (entget (entlast)))))
-    
-  (command "_PLAN" "_C")
-  (command "_ZOOM" "_OBJECT" taz_s_l9 taz_s_l10 "")
-  (command "_FILLET" taz_s_l9 taz_s_l10)
-  
-  (setq taz_s_f3 (cdr (assoc -1 (entget (entlast)))))
-  
-  (command "_PLAN" "_C")
-  (command "_ZOOM" "_OBJECT" taz_s_10 taz_s_11 "")
-  (command "_FILLET" taz_s_l10 taz_s_l11)
-  
-  (setq taz_s_f4 (cdr (assoc -1 (entget (entlast)))))
-  
-  (command "_CHPROP" taz_s_l1 taz_s_l2 taz_s_l3 taz_s_l4 taz_s_l5 taz_s_l6 taz_s_l7 taz_s_l8 taz_s_l9 taz_s_l10 taz_s_l11 taz_s_l12 taz_s_f1 taz_s_f2 taz_s_f3 taz_s_f4 "" "C" "6" "")
-  
-  (command "_PEDIT" "M")
-  
-  (command taz_s_l1 taz_s_l2 taz_s_l3 taz_s_l4 taz_s_l5 taz_s_l6 taz_s_l7 taz_s_l8 taz_s_l9 taz_s_l10 taz_s_l11 taz_s_l12 taz_s_f1 taz_s_f2 taz_s_f3 taz_s_f4 "")
-  
-  (command "_Y")
-  
-  (command "_J" "" "")
-  
-  (setq taz_s_create_beam_profile (ssname (ssget "_X" '((0 . "LWPOLYLINE") (62 . 6))) 0))
-  
-  (command "_ZOOM" "_SCALE" "0.0001X")
-  (command "_ZOOM" "_SCALE" "10000X")
-  
+  (command "REGEN")
+
+  ;; SWEEP
   (command "_SWEEP" taz_s_create_beam_profile "" taz_s_create_beam_path "")
-  
+
   ;; przywrócenie widoku
   (command "-VIEW" "_R" "taz_s_temp_view")
   (command "-VIEW" "_D" "taz_s_temp_view")
-
-  (command "_ZOOM" "_SCALE" "0.0001X")
+  
   (princ)
 )
