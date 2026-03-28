@@ -12,7 +12,7 @@
       (setq taz_s_b 100.0)
       (setq taz_s_tw 6.0)
       (setq taz_s_tf 10.0)
-      (setq taz_s_r 12.0)
+      (setq taz_s_r1 12.0)
     )
   )
 
@@ -24,7 +24,7 @@
       (setq taz_s_b 120.0)
       (setq taz_s_tw 6.5)
       (setq taz_s_tf 11.0)
-      (setq taz_s_r 12.0)
+      (setq taz_s_r1 12.0)
     )
   )
 
@@ -36,7 +36,7 @@
       (setq taz_s_b 140.0)
       (setq taz_s_tw 7.0)
       (setq taz_s_tf 12.0)
-      (setq taz_s_r 12.0)
+      (setq taz_s_r1 12.0)
     )
   )
 
@@ -48,7 +48,7 @@
       (setq taz_s_b 160.0)
       (setq taz_s_tw 8.0)
       (setq taz_s_tf 13.0)
-      (setq taz_s_r 15.0)
+      (setq taz_s_r1 15.0)
     )
   )
 
@@ -60,7 +60,7 @@
       (setq taz_s_b 180.0)
       (setq taz_s_tw 8.5)
       (setq taz_s_tf 14.0)
-      (setq taz_s_r 15.0)
+      (setq taz_s_r1 15.0)
     )
   )
 
@@ -72,7 +72,7 @@
       (setq taz_s_b 200.0)
       (setq taz_s_tw 9.0)
       (setq taz_s_tf 15.0)
-      (setq taz_s_r 18.0)
+      (setq taz_s_r1 18.0)
     )
   )
 
@@ -84,7 +84,7 @@
       (setq taz_s_b 220.0)
       (setq taz_s_tw 9.5)
       (setq taz_s_tf 16.0)
-      (setq taz_s_r 18.0)
+      (setq taz_s_r1 18.0)
     )
   )
 
@@ -96,7 +96,7 @@
       (setq taz_s_b 240.0)
       (setq taz_s_tw 10.0)
       (setq taz_s_tf 17.0)
-      (setq taz_s_r 21.0)
+      (setq taz_s_r1 21.0)
     )
   )
 
@@ -108,7 +108,7 @@
       (setq taz_s_b 260.0)
       (setq taz_s_tw 10.0)
       (setq taz_s_tf 17.5)
-      (setq taz_s_r 24.0)
+      (setq taz_s_r1 24.0)
     )
   )
 
@@ -120,7 +120,7 @@
       (setq taz_s_b 280.0)
       (setq taz_s_tw 10.5)
       (setq taz_s_tf 18.0)
-      (setq taz_s_r 24.0)
+      (setq taz_s_r1 24.0)
     )
   )
 
@@ -132,7 +132,7 @@
       (setq taz_s_b 300.0)
       (setq taz_s_tw 11.0)
       (setq taz_s_tf 19.0)
-      (setq taz_s_r 27.0)
+      (setq taz_s_r1 27.0)
     )
   )
 
@@ -144,7 +144,7 @@
       (setq taz_s_b 300.0)
       (setq taz_s_tw 11.5)
       (setq taz_s_tf 20.5)
-      (setq taz_s_r 27.0)
+      (setq taz_s_r1 27.0)
     )
   )
 
@@ -156,7 +156,7 @@
       (setq taz_s_b 300.0)
       (setq taz_s_tw 12.0)
       (setq taz_s_tf 21.5)
-      (setq taz_s_r 27.0)
+      (setq taz_s_r1 27.0)
     )
   )
 
@@ -168,7 +168,7 @@
       (setq taz_s_b 300.0)
       (setq taz_s_tw 12.5)
       (setq taz_s_tf 22.5)
-      (setq taz_s_r 27.0)
+      (setq taz_s_r1 27.0)
     )
   )
 
@@ -180,7 +180,7 @@
       (setq taz_s_b 300.0)
       (setq taz_s_tw 13.5)
       (setq taz_s_tf 24.0)
-      (setq taz_s_r 27.0)
+      (setq taz_s_r1 27.0)
     )
   )
 
@@ -192,7 +192,7 @@
       (setq taz_s_b 300.0)
       (setq taz_s_tw 14.0)
       (setq taz_s_tf 26.0)
-      (setq taz_s_r 27.0)
+      (setq taz_s_r1 27.0)
     )
   )
 
@@ -204,7 +204,7 @@
       (setq taz_s_b 300.0)
       (setq taz_s_tw 14.5)
       (setq taz_s_tf 28.0)
-      (setq taz_s_r 27.0)
+      (setq taz_s_r1 27.0)
     )
   )
 
@@ -216,7 +216,7 @@
       (setq taz_s_b 300.0)
       (setq taz_s_tw 15.0)
       (setq taz_s_tf 29.0)
-      (setq taz_s_r 27.0)
+      (setq taz_s_r1 27.0)
     )
   )
 
@@ -228,7 +228,7 @@
       (setq taz_s_b 300.0)
       (setq taz_s_tw 15.5)
       (setq taz_s_tf 30.0)
-      (setq taz_s_r 27.0)
+      (setq taz_s_r1 27.0)
     )
   )
 
@@ -240,7 +240,7 @@
       (setq taz_s_b 300.0)
       (setq taz_s_tw 16.0)
       (setq taz_s_tf 31.0)
-      (setq taz_s_r 27.0)
+      (setq taz_s_r1 27.0)
     )
   )
 
@@ -252,7 +252,7 @@
       (setq taz_s_b 300.0)
       (setq taz_s_tw 17.0)
       (setq taz_s_tf 32.0)
-      (setq taz_s_r 27.0)
+      (setq taz_s_r1 27.0)
     )
   )
 
@@ -264,7 +264,7 @@
       (setq taz_s_b 300.0)
       (setq taz_s_tw 17.5)
       (setq taz_s_tf 33.0)
-      (setq taz_s_r 30.0)
+      (setq taz_s_r1 30.0)
     )
   )
 
@@ -276,7 +276,7 @@
       (setq taz_s_b 300.0)
       (setq taz_s_tw 18.5)
       (setq taz_s_tf 35.0)
-      (setq taz_s_r 30.0)
+      (setq taz_s_r1 30.0)
     )
   )
 
@@ -288,7 +288,7 @@
       (setq taz_s_b 300.0)
       (setq taz_s_tw 19.0)
       (setq taz_s_tf 36.0)
-      (setq taz_s_r 30.0)
+      (setq taz_s_r1 30.0)
     )
   )
 )
