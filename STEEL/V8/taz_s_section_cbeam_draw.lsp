@@ -1,4 +1,7 @@
 (defun taz_s_section_cbeam_draw ()
+  
+  (setq taz_s_r1 1)
+  (setq taz_s_r2 1)
 
   ;; pobranie parametrów UPE – baza jak dla HEA, tylko UPE
   (if (= taz_s_family "UPE")
