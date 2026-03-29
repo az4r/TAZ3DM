@@ -5,19 +5,19 @@
 
   ;; pobranie parametrów Rura kwadratowa
   (if (= taz_s_family "Rura kwadratowa")
-    (taz_s_section_lbeam_draw_parametres_rura_kwadratowa)
+    (taz_s_section_hsbeam_draw_parametres_rura_kwadratowa)
     (princ)
   )
 
   ;; pobranie parametrów Rura prostokatna
   (if (= taz_s_family "Rura prostokatna")
-    (taz_s_section_lbeam_draw_parametres_rura_prostokatna)
+    (taz_s_section_hsbeam_draw_parametres_rura_prostokatna)
     (princ)
   )
   
   ;; pobranie parametrów Rura okragla
   (if (= taz_s_family "Rura okragla")
-    (taz_s_section_lbeam_draw_parametres_rura_okragla)
+    (taz_s_section_hsbeam_draw_parametres_rura_okragla)
     (princ)
   )
   
