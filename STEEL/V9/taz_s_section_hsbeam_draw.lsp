@@ -1884,6 +1884,8 @@
   (if (= taz_s_family "Rura kwadratowa")
     (progn
       (command "_PLINE"
+        taz_s_plp4_3       
+               
         taz_s_plp1_1
         "A"
         taz_s_plp1_2
@@ -1912,6 +1914,8 @@
         )
       (command "_CHPROP" (entlast) "" "C" "6" "")
       (command "_PLINE"
+        taz_s_plp8_3       
+        
         taz_s_plp5_1
         "A"
         taz_s_plp5_2
@@ -1947,6 +1951,8 @@
   (if (= taz_s_family "Rura prostokatna")
     (progn
       (command "_PLINE"
+        taz_s_plp4_3       
+      
         taz_s_plp1_1
         "A"
         taz_s_plp1_2
@@ -1975,6 +1981,8 @@
         )
       (command "_CHPROP" (entlast) "" "C" "6" "")
       (command "_PLINE"
+        taz_s_plp8_3
+        
         taz_s_plp5_1
         "A"
         taz_s_plp5_2
