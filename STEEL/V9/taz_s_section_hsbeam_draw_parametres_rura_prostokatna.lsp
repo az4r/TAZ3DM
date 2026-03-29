@@ -1,0 +1,976 @@
+(defun taz_s_section_hsbeam_draw_parametres_rura_prostokatna ()
+
+  ;; ============================================
+  ;; RURY PROSTOKĄTNE RHS – CZĘŚĆ 1
+  ;; ============================================
+
+  ;; RHS 50x25x2.5
+  (if (and (= taz_s_family "Rura prostokatna")
+           (= taz_s_type "50x25x2.5"))
+    (progn
+      (setq taz_s_h 50.0)
+      (setq taz_s_b 25.0)
+      (setq taz_s_t 2.5)
+      (setq taz_s_r1 5.0)   ;; ro
+      (setq taz_s_r2 2.5)   ;; ri
+    )
+  )
+
+  ;; RHS 50x25x3
+  (if (and (= taz_s_family "Rura prostokatna")
+           (= taz_s_type "50x25x3"))
+    (progn
+      (setq taz_s_h 50.0)
+      (setq taz_s_b 25.0)
+      (setq taz_s_t 3.0)
+      (setq taz_s_r1 6.0)
+      (setq taz_s_r2 3.0)
+    )
+  )
+
+  ;; RHS 50x25x3.5
+  (if (and (= taz_s_family "Rura prostokatna")
+           (= taz_s_type "50x25x3.5"))
+    (progn
+      (setq taz_s_h 50.0)
+      (setq taz_s_b 25.0)
+      (setq taz_s_t 3.5)
+      (setq taz_s_r1 7.0)
+      (setq taz_s_r2 3.5)
+    )
+  )
+
+  ;; RHS 60x40x2.5
+  (if (and (= taz_s_family "Rura prostokatna")
+           (= taz_s_type "60x40x2.5"))
+    (progn
+      (setq taz_s_h 60.0)
+      (setq taz_s_b 40.0)
+      (setq taz_s_t 2.5)
+      (setq taz_s_r1 5.0)
+      (setq taz_s_r2 2.5)
+    )
+  )
+
+  ;; RHS 60x40x3
+  (if (and (= taz_s_family "Rura prostokatna")
+           (= taz_s_type "60x40x3"))
+    (progn
+      (setq taz_s_h 60.0)
+      (setq taz_s_b 40.0)
+      (setq taz_s_t 3.0)
+      (setq taz_s_r1 6.0)
+      (setq taz_s_r2 3.0)
+    )
+  )
+
+  ;; RHS 60x40x3.5
+  (if (and (= taz_s_family "Rura prostokatna")
+           (= taz_s_type "60x40x3.5"))
+    (progn
+      (setq taz_s_h 60.0)
+      (setq taz_s_b 40.0)
+      (setq taz_s_t 3.5)
+      (setq taz_s_r1 7.0)
+      (setq taz_s_r2 3.5)
+    )
+  )
+
+  ;; RHS 60x40x4
+  (if (and (= taz_s_family "Rura prostokatna")
+           (= taz_s_type "60x40x4"))
+    (progn
+      (setq taz_s_h 60.0)
+      (setq taz_s_b 40.0)
+      (setq taz_s_t 4.0)
+      (setq taz_s_r1 8.0)
+      (setq taz_s_r2 4.0)
+    )
+  )
+
+  ;; RHS 60x40x4.5
+  (if (and (= taz_s_family "Rura prostokatna")
+           (= taz_s_type "60x40x4.5"))
+    (progn
+      (setq taz_s_h 60.0)
+      (setq taz_s_b 40.0)
+      (setq taz_s_t 4.5)
+      (setq taz_s_r1 9.0)
+      (setq taz_s_r2 4.5)
+    )
+  )
+
+  ;; RHS 76x38x2.5
+  (if (and (= taz_s_family "Rura prostokatna")
+           (= taz_s_type "76x38x2.5"))
+    (progn
+      (setq taz_s_h 76.0)
+      (setq taz_s_b 38.0)
+      (setq taz_s_t 2.5)
+      (setq taz_s_r1 5.0)
+      (setq taz_s_r2 2.5)
+    )
+  )
+
+  ;; ============================================
+;; RURY PROSTOKĄTNE RHS – CZĘŚĆ 2
+;; ============================================
+
+;; RHS 76x38x3
+(if (and (= taz_s_family "Rura prostokatna")
+         (= taz_s_type "76x38x3"))
+  (progn
+    (setq taz_s_h 76.0)
+    (setq taz_s_b 38.0)
+    (setq taz_s_t 3.0)
+    (setq taz_s_r1 6.0)
+    (setq taz_s_r2 3.0)
+  )
+)
+
+;; RHS 76x38x3.5
+(if (and (= taz_s_family "Rura prostokatna")
+         (= taz_s_type "76x38x3.5"))
+  (progn
+    (setq taz_s_h 76.0)
+    (setq taz_s_b 38.0)
+    (setq taz_s_t 3.5)
+    (setq taz_s_r1 7.0)
+    (setq taz_s_r2 3.5)
+  )
+)
+
+;; RHS 76x38x4
+(if (and (= taz_s_family "Rura prostokatna")
+         (= taz_s_type "76x38x4"))
+  (progn
+    (setq taz_s_h 76.0)
+    (setq taz_s_b 38.0)
+    (setq taz_s_t 4.0)
+    (setq taz_s_r1 8.0)
+    (setq taz_s_r2 4.0)
+  )
+)
+
+;; RHS 76x38x4.5
+(if (and (= taz_s_family "Rura prostokatna")
+         (= taz_s_type "76x38x4.5"))
+  (progn
+    (setq taz_s_h 76.0)
+    (setq taz_s_b 38.0)
+    (setq taz_s_t 4.5)
+    (setq taz_s_r1 9.0)
+    (setq taz_s_r2 4.5)
+  )
+)
+
+;; RHS 80x40x2.5
+(if (and (= taz_s_family "Rura prostokatna")
+         (= taz_s_type "80x40x2.5"))
+  (progn
+    (setq taz_s_h 80.0)
+    (setq taz_s_b 40.0)
+    (setq taz_s_t 2.5)
+    (setq taz_s_r1 5.0)
+    (setq taz_s_r2 2.5)
+  )
+)
+
+;; RHS 80x40x3
+(if (and (= taz_s_family "Rura prostokatna")
+         (= taz_s_type "80x40x3"))
+  (progn
+    (setq taz_s_h 80.0)
+    (setq taz_s_b 40.0)
+    (setq taz_s_t 3.0)
+    (setq taz_s_r1 6.0)
+    (setq taz_s_r2 3.0)
+  )
+)
+
+;; RHS 80x40x3.5
+(if (and (= taz_s_family "Rura prostokatna")
+         (= taz_s_type "80x40x3.5"))
+  (progn
+    (setq taz_s_h 80.0)
+    (setq taz_s_b 40.0)
+    (setq taz_s_t 3.5)
+    (setq taz_s_r1 7.0)
+    (setq taz_s_r2 3.5)
+  )
+)
+
+;; RHS 80x40x4
+(if (and (= taz_s_family "Rura prostokatna")
+         (= taz_s_type "80x40x4"))
+  (progn
+    (setq taz_s_h 80.0)
+    (setq taz_s_b 40.0)
+    (setq taz_s_t 4.0)
+    (setq taz_s_r1 8.0)
+    (setq taz_s_r2 4.0)
+  )
+)
+
+;; RHS 80x40x4.5
+(if (and (= taz_s_family "Rura prostokatna")
+         (= taz_s_type "80x40x4.5"))
+  (progn
+    (setq taz_s_h 80.0)
+    (setq taz_s_b 40.0)
+    (setq taz_s_t 4.5)
+    (setq taz_s_r1 9.0)
+    (setq taz_s_r2 4.5)
+  )
+)
+
+;; RHS 100x50x2.5
+(if (and (= taz_s_family "Rura prostokatna")
+         (= taz_s_type "100x50x2.5"))
+  (progn
+    (setq taz_s_h 100.0)
+    (setq taz_s_b 50.0)
+    (setq taz_s_t 2.5)
+    (setq taz_s_r1 5.0)
+    (setq taz_s_r2 2.5)
+  )
+)
+
+;; RHS 100x50x3
+(if (and (= taz_s_family "Rura prostokatna")
+         (= taz_s_type "100x50x3"))
+  (progn
+    (setq taz_s_h 100.0)
+    (setq taz_s_b 50.0)
+    (setq taz_s_t 3.0)
+    (setq taz_s_r1 6.0)
+    (setq taz_s_r2 3.0)
+  )
+)
+
+;; RHS 100x50x3.5
+(if (and (= taz_s_family "Rura prostokatna")
+         (= taz_s_type "100x50x3.5"))
+  (progn
+    (setq taz_s_h 100.0)
+    (setq taz_s_b 50.0)
+    (setq taz_s_t 3.5)
+    (setq taz_s_r1 7.0)
+    (setq taz_s_r2 3.5)
+  )
+)
+
+;; RHS 100x50x4
+(if (and (= taz_s_family "Rura prostokatna")
+         (= taz_s_type "100x50x4"))
+  (progn
+    (setq taz_s_h 100.0)
+    (setq taz_s_b 50.0)
+    (setq taz_s_t 4.0)
+    (setq taz_s_r1 8.0)
+    (setq taz_s_r2 4.0)
+  )
+)
+
+;; RHS 100x50x4.5
+(if (and (= taz_s_family "Rura prostokatna")
+         (= taz_s_type "100x50x4.5"))
+  (progn
+    (setq taz_s_h 100.0)
+    (setq taz_s_b 50.0)
+    (setq taz_s_t 4.5)
+    (setq taz_s_r1 9.0)
+    (setq taz_s_r2 4.5)
+  )
+)
+
+;; RHS 100x50x5
+(if (and (= taz_s_family "Rura prostokatna")
+         (= taz_s_type "100x50x5"))
+  (progn
+    (setq taz_s_h 100.0)
+    (setq taz_s_b 50.0)
+    (setq taz_s_t 5.0)
+    (setq taz_s_r1 10.0)
+    (setq taz_s_r2 5.0)
+  )
+)
+
+;; RHS 100x50x6
+(if (and (= taz_s_family "Rura prostokatna")
+         (= taz_s_type "100x50x6"))
+  (progn
+    (setq taz_s_h 100.0)
+    (setq taz_s_b 50.0)
+    (setq taz_s_t 6.0)
+    (setq taz_s_r1 12.0)
+    (setq taz_s_r2 6.0)
+  )
+)
+
+;; ============================================
+;; RURY PROSTOKĄTNE RHS – CZĘŚĆ 3
+;; ============================================
+
+;; RHS 120x60x3
+(if (and (= taz_s_family "Rura prostokatna")
+         (= taz_s_type "120x60x3"))
+  (progn
+    (setq taz_s_h 120.0)
+    (setq taz_s_b 60.0)
+    (setq taz_s_t 3.0)
+    (setq taz_s_r1 6.0)
+    (setq taz_s_r2 3.0)
+  )
+)
+
+;; RHS 120x60x3.5
+(if (and (= taz_s_family "Rura prostokatna")
+         (= taz_s_type "120x60x3.5"))
+  (progn
+    (setq taz_s_h 120.0)
+    (setq taz_s_b 60.0)
+    (setq taz_s_t 3.5)
+    (setq taz_s_r1 7.0)
+    (setq taz_s_r2 3.5)
+  )
+)
+
+;; RHS 120x60x4
+(if (and (= taz_s_family "Rura prostokatna")
+         (= taz_s_type "120x60x4"))
+  (progn
+    (setq taz_s_h 120.0)
+    (setq taz_s_b 60.0)
+    (setq taz_s_t 4.0)
+    (setq taz_s_r1 8.0)
+    (setq taz_s_r2 4.0)
+  )
+)
+
+;; RHS 120x60x4.5
+(if (and (= taz_s_family "Rura prostokatna")
+         (= taz_s_type "120x60x4.5"))
+  (progn
+    (setq taz_s_h 120.0)
+    (setq taz_s_b 60.0)
+    (setq taz_s_t 4.5)
+    (setq taz_s_r1 9.0)
+    (setq taz_s_r2 4.5)
+  )
+)
+
+;; RHS 120x60x5
+(if (and (= taz_s_family "Rura prostokatna")
+         (= taz_s_type "120x60x5"))
+  (progn
+    (setq taz_s_h 120.0)
+    (setq taz_s_b 60.0)
+    (setq taz_s_t 5.0)
+    (setq taz_s_r1 10.0)
+    (setq taz_s_r2 5.0)
+  )
+)
+
+;; RHS 120x60x6
+(if (and (= taz_s_family "Rura prostokatna")
+         (= taz_s_type "120x60x6"))
+  (progn
+    (setq taz_s_h 120.0)
+    (setq taz_s_b 60.0)
+    (setq taz_s_t 6.0)
+    (setq taz_s_r1 12.0)
+    (setq taz_s_r2 6.0)
+  )
+)
+
+;; RHS 150x100x3
+(if (and (= taz_s_family "Rura prostokatna")
+         (= taz_s_type "150x100x3"))
+  (progn
+    (setq taz_s_h 150.0)
+    (setq taz_s_b 100.0)
+    (setq taz_s_t 3.0)
+    (setq taz_s_r1 6.0)
+    (setq taz_s_r2 3.0)
+  )
+)
+
+;; RHS 150x100x3.5
+(if (and (= taz_s_family "Rura prostokatna")
+         (= taz_s_type "150x100x3.5"))
+  (progn
+    (setq taz_s_h 150.0)
+    (setq taz_s_b 100.0)
+    (setq taz_s_t 3.5)
+    (setq taz_s_r1 7.0)
+    (setq taz_s_r2 3.5)
+  )
+)
+
+;; RHS 150x100x4
+(if (and (= taz_s_family "Rura prostokatna")
+         (= taz_s_type "150x100x4"))
+  (progn
+    (setq taz_s_h 150.0)
+    (setq taz_s_b 100.0)
+    (setq taz_s_t 4.0)
+    (setq taz_s_r1 8.0)
+    (setq taz_s_r2 4.0)
+  )
+)
+
+;; RHS 150x100x4.5
+(if (and (= taz_s_family "Rura prostokatna")
+         (= taz_s_type "150x100x4.5"))
+  (progn
+    (setq taz_s_h 150.0)
+    (setq taz_s_b 100.0)
+    (setq taz_s_t 4.5)
+    (setq taz_s_r1 9.0)
+    (setq taz_s_r2 4.5)
+  )
+)
+
+;; RHS 150x100x5
+(if (and (= taz_s_family "Rura prostokatna")
+         (= taz_s_type "150x100x5"))
+  (progn
+    (setq taz_s_h 150.0)
+    (setq taz_s_b 100.0)
+    (setq taz_s_t 5.0)
+    (setq taz_s_r1 10.0)
+    (setq taz_s_r2 5.0)
+  )
+)
+
+;; RHS 150x100x6
+(if (and (= taz_s_family "Rura prostokatna")
+         (= taz_s_type "150x100x6"))
+  (progn
+    (setq taz_s_h 150.0)
+    (setq taz_s_b 100.0)
+    (setq taz_s_t 6.0)
+    (setq taz_s_r1 12.0)
+    (setq taz_s_r2 6.0)
+  )
+)
+
+;; RHS 160x80x3
+(if (and (= taz_s_family "Rura prostokatna")
+         (= taz_s_type "160x80x3"))
+  (progn
+    (setq taz_s_h 160.0)
+    (setq taz_s_b 80.0)
+    (setq taz_s_t 3.0)
+    (setq taz_s_r1 6.0)
+    (setq taz_s_r2 3.0)
+  )
+)
+
+;; RHS 160x80x3.5
+(if (and (= taz_s_family "Rura prostokatna")
+         (= taz_s_type "160x80x3.5"))
+  (progn
+    (setq taz_s_h 160.0)
+    (setq taz_s_b 80.0)
+    (setq taz_s_t 3.5)
+    (setq taz_s_r1 7.0)
+    (setq taz_s_r2 3.5)
+  )
+)
+
+;; RHS 160x80x4
+(if (and (= taz_s_family "Rura prostokatna")
+         (= taz_s_type "160x80x4"))
+  (progn
+    (setq taz_s_h 160.0)
+    (setq taz_s_b 80.0)
+    (setq taz_s_t 4.0)
+    (setq taz_s_r1 8.0)
+    (setq taz_s_r2 4.0)
+  )
+)
+
+;; RHS 160x80x4.5
+(if (and (= taz_s_family "Rura prostokatna")
+         (= taz_s_type "160x80x4.5"))
+  (progn
+    (setq taz_s_h 160.0)
+    (setq taz_s_b 80.0)
+    (setq taz_s_t 4.5)
+    (setq taz_s_r1 9.0)
+    (setq taz_s_r2 4.5)
+  )
+)
+
+;; RHS 160x80x5
+(if (and (= taz_s_family "Rura prostokatna")
+         (= taz_s_type "160x80x5"))
+  (progn
+    (setq taz_s_h 160.0)
+    (setq taz_s_b 80.0)
+    (setq taz_s_t 5.0)
+    (setq taz_s_r1 10.0)
+    (setq taz_s_r2 5.0)
+  )
+)
+
+;; RHS 160x80x6
+(if (and (= taz_s_family "Rura prostokatna")
+         (= taz_s_type "160x80x6"))
+  (progn
+    (setq taz_s_h 160.0)
+    (setq taz_s_b 80.0)
+    (setq taz_s_t 6.0)
+    (setq taz_s_r1 12.0)
+    (setq taz_s_r2 6.0)
+  )
+)
+
+;; ============================================
+;; RURY PROSTOKĄTNE RHS – CZĘŚĆ 4
+;; ============================================
+
+;; RHS 200x100x4
+(if (and (= taz_s_family "Rura prostokatna")
+         (= taz_s_type "200x100x4"))
+  (progn
+    (setq taz_s_h 200.0)
+    (setq taz_s_b 100.0)
+    (setq taz_s_t 4.0)
+    (setq taz_s_r1 8.0)
+    (setq taz_s_r2 4.0)
+  )
+)
+
+;; RHS 200x100x4.5
+(if (and (= taz_s_family "Rura prostokatna")
+         (= taz_s_type "200x100x4.5"))
+  (progn
+    (setq taz_s_h 200.0)
+    (setq taz_s_b 100.0)
+    (setq taz_s_t 4.5)
+    (setq taz_s_r1 9.0)
+    (setq taz_s_r2 4.5)
+  )
+)
+
+;; RHS 200x100x6
+(if (and (= taz_s_family "Rura prostokatna")
+         (= taz_s_type "200x100x6"))
+  (progn
+    (setq taz_s_h 200.0)
+    (setq taz_s_b 100.0)
+    (setq taz_s_t 6.0)
+    (setq taz_s_r1 12.0)
+    (setq taz_s_r2 6.0)
+  )
+)
+
+;; RHS 200x100x8
+(if (and (= taz_s_family "Rura prostokatna")
+         (= taz_s_type "200x100x8"))
+  (progn
+    (setq taz_s_h 200.0)
+    (setq taz_s_b 100.0)
+    (setq taz_s_t 8.0)
+    (setq taz_s_r1 20.0)
+    (setq taz_s_r2 12.0)
+  )
+)
+
+;; RHS 200x100x10
+(if (and (= taz_s_family "Rura prostokatna")
+         (= taz_s_type "200x100x10"))
+  (progn
+    (setq taz_s_h 200.0)
+    (setq taz_s_b 100.0)
+    (setq taz_s_t 10.0)
+    (setq taz_s_r1 25.0)
+    (setq taz_s_r2 15.0)
+  )
+)
+
+;; RHS 200x150x4
+(if (and (= taz_s_family "Rura prostokatna")
+         (= taz_s_type "200x150x4"))
+  (progn
+    (setq taz_s_h 200.0)
+    (setq taz_s_b 150.0)
+    (setq taz_s_t 4.0)
+    (setq taz_s_r1 8.0)
+    (setq taz_s_r2 4.0)
+  )
+)
+
+;; RHS 200x150x4.5
+(if (and (= taz_s_family "Rura prostokatna")
+         (= taz_s_type "200x150x4.5"))
+  (progn
+    (setq taz_s_h 200.0)
+    (setq taz_s_b 150.0)
+    (setq taz_s_t 4.5)
+    (setq taz_s_r1 9.0)
+    (setq taz_s_r2 4.5)
+  )
+)
+
+;; RHS 200x150x6
+(if (and (= taz_s_family "Rura prostokatna")
+         (= taz_s_type "200x150x6"))
+  (progn
+    (setq taz_s_h 200.0)
+    (setq taz_s_b 150.0)
+    (setq taz_s_t 6.0)
+    (setq taz_s_r1 12.0)
+    (setq taz_s_r2 6.0)
+  )
+)
+
+;; RHS 200x150x8
+(if (and (= taz_s_family "Rura prostokatna")
+         (= taz_s_type "200x150x8"))
+  (progn
+    (setq taz_s_h 200.0)
+    (setq taz_s_b 150.0)
+    (setq taz_s_t 8.0)
+    (setq taz_s_r1 20.0)
+    (setq taz_s_r2 12.0)
+  )
+)
+
+;; RHS 200x150x10
+(if (and (= taz_s_family "Rura prostokatna")
+         (= taz_s_type "200x150x10"))
+  (progn
+    (setq taz_s_h 200.0)
+    (setq taz_s_b 150.0)
+    (setq taz_s_t 10.0)
+    (setq taz_s_r1 25.0)
+    (setq taz_s_r2 15.0)
+  )
+)
+
+;; RHS 250x100x4
+(if (and (= taz_s_family "Rura prostokatna")
+         (= taz_s_type "250x100x4"))
+  (progn
+    (setq taz_s_h 250.0)
+    (setq taz_s_b 100.0)
+    (setq taz_s_t 4.0)
+    (setq taz_s_r1 8.0)
+    (setq taz_s_r2 4.0)
+  )
+)
+
+;; RHS 250x100x4.5
+(if (and (= taz_s_family "Rura prostokatna")
+         (= taz_s_type "250x100x4.5"))
+  (progn
+    (setq taz_s_h 250.0)
+    (setq taz_s_b 100.0)
+    (setq taz_s_t 4.5)
+    (setq taz_s_r1 9.0)
+    (setq taz_s_r2 4.5)
+  )
+)
+
+;; RHS 250x100x6
+(if (and (= taz_s_family "Rura prostokatna")
+         (= taz_s_type "250x100x6"))
+  (progn
+    (setq taz_s_h 250.0)
+    (setq taz_s_b 100.0)
+    (setq taz_s_t 6.0)
+    (setq taz_s_r1 12.0)
+    (setq taz_s_r2 6.0)
+  )
+)
+
+;; RHS 250x100x8
+(if (and (= taz_s_family "Rura prostokatna")
+         (= taz_s_type "250x100x8"))
+  (progn
+    (setq taz_s_h 250.0)
+    (setq taz_s_b 100.0)
+    (setq taz_s_t 8.0)
+    (setq taz_s_r1 20.0)
+    (setq taz_s_r2 12.0)
+  )
+)
+
+;; RHS 250x100x10
+(if (and (= taz_s_family "Rura prostokatna")
+         (= taz_s_type "250x100x10"))
+  (progn
+    (setq taz_s_h 250.0)
+    (setq taz_s_b 100.0)
+    (setq taz_s_t 10.0)
+    (setq taz_s_r1 25.0)
+    (setq taz_s_r2 15.0)
+  )
+)
+
+;; ============================================
+;; RURY PROSTOKĄTNE RHS – CZĘŚĆ 5
+;; ============================================
+
+;; RHS 250x150x6
+(if (and (= taz_s_family "Rura prostokatna")
+         (= taz_s_type "250x150x6"))
+  (progn
+    (setq taz_s_h 250.0)
+    (setq taz_s_b 150.0)
+    (setq taz_s_t 6.0)
+    (setq taz_s_r1 12.0)
+    (setq taz_s_r2 6.0)
+  )
+)
+
+;; RHS 250x150x8
+(if (and (= taz_s_family "Rura prostokatna")
+         (= taz_s_type "250x150x8"))
+  (progn
+    (setq taz_s_h 250.0)
+    (setq taz_s_b 150.0)
+    (setq taz_s_t 8.0)
+    (setq taz_s_r1 20.0)
+    (setq taz_s_r2 12.0)
+  )
+)
+
+;; RHS 250x150x10
+(if (and (= taz_s_family "Rura prostokatna")
+         (= taz_s_type "250x150x10"))
+  (progn
+    (setq taz_s_h 250.0)
+    (setq taz_s_b 150.0)
+    (setq taz_s_t 10.0)
+    (setq taz_s_r1 25.0)
+    (setq taz_s_r2 15.0)
+  )
+)
+
+;; RHS 300x140x6
+(if (and (= taz_s_family "Rura prostokatna")
+         (= taz_s_type "300x140x6"))
+  (progn
+    (setq taz_s_h 300.0)
+    (setq taz_s_b 140.0)
+    (setq taz_s_t 6.0)
+    (setq taz_s_r1 12.0)
+    (setq taz_s_r2 6.0)
+  )
+)
+
+;; RHS 300x140x8
+(if (and (= taz_s_family "Rura prostokatna")
+         (= taz_s_type "300x140x8"))
+  (progn
+    (setq taz_s_h 300.0)
+    (setq taz_s_b 140.0)
+    (setq taz_s_t 8.0)
+    (setq taz_s_r1 20.0)
+    (setq taz_s_r2 12.0)
+  )
+)
+
+;; RHS 300x140x10
+(if (and (= taz_s_family "Rura prostokatna")
+         (= taz_s_type "300x140x10"))
+  (progn
+    (setq taz_s_h 300.0)
+    (setq taz_s_b 140.0)
+    (setq taz_s_t 10.0)
+    (setq taz_s_r1 25.0)
+    (setq taz_s_r2 15.0)
+  )
+)
+
+;; RHS 320x200x6
+(if (and (= taz_s_family "Rura prostokatna")
+         (= taz_s_type "320x200x6"))
+  (progn
+    (setq taz_s_h 320.0)
+    (setq taz_s_b 200.0)
+    (setq taz_s_t 6.0)
+    (setq taz_s_r1 12.0)
+    (setq taz_s_r2 6.0)
+  )
+)
+
+;; RHS 320x200x8
+(if (and (= taz_s_family "Rura prostokatna")
+         (= taz_s_type "320x200x8"))
+  (progn
+    (setq taz_s_h 320.0)
+    (setq taz_s_b 200.0)
+    (setq taz_s_t 8.0)
+    (setq taz_s_r1 20.0)
+    (setq taz_s_r2 12.0)
+  )
+)
+
+;; RHS 320x200x10
+(if (and (= taz_s_family "Rura prostokatna")
+         (= taz_s_type "320x200x10"))
+  (progn
+    (setq taz_s_h 320.0)
+    (setq taz_s_b 200.0)
+    (setq taz_s_t 10.0)
+    (setq taz_s_r1 25.0)
+    (setq taz_s_r2 15.0)
+  )
+)
+
+;; RHS 340x180x6
+(if (and (= taz_s_family "Rura prostokatna")
+         (= taz_s_type "340x180x6"))
+  (progn
+    (setq taz_s_h 340.0)
+    (setq taz_s_b 180.0)
+    (setq taz_s_t 6.0)
+    (setq taz_s_r1 12.0)
+    (setq taz_s_r2 6.0)
+  )
+)
+
+;; RHS 340x180x8
+(if (and (= taz_s_family "Rura prostokatna")
+         (= taz_s_type "340x180x8"))
+  (progn
+    (setq taz_s_h 340.0)
+    (setq taz_s_b 180.0)
+    (setq taz_s_t 8.0)
+    (setq taz_s_r1 20.0)
+    (setq taz_s_r2 12.0)
+  )
+)
+
+;; RHS 340x180x10
+(if (and (= taz_s_family "Rura prostokatna")
+         (= taz_s_type "340x180x10"))
+  (progn
+    (setq taz_s_h 340.0)
+    (setq taz_s_b 180.0)
+    (setq taz_s_t 10.0)
+    (setq taz_s_r1 25.0)
+    (setq taz_s_r2 15.0)
+  )
+)
+
+;; ============================================
+;; RURY PROSTOKĄTNE RHS – CZĘŚĆ 6 (OSTATNIA)
+;; ============================================
+
+;; RHS 300x140x6  (powtórzenie z tabeli końcowej)
+(if (and (= taz_s_family "Rura prostokatna")
+         (= taz_s_type "300x140x6"))
+  (progn
+    (setq taz_s_h 300.0)
+    (setq taz_s_b 140.0)
+    (setq taz_s_t 6.0)
+    (setq taz_s_r1 12.0)
+    (setq taz_s_r2 6.0)
+  )
+)
+
+;; RHS 300x140x8
+(if (and (= taz_s_family "Rura prostokatna")
+         (= taz_s_type "300x140x8"))
+  (progn
+    (setq taz_s_h 300.0)
+    (setq taz_s_b 140.0)
+    (setq taz_s_t 8.0)
+    (setq taz_s_r1 20.0)
+    (setq taz_s_r2 12.0)
+  )
+)
+
+;; RHS 300x140x10
+(if (and (= taz_s_family "Rura prostokatna")
+         (= taz_s_type "300x140x10"))
+  (progn
+    (setq taz_s_h 300.0)
+    (setq taz_s_b 140.0)
+    (setq taz_s_t 10.0)
+    (setq taz_s_r1 25.0)
+    (setq taz_s_r2 15.0)
+  )
+)
+
+;; RHS 300x140x6 (StVen) – dane identyczne, inny wariant tabeli
+(if (and (= taz_s_family "Rura prostokatna")
+         (= taz_s_type "300x140x6-StVen"))
+  (progn
+    (setq taz_s_h 300.0)
+    (setq taz_s_b 140.0)
+    (setq taz_s_t 6.0)
+    (setq taz_s_r1 12.0)
+    (setq taz_s_r2 6.0)
+  )
+)
+
+;; RHS 300x140x8 (StVen)
+(if (and (= taz_s_family "Rura prostokatna")
+         (= taz_s_type "300x140x8-StVen"))
+  (progn
+    (setq taz_s_h 300.0)
+    (setq taz_s_b 140.0)
+    (setq taz_s_t 8.0)
+    (setq taz_s_r1 20.0)
+    (setq taz_s_r2 12.0)
+  )
+)
+
+;; RHS 300x140x10 (StVen)
+(if (and (= taz_s_family "Rura prostokatna")
+         (= taz_s_type "300x140x10-StVen"))
+  (progn
+    (setq taz_s_h 300.0)
+    (setq taz_s_b 140.0)
+    (setq taz_s_t 10.0)
+    (setq taz_s_r1 25.0)
+    (setq taz_s_r2 15.0)
+  )
+)
+
+;; RHS 300x140x6 (Bredt) – jeśli chcesz warianty torsyjne
+(if (and (= taz_s_family "Rura prostokatna")
+         (= taz_s_type "300x140x6-Bredt"))
+  (progn
+    (setq taz_s_h 300.0)
+    (setq taz_s_b 140.0)
+    (setq taz_s_t 6.0)
+    (setq taz_s_r1 12.0)
+    (setq taz_s_r2 6.0)
+  )
+)
+
+;; RHS 300x140x8 (Bredt)
+(if (and (= taz_s_family "Rura prostokatna")
+         (= taz_s_type "300x140x8-Bredt"))
+  (progn
+    (setq taz_s_h 300.0)
+    (setq taz_s_b 140.0)
+    (setq taz_s_t 8.0)
+    (setq taz_s_r1 20.0)
+    (setq taz_s_r2 12.0)
+  )
+)
+
+;; RHS 300x140x10 (Bredt)
+(if (and (= taz_s_family "Rura prostokatna")
+         (= taz_s_type "300x140x10-Bredt"))
+  (progn
+    (setq taz_s_h 300.0)
+    (setq taz_s_b 140.0)
+    (setq taz_s_t 10.0)
+    (setq taz_s_r1 25.0)
+    (setq taz_s_r2 15.0)
+  )
+)
+
+)
+
