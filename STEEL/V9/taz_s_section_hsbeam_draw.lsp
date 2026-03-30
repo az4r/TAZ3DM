@@ -1890,13 +1890,6 @@
     ;; ============================
     ;; WYPROWADZENIE WSPÓŁRZĘDNYCH
     ;; ============================
-
-    ;; Środek przekroju
-    (setq taz_s_p_center (list 0.0 0.0))
-
-    ;; Promienie
-    (setq taz_s_R_out (/ taz_s_d 2.0))
-    (setq taz_s_R_in  (- taz_s_R_out taz_s_t))
       
     ;; rysowanie konturu
     ;; ustawienie kamery
@@ -1906,6 +1899,13 @@
     (entdel (entlast))
     (command "_ZOOM" "_SCALE" "1000X")
     (command "REGEN")
+
+    ;; Środek przekroju
+    (setq taz_s_p_center (list 0.0 0.0))
+
+    ;; Promienie
+    (setq taz_s_R_out (/ taz_s_d 2.0))
+    (setq taz_s_R_in  (- taz_s_R_out taz_s_t))
 
     ;; ============================
     ;; PUNKTY ZEWNĘTRZNE (4 punkty)
@@ -2073,9 +2073,9 @@
   ;; rysowanie Rura okragla
   (if (= taz_s_family "Rura okragla")
     (progn
-      (command "_CIRCLE" taz_s_p_center taz_s_plp1)
+      (command "_CIRCLE" taz_s_p_center taz_s_R_out)
       (command "_CHPROP" (entlast) "" "C" "6" "")
-      (command "_CIRCLE" taz_s_p_center taz_s_plp5)
+      (command "_CIRCLE" taz_s_p_center taz_s_R_in)
       (command "_CHPROP" (entlast) "" "C" "210" "")
     )
     (princ)
