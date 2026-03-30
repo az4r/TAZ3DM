@@ -28,6 +28,9 @@
   
   ;; Punkt bazowy – zewnętrzny narożnik
   (setq taz_s_p '(0 0 0))
+  
+  (if (or (= taz_s_family "Rura kwadratowa") (= taz_s_family "Rura prostokatna"))
+    (progn
 
   ;; ============================
   ;; WYPROWADZENIE WSPÓŁRZĘDNYCH
@@ -1879,6 +1882,51 @@
   ;; KONIEC DODATKOWYCH PUNKTOW (PUNKT 8)
   ;; ###########################################################################
   ;; ###########################################################################
+    )  
+  )
+  
+  (if (= taz_s_family "Rura okragla")
+    (progn
+    ;; ============================
+    ;; WYPROWADZENIE WSPÓŁRZĘDNYCH
+    ;; ============================
+
+    ;; Środek przekroju
+    (setq taz_s_p_center (list 0.0 0.0))
+
+    ;; Promienie
+    (setq taz_s_R_out (/ taz_s_d 2.0))
+    (setq taz_s_R_in  (- taz_s_R_out taz_s_t))
+      
+    ;; rysowanie konturu
+    ;; ustawienie kamery
+    (command "_LINE" '(-50 -50 0) '(50 50 0) "")
+    (command "_PLAN" "_C")
+    (command "_ZOOM" "_OBJECT" (entlast) "")
+    (entdel (entlast))
+    (command "_ZOOM" "_SCALE" "1000X")
+    (command "REGEN")
+
+    ;; ============================
+    ;; PUNKTY ZEWNĘTRZNE (4 punkty)
+    ;; ============================
+
+    (setq taz_s_plp1 (list taz_s_R_out 0.0))         ;; prawo
+    (setq taz_s_plp2 (list 0.0 taz_s_R_out))         ;; góra
+    (setq taz_s_plp3 (list (- taz_s_R_out) 0.0))     ;; lewo
+    (setq taz_s_plp4 (list 0.0 (- taz_s_R_out)))     ;; dół
+
+    ;; ============================
+    ;; PUNKTY WEWNĘTRZNE (4 punkty)
+    ;; ============================
+
+    (setq taz_s_plp5 (list taz_s_R_in 0.0))          ;; prawo
+    (setq taz_s_plp6 (list 0.0 taz_s_R_in))          ;; góra
+    (setq taz_s_plp7 (list (- taz_s_R_in) 0.0))      ;; lewo
+    (setq taz_s_plp8 (list 0.0 (- taz_s_R_in)))      ;; dół
+
+    )
+  )
   
   ;; ---------------------------------------------------------
   ;; RYSOWANIE LINII ŚCIEŻKI WYCIĘCIA
@@ -2025,29 +2073,39 @@
   ;; rysowanie Rura okragla
   (if (= taz_s_family "Rura okragla")
     (progn
-      (command "_PLINE"
-        taz_s_plp1
-        taz_s_plp2               
-        taz_s_plp3
-        taz_s_plp4
-        
-        "C"
-        )
+      (command "_CIRCLE" taz_s_p_center taz_s_plp1)
       (command "_CHPROP" (entlast) "" "C" "6" "")
+      (command "_CIRCLE" taz_s_p_center taz_s_plp5)
+      (command "_CHPROP" (entlast) "" "C" "210" "")
     )
     (princ)
   )
 
+  (if (or (= taz_s_family "Rura kwadratowa") (= taz_s_family "Rura prostokatna"))
+    (progn
   ;; wybór profilu
   (setq taz_s_create_beam_profile
         (ssname (ssget "_X" '((0 . "LWPOLYLINE") (62 . 6))) 0))
-
   (command "REGEN")
   
   (setq taz_s_create_beam_profile_cut
         (ssname (ssget "_X" '((0 . "LWPOLYLINE") (62 . 210))) 0))
-
   (command "REGEN")
+    )
+  )
+  
+  (if (= taz_s_family "Rura okragla")
+    (progn
+  ;; wybór profilu
+  (setq taz_s_create_beam_profile
+        (ssname (ssget "_X" '((0 . "CIRCLE") (62 . 6))) 0))
+  (command "REGEN")
+  
+  (setq taz_s_create_beam_profile_cut
+        (ssname (ssget "_X" '((0 . "CIRCLE") (62 . 210))) 0))
+  (command "REGEN")
+    )
+  )
 
   ;; SWEEP
   (command "_SWEEP" taz_s_create_beam_profile "" taz_s_create_beam_path "")
