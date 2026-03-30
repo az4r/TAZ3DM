@@ -1879,6 +1879,14 @@
   ;; KONIEC DODATKOWYCH PUNKTOW (PUNKT 8)
   ;; ###########################################################################
   ;; ###########################################################################
+  
+  ;; ---------------------------------------------------------
+  ;; RYSOWANIE LINII ŚCIEŻKI WYCIĘCIA
+  ;; ---------------------------------------------------------
+
+  (command "_COPY" taz_s_create_beam_path "" (list 0 0) (list 0 0))
+  (setq taz_s_create_beam_path_cut
+        (cdr (assoc -1 (entget (entlast)))))
       
   ;; rysowanie Rura kwadratowa
   (if (= taz_s_family "Rura kwadratowa")
@@ -1942,7 +1950,7 @@
         
         "C"
         )
-      (command "_CHPROP" (entlast) "" "C" "6" "")
+      (command "_CHPROP" (entlast) "" "C" "210" "")
     )
     (princ)
   )
@@ -2009,7 +2017,7 @@
         
         "C"
         )
-      (command "_CHPROP" (entlast) "" "C" "6" "")
+      (command "_CHPROP" (entlast) "" "C" "210" "")
     )
     (princ)
   )
@@ -2037,9 +2045,18 @@
         (ssname (ssget "_X" '((0 . "LWPOLYLINE") (62 . 6))) 0))
 
   (command "REGEN")
+  
+  (setq taz_s_create_beam_profile_cut
+        (ssname (ssget "_X" '((0 . "LWPOLYLINE") (62 . 210))) 0))
+
+  (command "REGEN")
 
   ;; SWEEP
   (command "_SWEEP" taz_s_create_beam_profile "" taz_s_create_beam_path "")
+  (setq taz_s_substract_solid1 (entlast))
+  (command "_SWEEP" taz_s_create_beam_profile_cut "" taz_s_create_beam_path_cut "")
+  (setq taz_s_substract_solid2 (entlast))
+  (command "SUBTRACT" taz_s_substract_solid1 "" taz_s_substract_solid2 "")
 
   ;; przywrócenie widoku
   (command "-VIEW" "_R" "taz_s_temp_view")
