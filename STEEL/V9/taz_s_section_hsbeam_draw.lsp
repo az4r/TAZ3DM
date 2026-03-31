@@ -36,18 +36,24 @@
   ;; WYPROWADZENIE WSPÓŁRZĘDNYCH
   ;; ============================
 
-  (setq taz_s_x0 (car taz_s_p))
-  (setq taz_s_y0 (cadr taz_s_p))
+  (setq taz_s_x0 (car taz_s_p))   ;; środek X
+  (setq taz_s_y0 (cadr taz_s_p))  ;; środek Y
 
-  ;; końce zewnętrzne
-  (setq taz_s_xb (+ taz_s_x0 taz_s_b))   ;; szerokość zewnętrzna
-  (setq taz_s_yh (+ taz_s_y0 taz_s_h))   ;; wysokość zewnętrzna
+  ;; pół‑wymiary (od środka do krawędzi)
+  (setq taz_s_dx (/ taz_s_b 2.0))   ;; pół‑szerokość
+  (setq taz_s_dy (/ taz_s_h 2.0))   ;; pół‑wysokość
+
+  ;; zewnętrzne krawędzie
+  (setq taz_s_xld (- taz_s_x0 taz_s_dx))   ;; lewy
+  (setq taz_s_xrd (+ taz_s_x0 taz_s_dx))   ;; prawy
+  (setq taz_s_ybd (- taz_s_y0 taz_s_dy))   ;; dół
+  (setq taz_s_ytd (+ taz_s_y0 taz_s_dy))   ;; góra
 
   ;; wewnętrzne krawędzie (po grubości t)
-  (setq taz_s_t1 (+ taz_s_x0 taz_s_t))   ;; wewnętrzna lewa
-  (setq taz_s_t2 (+ taz_s_y0 taz_s_t))   ;; wewnętrzna dolna
-  (setq taz_s_t3 (- taz_s_xb taz_s_t))   ;; wewnętrzna prawa
-  (setq taz_s_t4 (- taz_s_yh taz_s_t))   ;; wewnętrzna górna
+  (setq taz_s_t1 (+ taz_s_xld taz_s_t))   ;; lewa wewnętrzna
+  (setq taz_s_t2 (+ taz_s_ybd taz_s_t))   ;; dolna wewnętrzna
+  (setq taz_s_t3 (- taz_s_xrd taz_s_t))   ;; prawa wewnętrzna
+  (setq taz_s_t4 (- taz_s_ytd taz_s_t))   ;; górna wewnętrzna
   
   ;; rysowanie konturu
   ;; ustawienie kamery
@@ -62,17 +68,17 @@
   ;; PUNKTY KONTURU RHS (bez promieni)
   ;; ============================
 
-  ;; Zewnętrzne narożniki (pełny obrys)
-  (setq taz_s_plp1 (list taz_s_x0 taz_s_y0))   ;; dolny-lewy
-  (setq taz_s_plp2 (list taz_s_xb taz_s_y0))   ;; dolny-prawy
-  (setq taz_s_plp3 (list taz_s_xb taz_s_yh))   ;; górny-prawy
-  (setq taz_s_plp4 (list taz_s_x0 taz_s_yh))   ;; górny-lewy
+  ;; Zewnętrzne narożniki
+  (setq taz_s_plp1 (list taz_s_xld taz_s_ybd))   ;; dolny-lewy
+  (setq taz_s_plp2 (list taz_s_xrd taz_s_ybd))   ;; dolny-prawy
+  (setq taz_s_plp3 (list taz_s_xrd taz_s_ytd))   ;; górny-prawy
+  (setq taz_s_plp4 (list taz_s_xld taz_s_ytd))   ;; górny-lewy
 
   ;; Wewnętrzne narożniki (otwór)
-  (setq taz_s_plp5 (list taz_s_t1 taz_s_t2))   ;; dolny-lewy wewnętrzny
-  (setq taz_s_plp6 (list taz_s_t3 taz_s_t2))   ;; dolny-prawy wewnętrzny
-  (setq taz_s_plp7 (list taz_s_t3 taz_s_t4))   ;; górny-prawy wewnętrzny
-  (setq taz_s_plp8 (list taz_s_t1 taz_s_t4))   ;; górny-lewy wewnętrzny
+  (setq taz_s_plp5 (list taz_s_t1 taz_s_t2))     ;; dolny-lewy wewnętrzny
+  (setq taz_s_plp6 (list taz_s_t3 taz_s_t2))     ;; dolny-prawy wewnętrzny
+  (setq taz_s_plp7 (list taz_s_t3 taz_s_t4))     ;; górny-prawy wewnętrzny
+  (setq taz_s_plp8 (list taz_s_t1 taz_s_t4))     ;; górny-lewy wewnętrzny
   
   ;; ###########################################################################
   ;; ###########################################################################
