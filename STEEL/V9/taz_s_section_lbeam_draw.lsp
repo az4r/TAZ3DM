@@ -1,7 +1,7 @@
 (defun taz_s_section_lbeam_draw ()
   
   (setq taz_s_r1 1)
-  (setq taz_s_r2 2)
+  (setq taz_s_r2 1)
 
   ;; pobranie parametrów Katownik rownoramienny
   (if (= taz_s_family "Katownik rownoramienny")
@@ -20,23 +20,27 @@
 
   (command "_ZOOM" "_SCALE" "10000X")
   
-  ;; Punkt bazowy – zewnętrzny narożnik
+  ;; Punkt bazowy – ŚRODEK profilu
   (setq taz_s_p '(0 0 0))
 
   ;; ============================
   ;; WYPROWADZENIE WSPÓŁRZĘDNYCH
   ;; ============================
 
-  (setq taz_s_x0 (car taz_s_p))
-  (setq taz_s_y0 (cadr taz_s_p))
+  (setq taz_s_x0 (car taz_s_p))   ;; środek
+  (setq taz_s_y0 (cadr taz_s_p))  ;; środek
+
+  ;; lewy-dolny narożnik względem środka
+  (setq taz_s_xld (- taz_s_x0 (/ taz_s_b 2.0)))
+  (setq taz_s_yld (- taz_s_y0 (/ taz_s_h 2.0)))
 
   ;; końce półek
-  (setq taz_s_xb (+ taz_s_x0 taz_s_b))   ;; pozioma półka – koniec
-  (setq taz_s_yh (+ taz_s_y0 taz_s_h))   ;; pionowa półka – koniec
+  (setq taz_s_xb (+ taz_s_xld taz_s_b))   ;; prawa strona
+  (setq taz_s_yh (+ taz_s_yld taz_s_h))   ;; góra
 
-  ;; grubość w poziomie i pionie
-  (setq taz_s_t1 (+ taz_s_x0 taz_s_t))   ;; wewnętrzna krawędź pozioma
-  (setq taz_s_t2 (+ taz_s_y0 taz_s_t))   ;; wewnętrzna krawędź pionowa
+  ;; wewnętrzne krawędzie
+  (setq taz_s_t1 (+ taz_s_xld taz_s_t))   ;; wewnętrzna krawędź pozioma
+  (setq taz_s_t2 (+ taz_s_yld taz_s_t))   ;; wewnętrzna krawędź pionowa
   
   ;; rysowanie konturu
   ;; ustawienie kamery
@@ -51,12 +55,12 @@
   ;; PUNKTY KONTURU (bez promieni)
   ;; ============================
 
-  (setq taz_s_plp1 (list taz_s_x0 taz_s_y0))   ;; narożnik zewnętrzny
-  (setq taz_s_plp2 (list taz_s_xb taz_s_y0))   ;; pozioma półka – zewnętrzny koniec
-  (setq taz_s_plp3 (list taz_s_xb taz_s_t2))   ;; pozioma półka – wewnętrzny punkt
-  (setq taz_s_plp4 (list taz_s_t1 taz_s_t2))   ;; wewnętrzny narożnik
-  (setq taz_s_plp5 (list taz_s_t1 taz_s_yh))   ;; pionowa półka – wewnętrzny punkt
-  (setq taz_s_plp6 (list taz_s_x0 taz_s_yh))   ;; pionowa półka – zewnętrzny koniec
+  (setq taz_s_plp1 (list taz_s_xld taz_s_yld))   ;; narożnik zewnętrzny
+  (setq taz_s_plp2 (list taz_s_xb  taz_s_yld))   ;; pozioma półka – zewnętrzny koniec
+  (setq taz_s_plp3 (list taz_s_xb  taz_s_t2))    ;; pozioma półka – wewnętrzny punkt
+  (setq taz_s_plp4 (list taz_s_t1  taz_s_t2))    ;; wewnętrzny narożnik
+  (setq taz_s_plp5 (list taz_s_t1  taz_s_yh))    ;; pionowa półka – wewnętrzny punkt
+  (setq taz_s_plp6 (list taz_s_xld taz_s_yh))    ;; pionowa półka – zewnętrzny koniec
   
   ;; ###########################################################################
   ;; ###########################################################################
