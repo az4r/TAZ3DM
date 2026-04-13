@@ -53,10 +53,36 @@
   ;; ---------------------------------------------------------
   ;; USTAWIENIE UCS DO OBIEKTU I OBROTY
   ;; ---------------------------------------------------------
-
-  (command "_.UCS" "_OB" (entlast))
-  (command "_.UCS" "_Y" "90")
-  (command "_.UCS" "_Z" "90")
+  
+  ;; Jezeli nie jestesmy w trybie edycji to ustaw UCS
+  (if (not taz_s_edit_mode)
+    (progn
+    (command "_.UCS" "_OB" (entlast))
+    (command "_.UCS" "_Y" "90")
+    (command "_.UCS" "_Z" "90")
+    )
+    (princ)
+  )
+  
+  (if taz_s_edit_section_angle_mode
+    (progn
+      (print (strcat "Aktualnie profil znajduje się pod kątem: " (rtos (eval (read (strcat "taz_s_" taz_s_attribs_object_name "_section_angle"))) 2 2)))
+      (set (read (strcat "taz_s_" taz_s_attribs_object_name "_section_angle")) (getreal "\nPodaj kąt obrotu przekroju: "))
+      (command "_.UCS" "_Z" (eval (read (strcat "taz_s_" taz_s_attribs_object_name "_section_angle"))))
+      (setq taz_s_section_angle_old (eval (read (strcat "taz_s_" taz_s_attribs_object_name "_section_angle"))))
+    )
+      (princ)
+  )
+  
+  (if taz_s_edit_section_position_mode
+    (progn
+      (print (strcat "Aktualnie profil znajduje się w pozycji: " (rtos (eval (read (strcat "taz_s_" taz_s_attribs_object_name "_section_position"))) 2 2)))
+      (set (read (strcat "taz_s_" taz_s_attribs_object_name "_section_position")) (getint "\nPodaj punkt położenia przekroju względem osi od 0 do 9: "))
+      (command "_.UCS" "_Z" (eval (read (strcat "taz_s_" taz_s_attribs_object_name "_section_angle"))))
+      (setq taz_s_section_position_old (eval (read (strcat "taz_s_" taz_s_attribs_object_name "_section_position"))))
+    )
+      (princ)
+  )
 
   ;; ---------------------------------------------------------
   ;; WYBÓR I RYSOWANIE PRZEKROJU BELKI
@@ -122,6 +148,10 @@
 
   (set (read (strcat "taz_s_" taz_s_attribs_object_name "_attr10"))
        "")
+  
+  (set (read (strcat "taz_s_" taz_s_attribs_object_name "_section_angle")) 0)
+    
+  (set (read (strcat "taz_s_" taz_s_attribs_object_name "_section_position")) 5)
 
   ;; ---------------------------------------------------------
   ;; RESET UCS DO WORLD
