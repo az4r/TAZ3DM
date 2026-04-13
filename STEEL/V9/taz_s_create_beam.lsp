@@ -1,3 +1,79 @@
+(defun taz_s_edit_section_position_parametres()
+  
+  (setq taz_s_r1 1)
+  (setq taz_s_r2 1)
+  
+  (if (= taz_s_family "HEA")
+    (taz_s_section_ibeam_draw_parametres_hea)
+    (princ)
+  )
+  (if (= taz_s_family "HEB")
+    (taz_s_section_ibeam_draw_parametres_heb)
+    (princ)
+  )
+  (if (= taz_s_family "IPE")
+    (taz_s_section_ibeam_draw_parametres_ipe)
+    (princ)
+  )
+  (if (= taz_s_family "IPN")
+    (taz_s_section_ibeam_draw_parametres_ipn)
+    (princ)
+  )
+  (if (= taz_s_family "UPE")
+    (taz_s_section_cbeam_draw_parametres_upe)
+    (princ)
+  )
+  (if (= taz_s_family "UPN")
+    (taz_s_section_cbeam_draw_parametres_upn)
+    (princ)
+  )
+  (if (= taz_s_family "Katownik rownoramienny")
+    (taz_s_section_lbeam_draw_parametres_katownik_rownoramienny)
+    (princ)
+  )
+  (if (= taz_s_family "Katownik nierownoramienny")
+    (taz_s_section_lbeam_draw_parametres_katownik_nierownoramienny)
+    (princ)
+  )
+  (if (= taz_s_family "Rura kwadratowa")
+    (taz_s_section_hsbeam_draw_parametres_rura_kwadratowa)
+    (princ)
+  )
+  (if (= taz_s_family "Rura prostokatna")
+    (taz_s_section_hsbeam_draw_parametres_rura_prostokatna)
+    (princ)
+  )
+  (if (= taz_s_family "Rura okragla")
+    (progn
+    (taz_s_section_hsbeam_draw_parametres_rura_okragla)
+    (setq taz_s_b (/ taz_s_d 2))
+    (setq taz_s_h (/ taz_s_d 2))
+    )
+    (princ)
+  )
+  
+  (if (= (rtos (eval (read (strcat "taz_s_" taz_s_attribs_object_name "_section_position"))) 2 2) "1")
+    (progn
+    (setq taz_s_edit_section_position_parametres_origin (list (/ (- taz_s_b) 2) (/ (- taz_s_h) 2) 0))
+    (command "_ZOOM" "_SCALE" "1000X")
+    (command "_.UCS" "_O" taz_s_edit_section_position_parametres_origin)
+    (command "_ZOOM" "_SCALE" "0.001X")
+    )  
+    (princ)
+  )
+  
+  (if (= (rtos (eval (read (strcat "taz_s_" taz_s_attribs_object_name "_section_position"))) 2 2) "5")
+    (progn
+    (setq taz_s_edit_section_position_parametres_origin (list 0 0 0))
+    (command "_ZOOM" "_SCALE" "1000X")  
+    (command "_.UCS" "_O" taz_s_edit_section_position_parametres_origin)
+    (command "_ZOOM" "_SCALE" "0.001X")
+    )  
+    (princ)
+  )
+
+)
+
 (defun c:taz_s_create_beam
   ( / taz_s_create_beam_p1
        taz_s_create_beam_p2
@@ -55,20 +131,27 @@
   ;; ---------------------------------------------------------
   
   ;; Jezeli nie jestesmy w trybie edycji to ustaw UCS
-  (if (not taz_s_edit_mode)
-    (progn
-    (command "_.UCS" "_OB" (entlast))
-    (command "_.UCS" "_Y" "90")
-    (command "_.UCS" "_Z" "90")
-    )
-    (princ)
-  )
+  ;;(if (not taz_s_edit_mode)
+    ;;(progn
+    ;;(command "_.UCS" "_OB" (entlast))
+    ;;(command "_.UCS" "_Y" "90")
+    ;;(command "_.UCS" "_Z" "90")
+    ;;)
+    ;;(princ)
+  ;;)
+  
+  (command "_.UCS" "_OB" (entlast))
+  (command "_.UCS" "_Y" "90")
+  (command "_.UCS" "_Z" "90")
   
   (if taz_s_edit_section_angle_mode
     (progn
       (print (strcat "Aktualnie profil znajduje się pod kątem: " (rtos (eval (read (strcat "taz_s_" taz_s_attribs_object_name "_section_angle"))) 2 2)))
       (set (read (strcat "taz_s_" taz_s_attribs_object_name "_section_angle")) (getreal "\nPodaj kąt obrotu przekroju: "))
+      (command "_ZOOM" "_SCALE" "1000X")
       (command "_.UCS" "_Z" (eval (read (strcat "taz_s_" taz_s_attribs_object_name "_section_angle"))))
+      (taz_s_edit_section_position_parametres)
+      (command "_ZOOM" "_SCALE" "0.001X")
       (setq taz_s_section_angle_old (eval (read (strcat "taz_s_" taz_s_attribs_object_name "_section_angle"))))
     )
       (princ)
@@ -78,7 +161,10 @@
     (progn
       (print (strcat "Aktualnie profil znajduje się w pozycji: " (rtos (eval (read (strcat "taz_s_" taz_s_attribs_object_name "_section_position"))) 2 2)))
       (set (read (strcat "taz_s_" taz_s_attribs_object_name "_section_position")) (getint "\nPodaj punkt położenia przekroju względem osi od 0 do 9: "))
+      (command "_ZOOM" "_SCALE" "1000X")
       (command "_.UCS" "_Z" (eval (read (strcat "taz_s_" taz_s_attribs_object_name "_section_angle"))))
+      (taz_s_edit_section_position_parametres)
+      (command "_ZOOM" "_SCALE" "0.001X")
       (setq taz_s_section_position_old (eval (read (strcat "taz_s_" taz_s_attribs_object_name "_section_position"))))
     )
       (princ)
