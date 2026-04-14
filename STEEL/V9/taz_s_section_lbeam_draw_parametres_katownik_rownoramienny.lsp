@@ -13,6 +13,8 @@
     (setq taz_s_t 3.0)
     (setq taz_s_r1 3.5)
     (setq taz_s_r2 2.0)
+    (setq taz_s_ey 6.0)
+    (setq taz_s_ex 14.0)
   )
 )
 
@@ -25,6 +27,8 @@
     (setq taz_s_t 3.0)
     (setq taz_s_r1 3.5)
     (setq taz_s_r2 2.0)
+    (setq taz_s_ey 7.2)
+    (setq taz_s_ex 17.8)
   )
 )
 
@@ -37,6 +41,8 @@
     (setq taz_s_t 4.0)
     (setq taz_s_r1 3.5)
     (setq taz_s_r2 2.0)
+    (setq taz_s_ey 7.6)
+    (setq taz_s_ex 17.4)
   )
 )
 
@@ -49,6 +55,8 @@
     (setq taz_s_t 3.0)
     (setq taz_s_r1 5.0)
     (setq taz_s_r2 2.5)
+    (setq taz_s_ey 8.4)
+    (setq taz_s_ex 21.6)
   )
 )
 
@@ -61,6 +69,8 @@
     (setq taz_s_t 4.0)
     (setq taz_s_r1 5.0)
     (setq taz_s_r2 2.5)
+    (setq taz_s_ey 8.8)
+    (setq taz_s_ex 21.2)
   )
 )
 
@@ -73,6 +83,8 @@
     (setq taz_s_t 5.0)
     (setq taz_s_r1 5.0)
     (setq taz_s_r2 2.5)
+    (setq taz_s_ey 9.2)
+    (setq taz_s_ex 20.8)
   )
 )
 
@@ -85,6 +97,8 @@
     (setq taz_s_t 4.0)
     (setq taz_s_r1 5.0)
     (setq taz_s_r2 2.5)
+    (setq taz_s_ey 10.0)
+    (setq taz_s_ex 25.0)
   )
 )
 
@@ -97,6 +111,8 @@
     (setq taz_s_t 5.0)
     (setq taz_s_r1 5.0)
     (setq taz_s_r2 2.5)
+    (setq taz_s_ey 10.4)
+    (setq taz_s_ex 24.6)
   )
 )
   
@@ -113,6 +129,8 @@
     (setq taz_s_t 4.0)
     (setq taz_s_r1 6.0)
     (setq taz_s_r2 3.0)
+    (setq taz_s_ey 11.2)
+    (setq taz_s_ex 28.8)
   )
 )
 
@@ -125,6 +143,8 @@
     (setq taz_s_t 5.0)
     (setq taz_s_r1 6.0)
     (setq taz_s_r2 3.0)
+    (setq taz_s_ey 11.6)
+    (setq taz_s_ex 28.4)
   )
 )
 
@@ -137,6 +157,8 @@
     (setq taz_s_t 4.0)
     (setq taz_s_r1 7.0)
     (setq taz_s_r2 3.5)
+    (setq taz_s_ey 12.3)
+    (setq taz_s_ex 32.7)
   )
 )
 
@@ -149,6 +171,8 @@
     (setq taz_s_t 5.0)
     (setq taz_s_r1 7.0)
     (setq taz_s_r2 3.5)
+    (setq taz_s_ey 12.8)
+    (setq taz_s_ex 32.2)
   )
 )
 
@@ -161,6 +185,8 @@
     (setq taz_s_t 5.0)
     (setq taz_s_r1 7.0)
     (setq taz_s_r2 3.5)
+    (setq taz_s_ey 14.0)
+    (setq taz_s_ex 36.0)
   )
 )
 
@@ -173,6 +199,8 @@
     (setq taz_s_t 6.0)
     (setq taz_s_r1 7.0)
     (setq taz_s_r2 3.5)
+    (setq taz_s_ey 14.5)
+    (setq taz_s_ex 35.5)
   )
 )
 
@@ -185,6 +213,8 @@
     (setq taz_s_t 7.0)
     (setq taz_s_r1 7.0)
     (setq taz_s_r2 3.5)
+    (setq taz_s_ey 14.9)
+    (setq taz_s_ex 35.1)
   )
 )
 
@@ -197,6 +227,8 @@
     (setq taz_s_t 6.0)
     (setq taz_s_r1 8.0)
     (setq taz_s_r2 4.0)
+    (setq taz_s_ey 15.6)
+    (setq taz_s_ex 39.4)
   )
 )
 
@@ -209,6 +241,8 @@
     (setq taz_s_t 5.0)
     (setq taz_s_r1 8.0)
     (setq taz_s_r2 4.0)
+    (setq taz_s_ey 16.4)
+    (setq taz_s_ex 43.6)
   )
 )
 
@@ -221,6 +255,8 @@
     (setq taz_s_t 6.0)
     (setq taz_s_r1 8.0)
     (setq taz_s_r2 4.0)
+    (setq taz_s_ey 16.9)
+    (setq taz_s_ex 43.1)
   )
 )
 
@@ -233,6 +269,8 @@
     (setq taz_s_t 8.0)
     (setq taz_s_r1 8.0)
     (setq taz_s_r2 4.0)
+    (setq taz_s_ey 17.7)
+    (setq taz_s_ex 42.3)
   )
 )
 
@@ -249,6 +287,8 @@
     (setq taz_s_t 7.0)
     (setq taz_s_r1 9.0)
     (setq taz_s_r2 4.5)
+    (setq taz_s_ey 19.6)
+    (setq taz_s_ex 15.0)
   )
 )
 
@@ -261,6 +301,8 @@
     (setq taz_s_t 6.0)
     (setq taz_s_r1 9.0)
     (setq taz_s_r2 4.5)
+    (setq taz_s_ey 21.3)
+    (setq taz_s_ex 16.3)
   )
 )
 
@@ -273,6 +315,8 @@
     (setq taz_s_t 7.0)
     (setq taz_s_r1 9.0)
     (setq taz_s_r2 4.5)
+    (setq taz_s_ey 21.2)
+    (setq taz_s_ex 16.3)
   )
 )
 
@@ -285,6 +329,8 @@
     (setq taz_s_t 9.0)
     (setq taz_s_r1 9.0)
     (setq taz_s_r2 4.5)
+    (setq taz_s_ey 21.0)
+    (setq taz_s_ex 16.0)
   )
 )
 
@@ -297,6 +343,8 @@
     (setq taz_s_t 7.0)
     (setq taz_s_r1 10.0)
     (setq taz_s_r2 5.0)
+    (setq taz_s_ey 22.8)
+    (setq taz_s_ex 17.6)
   )
 )
 
@@ -309,6 +357,8 @@
     (setq taz_s_t 8.0)
     (setq taz_s_r1 10.0)
     (setq taz_s_r2 5.0)
+    (setq taz_s_ey 22.6)
+    (setq taz_s_ex 17.3)
   )
 )
 
@@ -321,6 +371,8 @@
     (setq taz_s_t 6.0)
     (setq taz_s_r1 10.0)
     (setq taz_s_r2 5.0)
+    (setq taz_s_ey 24.4)
+    (setq taz_s_ex 18.7)
   )
 )
 
@@ -333,6 +385,8 @@
     (setq taz_s_t 8.0)
     (setq taz_s_r1 10.0)
     (setq taz_s_r2 5.0)
+    (setq taz_s_ey 24.2)
+    (setq taz_s_ex 18.6)
   )
 )
 
@@ -345,6 +399,8 @@
     (setq taz_s_t 10.0)
     (setq taz_s_r1 10.0)
     (setq taz_s_r2 5.0)
+    (setq taz_s_ey 24.1)
+    (setq taz_s_ex 18.5)
   )
 )
   
@@ -361,6 +417,8 @@
     (setq taz_s_t 7.0)
     (setq taz_s_r1 11.0)
     (setq taz_s_r2 5.5)
+    (setq taz_s_ey 27.5)
+    (setq taz_s_ex 21.1)
   )
 )
 
@@ -373,6 +431,8 @@
     (setq taz_s_t 8.0)
     (setq taz_s_r1 11.0)
     (setq taz_s_r2 5.5)
+    (setq taz_s_ey 27.4)
+    (setq taz_s_ex 20.9)
   )
 )
 
@@ -385,6 +445,8 @@
     (setq taz_s_t 9.0)
     (setq taz_s_r1 11.0)
     (setq taz_s_r2 5.5)
+    (setq taz_s_ey 27.4)
+    (setq taz_s_ex 21.0)
   )
 )
 
@@ -397,6 +459,8 @@
     (setq taz_s_t 8.0)
     (setq taz_s_r1 12.0)
     (setq taz_s_r2 6.0)
+    (setq taz_s_ey 30.6)
+    (setq taz_s_ex 23.4)
   )
 )
 
@@ -409,6 +473,8 @@
     (setq taz_s_t 10.0)
     (setq taz_s_r1 12.0)
     (setq taz_s_r2 6.0)
+    (setq taz_s_ey 30.4)
+    (setq taz_s_ex 23.3)
   )
 )
 
@@ -421,6 +487,8 @@
     (setq taz_s_t 12.0)
     (setq taz_s_r1 12.0)
     (setq taz_s_r2 6.0)
+    (setq taz_s_ey 30.2)
+    (setq taz_s_ex 23.1)
   )
 )
 
@@ -433,6 +501,8 @@
     (setq taz_s_t 14.0)
     (setq taz_s_r1 12.0)
     (setq taz_s_r2 6.0)
+    (setq taz_s_ey 30.0)
+    (setq taz_s_ex 22.8)
   )
 )
 
@@ -445,6 +515,8 @@
     (setq taz_s_t 10.0)
     (setq taz_s_r1 12.0)
     (setq taz_s_r2 6.0)
+    (setq taz_s_ey 33.6)
+    (setq taz_s_ex 25.7)
   )
 )
 
@@ -457,6 +529,8 @@
     (setq taz_s_t 12.0)
     (setq taz_s_r1 13.0)
     (setq taz_s_r2 6.5)
+    (setq taz_s_ey 33.3)
+    (setq taz_s_ex 25.6)
   )
 )
 
@@ -469,6 +543,8 @@
     (setq taz_s_t 10.0)
     (setq taz_s_r1 13.0)
     (setq taz_s_r2 6.5)
+    (setq taz_s_ey 36.7)
+    (setq taz_s_ex 28.1)
   )
 )
 
@@ -481,6 +557,8 @@
     (setq taz_s_t 11.0)
     (setq taz_s_r1 13.0)
     (setq taz_s_r2 6.5)
+    (setq taz_s_ey 36.6)
+    (setq taz_s_ex 28.2)
   )
 )
 
@@ -493,6 +571,8 @@
     (setq taz_s_t 12.0)
     (setq taz_s_r1 13.0)
     (setq taz_s_r2 6.5)
+    (setq taz_s_ey 36.5)
+    (setq taz_s_ex 28.0)
   )
 )
 
@@ -505,6 +585,8 @@
     (setq taz_s_t 13.0)
     (setq taz_s_r1 13.0)
     (setq taz_s_r2 6.5)
+    (setq taz_s_ey 36.4)
+    (setq taz_s_ex 27.9)
   )
 )
 
@@ -517,6 +599,8 @@
     (setq taz_s_t 15.0)
     (setq taz_s_r1 13.0)
     (setq taz_s_r2 6.5)
+    (setq taz_s_ey 36.2)
+    (setq taz_s_ex 27.7)
   )
 )
   
@@ -533,6 +617,8 @@
     (setq taz_s_t 12.0)
     (setq taz_s_r1 14.0)
     (setq taz_s_r2 7.0)
+    (setq taz_s_ey 36.4)
+    (setq taz_s_ex 93.6)
   )
 )
 
@@ -545,6 +631,8 @@
     (setq taz_s_t 10.0)
     (setq taz_s_r1 15.0)
     (setq taz_s_r2 7.5)
+    (setq taz_s_ey 37.9)
+    (setq taz_s_ex 102.1)
   )
 )
 
@@ -557,6 +645,8 @@
     (setq taz_s_t 13.0)
     (setq taz_s_r1 15.0)
     (setq taz_s_r2 7.5)
+    (setq taz_s_ey 39.2)
+    (setq taz_s_ex 100.8)
   )
 )
 
@@ -569,6 +659,8 @@
     (setq taz_s_t 15.0)
     (setq taz_s_r1 15.0)
     (setq taz_s_r2 7.5)
+    (setq taz_s_ey 40.0)
+    (setq taz_s_ex 100.0)
   )
 )
 
@@ -581,6 +673,8 @@
     (setq taz_s_t 10.0)
     (setq taz_s_r1 16.0)
     (setq taz_s_r2 8.0)
+    (setq taz_s_ey 40.3)
+    (setq taz_s_ex 109.7)
   )
 )
 
@@ -593,6 +687,8 @@
     (setq taz_s_t 12.0)
     (setq taz_s_r1 16.0)
     (setq taz_s_r2 8.0)
+    (setq taz_s_ey 41.2)
+    (setq taz_s_ex 108.8)
   )
 )
 
@@ -605,6 +701,8 @@
     (setq taz_s_t 14.0)
     (setq taz_s_r1 16.0)
     (setq taz_s_r2 8.0)
+    (setq taz_s_ey 42.1)
+    (setq taz_s_ex 107.9)
   )
 )
 
@@ -617,6 +715,8 @@
     (setq taz_s_t 15.0)
     (setq taz_s_r1 16.0)
     (setq taz_s_r2 8.0)
+    (setq taz_s_ey 42.5)
+    (setq taz_s_ex 107.5)
   )
 )
 
@@ -629,6 +729,8 @@
     (setq taz_s_t 16.0)
     (setq taz_s_r1 16.0)
     (setq taz_s_r2 8.0)
+    (setq taz_s_ey 42.9)
+    (setq taz_s_ex 107.1)
   )
 )
 
@@ -641,6 +743,8 @@
     (setq taz_s_t 18.0)
     (setq taz_s_r1 16.0)
     (setq taz_s_r2 8.0)
+    (setq taz_s_ey 43.7)
+    (setq taz_s_ex 106.3)
   )
 )
 
@@ -653,6 +757,8 @@
     (setq taz_s_t 20.0)
     (setq taz_s_r1 16.0)
     (setq taz_s_r2 8.0)
+    (setq taz_s_ey 44.4)
+    (setq taz_s_ex 105.6)
   )
 )
 
@@ -665,6 +771,8 @@
     (setq taz_s_t 15.0)
     (setq taz_s_r1 17.0)
     (setq taz_s_r2 8.5)
+    (setq taz_s_ey 44.9)
+    (setq taz_s_ex 115.1)
   )
 )
 
@@ -677,6 +785,8 @@
     (setq taz_s_t 17.0)
     (setq taz_s_r1 17.0)
     (setq taz_s_r2 8.5)
+    (setq taz_s_ey 45.7)
+    (setq taz_s_ex 114.3)
   )
 )
 
@@ -689,6 +799,8 @@
     (setq taz_s_t 19.0)
     (setq taz_s_r1 17.0)
     (setq taz_s_r2 8.5)
+    (setq taz_s_ey 46.5)
+    (setq taz_s_ex 113.5)
   )
 )
 
@@ -701,6 +813,8 @@
     (setq taz_s_t 16.0)
     (setq taz_s_r1 18.0)
     (setq taz_s_r2 9.0)
+    (setq taz_s_ey 50.2)
+    (setq taz_s_ex 129.8)
   )
 )
 
@@ -713,6 +827,8 @@
     (setq taz_s_t 18.0)
     (setq taz_s_r1 18.0)
     (setq taz_s_r2 9.0)
+    (setq taz_s_ey 51.0)
+    (setq taz_s_ex 129.0)
   )
 )
 
@@ -725,6 +841,8 @@
     (setq taz_s_t 20.0)
     (setq taz_s_r1 18.0)
     (setq taz_s_r2 9.0)
+    (setq taz_s_ey 51.8)
+    (setq taz_s_ex 128.2)
   )
 )
 
@@ -737,6 +855,8 @@
     (setq taz_s_t 22.0)
     (setq taz_s_r1 18.0)
     (setq taz_s_r2 9.0)
+    (setq taz_s_ey 52.6)
+    (setq taz_s_ex 127.4)
   )
 )
 
@@ -749,6 +869,8 @@
     (setq taz_s_t 16.0)
     (setq taz_s_r1 18.0)
     (setq taz_s_r2 9.0)
+    (setq taz_s_ey 55.2)
+    (setq taz_s_ex 144.8)
   )
 )
 
@@ -761,6 +883,8 @@
     (setq taz_s_t 18.0)
     (setq taz_s_r1 18.0)
     (setq taz_s_r2 9.0)
+    (setq taz_s_ey 56.0)
+    (setq taz_s_ex 144.0)
   )
 )
 
@@ -773,6 +897,8 @@
     (setq taz_s_t 20.0)
     (setq taz_s_r1 18.0)
     (setq taz_s_r2 9.0)
+    (setq taz_s_ey 56.8)
+    (setq taz_s_ex 143.2)
   )
 )
 
@@ -785,6 +911,8 @@
     (setq taz_s_t 22.0)
     (setq taz_s_r1 18.0)
     (setq taz_s_r2 9.0)
+    (setq taz_s_ey 57.6)
+    (setq taz_s_ex 142.4)
   )
 )
 
@@ -797,6 +925,8 @@
     (setq taz_s_t 24.0)
     (setq taz_s_r1 18.0)
     (setq taz_s_r2 9.0)
+    (setq taz_s_ey 58.4)
+    (setq taz_s_ex 141.6)
   )
 )
 
@@ -809,6 +939,8 @@
     (setq taz_s_t 26.0)
     (setq taz_s_r1 18.0)
     (setq taz_s_r2 9.0)
+    (setq taz_s_ey 59.1)
+    (setq taz_s_ex 140.9)
   )
 )
 
@@ -821,6 +953,8 @@
     (setq taz_s_t 28.0)
     (setq taz_s_r1 18.0)
     (setq taz_s_r2 9.0)
+    (setq taz_s_ey 59.9)
+    (setq taz_s_ex 140.1)
   )
 )
 
@@ -833,6 +967,8 @@
     (setq taz_s_t 30.0)
     (setq taz_s_r1 18.0)
     (setq taz_s_r2 9.0)
+    (setq taz_s_ey 60.6)
+    (setq taz_s_ex 139.4)
   )
 )
 
@@ -849,6 +985,8 @@
     (setq taz_s_t 18.0)
     (setq taz_s_r1 20.0)
     (setq taz_s_r2 10.0)
+    (setq taz_s_ey 68.4)
+    (setq taz_s_ex 181.6)
   )
 )
 
@@ -861,6 +999,8 @@
     (setq taz_s_t 20.0)
     (setq taz_s_r1 20.0)
     (setq taz_s_r2 10.0)
+    (setq taz_s_ey 69.2)
+    (setq taz_s_ex 180.8)
   )
 )
 
@@ -873,6 +1013,8 @@
     (setq taz_s_t 22.0)
     (setq taz_s_r1 20.0)
     (setq taz_s_r2 10.0)
+    (setq taz_s_ey 70.0)
+    (setq taz_s_ex 180.0)
   )
 )
 
@@ -885,6 +1027,8 @@
     (setq taz_s_t 24.0)
     (setq taz_s_r1 20.0)
     (setq taz_s_r2 10.0)
+    (setq taz_s_ey 70.8)
+    (setq taz_s_ex 179.2)
   )
 )
 
@@ -897,6 +1041,8 @@
     (setq taz_s_t 26.0)
     (setq taz_s_r1 20.0)
     (setq taz_s_r2 10.0)
+    (setq taz_s_ey 71.6)
+    (setq taz_s_ex 178.4)
   )
 )
 
@@ -909,6 +1055,8 @@
     (setq taz_s_t 28.0)
     (setq taz_s_r1 20.0)
     (setq taz_s_r2 10.0)
+    (setq taz_s_ey 72.3)
+    (setq taz_s_ex 177.7)
   )
 )
   
