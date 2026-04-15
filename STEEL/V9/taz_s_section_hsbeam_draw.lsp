@@ -2119,6 +2119,9 @@
   (command "_SWEEP" taz_s_create_beam_profile_cut "" "B" (list 0 0) taz_s_create_beam_path_cut "")
   (setq taz_s_substract_solid2 (entlast))
   (command "SUBTRACT" taz_s_substract_solid1 "" taz_s_substract_solid2 "")
+  
+  ;; zmiana warstwy
+  (command "_CHPROP" (ssadd (entlast)) "" "_LA" "taz_s_beam" "")
 
   ;; przywrócenie widoku
   (command "-VIEW" "_R" "taz_s_temp_view")
