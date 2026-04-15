@@ -52,6 +52,36 @@
     (princ)
   )
   
+  (if (= taz_s_category "Dwuteowniki")
+    (progn
+    (if (= (rtos (eval (read (strcat "taz_s_" taz_s_attribs_object_name "_section_position"))) 2 2) "0")
+    (progn
+    (setq taz_s_edit_section_position_parametres_origin (list 0 0 0))
+    (command "_ZOOM" "_SCALE" "1000X")
+    (command "_.UCS" "_O" taz_s_edit_section_position_parametres_origin)
+    (command "_ZOOM" "_SCALE" "0.001X")
+    )
+    (princ)
+    )
+    )
+    (princ)
+  )
+  
+  (if (= taz_s_category "Rury")
+    (progn
+    (if (= (rtos (eval (read (strcat "taz_s_" taz_s_attribs_object_name "_section_position"))) 2 2) "0")
+    (progn
+    (setq taz_s_edit_section_position_parametres_origin (list 0 0 0))
+    (command "_ZOOM" "_SCALE" "1000X")
+    (command "_.UCS" "_O" taz_s_edit_section_position_parametres_origin)
+    (command "_ZOOM" "_SCALE" "0.001X")
+    )
+    (princ)
+    )
+    )
+    (princ)
+  )
+  
   (if (= taz_s_family "UPE")
     (progn
     (if (= (rtos (eval (read (strcat "taz_s_" taz_s_attribs_object_name "_section_position"))) 2 2) "0")
