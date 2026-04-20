@@ -1,43 +1,50 @@
-(defun c:axes_dialog_test ( / dcl_id result )
+(defun c:taz_s_axes ( / taz_s_dcl_id taz_s_result )
 
-  (setq x_data '() y_data '() z_data '())
+  ;; ---------------------------
+  ;; dane
+  ;; ---------------------------
+  (setq taz_s_x_data '())
+  (setq taz_s_y_data '())
+  (setq taz_s_z_data '())
 
   ;; ---------------------------
   ;; format wpisu
   ;; ---------------------------
-  (defun format-row (name dist)
-    (strcat "[" name "]  " dist)
+  (defun taz_s_format_row (taz_s_name taz_s_dist)
+    (strcat "[" taz_s_name "]  " taz_s_dist)
   )
 
   ;; ---------------------------
   ;; update list
   ;; ---------------------------
-  (defun update_list (key data)
-    (start_list key)
-    (foreach item data (add_list item))
+  (defun taz_s_update_list (taz_s_key taz_s_data)
+    (start_list taz_s_key)
+    (foreach taz_s_item taz_s_data
+      (add_list taz_s_item)
+    )
     (end_list)
   )
 
   ;; ---------------------------
   ;; add
   ;; ---------------------------
-  (defun add_item (name dist data_key list_key)
-    (if (and (/= name "") (/= dist ""))
+  (defun taz_s_add_item (taz_s_name taz_s_dist taz_s_axis taz_s_list_key)
+    (if (and (/= taz_s_name "") (/= taz_s_dist ""))
       (progn
-        (setq row (format-row name dist))
+        (setq taz_s_row (taz_s_format_row taz_s_name taz_s_dist))
 
         (cond
-          ((= data_key "x")
-            (setq x_data (append x_data (list row)))
-            (update_list list_key x_data)
+          ((= taz_s_axis "x")
+            (setq taz_s_x_data (append taz_s_x_data (list taz_s_row)))
+            (taz_s_update_list taz_s_list_key taz_s_x_data)
           )
-          ((= data_key "y")
-            (setq y_data (append y_data (list row)))
-            (update_list list_key y_data)
+          ((= taz_s_axis "y")
+            (setq taz_s_y_data (append taz_s_y_data (list taz_s_row)))
+            (taz_s_update_list taz_s_list_key taz_s_y_data)
           )
-          ((= data_key "z")
-            (setq z_data (append z_data (list row)))
-            (update_list list_key z_data)
+          ((= taz_s_axis "z")
+            (setq taz_s_z_data (append taz_s_z_data (list taz_s_row)))
+            (taz_s_update_list taz_s_list_key taz_s_z_data)
           )
         )
       )
@@ -48,59 +55,100 @@
   ;; ---------------------------
   ;; clear
   ;; ---------------------------
-  (defun clear_list (data_key list_key)
+  (defun taz_s_clear_list (taz_s_axis taz_s_list_key)
     (cond
-      ((= data_key "x") (setq x_data '()) (update_list list_key x_data))
-      ((= data_key "y") (setq y_data '()) (update_list list_key y_data))
-      ((= data_key "z") (setq z_data '()) (update_list list_key z_data))
+      ((= taz_s_axis "x")
+        (setq taz_s_x_data '())
+        (taz_s_update_list taz_s_list_key taz_s_x_data)
+      )
+      ((= taz_s_axis "y")
+        (setq taz_s_y_data '())
+        (taz_s_update_list taz_s_list_key taz_s_y_data)
+      )
+      ((= taz_s_axis "z")
+        (setq taz_s_z_data '())
+        (taz_s_update_list taz_s_list_key taz_s_z_data)
+      )
     )
   )
 
   ;; ---------------------------
   ;; DCL
   ;; ---------------------------
-  (setq dcl_id (load_dialog "axes.dcl"))
-  (if (<= dcl_id 0) (progn (alert "Błąd DCL") (exit)))
-  (if (not (new_dialog "axes_dialog" dcl_id)) (exit))
+  (setq taz_s_dcl_id (load_dialog "taz_s_axes.dcl"))
 
+  (if (<= taz_s_dcl_id 0)
+    (progn (alert "Błąd DCL") (exit))
+  )
+
+  (if (not (new_dialog "taz_s_axes_dialog" taz_s_dcl_id))
+    (exit)
+  )
+
+  ;; ---------------------------
   ;; X
-  (action_tile "x_add"
-    "(add_item (get_tile \"x_name\") (get_tile \"x_dist\") \"x\" \"x_list\")")
-  (action_tile "x_clear"
-    "(clear_list \"x\" \"x_list\")")
+  ;; ---------------------------
+  (action_tile "taz_s_x_add"
+    "(taz_s_add_item (get_tile \"taz_s_x_name\") (get_tile \"taz_s_x_dist\") \"x\" \"taz_s_x_list\")"
+  )
 
+  (action_tile "taz_s_x_clear"
+    "(taz_s_clear_list \"x\" \"taz_s_x_list\")"
+  )
+
+  ;; ---------------------------
   ;; Y
-  (action_tile "y_add"
-    "(add_item (get_tile \"y_name\") (get_tile \"y_dist\") \"y\" \"y_list\")")
-  (action_tile "y_clear"
-    "(clear_list \"y\" \"y_list\")")
+  ;; ---------------------------
+  (action_tile "taz_s_y_add"
+    "(taz_s_add_item (get_tile \"taz_s_y_name\") (get_tile \"taz_s_y_dist\") \"y\" \"taz_s_y_list\")"
+  )
 
+  (action_tile "taz_s_y_clear"
+    "(taz_s_clear_list \"y\" \"taz_s_y_list\")"
+  )
+
+  ;; ---------------------------
   ;; Z
-  (action_tile "z_add"
-    "(add_item (get_tile \"z_name\") (get_tile \"z_dist\") \"z\" \"z_list\")")
-  (action_tile "z_clear"
-    "(clear_list \"z\" \"z_list\")")
+  ;; ---------------------------
+  (action_tile "taz_s_z_add"
+    "(taz_s_add_item (get_tile \"taz_s_z_name\") (get_tile \"taz_s_z_dist\") \"z\" \"taz_s_z_list\")"
+  )
 
+  (action_tile "taz_s_z_clear"
+    "(taz_s_clear_list \"z\" \"taz_s_z_list\")"
+  )
+
+  ;; ---------------------------
   ;; OK / Cancel
+  ;; ---------------------------
   (action_tile "accept" "(done_dialog 1)")
   (action_tile "cancel" "(done_dialog 0)")
 
-  (setq result (start_dialog))
-  (unload_dialog dcl_id)
+  ;; ---------------------------
+  ;; start
+  ;; ---------------------------
+  (setq taz_s_result (start_dialog))
+  (unload_dialog taz_s_dcl_id)
 
   ;; ---------------------------
   ;; debug
   ;; ---------------------------
-  (if (= result 1)
+  (if (= taz_s_result 1)
     (progn
       (prompt "\n--- X ---")
-      (foreach i x_data (prompt (strcat "\n" i)))
+      (foreach taz_s_i taz_s_x_data
+        (prompt (strcat "\n" taz_s_i))
+      )
 
       (prompt "\n--- Y ---")
-      (foreach i y_data (prompt (strcat "\n" i)))
+      (foreach taz_s_i taz_s_y_data
+        (prompt (strcat "\n" taz_s_i))
+      )
 
       (prompt "\n--- Z ---")
-      (foreach i z_data (prompt (strcat "\n" i)))
+      (foreach taz_s_i taz_s_z_data
+        (prompt (strcat "\n" taz_s_i))
+      )
     )
   )
 

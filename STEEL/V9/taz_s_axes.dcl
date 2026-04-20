@@ -1,4 +1,4 @@
-axes_dialog : dialog {
+taz_s_axes_dialog : dialog {
   label = "Osie modelu";
 
   : row {
@@ -15,18 +15,18 @@ axes_dialog : dialog {
       }
 
       : row {
-        : edit_box { key="x_name"; edit_width=10; }
-        : edit_box { key="x_dist"; edit_width=12; }
-        : button { key="x_add"; label="+"; width=3; }
+        : edit_box { key="taz_s_x_name"; edit_width=10; }
+        : edit_box { key="taz_s_x_dist"; edit_width=12; }
+        : button { key="taz_s_x_add"; label="+"; width=3; }
       }
 
       : list_box {
-        key = "x_list";
+        key = "taz_s_x_list";
         width = 30;
         height = 8;
       }
 
-      : button { key="x_clear"; label="Wyczyść"; }
+      : button { key="taz_s_x_clear"; label="Wyczyść"; }
     }
 
     // ============================
@@ -41,18 +41,18 @@ axes_dialog : dialog {
       }
 
       : row {
-        : edit_box { key="y_name"; edit_width=10; }
-        : edit_box { key="y_dist"; edit_width=12; }
-        : button { key="y_add"; label="+"; width=3; }
+        : edit_box { key="taz_s_y_name"; edit_width=10; }
+        : edit_box { key="taz_s_y_dist"; edit_width=12; }
+        : button { key="taz_s_y_add"; label="+"; width=3; }
       }
 
       : list_box {
-        key = "y_list";
+        key = "taz_s_y_list";
         width = 30;
         height = 8;
       }
 
-      : button { key="y_clear"; label="Wyczyść"; }
+      : button { key="taz_s_y_clear"; label="Wyczyść"; }
     }
 
     // ============================
@@ -67,18 +67,18 @@ axes_dialog : dialog {
       }
 
       : row {
-        : edit_box { key="z_name"; edit_width=10; }
-        : edit_box { key="z_dist"; edit_width=12; }
-        : button { key="z_add"; label="+"; width=3; }
+        : edit_box { key="taz_s_z_name"; edit_width=10; }
+        : edit_box { key="taz_s_z_dist"; edit_width=12; }
+        : button { key="taz_s_z_add"; label="+"; width=3; }
       }
 
       : list_box {
-        key = "z_list";
+        key = "taz_s_z_list";
         width = 30;
         height = 8;
       }
 
-      : button { key="z_clear"; label="Wyczyść"; }
+      : button { key="taz_s_z_clear"; label="Wyczyść"; }
     }
 
   }
