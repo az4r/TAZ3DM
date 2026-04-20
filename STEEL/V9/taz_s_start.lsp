@@ -5,6 +5,11 @@
   (command "_layer" "_M" "taz_s_beam" "_C" "145" "" "")
 )
   
+(if (tblsearch "LAYER" "taz_s_plate")
+  (princ)
+  (command "_layer" "_M" "taz_s_plate" "_C" "30" "" "")
+)
+  
 (if (tblsearch "LAYER" "taz_s_grid")
   (princ)
   (command "_layer" "_M" "taz_s_grid" "_C" "109" "" "")
