@@ -4,15 +4,19 @@ axes_dialog : dialog {
   : row {
 
     // ============================
-    // KOLUMNA X
+    // X
     // ============================
     : boxed_column {
       label = "X";
 
       : row {
-        : edit_box { key="x_name1"; edit_width=8; }
-        : edit_box { key="x_dist"; edit_width=8; }
-        : edit_box { key="x_name2"; edit_width=8; }
+        : text { label="Nazwa"; width=10; }
+        : text { label="Odległość"; width=12; }
+      }
+
+      : row {
+        : edit_box { key="x_name"; edit_width=10; }
+        : edit_box { key="x_dist"; edit_width=12; }
         : button { key="x_add"; label="+"; width=3; }
       }
 
@@ -22,22 +26,23 @@ axes_dialog : dialog {
         height = 8;
       }
 
-      : button {
-        key = "x_clear";
-        label = "Wyczyść";
-      }
+      : button { key="x_clear"; label="Wyczyść"; }
     }
 
     // ============================
-    // KOLUMNA Y
+    // Y
     // ============================
     : boxed_column {
       label = "Y";
 
       : row {
-        : edit_box { key="y_name1"; edit_width=8; }
-        : edit_box { key="y_dist"; edit_width=8; }
-        : edit_box { key="y_name2"; edit_width=8; }
+        : text { label="Nazwa"; width=10; }
+        : text { label="Odległość"; width=12; }
+      }
+
+      : row {
+        : edit_box { key="y_name"; edit_width=10; }
+        : edit_box { key="y_dist"; edit_width=12; }
         : button { key="y_add"; label="+"; width=3; }
       }
 
@@ -47,22 +52,23 @@ axes_dialog : dialog {
         height = 8;
       }
 
-      : button {
-        key = "y_clear";
-        label = "Wyczyść";
-      }
+      : button { key="y_clear"; label="Wyczyść"; }
     }
 
     // ============================
-    // KOLUMNA Z
+    // Z
     // ============================
     : boxed_column {
       label = "Z";
 
       : row {
-        : edit_box { key="z_name1"; edit_width=8; }
-        : edit_box { key="z_dist"; edit_width=8; }
-        : edit_box { key="z_name2"; edit_width=8; }
+        : text { label="Nazwa"; width=10; }
+        : text { label="Odległość"; width=12; }
+      }
+
+      : row {
+        : edit_box { key="z_name"; edit_width=10; }
+        : edit_box { key="z_dist"; edit_width=12; }
         : button { key="z_add"; label="+"; width=3; }
       }
 
@@ -72,10 +78,7 @@ axes_dialog : dialog {
         height = 8;
       }
 
-      : button {
-        key = "z_clear";
-        label = "Wyczyść";
-      }
+      : button { key="z_clear"; label="Wyczyść"; }
     }
 
   }
