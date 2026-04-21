@@ -5,9 +5,6 @@ taz_s_axes_dialog : dialog {
 
     : row {
 
-      // ============================
-      // X
-      // ============================
       : boxed_column {
         label = "X";
 
@@ -27,9 +24,6 @@ taz_s_axes_dialog : dialog {
         : button { key="taz_s_x_clear"; label="Wyczyść"; }
       }
 
-      // ============================
-      // Y
-      // ============================
       : boxed_column {
         label = "Y";
 
@@ -49,9 +43,6 @@ taz_s_axes_dialog : dialog {
         : button { key="taz_s_y_clear"; label="Wyczyść"; }
       }
 
-      // ============================
-      // Z
-      // ============================
       : boxed_column {
         label = "Z";
 
@@ -75,14 +66,19 @@ taz_s_axes_dialog : dialog {
 
     spacer;
 
-    // ============================
-    // OFFSET
-    // ============================
     : boxed_row {
       label = "Ustawienia";
 
       : text { label="Offset osi:"; }
       : edit_box { key="taz_s_offset"; edit_width=10; value="1000"; }
+
+      spacer;
+
+      : toggle {
+        key = "taz_s_draw_labels";
+        label = "Pokaż opisy osi";
+        value = "1";
+      }
     }
 
   }
