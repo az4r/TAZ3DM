@@ -225,7 +225,20 @@
         )
 
         (if (= taz_s_draw_labels "1")
-          (command "TEXT" (list taz_s_xmax taz_s_yval taz_s_zval) 250 0 taz_s_name)
+          (progn
+            (command "TEXT"
+              (list taz_s_xmin taz_s_yval taz_s_zval)
+              250
+              0
+              taz_s_name
+            )
+            (command "TEXT"
+              (list taz_s_xmax taz_s_yval taz_s_zval)
+              250
+              0
+              taz_s_name
+            )
+          )
         )
 
         (setq taz_s_tmp (cdr taz_s_tmp))
@@ -256,7 +269,20 @@
         )
 
         (if (= taz_s_draw_labels "1")
-          (command "TEXT" (list taz_s_xval taz_s_ymax taz_s_zval) 250 0 taz_s_name)
+          (progn
+            (command "TEXT"
+              (list taz_s_xval taz_s_ymin taz_s_zval)
+              250
+              90
+              taz_s_name
+            )
+            (command "TEXT"
+              (list taz_s_xval taz_s_ymax taz_s_zval)
+              250
+              90
+              taz_s_name
+            )
+          )
         )
 
         (setq taz_s_tmp (cdr taz_s_tmp))
