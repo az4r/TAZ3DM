@@ -1,4 +1,8 @@
 (defun c:taz_s_axes ()
+  
+  (setq taz_s_text_offset 250.0)
+  (setq taz_s_circle_radius 250.0)
+
 
   ;; ---------------------------
   ;; WCZYTANIE DANYCH
@@ -225,19 +229,27 @@
         )
 
         (if (= taz_s_draw_labels "1")
-          (progn
-            (command "TEXT"
-              (list taz_s_xmin taz_s_yval taz_s_zval)
+          (progn            
+            ;; LEWY KONIEC
+            (setq taz_s_pt1 (list (- taz_s_xmin taz_s_text_offset) taz_s_yval taz_s_zval))
+            (command "CIRCLE" taz_s_pt1 taz_s_circle_radius)
+            (command "TEXT" "_J" "MC"
+              taz_s_pt1
               250
               0
               taz_s_name
             )
-            (command "TEXT"
-              (list taz_s_xmax taz_s_yval taz_s_zval)
+
+
+            ;; PRAWY KONIEC
+            (setq taz_s_pt2 (list (+ taz_s_xmax taz_s_text_offset) taz_s_yval taz_s_zval))
+            (command "CIRCLE" taz_s_pt2 taz_s_circle_radius)
+            (command "TEXT" "_J" "MC"
+              taz_s_pt2
               250
               0
               taz_s_name
-            )
+            )         
           )
         )
 
@@ -269,19 +281,26 @@
         )
 
         (if (= taz_s_draw_labels "1")
-          (progn
-            (command "TEXT"
-              (list taz_s_xval taz_s_ymin taz_s_zval)
+          (progn            
+            ;; DÓŁ
+            (setq taz_s_pt1 (list taz_s_xval (- taz_s_ymin taz_s_text_offset) taz_s_zval))
+            (command "CIRCLE" taz_s_pt1 taz_s_circle_radius)
+            (command "TEXT" "_J" "MC"
+              taz_s_pt1
               250
               90
               taz_s_name
             )
-            (command "TEXT"
-              (list taz_s_xval taz_s_ymax taz_s_zval)
+
+            ;; GÓRA
+            (setq taz_s_pt2 (list taz_s_xval (+ taz_s_ymax taz_s_text_offset) taz_s_zval))
+            (command "CIRCLE" taz_s_pt2 taz_s_circle_radius)
+            (command "TEXT" "_J" "MC"
+              taz_s_pt2
               250
               90
               taz_s_name
-            )
+            )          
           )
         )
 

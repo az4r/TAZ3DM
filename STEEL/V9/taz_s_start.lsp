@@ -1,4 +1,4 @@
-(defun c:taz_s_start()
+(defun taz_s_start()
   
 (if (tblsearch "LAYER" "taz_s_beam")
   (princ)
@@ -18,3 +18,4 @@
 (command "_layer" "_S" "0" "")
 
 )
+(taz_s_start)
