@@ -232,22 +232,22 @@
     (taz_s_get_dist)
 
     ;; pozycja Y osi
-    (setq y taz_s_val)
+    (setq taz_s_y taz_s_val)
 
     ;; punkty prostokąta
-    (setq p1 (list taz_s_xmin y taz_s_zmin))
-    (setq p2 (list taz_s_xmax y taz_s_zmin))
-    (setq p3 (list taz_s_xmax y taz_s_zmax))
-    (setq p4 (list taz_s_xmin y taz_s_zmax))
+    (setq taz_s_p1 (list taz_s_xmin taz_s_y taz_s_zmin))
+    (setq taz_s_p2 (list taz_s_xmax taz_s_y taz_s_zmin))
+    (setq taz_s_p3 (list taz_s_xmax taz_s_y taz_s_zmax))
+    (setq taz_s_p4 (list taz_s_xmin taz_s_y taz_s_zmax))
 
     ;; polilinia 3D
     (command
       "3DPOLY"
-      p1
-      p2
-      p3
-      p4
-      p1
+      taz_s_p1
+      taz_s_p2
+      taz_s_p3
+      taz_s_p4
+      taz_s_p1
       ""
     )
 
@@ -267,22 +267,22 @@
     (taz_s_get_dist)
 
     ;; pozycja X osi
-    (setq x taz_s_val)
+    (setq taz_s_x taz_s_val)
 
     ;; punkty prostokąta
-    (setq p1 (list x taz_s_ymin taz_s_zmin))
-    (setq p2 (list x taz_s_ymax taz_s_zmin))
-    (setq p3 (list x taz_s_ymax taz_s_zmax))
-    (setq p4 (list x taz_s_ymin taz_s_zmax))
+    (setq taz_s_p1 (list taz_s_x taz_s_ymin taz_s_zmin))
+    (setq taz_s_p2 (list taz_s_x taz_s_ymax taz_s_zmin))
+    (setq taz_s_p3 (list taz_s_x taz_s_ymax taz_s_zmax))
+    (setq taz_s_p4 (list taz_s_x taz_s_ymin taz_s_zmax))
 
     ;; polilinia 3D
     (command
       "3DPOLY"
-      p1
-      p2
-      p3
-      p4
-      p1
+      taz_s_p1
+      taz_s_p2
+      taz_s_p3
+      taz_s_p4
+      taz_s_p1
       ""
     )
 
