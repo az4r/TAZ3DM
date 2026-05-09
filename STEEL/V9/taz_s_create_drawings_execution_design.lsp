@@ -197,7 +197,7 @@
   (setq taz_s_zmax taz_s_m)
 
   ;; ---------------------------------
-  ;; WARSTWA
+  ;; WARSTWA PROSTOKĄTÓW
   ;; ---------------------------------
 
   (if
@@ -205,10 +205,17 @@
     (command "_LAYER" "_M" "taz_s_execution_design" "_C" "30" "" "")
   )
 
-  (setvar "CLAYER" "taz_s_execution_design")
+  ;; ---------------------------------
+  ;; WARSTWA SECTION
+  ;; ---------------------------------
+
+  (if
+    (not (tblsearch "LAYER" "taz_s_sections"))
+    (command "_LAYER" "_M" "taz_s_sections" "_C" "1" "" "")
+  )
 
   ;; ---------------------------------
-  ;; CZYSZCZENIE WARSTWY
+  ;; CZYSZCZENIE WARSTWY PROSTOKĄTÓW
   ;; ---------------------------------
 
   (setq taz_s_ss
@@ -218,6 +225,24 @@
   (if taz_s_ss
     (command "ERASE" taz_s_ss "")
   )
+
+  ;; ---------------------------------
+  ;; CZYSZCZENIE WARSTWY SECTION
+  ;; ---------------------------------
+
+  (setq taz_s_ss
+    (ssget "X" '((8 . "taz_s_sections")))
+  )
+
+  (if taz_s_ss
+    (command "ERASE" taz_s_ss "")
+  )
+
+  ;; ---------------------------------
+  ;; OBIEKTY MODELU
+  ;; ---------------------------------
+
+  (setq taz_s_model_ss (ssget "X"))
 
   ;; ---------------------------------
   ;; PROSTOKĄTY X
@@ -240,7 +265,12 @@
     (setq taz_s_p3 (list taz_s_xmax taz_s_y taz_s_zmax))
     (setq taz_s_p4 (list taz_s_xmin taz_s_y taz_s_zmax))
 
-    ;; polilinia 3D
+    ;; ---------------------------------
+    ;; RYSOWANIE PROSTOKĄTA
+    ;; ---------------------------------
+
+    (setvar "CLAYER" "taz_s_execution_design")
+
     (command
       "3DPOLY"
       taz_s_p1
@@ -249,6 +279,22 @@
       taz_s_p4
       taz_s_p1
       ""
+    )
+
+    ;; ---------------------------------
+    ;; SECTION
+    ;; ---------------------------------
+
+    (setvar "CLAYER" "taz_s_sections")
+
+    (command
+      "SECTION"
+      taz_s_model_ss
+      ""
+      "_3points"
+      taz_s_p1
+      taz_s_p2
+      taz_s_p3
     )
 
     (setq taz_s_tmp (cdr taz_s_tmp))
@@ -275,7 +321,12 @@
     (setq taz_s_p3 (list taz_s_x taz_s_ymax taz_s_zmax))
     (setq taz_s_p4 (list taz_s_x taz_s_ymin taz_s_zmax))
 
-    ;; polilinia 3D
+    ;; ---------------------------------
+    ;; RYSOWANIE PROSTOKĄTA
+    ;; ---------------------------------
+
+    (setvar "CLAYER" "taz_s_execution_design")
+
     (command
       "3DPOLY"
       taz_s_p1
@@ -286,9 +337,25 @@
       ""
     )
 
+    ;; ---------------------------------
+    ;; SECTION
+    ;; ---------------------------------
+
+    (setvar "CLAYER" "taz_s_sections")
+
+    (command
+      "SECTION"
+      taz_s_model_ss
+      ""
+      "_3points"
+      taz_s_p1
+      taz_s_p2
+      taz_s_p3
+    )
+
     (setq taz_s_tmp (cdr taz_s_tmp))
   )
-  
+
   ;; ---------------------------------
   ;; PROSTOKĄTY Z
   ;; ---------------------------------
@@ -310,7 +377,12 @@
     (setq taz_s_p3 (list taz_s_xmax taz_s_ymax taz_s_z))
     (setq taz_s_p4 (list taz_s_xmin taz_s_ymax taz_s_z))
 
-    ;; polilinia 3D
+    ;; ---------------------------------
+    ;; RYSOWANIE PROSTOKĄTA
+    ;; ---------------------------------
+
+    (setvar "CLAYER" "taz_s_execution_design")
+
     (command
       "3DPOLY"
       taz_s_p1
@@ -319,6 +391,22 @@
       taz_s_p4
       taz_s_p1
       ""
+    )
+
+    ;; ---------------------------------
+    ;; SECTION
+    ;; ---------------------------------
+
+    (setvar "CLAYER" "taz_s_sections")
+
+    (command
+      "SECTION"
+      taz_s_model_ss
+      ""
+      "_3points"
+      taz_s_p1
+      taz_s_p2
+      taz_s_p3
     )
 
     (setq taz_s_tmp (cdr taz_s_tmp))
