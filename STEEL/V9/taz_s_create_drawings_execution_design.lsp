@@ -288,6 +288,41 @@
 
     (setq taz_s_tmp (cdr taz_s_tmp))
   )
+  
+  ;; ---------------------------------
+  ;; PROSTOKĄTY Z
+  ;; ---------------------------------
+
+  (setq taz_s_tmp taz_s_z_data)
+
+  (while taz_s_tmp
+
+    (setq taz_s_row (car taz_s_tmp))
+
+    (taz_s_get_dist)
+
+    ;; wysokość Z
+    (setq taz_s_z taz_s_val)
+
+    ;; punkty prostokąta
+    (setq taz_s_p1 (list taz_s_xmin taz_s_ymin taz_s_z))
+    (setq taz_s_p2 (list taz_s_xmax taz_s_ymin taz_s_z))
+    (setq taz_s_p3 (list taz_s_xmax taz_s_ymax taz_s_z))
+    (setq taz_s_p4 (list taz_s_xmin taz_s_ymax taz_s_z))
+
+    ;; polilinia 3D
+    (command
+      "3DPOLY"
+      taz_s_p1
+      taz_s_p2
+      taz_s_p3
+      taz_s_p4
+      taz_s_p1
+      ""
+    )
+
+    (setq taz_s_tmp (cdr taz_s_tmp))
+  )
 
   (princ)
 )
