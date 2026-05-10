@@ -77,6 +77,16 @@
     (setq taz_s_val (atof (substr taz_s_row taz_s_i)))
   )
 
+  ;; pobieranie nazwy osi z formatu "[N]  DYSTANS"
+  (defun taz_s_get_name ()
+    (setq taz_s_i 2)
+    (setq taz_s_res "")
+    (while (/= (substr taz_s_row taz_s_i 1) "]")
+      (setq taz_s_res (strcat taz_s_res (substr taz_s_row taz_s_i 1)))
+      (setq taz_s_i (+ taz_s_i 1))
+    )
+  )
+
   (defun taz_s_min ()
     (setq taz_s_m (car taz_s_list))
     (setq taz_s_list (cdr taz_s_list))
@@ -205,6 +215,8 @@
 
     (setq taz_s_row (car taz_s_tmp))
     (taz_s_get_dist)
+    (taz_s_get_name)
+    (setq taz_s_name taz_s_res)
     (setq taz_s_y taz_s_val)
 
     ;; PUNKTY
@@ -234,6 +246,21 @@
       (command "ROTATE3D" taz_s_section_ss "" "_X" taz_s_center "90")
     )
 
+    ;; ---------------------------------
+    ;; TYTUŁ PRZED MOVE
+    ;; ---------------------------------
+
+    (setq taz_s_title_pt
+      (list
+        (car taz_s_center)
+        (+ (cadr taz_s_center) 10000.0)
+        (caddr taz_s_center)
+      )
+    )
+
+    (setvar "CLAYER" "taz_s_execution_design")
+    (command "TEXT" "_J" "MC" taz_s_title_pt 700.0 0 (strcat "SECTION " taz_s_name))
+
     ;; MOVE Z BAZĄ W ŚRODKU
     (if taz_s_rect_ss
       (command "MOVE" taz_s_rect_ss "" taz_s_center (list taz_s_layout_x 0 0))
@@ -241,6 +268,7 @@
     (if taz_s_section_ss
       (command "MOVE" taz_s_section_ss "" taz_s_center (list taz_s_layout_x 0 0))
     )
+    (command "MOVE" (entlast) "" taz_s_center (list taz_s_layout_x 0 0))
 
     ;; WARSTWA DOCELOWA
     (if taz_s_section_ss
@@ -263,6 +291,8 @@
 
     (setq taz_s_row (car taz_s_tmp))
     (taz_s_get_dist)
+    (taz_s_get_name)
+    (setq taz_s_name taz_s_res)
     (setq taz_s_x taz_s_val)
 
     ;; PUNKTY
@@ -292,6 +322,21 @@
       (command "ROTATE3D" taz_s_section_ss "" "_Y" taz_s_center "-90")
     )
 
+    ;; ---------------------------------
+    ;; TYTUŁ PRZED MOVE
+    ;; ---------------------------------
+
+    (setq taz_s_title_pt
+      (list
+        (car taz_s_center)
+        (+ (cadr taz_s_center) 10000.0)
+        (caddr taz_s_center)
+      )
+    )
+
+    (setvar "CLAYER" "taz_s_execution_design")
+    (command "TEXT" "_J" "MC" taz_s_title_pt 700.0 0 (strcat "SECTION " taz_s_name))
+
     ;; MOVE Z BAZĄ W ŚRODKU
     (if taz_s_rect_ss
       (command "MOVE" taz_s_rect_ss "" taz_s_center (list taz_s_layout_x 0 0))
@@ -299,6 +344,7 @@
     (if taz_s_section_ss
       (command "MOVE" taz_s_section_ss "" taz_s_center (list taz_s_layout_x 0 0))
     )
+    (command "MOVE" (entlast) "" taz_s_center (list taz_s_layout_x 0 0))
 
     ;; WARSTWA DOCELOWA
     (if taz_s_section_ss
@@ -321,6 +367,8 @@
 
     (setq taz_s_row (car taz_s_tmp))
     (taz_s_get_dist)
+    (taz_s_get_name)
+    (setq taz_s_name taz_s_res)
     (setq taz_s_z taz_s_val)
 
     ;; PUNKTY
@@ -344,6 +392,21 @@
 
     ;; Z NIE MA ROTATE
 
+    ;; ---------------------------------
+    ;; TYTUŁ PRZED MOVE
+    ;; ---------------------------------
+
+    (setq taz_s_title_pt
+      (list
+        (car taz_s_center)
+        (+ (cadr taz_s_center) 10000.0)
+        (caddr taz_s_center)
+      )
+    )
+
+    (setvar "CLAYER" "taz_s_execution_design")
+    (command "TEXT" "_J" "MC" taz_s_title_pt 700.0 0 (strcat "SECTION " taz_s_name))
+
     ;; MOVE Z BAZĄ W ŚRODKU
     (if taz_s_rect_ss
       (command "MOVE" taz_s_rect_ss "" taz_s_center (list taz_s_layout_x 0 0))
@@ -351,6 +414,7 @@
     (if taz_s_section_ss
       (command "MOVE" taz_s_section_ss "" taz_s_center (list taz_s_layout_x 0 0))
     )
+    (command "MOVE" (entlast) "" taz_s_center (list taz_s_layout_x 0 0))
 
     ;; WARSTWA DOCELOWA
     (if taz_s_section_ss
@@ -373,7 +437,7 @@
   )
   
   ;; ---------------------------------------------------------
-  ;; PRZYWRÓCENIE POPRZEDNIEGO UCS
+  ;; PRZYWRÓCENIE POPRZEDNIEGO WIDOKU
   ;; ---------------------------------------------------------
   
   (command "-VIEW" "_R" "taz_s_temp_view")
