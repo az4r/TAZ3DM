@@ -63,6 +63,14 @@
   (setq taz_s_z_data taz_s_axis_data_z)
 
   ;; ---------------------------------
+  ;; PARAMETRY OZNACZEŃ OSI
+  ;; ---------------------------------
+
+  (setq taz_s_axis_overhang 1500.0)  ;; wystanie linii osi poniżej Zmin
+  (setq taz_s_axis_circle_r  500.0)  ;; promień kółka oznaczenia
+  (setq taz_s_axis_text_h    350.0)  ;; wysokość tekstu w kółku
+
+  ;; ---------------------------------
   ;; FUNKCJE POMOCNICZE
   ;; ---------------------------------
 
@@ -77,7 +85,6 @@
     (setq taz_s_val (atof (substr taz_s_row taz_s_i)))
   )
 
-  ;; pobieranie nazwy osi z formatu "[N]  DYSTANS"
   (defun taz_s_get_name ()
     (setq taz_s_i 2)
     (setq taz_s_res "")
@@ -107,10 +114,6 @@
     )
   )
 
-  ;; ---------------------------------
-  ;; FUNKCJA ŚRODKA PROSTOKĄTA
-  ;; ---------------------------------
-
   (defun taz_s_center_point (taz_s_p1 taz_s_p3)
     (list
       (/ (+ (car taz_s_p1) (car taz_s_p3)) 2.0)
@@ -120,12 +123,52 @@
   )
 
   ;; ---------------------------------
+  ;; FUNKCJA RYSOWANIA OZNACZENIA OSI
+  ;; Rysuje: linia wzdłuż Z + okrąg na dole + tekst w okręgu
+  ;; Wszystko na aktualnej warstwie (powinna być taz_s_sections przed wywołaniem)
+  ;; Zwraca selection set nowych encji
+  ;; ---------------------------------
+
+  (defun taz_s_draw_axis (ax ay z_top z_bot a_name / e_before ax_ss e_cur)
+    (setq e_before (entlast))
+
+    ;; linia osi pionowo wzdłuż Z
+    (command "_LINE"
+      (list ax ay z_bot)
+      (list ax ay z_top)
+      "")
+
+    ;; okrąg na końcu dolnym
+    (command "_CIRCLE"
+      (list ax ay z_bot)
+      taz_s_axis_circle_r)
+
+    ;; tekst nazwy osi wyśrodkowany w okręgu
+    (command "_TEXT" "_J" "MC"
+      (list ax ay z_bot)
+      taz_s_axis_text_h
+      0
+      a_name)
+
+    ;; zbierz nowe encje (wszystko co powstało po e_before)
+    (setq ax_ss (ssadd))
+    (if e_before
+      (setq e_cur (entnext e_before))
+      (setq e_cur (entnext))
+    )
+    (while e_cur
+      (ssadd e_cur ax_ss)
+      (setq e_cur (entnext e_cur))
+    )
+    ax_ss
+  )
+
+  ;; ---------------------------------
   ;; X VALUES
   ;; ---------------------------------
 
   (setq taz_s_xvals '())
   (setq taz_s_tmp taz_s_x_data)
-
   (while taz_s_tmp
     (setq taz_s_row (car taz_s_tmp))
     (taz_s_get_dist)
@@ -139,7 +182,6 @@
 
   (setq taz_s_yvals '())
   (setq taz_s_tmp taz_s_y_data)
-
   (while taz_s_tmp
     (setq taz_s_row (car taz_s_tmp))
     (taz_s_get_dist)
@@ -153,7 +195,6 @@
 
   (setq taz_s_zvals '())
   (setq taz_s_tmp taz_s_z_data)
-
   (while taz_s_tmp
     (setq taz_s_row (car taz_s_tmp))
     (taz_s_get_dist)
@@ -206,7 +247,8 @@
   (setq taz_s_model_ss (ssget "X"))
 
   ;; =========================================================
-  ;; X
+  ;; X  (przekroje prostopadłe do osi X — płaszczyzna Y=const)
+  ;; Na każdym przekroju X rysujemy osie Y (przecinają ten przekrój)
   ;; =========================================================
 
   (setq taz_s_tmp taz_s_x_data)
@@ -219,7 +261,7 @@
     (setq taz_s_name taz_s_res)
     (setq taz_s_y taz_s_val)
 
-    ;; PUNKTY
+    ;; PUNKTY narożne płaszczyzny przekroju
     (setq taz_s_p1 (list taz_s_xmin taz_s_y taz_s_zmin))
     (setq taz_s_p2 (list taz_s_xmax taz_s_y taz_s_zmin))
     (setq taz_s_p3 (list taz_s_xmax taz_s_y taz_s_zmax))
@@ -238,6 +280,40 @@
     (command "SECTION" taz_s_model_ss "" "_3points" taz_s_p1 taz_s_p2 taz_s_p3)
     (setq taz_s_section_ss (ssget "X" '((8 . "taz_s_sections_temp"))))
 
+    ;; OZNACZENIA OSI Y na przekroju X
+    ;; Każda oś Y przecina ten przekrój w punkcie (taz_s_x_val, taz_s_y, Z)
+    ;; ale przekrój X leży w Y=taz_s_y, więc osie Y wzdłuż X są widoczne
+    ;; Rysujemy oznaczenia dla każdej osi X (czyli dla pozycji X siatki)
+    ;; widocznych na tym przekroju (są to osie biegnące w kierunku Y, oznaczane cyframi)
+    ;; Na przekroju Y=const widoczne są wszystkie osie X (pionowe linie w X)
+    (setvar "CLAYER" "taz_s_sections")
+    (setq taz_s_xtmp taz_s_y_data)   ;; osie Y to dane y_data (pozycje X w siatce)
+    (setq taz_s_axis_ss_list (ssadd))
+    (while taz_s_xtmp
+      (setq taz_s_row (car taz_s_xtmp))
+      (taz_s_get_dist)
+      (taz_s_get_name)
+      (setq taz_s_ax_name taz_s_res)
+      (setq taz_s_ax_x taz_s_val)   ;; pozycja X tej osi
+      ;; rysuj oznaczenie: linia w Z przez (ax_x, taz_s_y)
+      (setq taz_s_one_axis_ss
+        (taz_s_draw_axis
+          taz_s_ax_x
+          taz_s_y
+          taz_s_zmax
+          (- taz_s_zmin taz_s_axis_overhang)
+          taz_s_ax_name
+        )
+      )
+      ;; dołącz do zbiorczego ss oznaczeń
+      (setq taz_s_k 0)
+      (while (< taz_s_k (sslength taz_s_one_axis_ss))
+        (ssadd (ssname taz_s_one_axis_ss taz_s_k) taz_s_axis_ss_list)
+        (setq taz_s_k (+ taz_s_k 1))
+      )
+      (setq taz_s_xtmp (cdr taz_s_xtmp))
+    )
+
     ;; ROTATE WZGLĘDEM ŚRODKA
     (if taz_s_rect_ss
       (command "ROTATE3D" taz_s_rect_ss "" "_X" taz_s_center "90")
@@ -245,11 +321,11 @@
     (if taz_s_section_ss
       (command "ROTATE3D" taz_s_section_ss "" "_X" taz_s_center "90")
     )
+    (if (> (sslength taz_s_axis_ss_list) 0)
+      (command "ROTATE3D" taz_s_axis_ss_list "" "_X" taz_s_center "90")
+    )
 
-    ;; ---------------------------------
     ;; TYTUŁ PRZED MOVE
-    ;; ---------------------------------
-
     (setq taz_s_title_pt
       (list
         (car taz_s_center)
@@ -257,7 +333,6 @@
         (caddr taz_s_center)
       )
     )
-
     (setvar "CLAYER" "taz_s_execution_design")
     (command "TEXT" "_J" "MC" taz_s_title_pt 700.0 0 (strcat "SECTION " taz_s_name))
 
@@ -268,9 +343,12 @@
     (if taz_s_section_ss
       (command "MOVE" taz_s_section_ss "" taz_s_center (list taz_s_layout_x 0 0))
     )
+    (if (> (sslength taz_s_axis_ss_list) 0)
+      (command "MOVE" taz_s_axis_ss_list "" taz_s_center (list taz_s_layout_x 0 0))
+    )
     (command "MOVE" (entlast) "" taz_s_center (list taz_s_layout_x 0 0))
 
-    ;; WARSTWA DOCELOWA
+    ;; WARSTWA DOCELOWA dla sekcji
     (if taz_s_section_ss
       (command "CHPROP" taz_s_section_ss "" "_LA" "taz_s_sections" "")
     )
@@ -281,8 +359,9 @@
     (setq taz_s_tmp (cdr taz_s_tmp))
   )
 
-  ;; =========================================================
-  ;; Y
+;; =========================================================
+  ;; Y  (przekroje prostopadłe do osi Y — płaszczyzna X=const)
+  ;; Na każdym przekroju X=const widoczne są osie X (biegnące wzdłuż Y)
   ;; =========================================================
 
   (setq taz_s_tmp taz_s_y_data)
@@ -301,7 +380,7 @@
     (setq taz_s_p3 (list taz_s_x taz_s_ymax taz_s_zmax))
     (setq taz_s_p4 (list taz_s_x taz_s_ymin taz_s_zmax))
 
-    ;; ŚRODEK PROSTOKĄTA
+    ;; ŚRODEK
     (setq taz_s_center (taz_s_center_point taz_s_p1 taz_s_p3))
 
     ;; PROSTOKĄT
@@ -314,18 +393,47 @@
     (command "SECTION" taz_s_model_ss "" "_3points" taz_s_p1 taz_s_p2 taz_s_p3)
     (setq taz_s_section_ss (ssget "X" '((8 . "taz_s_sections_temp"))))
 
-    ;; ROTATE WZGLĘDEM ŚRODKA
+    ;; OZNACZENIA OSI X na przekroju Y
+    ;; Na przekroju X=const widoczne są osie Y (biegnące wzdłuż X, oznaczane literami)
+    (setvar "CLAYER" "taz_s_sections")
+    (setq taz_s_xtmp taz_s_x_data)   ;; osie X to dane x_data (pozycje Y w siatce)
+    (setq taz_s_axis_ss_list (ssadd))
+    (while taz_s_xtmp
+      (setq taz_s_row (car taz_s_xtmp))
+      (taz_s_get_dist)
+      (taz_s_get_name)
+      (setq taz_s_ax_name taz_s_res)
+      (setq taz_s_ax_y taz_s_val)   ;; pozycja Y tej osi
+      ;; rysuj oznaczenie: linia w Z przez (taz_s_x, ax_y)
+      (setq taz_s_one_axis_ss
+        (taz_s_draw_axis
+          taz_s_x
+          taz_s_ax_y
+          taz_s_zmax
+          (- taz_s_zmin taz_s_axis_overhang)
+          taz_s_ax_name
+        )
+      )
+      (setq taz_s_k 0)
+      (while (< taz_s_k (sslength taz_s_one_axis_ss))
+        (ssadd (ssname taz_s_one_axis_ss taz_s_k) taz_s_axis_ss_list)
+        (setq taz_s_k (+ taz_s_k 1))
+      )
+      (setq taz_s_xtmp (cdr taz_s_xtmp))
+    )
+
+    ;; ROTATE
     (if taz_s_rect_ss
       (command "ROTATE3D" taz_s_rect_ss "" "_Y" taz_s_center "-90")
     )
     (if taz_s_section_ss
       (command "ROTATE3D" taz_s_section_ss "" "_Y" taz_s_center "-90")
     )
+    (if (> (sslength taz_s_axis_ss_list) 0)
+      (command "ROTATE3D" taz_s_axis_ss_list "" "_Y" taz_s_center "-90")
+    )
 
-    ;; ---------------------------------
-    ;; TYTUŁ PRZED MOVE
-    ;; ---------------------------------
-
+    ;; TYTUŁ
     (setq taz_s_title_pt
       (list
         (car taz_s_center)
@@ -333,16 +441,18 @@
         (caddr taz_s_center)
       )
     )
-
     (setvar "CLAYER" "taz_s_execution_design")
     (command "TEXT" "_J" "MC" taz_s_title_pt 700.0 0 (strcat "SECTION " taz_s_name))
 
-    ;; MOVE Z BAZĄ W ŚRODKU
+    ;; MOVE
     (if taz_s_rect_ss
       (command "MOVE" taz_s_rect_ss "" taz_s_center (list taz_s_layout_x 0 0))
     )
     (if taz_s_section_ss
       (command "MOVE" taz_s_section_ss "" taz_s_center (list taz_s_layout_x 0 0))
+    )
+    (if (> (sslength taz_s_axis_ss_list) 0)
+      (command "MOVE" taz_s_axis_ss_list "" taz_s_center (list taz_s_layout_x 0 0))
     )
     (command "MOVE" (entlast) "" taz_s_center (list taz_s_layout_x 0 0))
 
@@ -358,7 +468,8 @@
   )
 
   ;; =========================================================
-  ;; Z
+  ;; Z  (przekroje poziome — płaszczyzna Z=const)
+  ;; Na każdym przekroju Z=const widoczna jest cała siatka osi X i Y
   ;; =========================================================
 
   (setq taz_s_tmp taz_s_z_data)
@@ -377,7 +488,7 @@
     (setq taz_s_p3 (list taz_s_xmax taz_s_ymax taz_s_z))
     (setq taz_s_p4 (list taz_s_xmin taz_s_ymax taz_s_z))
 
-    ;; ŚRODEK PROSTOKĄTA
+    ;; ŚRODEK
     (setq taz_s_center (taz_s_center_point taz_s_p1 taz_s_p3))
 
     ;; PROSTOKĄT
@@ -390,12 +501,69 @@
     (command "SECTION" taz_s_model_ss "" "_3points" taz_s_p1 taz_s_p2 taz_s_p3)
     (setq taz_s_section_ss (ssget "X" '((8 . "taz_s_sections_temp"))))
 
-    ;; Z NIE MA ROTATE
+    ;; OZNACZENIA OSI na przekroju Z (poziomym)
+    ;; Przekrój poziomy leży w płaszczyźnie XY — osie biegną poziomo
+    ;; wzdłuż Z nie mają tu sensu w ten sam sposób, ale skoro widać siatkę w XY,
+    ;; rysujemy markery osi X i Y jako pionowe linie Z (krótkie, symboliczne)
+    ;; wychodzące z płaszczyzny Z=taz_s_z w dół o overhang
+    (setvar "CLAYER" "taz_s_sections")
+    (setq taz_s_axis_ss_list (ssadd))
 
-    ;; ---------------------------------
-    ;; TYTUŁ PRZED MOVE
-    ;; ---------------------------------
+    ;; Osie Y (biegnące wzdłuż X) — znaczniki w każdej pozycji Y siatki
+    ;; na skraju X (xmin) widoczne na przekroju poziomym
+    (setq taz_s_xtmp taz_s_x_data)
+    (while taz_s_xtmp
+      (setq taz_s_row (car taz_s_xtmp))
+      (taz_s_get_dist)
+      (taz_s_get_name)
+      (setq taz_s_ax_name taz_s_res)
+      (setq taz_s_ax_y taz_s_val)
+      (setq taz_s_one_axis_ss
+        (taz_s_draw_axis
+          taz_s_xmin
+          taz_s_ax_y
+          taz_s_z
+          (- taz_s_z taz_s_axis_overhang)
+          taz_s_ax_name
+        )
+      )
+      (setq taz_s_k 0)
+      (while (< taz_s_k (sslength taz_s_one_axis_ss))
+        (ssadd (ssname taz_s_one_axis_ss taz_s_k) taz_s_axis_ss_list)
+        (setq taz_s_k (+ taz_s_k 1))
+      )
+      (setq taz_s_xtmp (cdr taz_s_xtmp))
+    )
 
+    ;; Osie X (biegnące wzdłuż Y) — znaczniki w każdej pozycji X siatki
+    ;; na skraju Y (ymin) widoczne na przekroju poziomym
+    (setq taz_s_xtmp taz_s_y_data)
+    (while taz_s_xtmp
+      (setq taz_s_row (car taz_s_xtmp))
+      (taz_s_get_dist)
+      (taz_s_get_name)
+      (setq taz_s_ax_name taz_s_res)
+      (setq taz_s_ax_x taz_s_val)
+      (setq taz_s_one_axis_ss
+        (taz_s_draw_axis
+          taz_s_ax_x
+          taz_s_ymin
+          taz_s_z
+          (- taz_s_z taz_s_axis_overhang)
+          taz_s_ax_name
+        )
+      )
+      (setq taz_s_k 0)
+      (while (< taz_s_k (sslength taz_s_one_axis_ss))
+        (ssadd (ssname taz_s_one_axis_ss taz_s_k) taz_s_axis_ss_list)
+        (setq taz_s_k (+ taz_s_k 1))
+      )
+      (setq taz_s_xtmp (cdr taz_s_xtmp))
+    )
+
+    ;; Z NIE MA ROTATE (przekrój poziomy, już leży w XY)
+
+    ;; TYTUŁ
     (setq taz_s_title_pt
       (list
         (car taz_s_center)
@@ -403,16 +571,18 @@
         (caddr taz_s_center)
       )
     )
-
     (setvar "CLAYER" "taz_s_execution_design")
     (command "TEXT" "_J" "MC" taz_s_title_pt 700.0 0 (strcat "SECTION " taz_s_name))
 
-    ;; MOVE Z BAZĄ W ŚRODKU
+    ;; MOVE
     (if taz_s_rect_ss
       (command "MOVE" taz_s_rect_ss "" taz_s_center (list taz_s_layout_x 0 0))
     )
     (if taz_s_section_ss
       (command "MOVE" taz_s_section_ss "" taz_s_center (list taz_s_layout_x 0 0))
+    )
+    (if (> (sslength taz_s_axis_ss_list) 0)
+      (command "MOVE" taz_s_axis_ss_list "" taz_s_center (list taz_s_layout_x 0 0))
     )
     (command "MOVE" (entlast) "" taz_s_center (list taz_s_layout_x 0 0))
 
@@ -444,4 +614,4 @@
   (command "-VIEW" "_D" "taz_s_temp_view")
   
   (princ)
-)
+)  
