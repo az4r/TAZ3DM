@@ -129,38 +129,39 @@
   ;; Zwraca selection set nowych encji
   ;; ---------------------------------
 
-  (defun taz_s_draw_axis (ax ay z_top z_bot a_name / e_before ax_ss e_cur)
-    (setq e_before (entlast))
+  (defun taz_s_draw_axis (taz_s_da_ax taz_s_da_ay taz_s_da_z_top taz_s_da_z_bot taz_s_da_name
+                          / taz_s_da_e_before taz_s_da_ax_ss taz_s_da_e_cur)
+    (setq taz_s_da_e_before (entlast))
 
     ;; linia osi pionowo wzdłuż Z
     (command "_LINE"
-      (list ax ay z_bot)
-      (list ax ay z_top)
+      (list taz_s_da_ax taz_s_da_ay taz_s_da_z_bot)
+      (list taz_s_da_ax taz_s_da_ay taz_s_da_z_top)
       "")
 
     ;; okrąg na końcu dolnym
     (command "_CIRCLE"
-      (list ax ay z_bot)
+      (list taz_s_da_ax taz_s_da_ay taz_s_da_z_bot)
       taz_s_axis_circle_r)
 
     ;; tekst nazwy osi wyśrodkowany w okręgu
     (command "_TEXT" "_J" "MC"
-      (list ax ay z_bot)
+      (list taz_s_da_ax taz_s_da_ay taz_s_da_z_bot)
       taz_s_axis_text_h
       0
-      a_name)
+      taz_s_da_name)
 
-    ;; zbierz nowe encje (wszystko co powstało po e_before)
-    (setq ax_ss (ssadd))
-    (if e_before
-      (setq e_cur (entnext e_before))
-      (setq e_cur (entnext))
+    ;; zbierz nowe encje (wszystko co powstało po taz_s_da_e_before)
+    (setq taz_s_da_ax_ss (ssadd))
+    (if taz_s_da_e_before
+      (setq taz_s_da_e_cur (entnext taz_s_da_e_before))
+      (setq taz_s_da_e_cur (entnext))
     )
-    (while e_cur
-      (ssadd e_cur ax_ss)
-      (setq e_cur (entnext e_cur))
+    (while taz_s_da_e_cur
+      (ssadd taz_s_da_e_cur taz_s_da_ax_ss)
+      (setq taz_s_da_e_cur (entnext taz_s_da_e_cur))
     )
-    ax_ss
+    taz_s_da_ax_ss
   )
 
   ;; ---------------------------------
@@ -281,21 +282,16 @@
     (setq taz_s_section_ss (ssget "X" '((8 . "taz_s_sections_temp"))))
 
     ;; OZNACZENIA OSI Y na przekroju X
-    ;; Każda oś Y przecina ten przekrój w punkcie (taz_s_x_val, taz_s_y, Z)
-    ;; ale przekrój X leży w Y=taz_s_y, więc osie Y wzdłuż X są widoczne
-    ;; Rysujemy oznaczenia dla każdej osi X (czyli dla pozycji X siatki)
-    ;; widocznych na tym przekroju (są to osie biegnące w kierunku Y, oznaczane cyframi)
-    ;; Na przekroju Y=const widoczne są wszystkie osie X (pionowe linie w X)
+    ;; Na przekroju Y=const widoczne są wszystkie osie z y_data (pozycje X w siatce)
     (setvar "CLAYER" "taz_s_sections")
-    (setq taz_s_xtmp taz_s_y_data)   ;; osie Y to dane y_data (pozycje X w siatce)
+    (setq taz_s_xtmp taz_s_y_data)
     (setq taz_s_axis_ss_list (ssadd))
     (while taz_s_xtmp
       (setq taz_s_row (car taz_s_xtmp))
       (taz_s_get_dist)
       (taz_s_get_name)
       (setq taz_s_ax_name taz_s_res)
-      (setq taz_s_ax_x taz_s_val)   ;; pozycja X tej osi
-      ;; rysuj oznaczenie: linia w Z przez (ax_x, taz_s_y)
+      (setq taz_s_ax_x taz_s_val)
       (setq taz_s_one_axis_ss
         (taz_s_draw_axis
           taz_s_ax_x
@@ -305,7 +301,6 @@
           taz_s_ax_name
         )
       )
-      ;; dołącz do zbiorczego ss oznaczeń
       (setq taz_s_k 0)
       (while (< taz_s_k (sslength taz_s_one_axis_ss))
         (ssadd (ssname taz_s_one_axis_ss taz_s_k) taz_s_axis_ss_list)
@@ -394,17 +389,16 @@
     (setq taz_s_section_ss (ssget "X" '((8 . "taz_s_sections_temp"))))
 
     ;; OZNACZENIA OSI X na przekroju Y
-    ;; Na przekroju X=const widoczne są osie Y (biegnące wzdłuż X, oznaczane literami)
+    ;; Na przekroju X=const widoczne są osie z x_data (pozycje Y w siatce)
     (setvar "CLAYER" "taz_s_sections")
-    (setq taz_s_xtmp taz_s_x_data)   ;; osie X to dane x_data (pozycje Y w siatce)
+    (setq taz_s_xtmp taz_s_x_data)
     (setq taz_s_axis_ss_list (ssadd))
     (while taz_s_xtmp
       (setq taz_s_row (car taz_s_xtmp))
       (taz_s_get_dist)
       (taz_s_get_name)
       (setq taz_s_ax_name taz_s_res)
-      (setq taz_s_ax_y taz_s_val)   ;; pozycja Y tej osi
-      ;; rysuj oznaczenie: linia w Z przez (taz_s_x, ax_y)
+      (setq taz_s_ax_y taz_s_val)
       (setq taz_s_one_axis_ss
         (taz_s_draw_axis
           taz_s_x
@@ -502,15 +496,10 @@
     (setq taz_s_section_ss (ssget "X" '((8 . "taz_s_sections_temp"))))
 
     ;; OZNACZENIA OSI na przekroju Z (poziomym)
-    ;; Przekrój poziomy leży w płaszczyźnie XY — osie biegną poziomo
-    ;; wzdłuż Z nie mają tu sensu w ten sam sposób, ale skoro widać siatkę w XY,
-    ;; rysujemy markery osi X i Y jako pionowe linie Z (krótkie, symboliczne)
-    ;; wychodzące z płaszczyzny Z=taz_s_z w dół o overhang
     (setvar "CLAYER" "taz_s_sections")
     (setq taz_s_axis_ss_list (ssadd))
 
-    ;; Osie Y (biegnące wzdłuż X) — znaczniki w każdej pozycji Y siatki
-    ;; na skraju X (xmin) widoczne na przekroju poziomym
+    ;; Osie z x_data — znaczniki na skraju xmin
     (setq taz_s_xtmp taz_s_x_data)
     (while taz_s_xtmp
       (setq taz_s_row (car taz_s_xtmp))
@@ -535,8 +524,7 @@
       (setq taz_s_xtmp (cdr taz_s_xtmp))
     )
 
-    ;; Osie X (biegnące wzdłuż Y) — znaczniki w każdej pozycji X siatki
-    ;; na skraju Y (ymin) widoczne na przekroju poziomym
+    ;; Osie z y_data — znaczniki na skraju ymin
     (setq taz_s_xtmp taz_s_y_data)
     (while taz_s_xtmp
       (setq taz_s_row (car taz_s_xtmp))
@@ -614,4 +602,4 @@
   (command "-VIEW" "_D" "taz_s_temp_view")
   
   (princ)
-)  
+)
