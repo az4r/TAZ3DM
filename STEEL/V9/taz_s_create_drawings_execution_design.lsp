@@ -16,7 +16,7 @@
   ;; OFFSET KOLEJNYCH
   ;; ---------------------------------
 
-  (setq taz_s_layout_step 2000.0)
+  (setq taz_s_layout_step 10000.0)
 
   ;; ---------------------------------
   ;; AKTUALNA POZYCJA RZUTNI
