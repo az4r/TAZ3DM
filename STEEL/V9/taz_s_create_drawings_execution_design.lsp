@@ -66,7 +66,7 @@
   ;; PARAMETRY OZNACZEŃ OSI
   ;; ---------------------------------
 
-  (setq taz_s_axis_overhang 1500.0)  ;; wystanie linii osi poniżej Zmin
+  (setq taz_s_axis_overhang 1500.0)  ;; wystanie linii osi poniżej Zmin / poza krawędź
   (setq taz_s_axis_circle_r  250.0)  ;; promień kółka oznaczenia
   (setq taz_s_axis_text_h    175.0)  ;; wysokość tekstu w kółku
 
@@ -124,27 +124,18 @@
 
   ;; ---------------------------------
   ;; FUNKCJA RYSOWANIA OZNACZENIA OSI
+  ;; Dla przekrojów X i Y (pionowych).
   ;;
   ;; Parametry:
   ;;   taz_s_da_ax      - pozycja X osi
   ;;   taz_s_da_ay      - pozycja Y osi
   ;;   taz_s_da_z_top   - górny koniec linii osi (Zmax)
   ;;   taz_s_da_z_bot   - dolny koniec linii osi (Zmin - overhang)
-  ;;   taz_s_da_name    - nazwa osi (tekst w kółku)
-  ;;   taz_s_da_rot     - oś lokalnego obrotu kółka/tekstu przed ROTATE3D:
-  ;;                      "X"  → obrót _X 90  (dla przekrojów X)
-  ;;                      "Y"  → obrót _Y -90 (dla przekrojów Y)
-  ;;                      ""   → brak obrotu  (dla przekrojów Z)
+  ;;   taz_s_da_name    - nazwa osi
+  ;;   taz_s_da_rot     - "X" lub "Y": określa pre-obrót kółka/tekstu
+  ;;                      odwrotny do późniejszego ROTATE3D rzutni
   ;;
-  ;; Strategia:
-  ;;   1. Rysuj linię wzdłuż Z w WCS.
-  ;;   2. Rysuj kółko i tekst w WCS przy końcu dolnym linii (z_bot).
-  ;;      Kółko leży poziomo (w płaszczyźnie XY) — to jest punkt wyjścia.
-  ;;   3. Obróć TYLKO kółko i tekst lokalnie wokół punktu z_bot
-  ;;      o kąt odwrotny do późniejszego ROTATE3D rzutni.
-  ;;      Efekt: po globalnym ROTATE3D rzutni kółko wyląduje pionowo
-  ;;      w płaszczyźnie rzutni, przyklejone do końca linii osi.
-  ;;   4. Zbierz wszystkie nowe encje i zwróć jako ss.
+  ;; Zwraca ss wszystkich nowych encji.
   ;; ---------------------------------
 
   (defun taz_s_draw_axis (taz_s_da_ax taz_s_da_ay taz_s_da_z_top taz_s_da_z_bot
@@ -155,27 +146,21 @@
     (setq taz_s_da_e_before (entlast))
     (setq taz_s_da_cpt (list taz_s_da_ax taz_s_da_ay taz_s_da_z_bot))
 
-    ;; --- LINIA OSI: pionowo wzdłuż Z w WCS ---
+    ;; linia osi: pionowo wzdłuż Z w WCS
     (command "_LINE"
       taz_s_da_cpt
       (list taz_s_da_ax taz_s_da_ay taz_s_da_z_top)
       "")
 
-    ;; znacznik po narysowaniu linii — kółko i tekst będą PO tej encji
+    ;; znacznik po linii, przed kółkiem i tekstem
     (setq taz_s_da_e_mid (entlast))
 
-    ;; --- KÓŁKO w WCS (leży poziomo w XY przy punkcie z_bot) ---
+    ;; kółko i tekst w WCS przy końcu dolnym linii
     (command "_CIRCLE" taz_s_da_cpt taz_s_axis_circle_r)
-
-    ;; --- TEKST w WCS (wyśrodkowany w kółku) ---
     (command "_TEXT" "_J" "MC"
-      taz_s_da_cpt
-      taz_s_axis_text_h
-      0
-      taz_s_da_name)
+      taz_s_da_cpt taz_s_axis_text_h 0 taz_s_da_name)
 
-    ;; --- LOKALNY OBRÓT kółka i tekstu wokół punktu z_bot ---
-    ;; Zbieramy kółko + tekst (wszystko po taz_s_da_e_mid)
+    ;; zbierz tylko kółko i tekst do osobnego ss
     (setq taz_s_da_circ_ss (ssadd))
     (setq taz_s_da_e_cur (entnext taz_s_da_e_mid))
     (while taz_s_da_e_cur
@@ -183,10 +168,8 @@
       (setq taz_s_da_e_cur (entnext taz_s_da_e_cur))
     )
 
-    ;; Obracamy kółko i tekst tak, żeby po późniejszym ROTATE3D rzutni
-    ;; leżały w płaszczyźnie rzutni przyklejone do końca linii osi.
-    ;; ROTATE3D rzutni X = +90 wokół X  → pre-obracamy o -90 wokół X
-    ;; ROTATE3D rzutni Y = -90 wokół Y  → pre-obracamy o +90 wokół Y
+    ;; lokalny pre-obrót kółka i tekstu wokół końca linii —
+    ;; odwrotny do późniejszego ROTATE3D rzutni
     (cond
       ((= taz_s_da_rot "X")
         (if (> (sslength taz_s_da_circ_ss) 0)
@@ -198,10 +181,9 @@
           (command "ROTATE3D" taz_s_da_circ_ss "" "_Y" taz_s_da_cpt "90")
         )
       )
-      ;; "" → przekrój Z, brak obrotu lokalnego
     )
 
-    ;; --- ZBIERZ WSZYSTKIE NOWE ENCJE (linia + kółko + tekst) ---
+    ;; zbierz wszystkie nowe encje (linia + kółko + tekst)
     (setq taz_s_da_ax_ss (ssadd))
     (if taz_s_da_e_before
       (setq taz_s_da_e_cur (entnext taz_s_da_e_before))
@@ -212,6 +194,64 @@
       (setq taz_s_da_e_cur (entnext taz_s_da_e_cur))
     )
     taz_s_da_ax_ss
+  )
+
+  ;; ---------------------------------
+  ;; FUNKCJA RYSOWANIA OZNACZENIA OSI DLA PRZEKROJÓW Z (poziomych)
+  ;;
+  ;; Parametry:
+  ;;   taz_s_daz_ax   - pozycja X punktu startowego (na krawędzi prostokąta)
+  ;;   taz_s_daz_ay   - pozycja Y punktu startowego (na krawędzi prostokąta)
+  ;;   taz_s_daz_z    - poziom Z przekroju
+  ;;   taz_s_daz_dir  - kierunek wystania linii: "X-" lub "Y-"
+  ;;                    "X-" → linia wystawia w kierunku -X (krawędź xmin, dla osi z x_data)
+  ;;                    "Y-" → linia wystawia w kierunku -Y (krawędź ymin, dla osi z y_data)
+  ;;   taz_s_daz_name - nazwa osi
+  ;;
+  ;; Linia leży w płaszczyźnie XY (Z=const), kółko i tekst też — brak ROTATE.
+  ;; Zwraca ss wszystkich nowych encji.
+  ;; ---------------------------------
+
+  (defun taz_s_draw_axis_z (taz_s_daz_ax taz_s_daz_ay taz_s_daz_z
+                             taz_s_daz_dir taz_s_daz_name
+                             / taz_s_daz_e_before taz_s_daz_e_cur
+                               taz_s_daz_ax_ss taz_s_daz_pt_start
+                               taz_s_daz_pt_end)
+
+    (setq taz_s_daz_e_before (entlast))
+    (setq taz_s_daz_pt_start (list taz_s_daz_ax taz_s_daz_ay taz_s_daz_z))
+
+    ;; punkt końcowy linii — w kierunku -X lub -Y o długość overhang
+    (cond
+      ((= taz_s_daz_dir "X-")
+        (setq taz_s_daz_pt_end
+          (list (- taz_s_daz_ax taz_s_axis_overhang) taz_s_daz_ay taz_s_daz_z))
+      )
+      ((= taz_s_daz_dir "Y-")
+        (setq taz_s_daz_pt_end
+          (list taz_s_daz_ax (- taz_s_daz_ay taz_s_axis_overhang) taz_s_daz_z))
+      )
+    )
+
+    ;; linia pozioma w płaszczyźnie XY
+    (command "_LINE" taz_s_daz_pt_start taz_s_daz_pt_end "")
+
+    ;; kółko i tekst na końcu linii (w tej samej płaszczyźnie XY)
+    (command "_CIRCLE" taz_s_daz_pt_end taz_s_axis_circle_r)
+    (command "_TEXT" "_J" "MC"
+      taz_s_daz_pt_end taz_s_axis_text_h 0 taz_s_daz_name)
+
+    ;; zbierz wszystkie nowe encje
+    (setq taz_s_daz_ax_ss (ssadd))
+    (if taz_s_daz_e_before
+      (setq taz_s_daz_e_cur (entnext taz_s_daz_e_before))
+      (setq taz_s_daz_e_cur (entnext))
+    )
+    (while taz_s_daz_e_cur
+      (ssadd taz_s_daz_e_cur taz_s_daz_ax_ss)
+      (setq taz_s_daz_e_cur (entnext taz_s_daz_e_cur))
+    )
+    taz_s_daz_ax_ss
   )
 
   ;; ---------------------------------
@@ -313,15 +353,12 @@
     (setq taz_s_p2 (list taz_s_xmax taz_s_y taz_s_zmin))
     (setq taz_s_p3 (list taz_s_xmax taz_s_y taz_s_zmax))
     (setq taz_s_p4 (list taz_s_xmin taz_s_y taz_s_zmax))
-
     (setq taz_s_center (taz_s_center_point taz_s_p1 taz_s_p3))
 
-    ;; PROSTOKĄT
     (setvar "CLAYER" "taz_s_execution_design")
     (command "3DPOLY" taz_s_p1 taz_s_p2 taz_s_p3 taz_s_p4 taz_s_p1 "")
     (setq taz_s_rect_ss (ssget "_L"))
 
-    ;; SECTION
     (setvar "CLAYER" "taz_s_sections_temp")
     (command "SECTION" taz_s_model_ss "" "_3points" taz_s_p1 taz_s_p2 taz_s_p3)
     (setq taz_s_section_ss (ssget "X" '((8 . "taz_s_sections_temp"))))
@@ -339,10 +376,8 @@
       (setq taz_s_one_axis_ss
         (taz_s_draw_axis
           taz_s_ax_x taz_s_y
-          taz_s_zmax
-          (- taz_s_zmin taz_s_axis_overhang)
-          taz_s_ax_name
-          "X"
+          taz_s_zmax (- taz_s_zmin taz_s_axis_overhang)
+          taz_s_ax_name "X"
         )
       )
       (setq taz_s_k 0)
@@ -353,7 +388,6 @@
       (setq taz_s_xtmp (cdr taz_s_xtmp))
     )
 
-    ;; ROTATE WZGLĘDEM ŚRODKA
     (if taz_s_rect_ss
       (command "ROTATE3D" taz_s_rect_ss "" "_X" taz_s_center "90")
     )
@@ -364,18 +398,12 @@
       (command "ROTATE3D" taz_s_axis_ss_list "" "_X" taz_s_center "90")
     )
 
-    ;; TYTUŁ PRZED MOVE
     (setq taz_s_title_pt
-      (list
-        (car taz_s_center)
-        (+ (cadr taz_s_center) 10000.0)
-        (caddr taz_s_center)
-      )
+      (list (car taz_s_center) (+ (cadr taz_s_center) 10000.0) (caddr taz_s_center))
     )
     (setvar "CLAYER" "taz_s_execution_design")
     (command "TEXT" "_J" "MC" taz_s_title_pt 700.0 0 (strcat "SECTION " taz_s_name))
 
-    ;; MOVE Z BAZĄ W ŚRODKU
     (if taz_s_rect_ss
       (command "MOVE" taz_s_rect_ss "" taz_s_center (list taz_s_layout_x 0 0))
     )
@@ -387,14 +415,11 @@
     )
     (command "MOVE" (entlast) "" taz_s_center (list taz_s_layout_x 0 0))
 
-    ;; WARSTWA DOCELOWA dla sekcji
     (if taz_s_section_ss
       (command "CHPROP" taz_s_section_ss "" "_LA" "taz_s_sections" "")
     )
 
-    ;; NEXT POSITION
     (setq taz_s_layout_x (+ taz_s_layout_x taz_s_layout_step))
-
     (setq taz_s_tmp (cdr taz_s_tmp))
   )
 
@@ -416,15 +441,12 @@
     (setq taz_s_p2 (list taz_s_x taz_s_ymax taz_s_zmin))
     (setq taz_s_p3 (list taz_s_x taz_s_ymax taz_s_zmax))
     (setq taz_s_p4 (list taz_s_x taz_s_ymin taz_s_zmax))
-
     (setq taz_s_center (taz_s_center_point taz_s_p1 taz_s_p3))
 
-    ;; PROSTOKĄT
     (setvar "CLAYER" "taz_s_execution_design")
     (command "3DPOLY" taz_s_p1 taz_s_p2 taz_s_p3 taz_s_p4 taz_s_p1 "")
     (setq taz_s_rect_ss (ssget "_L"))
 
-    ;; SECTION
     (setvar "CLAYER" "taz_s_sections_temp")
     (command "SECTION" taz_s_model_ss "" "_3points" taz_s_p1 taz_s_p2 taz_s_p3)
     (setq taz_s_section_ss (ssget "X" '((8 . "taz_s_sections_temp"))))
@@ -442,10 +464,8 @@
       (setq taz_s_one_axis_ss
         (taz_s_draw_axis
           taz_s_x taz_s_ax_y
-          taz_s_zmax
-          (- taz_s_zmin taz_s_axis_overhang)
-          taz_s_ax_name
-          "Y"
+          taz_s_zmax (- taz_s_zmin taz_s_axis_overhang)
+          taz_s_ax_name "Y"
         )
       )
       (setq taz_s_k 0)
@@ -456,7 +476,6 @@
       (setq taz_s_xtmp (cdr taz_s_xtmp))
     )
 
-    ;; ROTATE
     (if taz_s_rect_ss
       (command "ROTATE3D" taz_s_rect_ss "" "_Y" taz_s_center "-90")
     )
@@ -467,18 +486,12 @@
       (command "ROTATE3D" taz_s_axis_ss_list "" "_Y" taz_s_center "-90")
     )
 
-    ;; TYTUŁ
     (setq taz_s_title_pt
-      (list
-        (car taz_s_center)
-        (+ (cadr taz_s_center) 10000.0)
-        (caddr taz_s_center)
-      )
+      (list (car taz_s_center) (+ (cadr taz_s_center) 10000.0) (caddr taz_s_center))
     )
     (setvar "CLAYER" "taz_s_execution_design")
     (command "TEXT" "_J" "MC" taz_s_title_pt 700.0 0 (strcat "SECTION " taz_s_name))
 
-    ;; MOVE
     (if taz_s_rect_ss
       (command "MOVE" taz_s_rect_ss "" taz_s_center (list taz_s_layout_x 0 0))
     )
@@ -490,19 +503,21 @@
     )
     (command "MOVE" (entlast) "" taz_s_center (list taz_s_layout_x 0 0))
 
-    ;; WARSTWA DOCELOWA
     (if taz_s_section_ss
       (command "CHPROP" taz_s_section_ss "" "_LA" "taz_s_sections" "")
     )
 
-    ;; NEXT POSITION
     (setq taz_s_layout_x (+ taz_s_layout_x taz_s_layout_step))
-
     (setq taz_s_tmp (cdr taz_s_tmp))
   )
 
   ;; =========================================================
   ;; Z  (przekroje poziome — płaszczyzna Z=const)
+  ;;
+  ;; Oznaczenia osi leżą w płaszczyźnie XY przekroju:
+  ;;   - osie z x_data: linia wystawia w kierunku -X od krawędzi xmin
+  ;;   - osie z y_data: linia wystawia w kierunku -Y od krawędzi ymin
+  ;; Brak ROTATE3D — wszystko już w dobrej płaszczyźnie.
   ;; =========================================================
 
   (setq taz_s_tmp taz_s_z_data)
@@ -519,24 +534,22 @@
     (setq taz_s_p2 (list taz_s_xmax taz_s_ymin taz_s_z))
     (setq taz_s_p3 (list taz_s_xmax taz_s_ymax taz_s_z))
     (setq taz_s_p4 (list taz_s_xmin taz_s_ymax taz_s_z))
-
     (setq taz_s_center (taz_s_center_point taz_s_p1 taz_s_p3))
 
-    ;; PROSTOKĄT
     (setvar "CLAYER" "taz_s_execution_design")
     (command "3DPOLY" taz_s_p1 taz_s_p2 taz_s_p3 taz_s_p4 taz_s_p1 "")
     (setq taz_s_rect_ss (ssget "_L"))
 
-    ;; SECTION
     (setvar "CLAYER" "taz_s_sections_temp")
     (command "SECTION" taz_s_model_ss "" "_3points" taz_s_p1 taz_s_p2 taz_s_p3)
     (setq taz_s_section_ss (ssget "X" '((8 . "taz_s_sections_temp"))))
 
-    ;; OZNACZENIA OSI — przekrój Z → rot ""
+    ;; OZNACZENIA OSI — poziome, w płaszczyźnie XY, bez ROTATE
     (setvar "CLAYER" "taz_s_sections")
     (setq taz_s_axis_ss_list (ssadd))
 
-    ;; Osie z x_data — znaczniki na skraju xmin
+    ;; Osie z x_data — linia wystawia w -X od krawędzi xmin
+    ;; Punkt startowy: (xmin, pozycja_Y_osi, z)
     (setq taz_s_xtmp taz_s_x_data)
     (while taz_s_xtmp
       (setq taz_s_row (car taz_s_xtmp))
@@ -545,12 +558,10 @@
       (setq taz_s_ax_name taz_s_res)
       (setq taz_s_ax_y taz_s_val)
       (setq taz_s_one_axis_ss
-        (taz_s_draw_axis
-          taz_s_xmin taz_s_ax_y
-          taz_s_z
-          (- taz_s_z taz_s_axis_overhang)
+        (taz_s_draw_axis_z
+          taz_s_xmin taz_s_ax_y taz_s_z
+          "X-"
           taz_s_ax_name
-          ""
         )
       )
       (setq taz_s_k 0)
@@ -561,7 +572,8 @@
       (setq taz_s_xtmp (cdr taz_s_xtmp))
     )
 
-    ;; Osie z y_data — znaczniki na skraju ymin
+    ;; Osie z y_data — linia wystawia w -Y od krawędzi ymin
+    ;; Punkt startowy: (pozycja_X_osi, ymin, z)
     (setq taz_s_xtmp taz_s_y_data)
     (while taz_s_xtmp
       (setq taz_s_row (car taz_s_xtmp))
@@ -570,12 +582,10 @@
       (setq taz_s_ax_name taz_s_res)
       (setq taz_s_ax_x taz_s_val)
       (setq taz_s_one_axis_ss
-        (taz_s_draw_axis
-          taz_s_ax_x taz_s_ymin
-          taz_s_z
-          (- taz_s_z taz_s_axis_overhang)
+        (taz_s_draw_axis_z
+          taz_s_ax_x taz_s_ymin taz_s_z
+          "Y-"
           taz_s_ax_name
-          ""
         )
       )
       (setq taz_s_k 0)
@@ -588,18 +598,12 @@
 
     ;; Z NIE MA ROTATE
 
-    ;; TYTUŁ
     (setq taz_s_title_pt
-      (list
-        (car taz_s_center)
-        (+ (cadr taz_s_center) 10000.0)
-        (caddr taz_s_center)
-      )
+      (list (car taz_s_center) (+ (cadr taz_s_center) 10000.0) (caddr taz_s_center))
     )
     (setvar "CLAYER" "taz_s_execution_design")
     (command "TEXT" "_J" "MC" taz_s_title_pt 700.0 0 (strcat "SECTION " taz_s_name))
 
-    ;; MOVE
     (if taz_s_rect_ss
       (command "MOVE" taz_s_rect_ss "" taz_s_center (list taz_s_layout_x 0 0))
     )
@@ -611,14 +615,11 @@
     )
     (command "MOVE" (entlast) "" taz_s_center (list taz_s_layout_x 0 0))
 
-    ;; WARSTWA DOCELOWA
     (if taz_s_section_ss
       (command "CHPROP" taz_s_section_ss "" "_LA" "taz_s_sections" "")
     )
 
-    ;; NEXT POSITION
     (setq taz_s_layout_x (+ taz_s_layout_x taz_s_layout_step))
-
     (setq taz_s_tmp (cdr taz_s_tmp))
   )
 
