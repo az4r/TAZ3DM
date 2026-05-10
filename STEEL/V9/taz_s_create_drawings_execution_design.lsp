@@ -68,6 +68,18 @@
   )
 
   ;; ---------------------------------
+  ;; FUNKCJA ŚRODKA PROSTOKĄTA
+  ;; ---------------------------------
+
+  (defun taz_s_center_point (taz_s_p1 taz_s_p3)
+    (list
+      (/ (+ (car taz_s_p1) (car taz_s_p3)) 2.0)
+      (/ (+ (cadr taz_s_p1) (cadr taz_s_p3)) 2.0)
+      (/ (+ (caddr taz_s_p1) (caddr taz_s_p3)) 2.0)
+    )
+  )
+
+  ;; ---------------------------------
   ;; X VALUES
   ;; ---------------------------------
 
@@ -142,8 +154,8 @@
   ;; CZYSZCZENIE WARSTW
   ;; ---------------------------------
 
-  (foreach lay '("taz_s_execution_design" "taz_s_sections" "taz_s_sections_temp")
-    (setq taz_s_ss (ssget "X" (list (cons 8 lay))))
+  (foreach taz_s_lay '("taz_s_execution_design" "taz_s_sections" "taz_s_sections_temp")
+    (setq taz_s_ss (ssget "X" (list (cons 8 taz_s_lay))))
     (if taz_s_ss (command "ERASE" taz_s_ss ""))
   )
 
@@ -171,34 +183,33 @@
     (setq taz_s_p3 (list taz_s_xmax taz_s_y taz_s_zmax))
     (setq taz_s_p4 (list taz_s_xmin taz_s_y taz_s_zmax))
 
+    ;; ŚRODEK PROSTOKĄTA
+    (setq taz_s_center (taz_s_center_point taz_s_p1 taz_s_p3))
+
     ;; PROSTOKĄT
     (setvar "CLAYER" "taz_s_execution_design")
     (command "3DPOLY" taz_s_p1 taz_s_p2 taz_s_p3 taz_s_p4 taz_s_p1 "")
-
     (setq taz_s_rect_ss (ssget "_L"))
 
     ;; SECTION
     (setvar "CLAYER" "taz_s_sections_temp")
     (command "SECTION" taz_s_model_ss "" "_3points" taz_s_p1 taz_s_p2 taz_s_p3)
-
     (setq taz_s_section_ss (ssget "X" '((8 . "taz_s_sections_temp"))))
 
-    ;; ROTATE FIRST
+    ;; ROTATE WZGLĘDEM ŚRODKA
     (if taz_s_rect_ss
-      (command "ROTATE3D" taz_s_rect_ss "" "_X" '(0 0 0) "90")
+      (command "ROTATE3D" taz_s_rect_ss "" "_X" taz_s_center "90")
     )
-
     (if taz_s_section_ss
-      (command "ROTATE3D" taz_s_section_ss "" "_X" '(0 0 0) "90")
+      (command "ROTATE3D" taz_s_section_ss "" "_X" taz_s_center "90")
     )
 
-    ;; MOVE AFTER ROTATE
+    ;; MOVE Z BAZĄ W ŚRODKU
     (if taz_s_rect_ss
-      (command "MOVE" taz_s_rect_ss "" '(0 0 0) (list taz_s_layout_x 0 0))
+      (command "MOVE" taz_s_rect_ss "" taz_s_center (list taz_s_layout_x 0 0))
     )
-
     (if taz_s_section_ss
-      (command "MOVE" taz_s_section_ss "" '(0 0 0) (list taz_s_layout_x 0 0))
+      (command "MOVE" taz_s_section_ss "" taz_s_center (list taz_s_layout_x 0 0))
     )
 
     ;; WARSTWA DOCELOWA
@@ -230,34 +241,33 @@
     (setq taz_s_p3 (list taz_s_x taz_s_ymax taz_s_zmax))
     (setq taz_s_p4 (list taz_s_x taz_s_ymin taz_s_zmax))
 
+    ;; ŚRODEK PROSTOKĄTA
+    (setq taz_s_center (taz_s_center_point taz_s_p1 taz_s_p3))
+
     ;; PROSTOKĄT
     (setvar "CLAYER" "taz_s_execution_design")
     (command "3DPOLY" taz_s_p1 taz_s_p2 taz_s_p3 taz_s_p4 taz_s_p1 "")
-
     (setq taz_s_rect_ss (ssget "_L"))
 
     ;; SECTION
     (setvar "CLAYER" "taz_s_sections_temp")
     (command "SECTION" taz_s_model_ss "" "_3points" taz_s_p1 taz_s_p2 taz_s_p3)
-
     (setq taz_s_section_ss (ssget "X" '((8 . "taz_s_sections_temp"))))
 
-    ;; ROTATE FIRST
+    ;; ROTATE WZGLĘDEM ŚRODKA
     (if taz_s_rect_ss
-      (command "ROTATE3D" taz_s_rect_ss "" "_Y" '(0 0 0) "-90")
+      (command "ROTATE3D" taz_s_rect_ss "" "_Y" taz_s_center "-90")
     )
-
     (if taz_s_section_ss
-      (command "ROTATE3D" taz_s_section_ss "" "_Y" '(0 0 0) "-90")
+      (command "ROTATE3D" taz_s_section_ss "" "_Y" taz_s_center "-90")
     )
 
-    ;; MOVE AFTER ROTATE
+    ;; MOVE Z BAZĄ W ŚRODKU
     (if taz_s_rect_ss
-      (command "MOVE" taz_s_rect_ss "" '(0 0 0) (list taz_s_layout_x 0 0))
+      (command "MOVE" taz_s_rect_ss "" taz_s_center (list taz_s_layout_x 0 0))
     )
-
     (if taz_s_section_ss
-      (command "MOVE" taz_s_section_ss "" '(0 0 0) (list taz_s_layout_x 0 0))
+      (command "MOVE" taz_s_section_ss "" taz_s_center (list taz_s_layout_x 0 0))
     )
 
     ;; WARSTWA DOCELOWA
@@ -289,26 +299,27 @@
     (setq taz_s_p3 (list taz_s_xmax taz_s_ymax taz_s_z))
     (setq taz_s_p4 (list taz_s_xmin taz_s_ymax taz_s_z))
 
+    ;; ŚRODEK PROSTOKĄTA
+    (setq taz_s_center (taz_s_center_point taz_s_p1 taz_s_p3))
+
     ;; PROSTOKĄT
     (setvar "CLAYER" "taz_s_execution_design")
     (command "3DPOLY" taz_s_p1 taz_s_p2 taz_s_p3 taz_s_p4 taz_s_p1 "")
-
     (setq taz_s_rect_ss (ssget "_L"))
 
     ;; SECTION
     (setvar "CLAYER" "taz_s_sections_temp")
     (command "SECTION" taz_s_model_ss "" "_3points" taz_s_p1 taz_s_p2 taz_s_p3)
-
     (setq taz_s_section_ss (ssget "X" '((8 . "taz_s_sections_temp"))))
 
-    ;; ROTATE FIRST (Z has no rotation)
-    ;; MOVE AFTER ROTATE
-    (if taz_s_rect_ss
-      (command "MOVE" taz_s_rect_ss "" '(0 0 0) (list taz_s_layout_x 0 0))
-    )
+    ;; Z NIE MA ROTATE
 
+    ;; MOVE Z BAZĄ W ŚRODKU
+    (if taz_s_rect_ss
+      (command "MOVE" taz_s_rect_ss "" taz_s_center (list taz_s_layout_x 0 0))
+    )
     (if taz_s_section_ss
-      (command "MOVE" taz_s_section_ss "" '(0 0 0) (list taz_s_layout_x 0 0))
+      (command "MOVE" taz_s_section_ss "" taz_s_center (list taz_s_layout_x 0 0))
     )
 
     ;; WARSTWA DOCELOWA
