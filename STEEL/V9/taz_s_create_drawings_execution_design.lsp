@@ -1,11 +1,41 @@
 (defun c:taz_s_create_drawings_execution_design ()
-
+  
   ;; ---------------------------------
-  ;; UCS WORLD
+  ;; WIDOK TYMCZASOWY - ZAPIS / NADPISANIE
   ;; ---------------------------------
+  (command "-VIEW" "_S" "taz_s_temp_view")
 
-  (command "_UCS" "_W")
+  ;; ---------------------------------------------------------
+  ;; UCS TYMCZASOWY - ZAPIS / NADPISANIE
+  ;; ---------------------------------------------------------
 
+  (setq taz_s_ucs_exist (tblsearch "UCS" "taz_s_ucs_temp"))
+
+  (if taz_s_ucs_exist
+    (progn
+      (command "_.UCS" "_NA" "_S" "taz_s_ucs_temp2")
+      (command "_.UCS" "_NA" "_R" "taz_s_ucs_temp2")
+      (command "_.UCS" "_NA" "_D" "taz_s_ucs_temp")
+      (command "_.UCS" "_NA" "_S" "taz_s_ucs_temp")
+      (command "_.UCS" "_NA" "_R" "taz_s_ucs_temp")
+      (command "_.UCS" "_NA" "_D" "taz_s_ucs_temp2")
+    )
+    (command "_.UCS" "_NA" "_S" "taz_s_ucs_temp")
+  )
+
+  (command "_.UCS" "_W")
+    
+  ;; ---------------------------------------------------------
+  ;; ZOOM
+  ;; ---------------------------------------------------------
+  
+  (command "_LINE" '(-50 -50 0) '(50 50 0) "")
+  (command "_PLAN" "_C")
+  (command "_ZOOM" "_OBJECT" (entlast) "")
+  (entdel (entlast))
+  (command "_ZOOM" "_SCALE" "1000X")
+  (command "REGEN")
+  
   ;; ---------------------------------
   ;; OFFSET START
   ;; ---------------------------------
@@ -333,5 +363,21 @@
     (setq taz_s_tmp (cdr taz_s_tmp))
   )
 
+  ;; ---------------------------------------------------------
+  ;; PRZYWRÓCENIE POPRZEDNIEGO UCS
+  ;; ---------------------------------------------------------
+  
+  (if taz_s_ucs_exist
+    (command "_.UCS" "_NA" "_R" "taz_s_ucs_temp")
+    (princ)
+  )
+  
+  ;; ---------------------------------------------------------
+  ;; PRZYWRÓCENIE POPRZEDNIEGO UCS
+  ;; ---------------------------------------------------------
+  
+  (command "-VIEW" "_R" "taz_s_temp_view")
+  (command "-VIEW" "_D" "taz_s_temp_view")
+  
   (princ)
 )
