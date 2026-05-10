@@ -7,6 +7,24 @@
   (command "_UCS" "_W")
 
   ;; ---------------------------------
+  ;; OFFSET START
+  ;; ---------------------------------
+
+  (setq taz_s_layout_start 100000.0)
+
+  ;; ---------------------------------
+  ;; OFFSET KOLEJNYCH
+  ;; ---------------------------------
+
+  (setq taz_s_layout_step 2000.0)
+
+  ;; ---------------------------------
+  ;; AKTUALNA POZYCJA RZUTNI
+  ;; ---------------------------------
+
+  (setq taz_s_layout_x taz_s_layout_start)
+
+  ;; ---------------------------------
   ;; WCZYTANIE DANYCH
   ;; ---------------------------------
 
@@ -215,7 +233,16 @@
   )
 
   ;; ---------------------------------
-  ;; CZYSZCZENIE WARSTWY PROSTOKĄTÓW
+  ;; WARSTWA SECTION TEMP
+  ;; ---------------------------------
+
+  (if
+    (not (tblsearch "LAYER" "taz_s_sections_temp"))
+    (command "_LAYER" "_M" "taz_s_sections_temp" "_C" "3" "" "")
+  )
+
+  ;; ---------------------------------
+  ;; CZYSZCZENIE WARSTW
   ;; ---------------------------------
 
   (setq taz_s_ss
@@ -226,12 +253,16 @@
     (command "ERASE" taz_s_ss "")
   )
 
-  ;; ---------------------------------
-  ;; CZYSZCZENIE WARSTWY SECTION
-  ;; ---------------------------------
-
   (setq taz_s_ss
     (ssget "X" '((8 . "taz_s_sections")))
+  )
+
+  (if taz_s_ss
+    (command "ERASE" taz_s_ss "")
+  )
+
+  (setq taz_s_ss
+    (ssget "X" '((8 . "taz_s_sections_temp")))
   )
 
   (if taz_s_ss
@@ -244,9 +275,9 @@
 
   (setq taz_s_model_ss (ssget "X"))
 
-  ;; ---------------------------------
-  ;; PROSTOKĄTY X
-  ;; ---------------------------------
+  ;; =========================================================
+  ;; X
+  ;; =========================================================
 
   (setq taz_s_tmp taz_s_x_data)
 
@@ -256,17 +287,19 @@
 
     (taz_s_get_dist)
 
-    ;; pozycja Y osi
     (setq taz_s_y taz_s_val)
 
-    ;; punkty prostokąta
+    ;; ---------------------------------
+    ;; PUNKTY
+    ;; ---------------------------------
+
     (setq taz_s_p1 (list taz_s_xmin taz_s_y taz_s_zmin))
     (setq taz_s_p2 (list taz_s_xmax taz_s_y taz_s_zmin))
     (setq taz_s_p3 (list taz_s_xmax taz_s_y taz_s_zmax))
     (setq taz_s_p4 (list taz_s_xmin taz_s_y taz_s_zmax))
 
     ;; ---------------------------------
-    ;; RYSOWANIE PROSTOKĄTA
+    ;; PROSTOKĄT
     ;; ---------------------------------
 
     (setvar "CLAYER" "taz_s_execution_design")
@@ -282,10 +315,18 @@
     )
 
     ;; ---------------------------------
-    ;; SECTION
+    ;; ŁAPANIE PROSTOKĄTA
     ;; ---------------------------------
 
-    (setvar "CLAYER" "taz_s_sections")
+    (setq taz_s_rect_ss
+      (ssget "_L")
+    )
+
+    ;; ---------------------------------
+    ;; SECTION TEMP
+    ;; ---------------------------------
+
+    (setvar "CLAYER" "taz_s_sections_temp")
 
     (command
       "SECTION"
@@ -297,116 +338,85 @@
       taz_s_p3
     )
 
-    (setq taz_s_tmp (cdr taz_s_tmp))
-  )
-
-  ;; ---------------------------------
-  ;; PROSTOKĄTY Y
-  ;; ---------------------------------
-
-  (setq taz_s_tmp taz_s_y_data)
-
-  (while taz_s_tmp
-
-    (setq taz_s_row (car taz_s_tmp))
-
-    (taz_s_get_dist)
-
-    ;; pozycja X osi
-    (setq taz_s_x taz_s_val)
-
-    ;; punkty prostokąta
-    (setq taz_s_p1 (list taz_s_x taz_s_ymin taz_s_zmin))
-    (setq taz_s_p2 (list taz_s_x taz_s_ymax taz_s_zmin))
-    (setq taz_s_p3 (list taz_s_x taz_s_ymax taz_s_zmax))
-    (setq taz_s_p4 (list taz_s_x taz_s_ymin taz_s_zmax))
-
     ;; ---------------------------------
-    ;; RYSOWANIE PROSTOKĄTA
+    ;; ŁAPANIE SECTION
     ;; ---------------------------------
 
-    (setvar "CLAYER" "taz_s_execution_design")
-
-    (command
-      "3DPOLY"
-      taz_s_p1
-      taz_s_p2
-      taz_s_p3
-      taz_s_p4
-      taz_s_p1
-      ""
+    (setq taz_s_section_ss
+      (ssget "X" '((8 . "taz_s_sections_temp")))
     )
 
     ;; ---------------------------------
-    ;; SECTION
+    ;; ROTATE 3D
     ;; ---------------------------------
 
-    (setvar "CLAYER" "taz_s_sections")
-
-    (command
-      "SECTION"
-      taz_s_model_ss
-      ""
-      "_3points"
-      taz_s_p1
-      taz_s_p2
-      taz_s_p3
+    (if taz_s_rect_ss
+      (command
+        "ROTATE3D"
+        taz_s_rect_ss
+        ""
+        "_X"
+        '(0 0 0)
+        "90"
+      )
     )
 
-    (setq taz_s_tmp (cdr taz_s_tmp))
-  )
-
-  ;; ---------------------------------
-  ;; PROSTOKĄTY Z
-  ;; ---------------------------------
-
-  (setq taz_s_tmp taz_s_z_data)
-
-  (while taz_s_tmp
-
-    (setq taz_s_row (car taz_s_tmp))
-
-    (taz_s_get_dist)
-
-    ;; wysokość Z
-    (setq taz_s_z taz_s_val)
-
-    ;; punkty prostokąta
-    (setq taz_s_p1 (list taz_s_xmin taz_s_ymin taz_s_z))
-    (setq taz_s_p2 (list taz_s_xmax taz_s_ymin taz_s_z))
-    (setq taz_s_p3 (list taz_s_xmax taz_s_ymax taz_s_z))
-    (setq taz_s_p4 (list taz_s_xmin taz_s_ymax taz_s_z))
-
-    ;; ---------------------------------
-    ;; RYSOWANIE PROSTOKĄTA
-    ;; ---------------------------------
-
-    (setvar "CLAYER" "taz_s_execution_design")
-
-    (command
-      "3DPOLY"
-      taz_s_p1
-      taz_s_p2
-      taz_s_p3
-      taz_s_p4
-      taz_s_p1
-      ""
+    (if taz_s_section_ss
+      (command
+        "ROTATE3D"
+        taz_s_section_ss
+        ""
+        "_X"
+        '(0 0 0)
+        "90"
+      )
     )
 
     ;; ---------------------------------
-    ;; SECTION
+    ;; MOVE
     ;; ---------------------------------
 
-    (setvar "CLAYER" "taz_s_sections")
+    (if taz_s_rect_ss
+      (command
+        "MOVE"
+        taz_s_rect_ss
+        ""
+        '(0 0 0)
+        (list taz_s_layout_x 0 0)
+      )
+    )
 
-    (command
-      "SECTION"
-      taz_s_model_ss
-      ""
-      "_3points"
-      taz_s_p1
-      taz_s_p2
-      taz_s_p3
+    (if taz_s_section_ss
+      (command
+        "MOVE"
+        taz_s_section_ss
+        ""
+        '(0 0 0)
+        (list taz_s_layout_x 0 0)
+      )
+    )
+
+    ;; ---------------------------------
+    ;; WARSTWA DOCELOWA
+    ;; ---------------------------------
+
+    (if taz_s_section_ss
+      (command
+        "CHPROP"
+        taz_s_section_ss
+        ""
+        "_LA"
+        "taz_s_sections"
+        ""
+      )
+    )
+
+    ;; ---------------------------------
+    ;; KOLEJNA POZYCJA
+    ;; ---------------------------------
+
+    (setq taz_s_layout_x
+      (+ taz_s_layout_x taz_s_layout_step)
     )
 
     (setq taz_s_tmp (cdr taz_s_tmp))
