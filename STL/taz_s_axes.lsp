@@ -52,7 +52,8 @@
 
   ;; ---------------------------
   ;; XDATA: ZAPIS DO RYSUNKU
-  ;; Dane są zapisywane jako XDATA na punkt pomocniczy (0,0,0) na warstwie taz_s_axes
+  ;; Punkt pomocniczy (0,0,0) leży na warstwie taz_s_data
+  ;; (warstwa tworzona przez taz_s_start.lsp)
   ;; ---------------------------
   (defun taz_s_save_xdata ()
 
@@ -60,21 +61,25 @@
       (regapp "TAZ_S_AXES_DATA")
     )
 
-    (if (not (tblsearch "LAYER" "taz_s_axes"))
-      (command "_layer" "_M" "taz_s_axes" "_C" "109" "" "")
+    ;; warstwa taz_s_data powinna już istnieć (taz_s_start.lsp)
+    ;; ale dla pewności tworzymy ją jeśli jej nie ma
+    (if (not (tblsearch "LAYER" "taz_s_data"))
+      (command "_layer" "_M" "taz_s_data" "_C" "145" "" "")
     )
 
+    ;; szukamy punktu pomocniczego na warstwie taz_s_data
     (setq taz_s_xd_ent nil)
-    (setq taz_s_xd_ss (ssget "X" '((8 . "taz_s_axes") (0 . "POINT"))))
+    (setq taz_s_xd_ss (ssget "X" '((8 . "taz_s_data") (0 . "POINT"))))
     (if taz_s_xd_ss
       (setq taz_s_xd_ent (ssname taz_s_xd_ss 0))
     )
 
+    ;; jeśli punkt nie istnieje – tworzymy go na warstwie taz_s_data
     (if (not taz_s_xd_ent)
       (progn
         (setq taz_s_prev_layer (getvar "CLAYER"))
-        (setvar "CLAYER" "taz_s_axes")
-        (entmake (list '(0 . "POINT") '(10 0.0 0.0 0.0) '(8 . "taz_s_axes")))
+        (setvar "CLAYER" "taz_s_data")
+        (entmake (list '(0 . "POINT") '(10 0.0 0.0 0.0) '(8 . "taz_s_data")))
         (setq taz_s_xd_ent (entlast))
         (setvar "CLAYER" taz_s_prev_layer)
       )
@@ -114,13 +119,15 @@
 
   ;; ---------------------------
   ;; XDATA: ODCZYT Z RYSUNKU
+  ;; Szuka punktu pomocniczego na warstwie taz_s_data
   ;; ---------------------------
   (defun taz_s_load_xdata ()
     (setq taz_s_x_data '())
     (setq taz_s_y_data '())
     (setq taz_s_z_data '())
 
-    (setq taz_s_xd_ss (ssget "X" '((8 . "taz_s_axes") (0 . "POINT"))))
+    ;; szukamy punktu na warstwie taz_s_data
+    (setq taz_s_xd_ss (ssget "X" '((8 . "taz_s_data") (0 . "POINT"))))
     (if taz_s_xd_ss
       (progn
         (setq taz_s_xd_ent (ssname taz_s_xd_ss 0))
@@ -276,6 +283,7 @@
 
   ;; ---------------------------
   ;; WARSTWA + CZYSZCZENIE
+  ;; (dotyczy wyłącznie warstwy rysunkowej taz_s_axes)
   ;; ---------------------------
   (defun taz_s_prepare_layer ()
     (if (not (tblsearch "LAYER" "taz_s_axes"))

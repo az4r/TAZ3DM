@@ -1,5 +1,10 @@
 (defun taz_s_start()
   
+(if (tblsearch "LAYER" "taz_s_data")
+  (princ)
+  (command "_layer" "_M" "taz_s_data" "_C" "145" "" "")
+)
+  
 (if (tblsearch "LAYER" "taz_s_beam")
   (princ)
   (command "_layer" "_M" "taz_s_beam" "_C" "145" "" "")
