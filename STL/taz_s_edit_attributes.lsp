@@ -32,7 +32,21 @@
 (defun c:taz_s_edit_attributes()
   
   ;; ---------------------------------------------------------
-  ;; SELEKCJA OBIEKTÓW
+  ;; SCIEZKA DO PLIKU DANYCH
+  ;; ---------------------------------------------------------
+
+  (setq taz_s_dwg_path (getvar "DWGPREFIX"))
+  (setq taz_s_data_file (strcat taz_s_dwg_path (substr (getvar "DWGNAME") 1 (- (strlen (getvar "DWGNAME")) 4)) "/" "taz_s_beam_data.txt"))
+
+  ;; ---------------------------------------------------------
+  ;; WCZYTANIE DANYCH Z PLIKU TXT DO ZMIENNYCH GLOBALNYCH
+  ;; Plik zawiera gotowe (setq ...) wiec load wystarczy
+  ;; ---------------------------------------------------------
+
+  (load taz_s_data_file)
+
+  ;; ---------------------------------------------------------
+  ;; SELEKCJA OBIEKTOW
   ;; ---------------------------------------------------------
 
   (setq taz_s_attribs_selection (ssget "_I"))
@@ -53,7 +67,7 @@
   (new_dialog "taz_s_edit_attributes_dialog" taz_s_dcl_id)
   
   ;; ---------------------------------------------------------
-  ;; Ustawienie wartości w polach
+  ;; Ustawienie wartosci w polach
   ;; ---------------------------------------------------------
 
   (setq taz_s_attr_name "attr1")
@@ -87,7 +101,7 @@
   (set_tile "taz_s_attr10" (taz_s_get_common_value))
 
   ;; ---------------------------------------------------------
-  ;; Zapis wartości po kliknięciu OK
+  ;; Zapis wartosci po kliknieciu OK
   ;; ---------------------------------------------------------
 
   (action_tile
@@ -193,5 +207,37 @@
 
   (start_dialog)
   (unload_dialog taz_s_dcl_id)
+
+  ;; ---------------------------------------------------------
+  ;; ZAPIS ZMIENNYCH GLOBALNYCH Z POWROTEM DO PLIKU TXT
+  ;; Robimy to po zamknieciu dialogu - tylko jesli kliknieto OK
+  ;; Wczytujemy wszystkie uchwyty z selekcji i zapisujemy ich atrybuty
+  ;; ---------------------------------------------------------
+
+  (setq taz_s_f_beam_data (open taz_s_data_file "w"))
+
+  (setq taz_s_attribs_count_index 0)
+  (while (< taz_s_attribs_count_index taz_s_attribs_count)
+
+    (setq taz_s_attribs_object (ssname taz_s_attribs_selection taz_s_attribs_count_index))
+    (setq taz_s_attribs_object_name (cdr (assoc 5 (entget taz_s_attribs_object))))
+
+    (write-line (strcat "(setq taz_s_" taz_s_attribs_object_name "_attr1 \"" (eval (read (strcat "taz_s_" taz_s_attribs_object_name "_attr1"))) "\")") taz_s_f_beam_data)
+    (write-line (strcat "(setq taz_s_" taz_s_attribs_object_name "_attr2 \"" (eval (read (strcat "taz_s_" taz_s_attribs_object_name "_attr2"))) "\")") taz_s_f_beam_data)
+    (write-line (strcat "(setq taz_s_" taz_s_attribs_object_name "_attr3 \"" (eval (read (strcat "taz_s_" taz_s_attribs_object_name "_attr3"))) "\")") taz_s_f_beam_data)
+    (write-line (strcat "(setq taz_s_" taz_s_attribs_object_name "_attr4 \"" (eval (read (strcat "taz_s_" taz_s_attribs_object_name "_attr4"))) "\")") taz_s_f_beam_data)
+    (write-line (strcat "(setq taz_s_" taz_s_attribs_object_name "_attr5 \"" (eval (read (strcat "taz_s_" taz_s_attribs_object_name "_attr5"))) "\")") taz_s_f_beam_data)
+    (write-line (strcat "(setq taz_s_" taz_s_attribs_object_name "_attr6 \"" (eval (read (strcat "taz_s_" taz_s_attribs_object_name "_attr6"))) "\")") taz_s_f_beam_data)
+    (write-line (strcat "(setq taz_s_" taz_s_attribs_object_name "_attr7 \"" (eval (read (strcat "taz_s_" taz_s_attribs_object_name "_attr7"))) "\")") taz_s_f_beam_data)
+    (write-line (strcat "(setq taz_s_" taz_s_attribs_object_name "_attr8 \"" (eval (read (strcat "taz_s_" taz_s_attribs_object_name "_attr8"))) "\")") taz_s_f_beam_data)
+    (write-line (strcat "(setq taz_s_" taz_s_attribs_object_name "_attr9 \"" (eval (read (strcat "taz_s_" taz_s_attribs_object_name "_attr9"))) "\")") taz_s_f_beam_data)
+    (write-line (strcat "(setq taz_s_" taz_s_attribs_object_name "_attr10 \"" (eval (read (strcat "taz_s_" taz_s_attribs_object_name "_attr10"))) "\")") taz_s_f_beam_data)
+    (write-line "" taz_s_f_beam_data)
+
+    (setq taz_s_attribs_count_index (1+ taz_s_attribs_count_index))
+  )
+
+  (close taz_s_f_beam_data)
+
   (princ)
 )

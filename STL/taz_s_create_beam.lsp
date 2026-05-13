@@ -409,6 +409,13 @@
   (write-line "" taz_s_f_beam_data)
 
   (close taz_s_f_beam_data)
+  
+  ;; ---------------------------------------------------------
+  ;; WCZYTANIE DANYCH Z PLIKU TXT DO ZMIENNYCH GLOBALNYCH
+  ;; Plik zawiera gotowe (setq ...) wiec load wystarczy
+  ;; ---------------------------------------------------------
+
+  (load taz_s_data_file)
 
   ;; ---------------------------------------------------------
   ;; PRZYWRÓCENIE POPRZEDNIEGO UCS
