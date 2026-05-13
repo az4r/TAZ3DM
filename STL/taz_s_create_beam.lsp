@@ -290,16 +290,6 @@
   ;; USTAWIENIE UCS DO OBIEKTU I OBROTY
   ;; ---------------------------------------------------------
   
-  ;; Jezeli nie jestesmy w trybie edycji to ustaw UCS
-  ;;(if (not taz_s_edit_mode)
-    ;;(progn
-    ;;(command "_.UCS" "_OB" (entlast))
-    ;;(command "_.UCS" "_Y" "90")
-    ;;(command "_.UCS" "_Z" "90")
-    ;;)
-    ;;(princ)
-  ;;)
-  
   (command "_.UCS" "_OB" (entlast))
   (command "_.UCS" "_Y" "90")
   (command "_.UCS" "_Z" "90")
@@ -334,13 +324,11 @@
   ;; WYBÓR I RYSOWANIE PRZEKROJU BELKI
   ;; ---------------------------------------------------------
 
-  ;; Jezeli nie jestesmy w trybie edycji to wybierz przekroj
   (if (not taz_s_edit_mode)
     (taz_s_select_section)
     (princ)
   )
   
-  ;; Funkcja rysująca
   (if (= taz_s_category "Dwuteowniki")
     (taz_s_section_ibeam_draw)
     (princ)
@@ -359,45 +347,12 @@
   )
 
   ;; ---------------------------------------------------------
-  ;; ATRYBUTY – ZAPIS DO ZMIENNYCH GLOBALNYCH
+  ;; POBRANIE HANDLE ELEMENTU
+  ;; Handle to unikalny identyfikator nadawany przez AutoCAD
   ;; ---------------------------------------------------------
 
   (setq taz_s_attribs_object_name
         (cdr (assoc 5 (entget (entlast)))))
-
-  (set (read (strcat "taz_s_" taz_s_attribs_object_name "_attr1"))
-       "")
-
-  (set (read (strcat "taz_s_" taz_s_attribs_object_name "_attr2"))
-       "")
-
-  (set (read (strcat "taz_s_" taz_s_attribs_object_name "_attr3"))
-       "")
-
-  (set (read (strcat "taz_s_" taz_s_attribs_object_name "_attr4"))
-       "")
-
-  (set (read (strcat "taz_s_" taz_s_attribs_object_name "_attr5"))
-       "")
-
-  (set (read (strcat "taz_s_" taz_s_attribs_object_name "_attr6"))
-       taz_s_family)
-
-  (set (read (strcat "taz_s_" taz_s_attribs_object_name "_attr7"))
-       taz_s_type)
-
-  (set (read (strcat "taz_s_" taz_s_attribs_object_name "_attr8"))
-       "")
-
-  (set (read (strcat "taz_s_" taz_s_attribs_object_name "_attr9"))
-       "BELKA")
-
-  (set (read (strcat "taz_s_" taz_s_attribs_object_name "_attr10"))
-       "")
-  
-  (set (read (strcat "taz_s_" taz_s_attribs_object_name "_section_angle")) 0)
-    
-  (set (read (strcat "taz_s_" taz_s_attribs_object_name "_section_position")) 5)
 
   ;; ---------------------------------------------------------
   ;; RESET UCS DO WORLD
@@ -406,20 +361,54 @@
   (command "_.UCS" "_W")
 
   ;; ---------------------------------------------------------
-  ;; ZAPIS PUNKTÓW ŚCIEŻKI DLA EDYCJI
+  ;; ŚCIEŻKA DO PLIKU DANYCH
+  ;; Plik .txt z danymi leży obok rysunku
   ;; ---------------------------------------------------------
 
-  (set (read
-         (strcat "taz_s_create_beam_"
-                 taz_s_attribs_object_name
-                 "_sweep_p1"))
-       taz_s_create_beam_p1)
+  (setq taz_s_dwg_path (getvar "DWGPREFIX"))
+  (setq taz_s_data_file (strcat taz_s_dwg_path (substr (getvar "DWGNAME") 1 (- (strlen (getvar "DWGNAME")) 4)) "/" "taz_s_beam_data.txt"))
 
-  (set (read
-         (strcat "taz_s_create_beam_"
-                 taz_s_attribs_object_name
-                 "_sweep_p2"))
-       taz_s_create_beam_p2)
+  ;; ---------------------------------------------------------
+  ;; ZAPIS DANYCH ELEMENTU DO PLIKU TEKSTOWEGO
+  ;; "a" oznacza dopisywanie na koniec - poprzednie dane nie znikają
+  ;; ---------------------------------------------------------
+
+  (setq taz_s_f (open taz_s_data_file "a"))
+
+  ;; -- atrybuty ogólne --
+  (write-line (strcat "(setq taz_s_" taz_s_attribs_object_name "_attr1 \"\")") taz_s_f)
+  (write-line (strcat "(setq taz_s_" taz_s_attribs_object_name "_attr2 \"\")") taz_s_f)
+  (write-line (strcat "(setq taz_s_" taz_s_attribs_object_name "_attr3 \"\")") taz_s_f)
+  (write-line (strcat "(setq taz_s_" taz_s_attribs_object_name "_attr4 \"\")") taz_s_f)
+  (write-line (strcat "(setq taz_s_" taz_s_attribs_object_name "_attr5 \"\")") taz_s_f)
+  (write-line (strcat "(setq taz_s_" taz_s_attribs_object_name "_attr6 \"" taz_s_family "\")") taz_s_f)
+  (write-line (strcat "(setq taz_s_" taz_s_attribs_object_name "_attr7 \"" taz_s_type "\")") taz_s_f)
+  (write-line (strcat "(setq taz_s_" taz_s_attribs_object_name "_attr8 \"\")") taz_s_f)
+  (write-line (strcat "(setq taz_s_" taz_s_attribs_object_name "_attr9 \"BELKA\")") taz_s_f)
+  (write-line (strcat "(setq taz_s_" taz_s_attribs_object_name "_attr10 \"\")") taz_s_f)
+
+  ;; -- kąt obrotu przekroju (po inicjalizacji zawsze 0) --
+  (write-line (strcat "(setq taz_s_" taz_s_attribs_object_name "_section_angle 0)") taz_s_f)
+
+  ;; -- pozycja przekroju względem osi (po inicjalizacji zawsze 5) --
+  (write-line (strcat "(setq taz_s_" taz_s_attribs_object_name "_section_position 5)") taz_s_f)
+
+  ;; -- punkt początkowy ścieżki sterującej --
+  (setq taz_s_p1x (car taz_s_create_beam_p1))
+  (setq taz_s_p1y (cadr taz_s_create_beam_p1))
+  (setq taz_s_p1z (caddr taz_s_create_beam_p1))
+  (write-line (strcat "(setq taz_s_create_beam_" taz_s_attribs_object_name "_sweep_p1 (list " (rtos taz_s_p1x 2 6) " " (rtos taz_s_p1y 2 6) " " (rtos taz_s_p1z 2 6) "))") taz_s_f)
+
+  ;; -- punkt końcowy ścieżki sterującej --
+  (setq taz_s_p2x (car taz_s_create_beam_p2))
+  (setq taz_s_p2y (cadr taz_s_create_beam_p2))
+  (setq taz_s_p2z (caddr taz_s_create_beam_p2))
+  (write-line (strcat "(setq taz_s_create_beam_" taz_s_attribs_object_name "_sweep_p2 (list " (rtos taz_s_p2x 2 6) " " (rtos taz_s_p2y 2 6) " " (rtos taz_s_p2z 2 6) "))") taz_s_f)
+
+  ;; -- pusty wiersz dla czytelnosci miedzy elementami --
+  (write-line "" taz_s_f)
+
+  (close taz_s_f)
 
   ;; ---------------------------------------------------------
   ;; PRZYWRÓCENIE POPRZEDNIEGO UCS
