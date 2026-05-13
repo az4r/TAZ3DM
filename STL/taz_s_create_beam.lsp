@@ -373,42 +373,42 @@
   ;; "a" oznacza dopisywanie na koniec - poprzednie dane nie znikają
   ;; ---------------------------------------------------------
 
-  (setq taz_s_f (open taz_s_data_file "a"))
+  (setq taz_s_f_beam_data (open taz_s_data_file "a"))
 
   ;; -- atrybuty ogólne --
-  (write-line (strcat "(setq taz_s_" taz_s_attribs_object_name "_attr1 \"\")") taz_s_f)
-  (write-line (strcat "(setq taz_s_" taz_s_attribs_object_name "_attr2 \"\")") taz_s_f)
-  (write-line (strcat "(setq taz_s_" taz_s_attribs_object_name "_attr3 \"\")") taz_s_f)
-  (write-line (strcat "(setq taz_s_" taz_s_attribs_object_name "_attr4 \"\")") taz_s_f)
-  (write-line (strcat "(setq taz_s_" taz_s_attribs_object_name "_attr5 \"\")") taz_s_f)
-  (write-line (strcat "(setq taz_s_" taz_s_attribs_object_name "_attr6 \"" taz_s_family "\")") taz_s_f)
-  (write-line (strcat "(setq taz_s_" taz_s_attribs_object_name "_attr7 \"" taz_s_type "\")") taz_s_f)
-  (write-line (strcat "(setq taz_s_" taz_s_attribs_object_name "_attr8 \"\")") taz_s_f)
-  (write-line (strcat "(setq taz_s_" taz_s_attribs_object_name "_attr9 \"BELKA\")") taz_s_f)
-  (write-line (strcat "(setq taz_s_" taz_s_attribs_object_name "_attr10 \"\")") taz_s_f)
+  (write-line (strcat "(setq taz_s_" taz_s_attribs_object_name "_attr1 \"\")") taz_s_f_beam_data)
+  (write-line (strcat "(setq taz_s_" taz_s_attribs_object_name "_attr2 \"\")") taz_s_f_beam_data)
+  (write-line (strcat "(setq taz_s_" taz_s_attribs_object_name "_attr3 \"\")") taz_s_f_beam_data)
+  (write-line (strcat "(setq taz_s_" taz_s_attribs_object_name "_attr4 \"\")") taz_s_f_beam_data)
+  (write-line (strcat "(setq taz_s_" taz_s_attribs_object_name "_attr5 \"\")") taz_s_f_beam_data)
+  (write-line (strcat "(setq taz_s_" taz_s_attribs_object_name "_attr6 \"" taz_s_family "\")") taz_s_f_beam_data)
+  (write-line (strcat "(setq taz_s_" taz_s_attribs_object_name "_attr7 \"" taz_s_type "\")") taz_s_f_beam_data)
+  (write-line (strcat "(setq taz_s_" taz_s_attribs_object_name "_attr8 \"\")") taz_s_f_beam_data)
+  (write-line (strcat "(setq taz_s_" taz_s_attribs_object_name "_attr9 \"BELKA\")") taz_s_f_beam_data)
+  (write-line (strcat "(setq taz_s_" taz_s_attribs_object_name "_attr10 \"\")") taz_s_f_beam_data)
 
   ;; -- kąt obrotu przekroju (po inicjalizacji zawsze 0) --
-  (write-line (strcat "(setq taz_s_" taz_s_attribs_object_name "_section_angle 0)") taz_s_f)
+  (write-line (strcat "(setq taz_s_" taz_s_attribs_object_name "_section_angle 0)") taz_s_f_beam_data)
 
   ;; -- pozycja przekroju względem osi (po inicjalizacji zawsze 5) --
-  (write-line (strcat "(setq taz_s_" taz_s_attribs_object_name "_section_position 5)") taz_s_f)
+  (write-line (strcat "(setq taz_s_" taz_s_attribs_object_name "_section_position 5)") taz_s_f_beam_data)
 
   ;; -- punkt początkowy ścieżki sterującej --
   (setq taz_s_p1x (car taz_s_create_beam_p1))
   (setq taz_s_p1y (cadr taz_s_create_beam_p1))
   (setq taz_s_p1z (caddr taz_s_create_beam_p1))
-  (write-line (strcat "(setq taz_s_create_beam_" taz_s_attribs_object_name "_sweep_p1 (list " (rtos taz_s_p1x 2 6) " " (rtos taz_s_p1y 2 6) " " (rtos taz_s_p1z 2 6) "))") taz_s_f)
+  (write-line (strcat "(setq taz_s_create_beam_" taz_s_attribs_object_name "_sweep_p1 (list " (rtos taz_s_p1x 2 6) " " (rtos taz_s_p1y 2 6) " " (rtos taz_s_p1z 2 6) "))") taz_s_f_beam_data)
 
   ;; -- punkt końcowy ścieżki sterującej --
   (setq taz_s_p2x (car taz_s_create_beam_p2))
   (setq taz_s_p2y (cadr taz_s_create_beam_p2))
   (setq taz_s_p2z (caddr taz_s_create_beam_p2))
-  (write-line (strcat "(setq taz_s_create_beam_" taz_s_attribs_object_name "_sweep_p2 (list " (rtos taz_s_p2x 2 6) " " (rtos taz_s_p2y 2 6) " " (rtos taz_s_p2z 2 6) "))") taz_s_f)
+  (write-line (strcat "(setq taz_s_create_beam_" taz_s_attribs_object_name "_sweep_p2 (list " (rtos taz_s_p2x 2 6) " " (rtos taz_s_p2y 2 6) " " (rtos taz_s_p2z 2 6) "))") taz_s_f_beam_data)
 
   ;; -- pusty wiersz dla czytelnosci miedzy elementami --
-  (write-line "" taz_s_f)
+  (write-line "" taz_s_f_beam_data)
 
-  (close taz_s_f)
+  (close taz_s_f_beam_data)
 
   ;; ---------------------------------------------------------
   ;; PRZYWRÓCENIE POPRZEDNIEGO UCS
