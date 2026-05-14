@@ -214,7 +214,7 @@
   ;; Wczytujemy wszystkie uchwyty z selekcji i zapisujemy ich atrybuty
   ;; ---------------------------------------------------------
 
-  (setq taz_s_f_beam_data (open taz_s_data_file "w"))
+  (setq taz_s_f_beam_data (open taz_s_data_file "a"))
 
   (setq taz_s_attribs_count_index 0)
   (while (< taz_s_attribs_count_index taz_s_attribs_count)
