@@ -1,16 +1,27 @@
-(defun taz_s_start()
+;; ---------------------------------------------------------
+;; taz_s_path
+;; Zwraca aktualną ścieżkę do katalogu danych projektu.
+;; Zawsze liczy na bieżąco z DWGPREFIX i DWGNAME.
+;; ---------------------------------------------------------
+(defun taz_s_path ()
+  (strcat
+    (getvar "DWGPREFIX")
+    (substr (getvar "DWGNAME") 1 (- (strlen (getvar "DWGNAME")) 4))
+    "/"
+  )
+)
+
+(defun taz_s_start ()
 
   ;; warstwy
   (if (tblsearch "LAYER" "taz_s_beam")
     (princ)
     (command "_layer" "_M" "taz_s_beam" "_C" "145" "" "")
   )
-
   (if (tblsearch "LAYER" "taz_s_plate")
     (princ)
     (command "_layer" "_M" "taz_s_plate" "_C" "30" "" "")
   )
-
   (if (tblsearch "LAYER" "taz_s_axes")
     (princ)
     (command "_layer" "_M" "taz_s_axes" "_C" "109" "" "")
@@ -18,43 +29,60 @@
 
   (command "_layer" "_S" "0" "")
 
-  ;; katalogi
-  (setq taz_s_maindir (strcat (getvar "DWGPREFIX") "TAZ"))
-  (setq taz_s_tmpdir  (strcat (getvar "DWGPREFIX") "TAZ/TMP"))
-  (setq taz_s_dwgname (substr (getvar "DWGNAME") 1 (- (strlen (getvar "DWGNAME")) 4)))
-  (setq taz_s_dwgdir  (strcat taz_s_tmpdir "/" taz_s_dwgname))
-
-  ;; tworzenie katalogów
-  (if (vl-file-directory-p taz_s_maindir)
-    (princ)
-    (vl-mkdir taz_s_maindir)
-  )
-
-  (if (vl-file-directory-p taz_s_tmpdir)
-    (princ)
-    (vl-mkdir taz_s_tmpdir)
-  )
-
-  ;; jeśli Model nie jest pusty to nic nie rób
+  ;; Jeśli model nie jest pusty — projekt już zapisany, nic nie rób
   (if (ssget "_X" '((410 . "Model")))
     (princ)
 
-    ;; jeśli pusty
+    ;; Model pusty — nowy projekt, pytamy użytkownika o katalog
     (progn
 
-      ;; usuń starą kopię jeśli istnieje
-      (if (findfile (strcat taz_s_tmpdir "/" taz_s_dwgname ".dwg"))
+      ;; Użytkownik wskazuje katalog gdzie ma być zapisany projekt
+      (setq taz_s_chosen_dir (getfiled "Wskaż katalog projektu" "" "dwg" 9))
+
+      ;; Jeśli anulował — przerywamy
+      (if (not taz_s_chosen_dir)
+        (princ)
+
         (progn
-          (vl-file-delete (strcat taz_s_tmpdir "/" taz_s_dwgname ".dwg"))
-          (foreach taz_s_dwgdirfiles (vl-directory-files taz_s_dwgdir nil 1) (vl-file-delete (strcat taz_s_dwgdir "/" taz_s_dwgdirfiles)))
+
+          ;; *** JEDYNA ZMIANA: pobieramy sam katalog + dodajemy "/" ***
+          (setq taz_s_chosen_dir
+            (strcat (vl-filename-directory taz_s_chosen_dir) "/")
+          )
+
+
+          ;; Nazwa aktualnie otwartego rysunku (bez rozszerzenia)
+          (setq taz_s_dwgname
+            (substr (getvar "DWGNAME") 1 (- (strlen (getvar "DWGNAME")) 4))
+          )
+
+          ;; Pełne ścieżki docelowe
+          (setq taz_s_target_dwg
+            (strcat taz_s_chosen_dir taz_s_dwgname ".dwg")
+          )
+          (setq taz_s_target_dir
+            (strcat taz_s_chosen_dir taz_s_dwgname)
+          )
+
+          ;; Jeśli istnieje stary plik dwg o tej nazwie — usuń go
+          (if (findfile taz_s_target_dwg)
+            (vl-file-delete taz_s_target_dwg)
+          )
+
+          ;; Jeśli istnieje stary katalog danych — wyczyść go z plików
+          (if (vl-file-directory-p taz_s_target_dir)
+            (foreach taz_s_f (vl-directory-files taz_s_target_dir nil 1)
+              (vl-file-delete (strcat taz_s_target_dir "/" taz_s_f))
+            )
+            ;; Katalog nie istnieje — utwórz go
+            (vl-mkdir taz_s_target_dir)
+          )
+
+          ;; Zapisz rysunek we wskazanym katalogu
+          (command "_SAVEAS" "" taz_s_target_dwg)
+
         )
       )
-
-      ;; zapisz kopię
-      (command "_SAVEAS" "" (strcat taz_s_tmpdir "/" taz_s_dwgname ".dwg"))
-
-      ;; utwórz katalog projektu
-      (vl-mkdir (strcat taz_s_tmpdir "/" taz_s_dwgname))
     )
   )
 )
