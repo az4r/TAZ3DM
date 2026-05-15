@@ -238,6 +238,8 @@
   )
 
   (close taz_s_f_beam_data)
+  
+  (taz_s_cleanup_data_file)
 
   (princ)
 )

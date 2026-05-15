@@ -1,16 +1,3 @@
-;; ---------------------------------------------------------
-;; taz_s_path
-;; Zwraca aktualną ścieżkę do katalogu danych projektu.
-;; Zawsze liczy na bieżąco z DWGPREFIX i DWGNAME.
-;; ---------------------------------------------------------
-(defun taz_s_path ()
-  (strcat
-    (getvar "DWGPREFIX")
-    (substr (getvar "DWGNAME") 1 (- (strlen (getvar "DWGNAME")) 4))
-    "/"
-  )
-)
-
 (defun taz_s_start ()
 
   ;; warstwy
