@@ -3,73 +3,30 @@
   (setq taz_s_text_offset 250.0)
   (setq taz_s_circle_radius 250.0)
 
+  ;; ---------------------------------------------------------
+  ;; SCIEZKA DO PLIKU DANYCH OSI
+  ;; ---------------------------------------------------------
 
-  ;; ---------------------------
-  ;; ŚCIEŻKA DO PLIKU DANYCH
-  ;; Plik .txt z danymi leży obok rysunku
-  ;; ---------------------------
   (setq taz_s_dwg_path (getvar "DWGPREFIX"))
-  (setq taz_s_data_file (strcat taz_s_dwg_path (substr (getvar "DWGNAME") 1 (- (strlen (getvar "DWGNAME")) 4)) "/" "taz_s_axes_data.txt"))
+  (setq taz_s_axes_data_file
+    (strcat taz_s_dwg_path
+            (substr (getvar "DWGNAME") 1 (- (strlen (getvar "DWGNAME")) 4))
+            "/"
+            "taz_s_axes_data.txt"))
 
-  ;; ---------------------------
-  ;; ZAPIS DANYCH DO PLIKU
-  ;; Zapisuje trzy setq jako zwykły plik .txt
-  ;; ---------------------------
-  (defun taz_s_save_data ()
+  ;; ---------------------------------------------------------
+  ;; WCZYTANIE DANYCH Z PLIKU TXT DO ZMIENNYCH GLOBALNYCH
+  ;; Plik zawiera gotowe (setq ...) wiec load wystarczy
+  ;; Jesli plik nie istnieje - zmienne pozostaja niezainicjowane
+  ;; ---------------------------------------------------------
 
-    (setq taz_s_f (open taz_s_data_file "w"))
-
-    ;; -- zapis X --
-    (setq taz_s_line "(setq taz_s_axis_data_x '(")
-    (setq taz_s_tmp taz_s_x_data)
-    (while taz_s_tmp
-      (setq taz_s_line (strcat taz_s_line "\"" (car taz_s_tmp) "\" "))
-      (setq taz_s_tmp (cdr taz_s_tmp))
-    )
-    (setq taz_s_line (strcat taz_s_line "))"))
-    (write-line taz_s_line taz_s_f)
-
-    ;; -- zapis Y --
-    (setq taz_s_line "(setq taz_s_axis_data_y '(")
-    (setq taz_s_tmp taz_s_y_data)
-    (while taz_s_tmp
-      (setq taz_s_line (strcat taz_s_line "\"" (car taz_s_tmp) "\" "))
-      (setq taz_s_tmp (cdr taz_s_tmp))
-    )
-    (setq taz_s_line (strcat taz_s_line "))"))
-    (write-line taz_s_line taz_s_f)
-
-    ;; -- zapis Z --
-    (setq taz_s_line "(setq taz_s_axis_data_z '(")
-    (setq taz_s_tmp taz_s_z_data)
-    (while taz_s_tmp
-      (setq taz_s_line (strcat taz_s_line "\"" (car taz_s_tmp) "\" "))
-      (setq taz_s_tmp (cdr taz_s_tmp))
-    )
-    (setq taz_s_line (strcat taz_s_line "))"))
-    (write-line taz_s_line taz_s_f)
-
-    (close taz_s_f)
+  (if (findfile taz_s_axes_data_file)
+    (load taz_s_axes_data_file)
   )
 
-
   ;; ---------------------------
-  ;; ODCZYT DANYCH Z PLIKU
-  ;; Wczytuje plik .txt jeśli istnieje - zmienne globalne ustawiają się same
+  ;; WCZYTANIE DANYCH DO LOKALNYCH LIST ROBOCZYCH
   ;; ---------------------------
-  (defun taz_s_load_data ()
-    (if (findfile taz_s_data_file)
-      (load taz_s_data_file)
-    )
-  )
-
-
-  ;; ---------------------------
-  ;; WCZYTANIE DANYCH
-  ;; Najpierw próbujemy z pliku, potem ze zmiennych sesji
-  ;; ---------------------------
-  (taz_s_load_data)
-
   (if (and (boundp 'taz_s_axis_data_x) taz_s_axis_data_x)
     (setq taz_s_x_data taz_s_axis_data_x)
     (setq taz_s_x_data '())
@@ -84,6 +41,7 @@
     (setq taz_s_z_data taz_s_axis_data_z)
     (setq taz_s_z_data '())
   )
+
   ;; ---------------------------
   ;; FORMAT
   ;; ---------------------------
@@ -197,22 +155,25 @@
   ;; ---------------------------
   (defun taz_s_prepare_layer ()
 
+    ;; utwórz jeśli nie istnieje
     (if (not (tblsearch "LAYER" "taz_s_axes"))
       (command "_layer" "_M" "taz_s_axes" "_C" "109" "" "")
     )
 
+    ;; ustaw warstwę
     (setvar "CLAYER" "taz_s_axes")
 
+    ;; usuń tylko elementy z tej warstwy
     (setq taz_s_ss (ssget "X" '((8 . "taz_s_axes"))))
     (if taz_s_ss (command "ERASE" taz_s_ss ""))
   )
 
   ;; ---------------------------
   ;; RYSOWANIE
-  ;; (jedyna zmiana: na końcu dodano wywołanie taz_s_save_data)
   ;; ---------------------------
   (defun taz_s_draw_axes ()
 
+    ;; widok
     (command "-VIEW" "_S" "taz_s_temp_view")
 
     (taz_s_prepare_layer)
@@ -289,6 +250,7 @@
 
         (if (= taz_s_draw_labels "1")
           (progn
+            ;; LEWY KONIEC
             (setq taz_s_pt1 (list (- taz_s_xmin taz_s_text_offset) taz_s_yval taz_s_zval))
             (command "CIRCLE" taz_s_pt1 taz_s_circle_radius)
             (command "TEXT" "_J" "MC"
@@ -298,6 +260,7 @@
               taz_s_name
             )
 
+            ;; PRAWY KONIEC
             (setq taz_s_pt2 (list (+ taz_s_xmax taz_s_text_offset) taz_s_yval taz_s_zval))
             (command "CIRCLE" taz_s_pt2 taz_s_circle_radius)
             (command "TEXT" "_J" "MC"
@@ -338,6 +301,7 @@
 
         (if (= taz_s_draw_labels "1")
           (progn
+            ;; DÓŁ
             (setq taz_s_pt1 (list taz_s_xval (- taz_s_ymin taz_s_text_offset) taz_s_zval))
             (command "CIRCLE" taz_s_pt1 taz_s_circle_radius)
             (command "TEXT" "_J" "MC"
@@ -347,6 +311,7 @@
               taz_s_name
             )
 
+            ;; GÓRA
             (setq taz_s_pt2 (list taz_s_xval (+ taz_s_ymax taz_s_text_offset) taz_s_zval))
             (command "CIRCLE" taz_s_pt2 taz_s_circle_radius)
             (command "TEXT" "_J" "MC"
@@ -364,17 +329,16 @@
       (setq taz_s_zlist (cdr taz_s_zlist))
     )
 
-    ;; zapis do zmiennych sesji (bez zmian)
+    ;; Aktualizacja zmiennych globalnych po rysowaniu
     (setq taz_s_axis_data_x taz_s_x_data)
     (setq taz_s_axis_data_y taz_s_y_data)
     (setq taz_s_axis_data_z taz_s_z_data)
 
-    ;; ZAPIS DO PLIKU (nowa linia!)
-    (taz_s_save_data)
-
+    ;; przywrócenie widoku
     (command "-VIEW" "_R" "taz_s_temp_view")
     (command "-VIEW" "_D" "taz_s_temp_view")
   )
+
   ;; ---------------------------
   ;; DCL
   ;; ---------------------------
@@ -410,6 +374,40 @@
 
   (start_dialog)
   (unload_dialog taz_s_dcl_id)
+
+  ;; ---------------------------------------------------------
+  ;; ZAPIS ZMIENNYCH GLOBALNYCH Z POWROTEM DO PLIKU TXT
+  ;; Robimy to po zamknieciu dialogu (taz_s_draw_axes juz
+  ;; zaktualizowalo zmienne globalne taz_s_axis_data_x/y/z)
+  ;; Listy zapisujemy przez prin1 aby zachowac poprawny format
+  ;; ---------------------------------------------------------
+
+  (setq taz_s_f_axes_data (open taz_s_axes_data_file "a"))
+
+  (write-line
+    (strcat "(setq taz_s_axis_data_x '"
+            (vl-prin1-to-string taz_s_axis_data_x)
+            ")")
+    taz_s_f_axes_data)
+
+  (write-line
+    (strcat "(setq taz_s_axis_data_y '"
+            (vl-prin1-to-string taz_s_axis_data_y)
+            ")")
+    taz_s_f_axes_data)
+
+  (write-line
+    (strcat "(setq taz_s_axis_data_z '"
+            (vl-prin1-to-string taz_s_axis_data_z)
+            ")")
+    taz_s_f_axes_data)
+
+  (close taz_s_f_axes_data)
+
+  ;; taz_s_cleanup_data_file operuje na zmiennej taz_s_data_file
+  ;; - kierujemy ja na nasz plik i wywolujemy funkcje wspolna
+  (setq taz_s_data_file taz_s_axes_data_file)
+  (taz_s_cleanup_data_file)
 
   (princ)
 )
