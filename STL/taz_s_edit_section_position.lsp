@@ -222,9 +222,11 @@
   (write-line (strcat "(setq taz_s_" taz_s_attribs_object_name_new "_attr8 \""           taz_s_attr8_old "\")") taz_s_f_beam_data)
   (write-line (strcat "(setq taz_s_" taz_s_attribs_object_name_new "_attr9 \""           taz_s_attr9_old "\")") taz_s_f_beam_data)
   (write-line (strcat "(setq taz_s_" taz_s_attribs_object_name_new "_attr10 \""          taz_s_attr10_old "\")") taz_s_f_beam_data)
-  (write-line (strcat "(setq taz_s_" taz_s_attribs_object_name_new "_section_angle \""   (rtos taz_s_section_angle_old 2 6) "\")") taz_s_f_beam_data)
-  (write-line (strcat "(setq taz_s_" taz_s_attribs_object_name_new "_section_position \"" taz_s_section_position_old "\")") taz_s_f_beam_data)
-
+  ;;(write-line (strcat "(setq taz_s_" taz_s_attribs_object_name_new "_section_angle \""   (rtos taz_s_section_angle_old 2 6) "\")") taz_s_f_beam_data)
+  (write-line (strcat "(setq taz_s_" taz_s_attribs_object_name_new "_section_angle " (rtos taz_s_section_angle_old 2 6) ")") taz_s_f_beam_data)
+  ;;(write-line (strcat "(setq taz_s_" taz_s_attribs_object_name_new "_section_position \"" taz_s_section_position_old "\")") taz_s_f_beam_data)
+  (write-line (strcat "(setq taz_s_" taz_s_attribs_object_name_new "_section_position "(itoa taz_s_section_position_old) ")") taz_s_f_beam_data)
+  
   (close taz_s_f_beam_data)
   
   (taz_s_cleanup_data_file)
