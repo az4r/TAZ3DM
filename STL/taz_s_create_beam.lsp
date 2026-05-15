@@ -405,10 +405,9 @@
   (setq taz_s_p2z (caddr taz_s_create_beam_p2))
   (write-line (strcat "(setq taz_s_create_beam_" taz_s_attribs_object_name "_sweep_p2 (list " (rtos taz_s_p2x 2 6) " " (rtos taz_s_p2y 2 6) " " (rtos taz_s_p2z 2 6) "))") taz_s_f_beam_data)
 
-  ;; -- pusty wiersz dla czytelnosci miedzy elementami --
-  (write-line "" taz_s_f_beam_data)
-
   (close taz_s_f_beam_data)
+  
+  (taz_s_cleanup_data_file)
   
   ;; ---------------------------------------------------------
   ;; WCZYTANIE DANYCH Z PLIKU TXT DO ZMIENNYCH GLOBALNYCH
