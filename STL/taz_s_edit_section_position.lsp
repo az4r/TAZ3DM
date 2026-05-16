@@ -2,6 +2,8 @@
 
 (defun c:taz_s_edit_section_position()
   
+  ;;(taz_s_current_settings_save)
+  
   ;; ---------------------------------------------------------
   ;; SCIEZKA DO PLIKU DANYCH I WCZYTANIE
   ;; ---------------------------------------------------------
@@ -15,22 +17,6 @@
 
   (setq taz_s_edit_mode T)
   (setq taz_s_edit_section_position_mode T)
-  
-  ;; UCS tymczasowy – zapis / nadpisanie
-
-  (setq taz_s_ucs_exist (tblsearch "UCS" "taz_s_ucs_temp"))
-
-  (if taz_s_ucs_exist
-    (progn
-      (command "_.UCS" "_NA" "_S" "taz_s_ucs_temp2")
-      (command "_.UCS" "_NA" "_R" "taz_s_ucs_temp2")
-      (command "_.UCS" "_NA" "_D" "taz_s_ucs_temp")
-      (command "_.UCS" "_NA" "_S" "taz_s_ucs_temp")
-      (command "_.UCS" "_NA" "_R" "taz_s_ucs_temp")
-      (command "_.UCS" "_NA" "_D" "taz_s_ucs_temp2")
-    )
-    (command "_.UCS" "_NA" "_S" "taz_s_ucs_temp")
-  )
 
   ;; Reset UCS do World
   (command "_.UCS" "_W")
@@ -119,6 +105,7 @@
   (setq taz_s_attr8_old  (eval (read (strcat "taz_s_" taz_s_attribs_object_name "_attr8"))))
   (setq taz_s_attr9_old  (eval (read (strcat "taz_s_" taz_s_attribs_object_name "_attr9"))))
   (setq taz_s_attr10_old (eval (read (strcat "taz_s_" taz_s_attribs_object_name "_attr10"))))
+  (setq taz_s_section_position_old (eval (read (strcat "taz_s_" taz_s_attribs_object_name "_section_position"))))
   (setq taz_s_section_angle_old (eval (read (strcat "taz_s_" taz_s_attribs_object_name "_section_angle"))))
 
   ;; ---------------------------------------------------------
@@ -127,6 +114,33 @@
 
   (setq taz_s_section_ibeam_family taz_s_attr6_old)
   (setq taz_s_section_ibeam_type   taz_s_attr7_old)
+  
+  ;;; FIX: Ustaw również globalne zmienne taz_s_family / taz_s_type / taz_s_category,
+  ;;; których używają funkcje rysujące przekrój wewnątrz taz_s_create_beam.
+  ;;; Bez tego, po ponownym otwarciu pliku, zmienne te są nil i skrypt się wysypuje.
+  (setq taz_s_family taz_s_attr6_old)
+  (setq taz_s_type   taz_s_attr7_old)
+
+  ;;; FIX: Odtwórz taz_s_category na podstawie rodziny profilu.
+  ;;; Przy nowym projekcie taz_s_category jest ustawiana przez taz_s_select_section,
+  ;;; ale przy edycji (taz_s_edit_mode=T) taz_s_select_section jest pomijane.
+  (cond
+    ((or (= taz_s_family "HEA")
+         (= taz_s_family "HEB")
+         (= taz_s_family "IPE")
+         (= taz_s_family "IPN"))
+     (setq taz_s_category "Dwuteowniki"))
+    ((or (= taz_s_family "UPE")
+         (= taz_s_family "UPN"))
+     (setq taz_s_category "Ceowniki"))
+    ((or (= taz_s_family "Katownik rownoramienny")
+         (= taz_s_family "Katownik nierownoramienny"))
+     (setq taz_s_category "Katowniki"))
+    ((or (= taz_s_family "Rura kwadratowa")
+         (= taz_s_family "Rura prostokatna")
+         (= taz_s_family "Rura okragla"))
+     (setq taz_s_category "Rury"))
+  )
   
   ;; ---------------------------------------------------------
   ;; Zapisz nowe punkty ścieżki
@@ -232,5 +246,7 @@
   (taz_s_cleanup_data_file)
   
   (princ)
+  
+  ;;(taz_s_current_settings_restore)
        
 )

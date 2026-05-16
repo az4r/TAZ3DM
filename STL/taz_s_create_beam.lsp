@@ -231,32 +231,11 @@
     )  
     (princ)
   )
-
 )
 
-(defun c:taz_s_create_beam
-  ( / taz_s_create_beam_p1
-       taz_s_create_beam_p2
-       taz_s_ucs_exist
-  )
-
-  ;; ---------------------------------------------------------
-  ;; UCS tymczasowy – zapis / nadpisanie
-  ;; ---------------------------------------------------------
-
-  (setq taz_s_ucs_exist (tblsearch "UCS" "taz_s_ucs_temp"))
-
-  (if taz_s_ucs_exist
-    (progn
-      (command "_.UCS" "_NA" "_S" "taz_s_ucs_temp2")
-      (command "_.UCS" "_NA" "_R" "taz_s_ucs_temp2")
-      (command "_.UCS" "_NA" "_D" "taz_s_ucs_temp")
-      (command "_.UCS" "_NA" "_S" "taz_s_ucs_temp")
-      (command "_.UCS" "_NA" "_R" "taz_s_ucs_temp")
-      (command "_.UCS" "_NA" "_D" "taz_s_ucs_temp2")
-    )
-    (command "_.UCS" "_NA" "_S" "taz_s_ucs_temp")
-  )
+(defun c:taz_s_create_beam ( / taz_s_create_beam_p1 taz_s_create_beam_p2 taz_s_ucs_exist)
+  
+  (taz_s_current_settings_save)
 
   ;; Reset UCS do World
   (command "_.UCS" "_W")
@@ -417,15 +396,6 @@
   (load taz_s_data_file)
 
   ;; ---------------------------------------------------------
-  ;; PRZYWRÓCENIE POPRZEDNIEGO UCS
-  ;; ---------------------------------------------------------
-  
-  (if taz_s_ucs_exist
-    (command "_.UCS" "_NA" "_R" "taz_s_ucs_temp")
-    (princ)
-  )
-
-  ;; ---------------------------------------------------------
   ;; WYCZYSZCZENIE ZMIENNYCH EDYCJI
   ;; ---------------------------------------------------------
 
@@ -440,6 +410,9 @@
   (setq taz_s_r1 nil)
   (setq taz_s_r2 nil)
   (setq taz_s_r nil)
-
+  
   (princ)
+  
+  (taz_s_current_settings_restore)
+  
 )
