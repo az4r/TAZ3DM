@@ -1,3 +1,12 @@
+(defun taz_s_program_settings_change()
+  (setq taz_s_current_locked_layer_fade (getvar "LAYLOCKFADECTL"))
+  (setvar "LAYLOCKFADECTL" 0)
+)
+
+(defun taz_s_program_settings_restore()
+  (setvar "LAYLOCKFADECTL" taz_s_current_locked_layer_fade)
+)
+
 ;; ---------------------------------------------------------
 ;; taz_s_current_settings_save
 ;; Zapisuje aktualny stan wybranych ustawień.
@@ -140,6 +149,7 @@
 (defun taz_s_start ()
   
   (taz_s_current_settings_save)
+  (taz_s_program_settings_change)
 
   ;; warstwy
   (if (tblsearch "LAYER" "taz_s_editing_layer")
