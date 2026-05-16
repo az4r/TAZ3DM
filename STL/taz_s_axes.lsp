@@ -1,4 +1,6 @@
 (defun c:taz_s_axes ()
+  
+  (taz_s_current_settings_save)
 
   (setq taz_s_text_offset 250.0)
   (setq taz_s_circle_radius 250.0)
@@ -410,4 +412,7 @@
   (taz_s_cleanup_data_file)
 
   (princ)
+  
+  (taz_s_current_settings_restore)
+  
 )

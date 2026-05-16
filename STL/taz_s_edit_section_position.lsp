@@ -2,7 +2,9 @@
 
 (defun c:taz_s_edit_section_position()
   
-  ;;(taz_s_current_settings_save)
+  (taz_s_current_settings_save)
+  (command "_LAYER" "_U" "taz_s_editing_layer" "")
+  (command "_LAYER" "_S" "taz_s_editing_layer" "")
   
   ;; ---------------------------------------------------------
   ;; SCIEZKA DO PLIKU DANYCH I WCZYTANIE
@@ -180,9 +182,11 @@
   ;; Usuń starą bryłę
   ;; ---------------------------------------------------------
 
+  (command "_LAYER" "_U" "taz_s_beam" "")
   (if (and taz_s_attribs_object_old (entget taz_s_attribs_object_old))
     (entdel taz_s_attribs_object_old)
   )
+  (command "_LAYER" "_LO" "taz_s_beam" "")
 
   ;; ---------------------------------------------------------
   ;; Ustaw nową bryłę jako aktualną
@@ -240,6 +244,7 @@
   
   (princ)
   
-  ;;(taz_s_current_settings_restore)
+  (command "_LAYER" "_LO" "taz_s_editing_layer" "")
+  (taz_s_current_settings_restore)
        
 )

@@ -235,7 +235,14 @@
 
 (defun c:taz_s_create_beam ( / taz_s_create_beam_p1 taz_s_create_beam_p2)
   
-  (taz_s_current_settings_save)
+  (if taz_s_edit_mode
+    (princ)
+    (progn
+      (taz_s_current_settings_save)
+      (command "_LAYER" "_U" "taz_s_editing_layer" "")
+      (command "_LAYER" "_S" "taz_s_editing_layer" "")
+    )
+  )
 
   ;; Reset UCS do World
   (command "_.UCS" "_W")
@@ -413,6 +420,12 @@
   
   (princ)
   
-  (taz_s_current_settings_restore)
+  (if taz_s_edit_mode
+    (princ)
+    (progn
+      (command "_LAYER" "_LO" "taz_s_editing_layer" "")
+      (taz_s_current_settings_restore)
+    )
+  )
   
 )

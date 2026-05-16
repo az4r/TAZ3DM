@@ -142,24 +142,22 @@
   (taz_s_current_settings_save)
 
   ;; warstwy
-  (if (tblsearch "LAYER" "taz_s_operational_layer")
+  (if (tblsearch "LAYER" "taz_s_editing_layer")
     (princ)
-    (command "_layer" "_M" "taz_s_operational_layer" "_C" "1" "" "")
+    (command "_LAYER" "_M" "taz_s_editing_layer" "_C" "1" "" "_LO" "taz_s_editing_layer" "")
   )
   (if (tblsearch "LAYER" "taz_s_beam")
     (princ)
-    (command "_layer" "_M" "taz_s_beam" "_C" "145" "" "")
+    (command "_LAYER" "_M" "taz_s_beam" "_C" "145" "" "_LO" "taz_s_beam" "")
   )
   (if (tblsearch "LAYER" "taz_s_plate")
     (princ)
-    (command "_layer" "_M" "taz_s_plate" "_C" "30" "" "")
+    (command "_LAYER" "_M" "taz_s_plate" "_C" "30" "" "_LO" "taz_s_plate" "")
   )
   (if (tblsearch "LAYER" "taz_s_axes")
     (princ)
-    (command "_layer" "_M" "taz_s_axes" "_C" "109" "" "")
+    (command "_LAYER" "_M" "taz_s_axes" "_C" "109" "" "_LO" "taz_s_axes" "")
   )
-
-  (command "_layer" "_S" "0" "")
 
   ;; Jeśli model nie jest pusty — projekt już zapisany, nic nie rób
   (if (ssget "_X" '((410 . "Model")))
