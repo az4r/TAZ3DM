@@ -232,7 +232,6 @@
     (write-line (strcat "(setq taz_s_" taz_s_attribs_object_name "_attr8 \"" (eval (read (strcat "taz_s_" taz_s_attribs_object_name "_attr8"))) "\")") taz_s_f_beam_data)
     (write-line (strcat "(setq taz_s_" taz_s_attribs_object_name "_attr9 \"" (eval (read (strcat "taz_s_" taz_s_attribs_object_name "_attr9"))) "\")") taz_s_f_beam_data)
     (write-line (strcat "(setq taz_s_" taz_s_attribs_object_name "_attr10 \"" (eval (read (strcat "taz_s_" taz_s_attribs_object_name "_attr10"))) "\")") taz_s_f_beam_data)
-    (write-line "" taz_s_f_beam_data)
 
     (setq taz_s_attribs_count_index (1+ taz_s_attribs_count_index))
   )

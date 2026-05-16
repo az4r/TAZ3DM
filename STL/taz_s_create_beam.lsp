@@ -233,7 +233,7 @@
   )
 )
 
-(defun c:taz_s_create_beam ( / taz_s_create_beam_p1 taz_s_create_beam_p2 taz_s_ucs_exist)
+(defun c:taz_s_create_beam ( / taz_s_create_beam_p1 taz_s_create_beam_p2)
   
   (taz_s_current_settings_save)
 
