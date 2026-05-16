@@ -71,13 +71,13 @@
   ;; pobierz zapisane punkty ścieżki
   (setq taz_s_edit_p1
         (eval (read
-               (strcat "taz_s_create_beam_"
+               (strcat "taz_s_"
                        taz_s_attribs_object_name
                        "_sweep_p1"))))
 
   (setq taz_s_edit_p2
         (eval (read
-               (strcat "taz_s_create_beam_"
+               (strcat "taz_s_"
                        taz_s_attribs_object_name
                        "_sweep_p2"))))
 
