@@ -107,13 +107,6 @@
   (setq taz_s_attr10_old (eval (read (strcat "taz_s_" taz_s_attribs_object_name "_attr10"))))
   (setq taz_s_section_position_old (eval (read (strcat "taz_s_" taz_s_attribs_object_name "_section_position"))))
   (setq taz_s_section_angle_old (eval (read (strcat "taz_s_" taz_s_attribs_object_name "_section_angle"))))
-
-  ;; ---------------------------------------------------------
-  ;; Ustaw rodzinę i typ profilu na podstawie starych atrybutów
-  ;; ---------------------------------------------------------
-
-  (setq taz_s_section_ibeam_family taz_s_attr6_old)
-  (setq taz_s_section_ibeam_type   taz_s_attr7_old)
   
   ;;; FIX: Ustaw również globalne zmienne taz_s_family / taz_s_type / taz_s_category,
   ;;; których używają funkcje rysujące przekrój wewnątrz taz_s_create_beam.
