@@ -72,9 +72,7 @@
 ;; Czyści plik który został przypisany do zmiennej
 ;; taz_s_data_file wewnątrz katalogu danych projektu.
 ;; ---------------------------------------------------------
-
 (defun taz_s_cleanup_data_file ()
-
   (setq taz_s_cl_file taz_s_data_file)
 
   ;; --- WCZYTAJ WSZYSTKIE LINIE ---
@@ -90,15 +88,12 @@
   ;; --- ODWROC LISTE ---
   (setq taz_s_cl_reversed (reverse taz_s_cl_all_lines))
 
-  ;; --- PRZEJDZ OD KONCA ---
+  ;; --- PRZEJDZ OD KONCA I USUN DUPLIKATY ---
   (setq taz_s_cl_seen (list))
   (setq taz_s_cl_result (list))
   (setq taz_s_cl_i 0)
-
   (while (< taz_s_cl_i (length taz_s_cl_reversed))
-
     (setq taz_s_cl_line (nth taz_s_cl_i taz_s_cl_reversed))
-
     (if (= (substr taz_s_cl_line 1 6) "(setq ")
       (progn
         ;; Wyciagnij nazwe zmiennej - szukaj spacji bez vl
@@ -112,7 +107,6 @@
           (setq taz_s_cl_j (1+ taz_s_cl_j))
         )
         (setq taz_s_cl_varname (substr taz_s_cl_rest 1 (1- taz_s_cl_sp)))
-
         ;; Jesli zmienna nie byla jeszcze widziana - dodaj do wyniku
         (if (not (member taz_s_cl_varname taz_s_cl_seen))
           (progn
@@ -122,12 +116,69 @@
         )
       )
     )
-
     (setq taz_s_cl_i (1+ taz_s_cl_i))
   )
 
   ;; --- ODWROC WYNIK ---
   (setq taz_s_cl_result (reverse taz_s_cl_result))
+
+  ;; --- SORTUJ ALFABETYCZNIE (bubble sort) ---
+  ;; Dla kazdej linii wyciagamy nazwe zmiennej do porownania
+  ;; Zamieniamy miejscami linie jesli poprzednia > nastepna
+  (setq taz_s_cl_sorted nil)
+  (while (not taz_s_cl_sorted)
+    (setq taz_s_cl_sorted t)
+    (setq taz_s_cl_i 0)
+    (while (< taz_s_cl_i (1- (length taz_s_cl_result)))
+      ;; Wyciagnij nazwe zmiennej z linii [i]
+      (setq taz_s_cl_lineA (nth taz_s_cl_i taz_s_cl_result))
+      (setq taz_s_cl_restA (substr taz_s_cl_lineA 7))
+      (setq taz_s_cl_spA nil)
+      (setq taz_s_cl_j 1)
+      (while (and (not taz_s_cl_spA) (<= taz_s_cl_j (strlen taz_s_cl_restA)))
+        (if (= (substr taz_s_cl_restA taz_s_cl_j 1) " ")
+          (setq taz_s_cl_spA taz_s_cl_j)
+        )
+        (setq taz_s_cl_j (1+ taz_s_cl_j))
+      )
+      (setq taz_s_cl_nameA (substr taz_s_cl_restA 1 (1- taz_s_cl_spA)))
+      ;; Wyciagnij nazwe zmiennej z linii [i+1]
+      (setq taz_s_cl_lineB (nth (1+ taz_s_cl_i) taz_s_cl_result))
+      (setq taz_s_cl_restB (substr taz_s_cl_lineB 7))
+      (setq taz_s_cl_spB nil)
+      (setq taz_s_cl_j 1)
+      (while (and (not taz_s_cl_spB) (<= taz_s_cl_j (strlen taz_s_cl_restB)))
+        (if (= (substr taz_s_cl_restB taz_s_cl_j 1) " ")
+          (setq taz_s_cl_spB taz_s_cl_j)
+        )
+        (setq taz_s_cl_j (1+ taz_s_cl_j))
+      )
+      (setq taz_s_cl_nameB (substr taz_s_cl_restB 1 (1- taz_s_cl_spB)))
+      ;; Jesli A > B - zamien miejscami
+      (if (> taz_s_cl_nameA taz_s_cl_nameB)
+        (progn
+          (setq taz_s_cl_sorted nil)
+          ;; Zbierz linie przed A
+          (setq taz_s_cl_before (list))
+          (setq taz_s_cl_k 0)
+          (while (< taz_s_cl_k taz_s_cl_i)
+            (setq taz_s_cl_before (append taz_s_cl_before (list (nth taz_s_cl_k taz_s_cl_result))))
+            (setq taz_s_cl_k (1+ taz_s_cl_k))
+          )
+          ;; Zbierz linie po B
+          (setq taz_s_cl_after (list))
+          (setq taz_s_cl_k (+ taz_s_cl_i 2))
+          (while (< taz_s_cl_k (length taz_s_cl_result))
+            (setq taz_s_cl_after (append taz_s_cl_after (list (nth taz_s_cl_k taz_s_cl_result))))
+            (setq taz_s_cl_k (1+ taz_s_cl_k))
+          )
+          ;; Zloz z zamiana kolejnosci A i B
+          (setq taz_s_cl_result (append taz_s_cl_before (list taz_s_cl_lineB) (list taz_s_cl_lineA) taz_s_cl_after))
+        )
+      )
+      (setq taz_s_cl_i (1+ taz_s_cl_i))
+    )
+  )
 
   ;; --- ZAPISZ DO PLIKU ---
   (setq taz_s_cl_f (open taz_s_cl_file "w"))
@@ -137,7 +188,6 @@
     (setq taz_s_cl_i (1+ taz_s_cl_i))
   )
   (close taz_s_cl_f)
-
 )
 
 ;; ---------------------------------------------------------
