@@ -91,7 +91,7 @@
   (command "_CHPROP" taz_s_attribs_line "" "_P" "_C" "1" "")
 
   ;; ustaw transparency 75 na bryle
-  (command "_CHPROP" taz_s_attribs_object "" "_P" "_TR" "85" "")
+  ;;(command "_CHPROP" taz_s_attribs_object "" "_P" "_TR" "85" "")
   
   ;; ---------------------------------------------------------
   ;; POBIERZ ATRYBUTY STAREJ BRYŁY (PRZED create_ibeam!)
@@ -159,7 +159,7 @@
         (cdr (assoc 5 (entget taz_s_attribs_object_new))))
 
   ;; nadaj transparency 75
-  (command "_CHPROP" taz_s_attribs_object_new "" "_P" "_TR" "75" "")
+  ;;(command "_CHPROP" taz_s_attribs_object_new "" "_P" "_TR" "75" "")
   
   ;; ---------------------------------------------------------
   ;; PRZENIEŚ ATRYBUTY ZE STAREJ BRYŁY NA NOWĄ
@@ -204,9 +204,9 @@
   (setq taz_s_edit_section_angle_mode nil)
   
   ;; przywróć normalną przezroczystość bryły
-  (if (and taz_s_attribs_object (entget taz_s_attribs_object))
-    (command "_CHPROP" taz_s_attribs_object "" "_P" "_TR" "0" "")
-  )
+  ;;(if (and taz_s_attribs_object (entget taz_s_attribs_object))
+    ;;(command "_CHPROP" taz_s_attribs_object "" "_P" "_TR" "0" "")
+  ;;)
 
   ;; usuń czerwoną linię sterującą
   (if (and taz_s_attribs_line (entget taz_s_attribs_line))

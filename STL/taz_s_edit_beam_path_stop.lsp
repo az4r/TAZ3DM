@@ -8,9 +8,9 @@
 (defun c:taz_s_edit_beam_path_stop ( / )
 
   ;; przywróć normalną przezroczystość bryły
-  (if (and taz_s_attribs_object (entget taz_s_attribs_object))
-    (command "_CHPROP" taz_s_attribs_object "" "_P" "_TR" "0" "")
-  )
+  ;;(if (and taz_s_attribs_object (entget taz_s_attribs_object))
+    ;;(command "_CHPROP" taz_s_attribs_object "" "_P" "_TR" "0" "")
+  ;;)
 
   ;; usuń czerwoną linię sterującą
   (if (and taz_s_attribs_line (entget taz_s_attribs_line))

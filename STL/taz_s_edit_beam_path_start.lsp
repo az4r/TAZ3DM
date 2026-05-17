@@ -132,7 +132,7 @@
                       (cdr (assoc 5 (entget taz_s_attribs_object_new))))
 
                 ;; nadaj transparency 85 (tryb edycji)
-                (command "_CHPROP" taz_s_attribs_object_new "" "_P" "_TR" "85" "")
+                ;;(command "_CHPROP" taz_s_attribs_object_new "" "_P" "_TR" "85" "")
 
                 ;; ---------------------------------------------------------
                 ;; PRZENIEŚ ATRYBUTY ZE STAREJ BRYŁY NA NOWĄ
@@ -299,7 +299,7 @@
   (command "_CHPROP" taz_s_attribs_line "" "_P" "_C" "1" "")
 
   ;; ustaw transparency 85 na bryle
-  (command "_CHPROP" taz_s_attribs_object "" "_P" "_TR" "85" "")
+  ;;(command "_CHPROP" taz_s_attribs_object "" "_P" "_TR" "85" "")
 
   ;; ---------------------------------------------------------
   ;; POBIERZ ATRYBUTY STAREJ BRYŁY (PRZED create_beam!)

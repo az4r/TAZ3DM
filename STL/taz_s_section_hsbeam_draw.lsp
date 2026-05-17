@@ -2114,9 +2114,9 @@
   )
 
   ;; SWEEP
-  (command "_SWEEP" taz_s_create_beam_profile "" taz_s_create_beam_path "")
+  (command "_SWEEP" taz_s_create_beam_profile "" taz_s_create_beam_path)
   (setq taz_s_substract_solid1 (entlast))
-  (command "_SWEEP" taz_s_create_beam_profile_cut "" "B" (list 0 0) taz_s_create_beam_path_cut "")
+  (command "_SWEEP" taz_s_create_beam_profile_cut "" "B" (list 0 0) taz_s_create_beam_path_cut)
   (setq taz_s_substract_solid2 (entlast))
   (command "SUBTRACT" taz_s_substract_solid1 "" taz_s_substract_solid2 "")
   
