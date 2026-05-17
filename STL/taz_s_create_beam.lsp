@@ -305,6 +305,19 @@
     )
       (princ)
   )
+  
+  (if taz_s_edit_beam_path_mode
+    (progn
+      ;;(print (strcat "Aktualnie profil znajduje się pod kątem: " (rtos (eval (read (strcat "taz_s_" taz_s_attribs_object_name "_section_angle"))) 2 2)))
+      ;;(set (read (strcat "taz_s_" taz_s_attribs_object_name "_section_angle")) (getreal "\nPodaj kąt obrotu przekroju: "))
+      (command "_ZOOM" "_SCALE" "1000X")
+      (command "_.UCS" "_Z" (eval (read (strcat "taz_s_" taz_s_attribs_object_name "_section_angle"))))
+      (taz_s_edit_section_position_parametres)
+      (command "_ZOOM" "_SCALE" "0.001X")
+      ;;(setq taz_s_section_angle_old (eval (read (strcat "taz_s_" taz_s_attribs_object_name "_section_angle"))))
+    )
+      (princ)
+  )
 
   ;; ---------------------------------------------------------
   ;; WYBÓR I RYSOWANIE PRZEKROJU BELKI
