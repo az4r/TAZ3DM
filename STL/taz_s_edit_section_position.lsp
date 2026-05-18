@@ -1,6 +1,6 @@
-(setq taz_s_attribs_line nil)
-
 (defun c:taz_s_edit_section_position()
+  
+  (setq taz_s_attribs_line nil)
   
   (taz_s_current_settings_save)
   (command "_LAYER" "_U" "taz_s_editing_layer" "")

@@ -37,7 +37,16 @@
   (princ "\nEdycja ścieżki zamknięta – linia usunięta, bryła przywrócona.")
 
   (command "_LAYER" "_LO" "taz_s_editing_layer" "")
-  (taz_s_current_settings_restore)
+  ;;(taz_s_current_settings_restore)
+  
+  ;; WARSTWA
+  (setvar "CLAYER" taz_s_current_layer)
+  
+  ;; UCS
+  (if taz_s_current_ucs_exist
+    (command "_.UCS" "_NA" "_R" "taz_s_current_ucs")
+    (princ)
+  )
 
   (princ)
 

@@ -6,7 +6,6 @@
 ;; Zakończenie edycji: c:taz_s_edit_beam_path_stop
 ;; =============================================================
 
-(setq taz_s_attribs_line nil)
 (setq taz_s_edit_beam_path_reactor nil)
 
 ;; -------------------------------------------------------------
@@ -46,48 +45,8 @@
                   (= taz_s_cmd "PASTECLIP")
                   (= taz_s_cmd "_PASTECLIP"))
             (progn
-              ;; policz linie na warstwie edycji
-              (setq taz_s_line_count 0)
-              (setq taz_s_check_ss (ssget "_X"
-                (list
-                  (cons 0 "LINE")
-                  (cons 8 "taz_s_editing_layer")
-                )
-              ))
-              (if taz_s_check_ss
-                (setq taz_s_line_count (sslength taz_s_check_ss))
-              )
-
-              ;; jeśli jest więcej niż jedna linia → usuń ostatnio dodaną (kopię)
-              (if (> taz_s_line_count 1)
-                (progn
-                  ;; usuń ostatni obiekt jeśli to linia na warstwie edycji
-                  (setq taz_s_last_ent (entlast))
-                  (if (and taz_s_last_ent
-                           (/= taz_s_last_ent taz_s_attribs_line)
-                           (= (cdr (assoc 0 (entget taz_s_last_ent))) "LINE")
-                           (= (cdr (assoc 8 (entget taz_s_last_ent))) "taz_s_editing_layer"))
-                    (progn
-                      (entdel taz_s_last_ent)
-                      (princ "\nSkopiowana linia sterująca została usunięta.")
-                    )
-                    (progn
-                      ;; szukaj w selekcji – usuń każdą linię na warstwie edycji która nie jest naszą
-                      (setq taz_s_i 0)
-                      (if taz_s_check_ss
-                        (while (< taz_s_i (sslength taz_s_check_ss))
-                          (setq taz_s_ent_check (ssname taz_s_check_ss taz_s_i))
-                          (if (/= taz_s_ent_check taz_s_attribs_line)
-                            (entdel taz_s_ent_check)
-                          )
-                          (setq taz_s_i (+ taz_s_i 1))
-                        )
-                      )
-                      (princ "\nSkopiowana linia sterująca została usunięta.")
-                    )
-                  )
-                )
-              )
+              (setq taz_s_cleanup_layer (ssget "_X" (list (cons 8 (getvar "CLAYER")) '(-4 . "<NOT") (cons 5 (cdr (assoc 5 (entget taz_s_attribs_line)))) '(-4 . "NOT>"))))
+              (command "_.ERASE" taz_s_cleanup_layer "")
             )
 
             ;; ---------------------------------------------------------
@@ -209,6 +168,8 @@
 ;; =============================================================
 
 (defun c:taz_s_edit_beam_path_start ( / )
+  
+  (setq taz_s_attribs_line nil)
 
   (taz_s_current_settings_save)
   (command "_LAYER" "_U" "taz_s_editing_layer" "")
