@@ -406,14 +406,15 @@
 
   (close taz_s_f_beam_data)
   
-  (taz_s_cleanup_data_file)
+  ;;(setq taz_s_data_file taz_s_f_beam_data)
+  ;;(taz_s_cleanup_data_file)
   
   ;; ---------------------------------------------------------
   ;; WCZYTANIE DANYCH Z PLIKU TXT DO ZMIENNYCH GLOBALNYCH
   ;; Plik zawiera gotowe (setq ...) wiec load wystarczy
   ;; ---------------------------------------------------------
 
-  (load taz_s_data_file)
+  ;;(load taz_s_data_file)
 
   ;; ---------------------------------------------------------
   ;; WYCZYSZCZENIE ZMIENNYCH EDYCJI

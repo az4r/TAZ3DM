@@ -384,7 +384,7 @@
   ;; Listy zapisujemy przez prin1 aby zachowac poprawny format
   ;; ---------------------------------------------------------
 
-  (setq taz_s_f_axes_data (open taz_s_axes_data_file "a"))
+  (setq taz_s_f_axes_data (open taz_s_axes_data_file "w"))
 
   (write-line
     (strcat "(setq taz_s_axis_data_x '"
@@ -408,8 +408,8 @@
 
   ;; taz_s_cleanup_data_file operuje na zmiennej taz_s_data_file
   ;; - kierujemy ja na nasz plik i wywolujemy funkcje wspolna
-  (setq taz_s_data_file taz_s_axes_data_file)
-  (taz_s_cleanup_data_file)
+  ;;(setq taz_s_data_file taz_s_axes_data_file)
+  ;;(taz_s_cleanup_data_file)
 
   (princ)
   
