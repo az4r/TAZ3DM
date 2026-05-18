@@ -1,6 +1,7 @@
 (defun c:taz_s_axes ()
   
   (taz_s_current_settings_save)
+  (command "_LAYER" "_U" "taz_s_axes" "")
 
   (setq taz_s_text_offset 250.0)
   (setq taz_s_circle_radius 250.0)
@@ -413,6 +414,7 @@
 
   (princ)
   
+  (command "_LAYER" "_LO" "taz_s_editing_layer" "")
   (taz_s_current_settings_restore)
   
 )
