@@ -407,14 +407,9 @@
 
   (close taz_s_f_axes_data)
 
-  ;; taz_s_cleanup_data_file operuje na zmiennej taz_s_data_file
-  ;; - kierujemy ja na nasz plik i wywolujemy funkcje wspolna
-  ;;(setq taz_s_data_file taz_s_axes_data_file)
-  ;;(taz_s_cleanup_data_file)
-
   (princ)
   
-  (command "_LAYER" "_LO" "taz_s_editing_layer" "")
+  (command "_LAYER" "_LO" "taz_s_axes" "")
   (taz_s_current_settings_restore)
   
 )

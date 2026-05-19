@@ -2114,11 +2114,23 @@
   )
 
   ;; SWEEP
-  (command "_SWEEP" taz_s_create_beam_profile "" taz_s_create_beam_path)
-  (setq taz_s_substract_solid1 (entlast))
-  (command "_SWEEP" taz_s_create_beam_profile_cut "" "B" (list 0 0) taz_s_create_beam_path_cut)
-  (setq taz_s_substract_solid2 (entlast))
-  (command "SUBTRACT" taz_s_substract_solid1 "" taz_s_substract_solid2 "")
+  
+  (if taz_s_edit_beam_path_mode
+    (progn
+      (command "_SWEEP" taz_s_create_beam_profile "" taz_s_create_beam_path )
+      (setq taz_s_substract_solid1 (entlast))
+      (command "_SWEEP" taz_s_create_beam_profile_cut "" "B" (list 0 0) taz_s_create_beam_path_cut)
+      (setq taz_s_substract_solid2 (entlast))
+      (command "SUBTRACT" taz_s_substract_solid1 "" taz_s_substract_solid2 "")
+    )
+    (progn
+      (command "_SWEEP" taz_s_create_beam_profile "" taz_s_create_beam_path "")
+      (setq taz_s_substract_solid1 (entlast))
+      (command "_SWEEP" taz_s_create_beam_profile_cut "" "B" (list 0 0) taz_s_create_beam_path_cut "")
+      (setq taz_s_substract_solid2 (entlast))
+      (command "SUBTRACT" taz_s_substract_solid1 "" taz_s_substract_solid2 "")
+    )
+  )
   
   ;; zmiana warstwy
   (command "_CHPROP" (ssadd (entlast)) "" "_LA" "taz_s_beam" "")

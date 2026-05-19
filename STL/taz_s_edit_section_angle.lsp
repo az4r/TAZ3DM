@@ -240,8 +240,8 @@
 
   (close taz_s_f_beam_data)
   
-  ;;(setq taz_s_data_file taz_s_f_beam_data)
-  ;;(taz_s_cleanup_data_file)
+  (setq taz_s_data_file taz_s_f_beam_data)
+  (taz_s_cleanup_data_file)
 
   (princ)
   

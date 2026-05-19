@@ -148,7 +148,8 @@
                 (write-line (strcat "(setq taz_s_" taz_s_attribs_object_name_new "_section_position " (itoa taz_s_section_position_old) ")") taz_s_f_beam_data)
 
                 (close taz_s_f_beam_data)
-
+                
+                (setq taz_s_data_file taz_s_f_beam_data)
                 (taz_s_cleanup_data_file)
 
                 (princ "\nNowa bryła wygenerowana – linia sterująca gotowa do kolejnej edycji.")
