@@ -276,9 +276,7 @@
   ;; USTAWIENIE UCS DO OBIEKTU I OBROTY
   ;; ---------------------------------------------------------
   
-  (command "_.UCS" "_OB" (entlast))
-  (command "_.UCS" "_Y" "90")
-  (command "_.UCS" "_Z" "90")
+  (command "_.UCS" "_ZA" taz_s_create_beam_p1 taz_s_create_beam_p2)
   
   (if taz_s_edit_section_angle_mode
     (progn
