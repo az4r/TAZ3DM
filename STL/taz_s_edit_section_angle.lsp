@@ -240,12 +240,12 @@
 
   (close taz_s_f_beam_data)
   
-  (setq taz_s_data_file taz_s_f_beam_data)
-  (taz_s_cleanup_data_file)
-
-  (princ)
+  ;;(setq taz_s_data_file taz_s_f_beam_data)
+  ;;(taz_s_cleanup_data_file)
   
   (command "_LAYER" "_LO" "taz_s_editing_layer" "")
   (taz_s_current_settings_restore)
+  
+  (princ)
   
 )

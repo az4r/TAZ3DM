@@ -1,3 +1,7 @@
+;; ---------------------------------------------------------
+;; taz_s_program_settings_change
+;; Zapisuje aktualne ustawienia programu i dostosowuje pod nakladkę
+;; ---------------------------------------------------------
 (defun taz_s_program_settings_change()
   (setq taz_s_current_locked_layer_fade (getvar "LAYLOCKFADECTL"))
   (setvar "LAYLOCKFADECTL" 0)
@@ -5,9 +9,36 @@
   (setvar "GRIDMODE" 0)
 )
 
+
+;; ---------------------------------------------------------
+;; taz_s_program_settings_restore
+;; Przywraca domyślne ustawienia programu
+;; ---------------------------------------------------------
 (defun taz_s_program_settings_restore()
   (setvar "LAYLOCKFADECTL" taz_s_current_locked_layer_fade)
   (setvar "GRIDMODE" taz_s_current_grid_mode)
+)
+
+;; ---------------------------------------------------------
+;; taz_s_unlock_all_layers
+;; Odblokowuje wszystkie warstwy
+;; ---------------------------------------------------------
+(defun taz_s_unlock_all_layers()
+  (command "_LAYER" "_U" "taz_s_editing_layer" "")
+  (command "_LAYER" "_U" "taz_s_beam" "")
+  (command "_LAYER" "_U" "taz_s_plate" "")
+  (command "_LAYER" "_U" "taz_s_axes" "")
+)
+
+;; ---------------------------------------------------------
+;; taz_s_lock_all_layers
+;; Blokuje wszystkie warstwy
+;; ---------------------------------------------------------
+(defun taz_s_lock_all_layers()
+  (command "_LAYER" "_LO" "taz_s_editing_layer" "")
+  (command "_LAYER" "_LO" "taz_s_beam" "")
+  (command "_LAYER" "_LO" "taz_s_plate" "")
+  (command "_LAYER" "_LO" "taz_s_axes" "")
 )
 
 ;; ---------------------------------------------------------
@@ -76,7 +107,69 @@
 ;; taz_s_data_file wewnątrz katalogu danych projektu.
 ;; ---------------------------------------------------------
 (defun taz_s_cleanup_data_file ()
-  (print "pseudo porzadki")
+  (setq taz_s_cl_file taz_s_data_file)
+
+  ;; --- WCZYTAJ WSZYSTKIE LINIE ---
+  (setq taz_s_cl_f (open taz_s_cl_file "r"))
+  (setq taz_s_cl_all_lines (list))
+  (setq taz_s_cl_line (read-line taz_s_cl_f))
+  (while taz_s_cl_line
+    (setq taz_s_cl_all_lines (append taz_s_cl_all_lines (list taz_s_cl_line)))
+    (setq taz_s_cl_line (read-line taz_s_cl_f))
+  )
+  (close taz_s_cl_f)
+
+  ;; --- ODWROC LISTE ---
+  (setq taz_s_cl_reversed (reverse taz_s_cl_all_lines))
+
+  ;; --- PRZEJDZ OD KONCA ---
+  (setq taz_s_cl_seen (list))
+  (setq taz_s_cl_result (list))
+  (setq taz_s_cl_i 0)
+
+  (while (< taz_s_cl_i (length taz_s_cl_reversed))
+
+    (setq taz_s_cl_line (nth taz_s_cl_i taz_s_cl_reversed))
+
+    (if (= (substr taz_s_cl_line 1 6) "(setq ")
+      (progn
+        ;; Wyciagnij nazwe zmiennej - szukaj spacji bez vl
+        (setq taz_s_cl_rest (substr taz_s_cl_line 7))
+        (setq taz_s_cl_sp nil)
+        (setq taz_s_cl_j 1)
+        (while (and (not taz_s_cl_sp) (<= taz_s_cl_j (strlen taz_s_cl_rest)))
+          (if (= (substr taz_s_cl_rest taz_s_cl_j 1) " ")
+            (setq taz_s_cl_sp taz_s_cl_j)
+          )
+          (setq taz_s_cl_j (1+ taz_s_cl_j))
+        )
+        (setq taz_s_cl_varname (substr taz_s_cl_rest 1 (1- taz_s_cl_sp)))
+
+        ;; Jesli zmienna nie byla jeszcze widziana - dodaj do wyniku
+        (if (not (member taz_s_cl_varname taz_s_cl_seen))
+          (progn
+            (setq taz_s_cl_seen (append taz_s_cl_seen (list taz_s_cl_varname)))
+            (setq taz_s_cl_result (append taz_s_cl_result (list taz_s_cl_line)))
+          )
+        )
+      )
+    )
+
+    (setq taz_s_cl_i (1+ taz_s_cl_i))
+  )
+
+  ;; --- ODWROC WYNIK ---
+  (setq taz_s_cl_result (reverse taz_s_cl_result))
+
+  ;; --- ZAPISZ DO PLIKU ---
+  (setq taz_s_cl_f (open taz_s_cl_file "w"))
+  (setq taz_s_cl_i 0)
+  (while (< taz_s_cl_i (length taz_s_cl_result))
+    (write-line (nth taz_s_cl_i taz_s_cl_result) taz_s_cl_f)
+    (setq taz_s_cl_i (1+ taz_s_cl_i))
+  )
+  (close taz_s_cl_f)
+
 )
 
 ;; ---------------------------------------------------------
@@ -164,6 +257,8 @@
     )
   )
   (taz_s_current_settings_restore)
+  
+  (princ)
 )
 
 (taz_s_start)

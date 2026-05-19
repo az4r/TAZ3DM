@@ -406,10 +406,10 @@
     taz_s_f_axes_data)
 
   (close taz_s_f_axes_data)
-
-  (princ)
   
   (command "_LAYER" "_LO" "taz_s_axes" "")
   (taz_s_current_settings_restore)
+  
+  (princ)
   
 )

@@ -149,8 +149,8 @@
 
                 (close taz_s_f_beam_data)
                 
-                (setq taz_s_data_file taz_s_f_beam_data)
-                (taz_s_cleanup_data_file)
+                ;;(setq taz_s_data_file taz_s_f_beam_data)
+                ;;(taz_s_cleanup_data_file)
 
                 (princ "\nNowa bryła wygenerowana – linia sterująca gotowa do kolejnej edycji.")
               )
@@ -318,6 +318,7 @@
 
   (princ "\nEdycja ścieżki otwarta – przesuń, obróć lub rozciągnij linię sterującą.")
   (princ "\nAby zakończyć edycję wpisz: taz_s_edit_beam_path_stop")
+  
   (princ)
 
 )

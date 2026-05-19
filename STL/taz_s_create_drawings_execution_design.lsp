@@ -1,5 +1,8 @@
 (defun c:taz_s_create_drawings_execution_design ()
   
+  (taz_s_current_settings_save)
+  (taz_s_unlock_all_layers)
+  
   ;; ---------------------------------
   ;; WIDOK TYMCZASOWY - ZAPIS / NADPISANIE
   ;; ---------------------------------
@@ -638,6 +641,9 @@
   
   (command "-VIEW" "_R" "taz_s_temp_view")
   (command "-VIEW" "_D" "taz_s_temp_view")
+  
+  (taz_s_lock_all_layers)
+  (taz_s_current_settings_restore)
   
   (princ)
 )
