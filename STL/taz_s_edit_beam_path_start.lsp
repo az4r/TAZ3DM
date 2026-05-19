@@ -45,6 +45,7 @@
                   (= taz_s_cmd "PASTECLIP")
                   (= taz_s_cmd "_PASTECLIP"))
             (progn
+              (command "-VIEW" "_S" "taz_s_current_view")
               (setq taz_s_cleanup_layer (ssget "_X" (list (cons 8 (getvar "CLAYER")) '(-4 . "<NOT") (cons 5 (cdr (assoc 5 (entget taz_s_attribs_line)))) '(-4 . "NOT>"))))
               (command "_.ERASE" taz_s_cleanup_layer "")
             )
@@ -66,6 +67,8 @@
                     (= taz_s_cmd "GRIP_STRETCH")
                     (= taz_s_cmd "_GRIP_STRETCH"))
               (progn
+                
+                (command "-VIEW" "_S" "taz_s_current_view")
 
                 ;; pobierz nowe punkty linii sterującej
                 (setq taz_s_line_now_p1 (cdr (assoc 10 (entget taz_s_attribs_line))))

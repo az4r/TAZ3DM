@@ -261,6 +261,7 @@
             (getpoint "\nPodaj pierwszy punkt linii: "))
       (setq taz_s_create_beam_p2
             (getpoint taz_s_create_beam_p1 "\nPodaj drugi punkt linii: "))
+      (command "-VIEW" "_S" "taz_s_current_view")
     )
   )
 
@@ -282,6 +283,7 @@
     (progn
       (print (strcat "Aktualnie profil znajduje się pod kątem: " (rtos (eval (read (strcat "taz_s_" taz_s_attribs_object_name "_section_angle"))) 2 2)))
       (set (read (strcat "taz_s_" taz_s_attribs_object_name "_section_angle")) (getreal "\nPodaj kąt obrotu przekroju: "))
+      (command "-VIEW" "_S" "taz_s_current_view")
       (command "_ZOOM" "_SCALE" "1000X")
       (command "_.UCS" "_Z" (eval (read (strcat "taz_s_" taz_s_attribs_object_name "_section_angle"))))
       (taz_s_edit_section_position_parametres)
@@ -295,6 +297,7 @@
     (progn
       (print (strcat "Aktualnie profil znajduje się w pozycji: " (rtos (eval (read (strcat "taz_s_" taz_s_attribs_object_name "_section_position"))) 2 2)))
       (set (read (strcat "taz_s_" taz_s_attribs_object_name "_section_position")) (getint "\nPodaj punkt położenia przekroju względem osi od 0 do 9: "))
+      (command "-VIEW" "_S" "taz_s_current_view")
       (command "_ZOOM" "_SCALE" "1000X")
       (command "_.UCS" "_Z" (eval (read (strcat "taz_s_" taz_s_attribs_object_name "_section_angle"))))
       (taz_s_edit_section_position_parametres)
