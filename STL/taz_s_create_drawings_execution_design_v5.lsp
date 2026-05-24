@@ -260,6 +260,16 @@
 
     (command "3DPOLY" taz_s_p1 taz_s_p2 taz_s_p3 taz_s_p4 taz_s_p1 "")
 
+    ;; wyciagnij prostokat wzdluz osi Y o 1000
+    (command "EXTRUDE" (entlast) "" "1000" "0")
+    
+    (command "_ZOOM" "_OBJECT" (entlast) "")
+    (command "_ZOOM" "_SCALE" "1000X")
+    (command "REGEN")
+
+    ;; cofnij o 500 w przeciwnym kierunku niz wyciagniecie
+    (command "MOVE" (entlast) "" "0,0,0" "0,-500,0")
+
     (setq taz_s_copy_nr (+ taz_s_copy_nr 1))
     (setq taz_s_tmp (cdr taz_s_tmp))
   )
@@ -292,6 +302,17 @@
 
     (command "3DPOLY" taz_s_p1 taz_s_p2 taz_s_p3 taz_s_p4 taz_s_p1 "")
 
+    ;; wyciagnij prostokat wzdluz osi X o 1000
+    (command "EXTRUDE" (entlast) "" "1000" "0")
+    
+    (command "_ZOOM" "_OBJECT" (entlast) "")
+    (command "_ZOOM" "_SCALE" "1000X")
+    (command "REGEN")
+
+    ;; przesuń bryłę o -500 wzdluz X
+    ;; aby plaszczyzna byla w srodku bryly
+    (command "MOVE" (entlast) "" "0,0,0" "-500,0,0")
+
     (setq taz_s_copy_nr (+ taz_s_copy_nr 1))
     (setq taz_s_tmp (cdr taz_s_tmp))
   )
@@ -323,6 +344,17 @@
     (setq taz_s_p4 (list taz_s_xmin taz_s_ymax (+ taz_s_z taz_s_zoffset)))
 
     (command "3DPOLY" taz_s_p1 taz_s_p2 taz_s_p3 taz_s_p4 taz_s_p1 "")
+
+    ;; wyciagnij prostokat wzdluz osi Z o 1000
+    (command "EXTRUDE" (entlast) "" "1000" "0")
+    
+    (command "_ZOOM" "_OBJECT" (entlast) "")
+    (command "_ZOOM" "_SCALE" "1000X")
+    (command "REGEN")
+
+    ;; przesuń bryłę o -500 wzdluz Z
+    ;; aby plaszczyzna byla w srodku bryly
+    (command "MOVE" (entlast) "" "0,0,0" "0,0,-500")
 
     (setq taz_s_copy_nr (+ taz_s_copy_nr 1))
     (setq taz_s_tmp (cdr taz_s_tmp))
