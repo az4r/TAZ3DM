@@ -200,6 +200,20 @@
   (setq taz_s_zmax taz_s_m)
 
   ;; ---------------------------------
+  ;; MARGINES PROSTOKATOW
+  ;; Powiekszamy granice o 1000 jednostek
+  ;; aby bryly mialy zapas i nic nie umknelo
+  ;; na pozniejszych widokach
+  ;; ---------------------------------
+
+  (setq taz_s_xmin (- taz_s_xmin 1000))
+  (setq taz_s_xmax (+ taz_s_xmax 1000))
+  (setq taz_s_ymin (- taz_s_ymin 1000))
+  (setq taz_s_ymax (+ taz_s_ymax 1000))
+  (setq taz_s_zmin (- taz_s_zmin 1000))
+  (setq taz_s_zmax (+ taz_s_zmax 1000))
+
+  ;; ---------------------------------
   ;; WARSTWA
   ;; ---------------------------------
 
