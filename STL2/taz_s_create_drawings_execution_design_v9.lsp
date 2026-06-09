@@ -173,6 +173,7 @@
     (ssget "X"
       (list
         (cons -4 "<AND")
+        (cons 67 0)                                          ; tylko model space
         (cons -4 "<NOT") (cons 8 "taz_s_axes")             (cons -4 "NOT>")
         (cons -4 "<NOT") (cons 8 "taz_s_execution_design") (cons -4 "NOT>")
         (cons -4 "<NOT") (cons 8 "taz_s_editing_layer")    (cons -4 "NOT>")
@@ -237,24 +238,14 @@
 
       (setq taz_s_target_ent (nth taz_s_ei taz_s_elems_list))
 
-      (if (< taz_s_ei (- taz_s_total_elems 1))
+      ;; Zawsze kopiuj bryle tnaca - oryginał zostaje nienaruszony
+      (setq taz_s_cut_ss1 (ssadd))
+      (ssadd taz_s_cut_ename taz_s_cut_ss1)
+      (command "COPY" taz_s_cut_ss1 "" "0,0,0" "0,0,0")
+      (setq taz_s_cut_work_ent (entlast))
 
-        ;; Nie ostatni: kopiuj bryle tnaca w to samo miejsce
-        (progn
-          (setq taz_s_cut_ss1 (ssadd))
-          (ssadd taz_s_cut_ename taz_s_cut_ss1)
-          (command "COPY" taz_s_cut_ss1 "" "0,0,0" "0,0,0")
-          (setq taz_s_cut_work_ent (entlast))
-        )
-
-        ;; Ostatni: uzyj oryginalnej bryly tnacej
-        (setq taz_s_cut_work_ent taz_s_cut_ename)
-      )
-
-      ;; Ustaw warstwe na editing_layer - wynik intersect trafi tam
       (setvar "CLAYER" "taz_s_editing_layer")
 
-      ;; Wykonaj INTERSECT
       (setq taz_s_int_ss (ssadd))
       (ssadd taz_s_cut_work_ent taz_s_int_ss)
       (ssadd taz_s_target_ent   taz_s_int_ss)
@@ -262,6 +253,10 @@
 
       (setq taz_s_ei (+ taz_s_ei 1))
     )
+
+    ;; Oryginal bryly tnacej nigdy nie byl uzyty w INTERSECT
+    ;; wiec na pewno nadal istnieje - kasujemy go tutaj
+    (entdel taz_s_cut_ename)
   )
 
   ;; ---------------------------------
@@ -283,6 +278,7 @@
       (ssget "X"
         (list
           (cons -4 "<AND")
+          (cons 67 0)                                          ; tylko model space
           (cons -4 "<NOT") (cons 8 "taz_s_axes")             (cons -4 "NOT>")
           (cons -4 "<NOT") (cons 8 "taz_s_execution_design") (cons -4 "NOT>")
           (cons -4 "<NOT") (cons 8 "taz_s_editing_layer")    (cons -4 "NOT>")
@@ -392,6 +388,11 @@
     (setq taz_s_tmp (cdr taz_s_tmp))
     
     (command "_layout" "_N" taz_s_view_name)
+    (command "_layout" "_S" taz_s_view_name)
+    (command "_mspace")
+    (command "-VIEW" "_R" taz_s_view_name)
+    (command "_pspace")
+    (command "_layout" "_S" "Model")
     
   )
 
@@ -452,6 +453,11 @@
     (setq taz_s_tmp (cdr taz_s_tmp))
     
     (command "_layout" "_N" taz_s_view_name)
+    (command "_layout" "_S" taz_s_view_name)
+    (command "_mspace")
+    (command "-VIEW" "_R" taz_s_view_name)
+    (command "_pspace")
+    (command "_layout" "_S" "Model")
     
   )
 
@@ -512,6 +518,11 @@
     (setq taz_s_tmp (cdr taz_s_tmp))
     
     (command "_layout" "_N" taz_s_view_name)
+    (command "_layout" "_S" taz_s_view_name)
+    (command "_mspace")
+    (command "-VIEW" "_R" taz_s_view_name)
+    (command "_pspace")
+    (command "_layout" "_S" "Model")
     
   )
 
