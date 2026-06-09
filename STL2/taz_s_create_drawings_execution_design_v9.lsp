@@ -390,6 +390,9 @@
 
     (setq taz_s_copy_nr (+ taz_s_copy_nr 1))
     (setq taz_s_tmp (cdr taz_s_tmp))
+    
+    (command "_layout" "_N" taz_s_view_name)
+    
   )
 
   ;; -------------------------------------------------------
@@ -447,6 +450,9 @@
 
     (setq taz_s_copy_nr (+ taz_s_copy_nr 1))
     (setq taz_s_tmp (cdr taz_s_tmp))
+    
+    (command "_layout" "_N" taz_s_view_name)
+    
   )
 
   ;; -------------------------------------------------------
@@ -504,6 +510,9 @@
 
     (setq taz_s_copy_nr (+ taz_s_copy_nr 1))
     (setq taz_s_tmp (cdr taz_s_tmp))
+    
+    (command "_layout" "_N" taz_s_view_name)
+    
   )
 
   (taz_s_lock_all_layers)
