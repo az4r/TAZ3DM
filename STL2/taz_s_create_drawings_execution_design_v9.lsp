@@ -541,6 +541,11 @@
     (command "_layout" "_S" taz_s_view_name)
     (command "_mspace")
     (command "-VIEW" "_R" taz_s_view_name)
+    
+    (command "_UCS" "_W")
+    (command "_UCS" (list 0 taz_s_zoffset taz_s_zoffset) "")
+    ;;(command "_PLAN" "_C")
+    
     (setq taz_s_solprof_ss (ssget "_X" (list (cons 8 "taz_s_execution_design"))))    
     (command "_.SOLPROF")
     (command taz_s_solprof_ss)
