@@ -278,7 +278,7 @@
       (ssget "X"
         (list
           (cons -4 "<AND")
-          (cons 67 0)                                          ; tylko model space
+          (cons 67 0)
           (cons -4 "<NOT") (cons 8 "taz_s_axes")             (cons -4 "NOT>")
           (cons -4 "<NOT") (cons 8 "taz_s_execution_design") (cons -4 "NOT>")
           (cons -4 "<NOT") (cons 8 "taz_s_editing_layer")    (cons -4 "NOT>")
@@ -292,11 +292,20 @@
         (setq taz_s_ci 0)
         (while (< taz_s_ci (sslength taz_s_all_candidate))
           (setq taz_s_cand_ent (ssname taz_s_all_candidate taz_s_ci))
-          (if (not (taz_s_is_original taz_s_cand_ent))
+
+          ;; ❗ FILTR: tylko 3DSOLID
+          (setq taz_s_ed (entget taz_s_cand_ent))
+          (setq taz_s_type (cdr (assoc 0 taz_s_ed)))
+
+          (if (and
+                (equal taz_s_type "3DSOLID")
+                (not (taz_s_is_original taz_s_cand_ent))
+              )
             (setq taz_s_copy_enames
               (append taz_s_copy_enames (list taz_s_cand_ent))
             )
           )
+
           (setq taz_s_ci (+ taz_s_ci 1))
         )
       )
@@ -304,6 +313,7 @@
 
     taz_s_copy_enames
   )
+
 
   ;; ---------------------------------
   ;; POMOCNICZA: POBIERZ NAZWE OSI Z WIERSZA
@@ -391,6 +401,11 @@
     (command "_layout" "_S" taz_s_view_name)
     (command "_mspace")
     (command "-VIEW" "_R" taz_s_view_name)
+    (setq taz_s_solprof_ss (ssget "_X" (list (cons 8 "taz_s_execution_design"))))    
+    (command "_.SOLPROF")
+    (command taz_s_solprof_ss)
+    (command "" "_Y" "_Y" "_Y")
+    (command "_.ERASE" (ssget "_X" (list (cons 8 "taz_s_execution_design"))) "")
     (command "_pspace")
     (command "_layout" "_S" "Model")
     
@@ -456,6 +471,11 @@
     (command "_layout" "_S" taz_s_view_name)
     (command "_mspace")
     (command "-VIEW" "_R" taz_s_view_name)
+    (setq taz_s_solprof_ss (ssget "_X" (list (cons 8 "taz_s_execution_design"))))    
+    (command "_.SOLPROF")
+    (command taz_s_solprof_ss)
+    (command "" "_Y" "_Y" "_Y")
+    (command "_.ERASE" (ssget "_X" (list (cons 8 "taz_s_execution_design"))) "")
     (command "_pspace")
     (command "_layout" "_S" "Model")
     
@@ -521,6 +541,11 @@
     (command "_layout" "_S" taz_s_view_name)
     (command "_mspace")
     (command "-VIEW" "_R" taz_s_view_name)
+    (setq taz_s_solprof_ss (ssget "_X" (list (cons 8 "taz_s_execution_design"))))    
+    (command "_.SOLPROF")
+    (command taz_s_solprof_ss)
+    (command "" "_Y" "_Y" "_Y")
+    (command "_.ERASE" (ssget "_X" (list (cons 8 "taz_s_execution_design"))) "")
     (command "_pspace")
     (command "_layout" "_S" "Model")
     
