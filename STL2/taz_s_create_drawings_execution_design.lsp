@@ -293,7 +293,7 @@
         (while (< taz_s_ci (sslength taz_s_all_candidate))
           (setq taz_s_cand_ent (ssname taz_s_all_candidate taz_s_ci))
 
-          ;; ❗ FILTR: tylko 3DSOLID
+          ;; FILTR: tylko 3DSOLID
           (setq taz_s_ed (entget taz_s_cand_ent))
           (setq taz_s_type (cdr (assoc 0 taz_s_ed)))
 
@@ -347,6 +347,8 @@
   ;; -------------------------------------------------------
 
   (setq taz_s_tmp taz_s_x_data)
+  
+  (setq taz_s_initial_solprof 1)
 
   (while taz_s_tmp
 
@@ -403,9 +405,16 @@
     ;;(command "-VIEW" "_R" taz_s_view_name)
     
     (command "_UCS" "_W")
+    (if (= taz_s_initial_solprof 1)
+      (command "_PLAN" "_W")
+    )
+    
+    (setq taz_s_initial_solprof 0)
+    
     (command "_UCS" "_O" (list (/ (+ taz_s_xmin taz_s_xmax) 2.0) taz_s_y taz_s_zoffset))
     (command "_UCS" "_X" 90)
     (command "_PLAN" "_C")
+    ;;(command "_REGEN")
     
     (setq taz_s_solprof_ss (ssget "_X" (list (cons 8 "taz_s_execution_design"))))    
     (command "_.SOLPROF")
@@ -479,10 +488,12 @@
     ;;(command "-VIEW" "_R" taz_s_view_name)
     
     (command "_UCS" "_W")
+    ;;(command "_PLAN" "_W")
     (command "_UCS" "_O" (list taz_s_x (/ (+ taz_s_ymin taz_s_ymax) 2.0) taz_s_zoffset))
     (command "_UCS" "_X" 90)
     (command "_UCS" "_Y" 90)
     (command "_PLAN" "_C")
+    ;;(command "_REGEN")
     
     (setq taz_s_solprof_ss (ssget "_X" (list (cons 8 "taz_s_execution_design"))))    
     (command "_.SOLPROF")
@@ -558,6 +569,7 @@
     (command "_UCS" "_W")
     (command "_UCS" "_O" (list 0 0 taz_s_zoffset))
     (command "_PLAN" "_C")
+    ;;(command "_REGEN")
     
     (setq taz_s_solprof_ss (ssget "_X" (list (cons 8 "taz_s_execution_design"))))    
     (command "_.SOLPROF")
