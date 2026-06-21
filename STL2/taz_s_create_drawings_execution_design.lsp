@@ -1,3 +1,120 @@
+(defun taz_s_merge_solprof_layers ()
+
+  (setq taz_s_layer_rec (tblnext "LAYER" T))
+
+  (while taz_s_layer_rec
+
+    (setq taz_s_layer_name
+          (cdr (assoc 2 taz_s_layer_rec))
+    )
+
+    ;; PH* -> taz_s_hidden
+    (if (= "PH"
+           (strcase
+             (substr
+               taz_s_layer_name
+               1
+               (min 2 (strlen taz_s_layer_name))
+             )
+           )
+        )
+      (progn
+
+        (setq taz_s_ss
+              (ssget "X"
+                     (list (cons 8 taz_s_layer_name))
+              )
+        )
+
+        (if taz_s_ss
+          (progn
+
+            (setq taz_s_idx (sslength taz_s_ss))
+
+            (repeat taz_s_idx
+
+              (setq taz_s_idx (1- taz_s_idx))
+
+              (setq taz_s_ent
+                    (ssname taz_s_ss taz_s_idx)
+              )
+
+              (setq taz_s_edata
+                    (entget taz_s_ent)
+              )
+
+              (entmod
+                (subst
+                  (cons 8 "taz_s_hidden")
+                  (assoc 8 taz_s_edata)
+                  taz_s_edata
+                )
+              )
+
+            )
+          )
+        )
+      )
+    )
+
+    ;; PV* -> taz_s_visible
+    (if (= "PV"
+           (strcase
+             (substr
+               taz_s_layer_name
+               1
+               (min 2 (strlen taz_s_layer_name))
+             )
+           )
+        )
+      (progn
+
+        (setq taz_s_ss
+              (ssget "X"
+                     (list (cons 8 taz_s_layer_name))
+              )
+        )
+
+        (if taz_s_ss
+          (progn
+
+            (setq taz_s_idx (sslength taz_s_ss))
+
+            (repeat taz_s_idx
+
+              (setq taz_s_idx (1- taz_s_idx))
+
+              (setq taz_s_ent
+                    (ssname taz_s_ss taz_s_idx)
+              )
+
+              (setq taz_s_edata
+                    (entget taz_s_ent)
+              )
+
+              (entmod
+                (subst
+                  (cons 8 "taz_s_visible")
+                  (assoc 8 taz_s_edata)
+                  taz_s_edata
+                )
+              )
+
+            )
+          )
+        )
+      )
+    )
+
+    (setq taz_s_layer_rec (tblnext "LAYER"))
+  )
+
+  (command "_.REGEN")
+
+  (princ "\nPrzeniesiono obiekty z warstw PH* i PV*.")
+  (princ)
+)
+
 (defun c:taz_s_create_drawings_execution_design ()
   
   (taz_s_current_settings_save)
@@ -581,6 +698,8 @@
     
   )
 
+  (command "-LAYDEL" "N" "taz_s_execution_design" "" "_Y")
+  (taz_s_merge_solprof_layers)
   (taz_s_lock_all_layers)
   (taz_s_current_settings_restore)
   (princ)
