@@ -138,7 +138,66 @@
 
     (setq taz_s_layer_rec (tblnext "LAYER"))
   )
+  
+  ;; Purge bloków *u...
+  (setq taz_s_block_rec (tblnext "BLOCK" T))
 
+  (while taz_s_block_rec
+
+    (setq taz_s_block_name
+          (cdr (assoc 2 taz_s_block_rec))
+    )
+
+    (if (= "*U"
+          (strcase
+            (substr
+              taz_s_block_name
+              1
+              (min 2 (strlen taz_s_block_name))
+            )
+          )
+        )
+      (command "_.-purge" "_B" taz_s_block_name "_N")
+    )
+
+    (setq taz_s_block_rec (tblnext "BLOCK"))
+  )
+
+  ;; Usuń puste warstwy PH* i PV*
+  (setq taz_s_layer_rec (tblnext "LAYER" T))
+
+  (while taz_s_layer_rec
+
+    (setq taz_s_layer_name
+          (cdr (assoc 2 taz_s_layer_rec))
+    )
+
+    (if (or
+          (= "PH"
+            (strcase
+              (substr
+                taz_s_layer_name
+                1
+                (min 2 (strlen taz_s_layer_name))
+              )
+            )
+          )
+          (= "PV"
+            (strcase
+              (substr
+                taz_s_layer_name
+                1
+                (min 2 (strlen taz_s_layer_name))
+              )
+            )
+          )
+        )
+      (command "_.-layer" "_delete" taz_s_layer_name "")
+    )
+
+    (setq taz_s_layer_rec (tblnext "LAYER"))
+  )
+  
   (command "_.REGEN")
 
   (princ "\nPrzeniesiono obiekty z warstw PH* i PV*.")
