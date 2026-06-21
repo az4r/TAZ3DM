@@ -20,6 +20,21 @@
         )
       (progn
 
+        ;; Rozbij bloki
+        (setq taz_s_blkss
+              (ssget "X"
+                     (list
+                       (cons 8 taz_s_layer_name)
+                       (cons 0 "INSERT")
+                     )
+              )
+        )
+
+        (if taz_s_blkss
+          (command "_.explode" taz_s_blkss "")
+        )
+
+        ;; Pobierz wszystkie obiekty po rozbiciu
         (setq taz_s_ss
               (ssget "X"
                      (list (cons 8 taz_s_layer_name))
@@ -69,6 +84,21 @@
         )
       (progn
 
+        ;; Rozbij bloki
+        (setq taz_s_blkss
+              (ssget "X"
+                     (list
+                       (cons 8 taz_s_layer_name)
+                       (cons 0 "INSERT")
+                     )
+              )
+        )
+
+        (if taz_s_blkss
+          (command "_.explode" taz_s_blkss "")
+        )
+
+        ;; Pobierz wszystkie obiekty po rozbiciu
         (setq taz_s_ss
               (ssget "X"
                      (list (cons 8 taz_s_layer_name))
