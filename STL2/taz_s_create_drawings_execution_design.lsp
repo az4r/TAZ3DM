@@ -322,6 +322,17 @@
   (setq taz_s_list taz_s_xvals) (taz_s_max) (setq taz_s_ymax taz_s_m)
   (setq taz_s_list taz_s_zvals) (taz_s_min) (setq taz_s_zmin taz_s_m)
   (setq taz_s_list taz_s_zvals) (taz_s_max) (setq taz_s_zmax taz_s_m)
+  
+  ;; ---------------------------------
+  ;; GRANICE BEZ MARGINESU
+  ;; ---------------------------------
+  
+  (setq taz_s_xmin_nomargin taz_s_xmin)
+  (setq taz_s_xmax_nomargin taz_s_xmax)
+  (setq taz_s_ymin_nomargin taz_s_ymin)
+  (setq taz_s_ymax_nomargin taz_s_ymax)
+  (setq taz_s_zmin_nomargin taz_s_zmin)
+  (setq taz_s_zmax_nomargin taz_s_zmax)
 
   ;; ---------------------------------
   ;; MARGINES PROSTOKATOW
@@ -563,13 +574,23 @@
     (setq taz_s_y taz_s_val)
     (setq taz_s_zoffset (* taz_s_copy_nr 100000))
 
-    ;; KROK 1: narysuj bryle tnaca
+    ;; KROK 1: narysuj bryle tnaca i osie
     (setvar "CLAYER" "taz_s_execution_design")
+    
+    (setq taz_s_p1_nomargin (list taz_s_xmin_nomargin taz_s_y (+ taz_s_zmin taz_s_zoffset)))
+    (setq taz_s_p2_nomargin (list taz_s_xmax_nomargin taz_s_y (+ taz_s_zmin taz_s_zoffset)))
+    (setq taz_s_p3_nomargin (list taz_s_xmax_nomargin taz_s_y (+ taz_s_zmax taz_s_zoffset)))
+    (setq taz_s_p4_nomargin (list taz_s_xmin_nomargin taz_s_y (+ taz_s_zmax taz_s_zoffset)))
 
     (setq taz_s_p1 (list taz_s_xmin taz_s_y (+ taz_s_zmin taz_s_zoffset)))
     (setq taz_s_p2 (list taz_s_xmax taz_s_y (+ taz_s_zmin taz_s_zoffset)))
     (setq taz_s_p3 (list taz_s_xmax taz_s_y (+ taz_s_zmax taz_s_zoffset)))
     (setq taz_s_p4 (list taz_s_xmin taz_s_y (+ taz_s_zmax taz_s_zoffset)))
+    
+    (command "3DPOLY" taz_s_p1_nomargin taz_s_p4_nomargin "")
+    (command "_.CHPROP" (entlast) "" "LA" "taz_s_axes" "")
+    (command "3DPOLY" taz_s_p2_nomargin taz_s_p3_nomargin "")
+    (command "_.CHPROP" (entlast) "" "LA" "taz_s_axes" "")
 
     (command "3DPOLY" taz_s_p1 taz_s_p2 taz_s_p3 taz_s_p4 taz_s_p1 "")
     (command "EXTRUDE" (entlast) "" "1000" "0")
