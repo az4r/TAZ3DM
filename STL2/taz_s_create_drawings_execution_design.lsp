@@ -557,6 +557,26 @@
   ;; =================================================================
 
   (setq taz_s_copy_nr 1)
+  
+  (defun taz_s_get_number (taz_s_txt / taz_s_i taz_s_len taz_s_pos)
+    (setq taz_s_i 1
+          taz_s_len (strlen taz_s_txt)
+          taz_s_pos 0)
+
+    ;; szukamy pierwszej spacji
+    (while (and (<= taz_s_i taz_s_len) (= taz_s_pos 0))
+      (if (= (substr taz_s_txt taz_s_i 1) " ")
+        (setq taz_s_pos taz_s_i)
+      )
+      (setq taz_s_i (1+ taz_s_i))
+    )
+
+    ;; pobieramy wszystko po spacji
+    (if taz_s_pos
+      (atof (substr taz_s_txt (1+ taz_s_pos)))
+      0.0
+    )
+  )
 
   ;; -------------------------------------------------------
   ;; PRZYPADKI X
@@ -577,6 +597,19 @@
     ;; KROK 1: narysuj bryle tnaca i osie
     (setvar "CLAYER" "taz_s_execution_design")
     
+    (foreach taz_s_axis taz_s_axis_data_y
+
+      (setq taz_s_x (taz_s_get_number taz_s_axis))
+
+      ;; linia osi (góra / dół)
+      (setq taz_s_p1_axis (list taz_s_x taz_s_y (+ taz_s_zmin taz_s_zoffset)))
+      (setq taz_s_p2_axis (list taz_s_x taz_s_y (+ taz_s_zmax taz_s_zoffset)))
+
+      (command "3DPOLY" taz_s_p1_axis taz_s_p2_axis "")
+      (command "_.CHPROP" (entlast) "" "LA" "taz_s_axes" "")
+    )
+
+    
     (setq taz_s_p1_nomargin (list taz_s_xmin_nomargin taz_s_y (+ taz_s_zmin taz_s_zoffset)))
     (setq taz_s_p2_nomargin (list taz_s_xmax_nomargin taz_s_y (+ taz_s_zmin taz_s_zoffset)))
     (setq taz_s_p3_nomargin (list taz_s_xmax_nomargin taz_s_y (+ taz_s_zmax taz_s_zoffset)))
@@ -586,11 +619,6 @@
     (setq taz_s_p2 (list taz_s_xmax taz_s_y (+ taz_s_zmin taz_s_zoffset)))
     (setq taz_s_p3 (list taz_s_xmax taz_s_y (+ taz_s_zmax taz_s_zoffset)))
     (setq taz_s_p4 (list taz_s_xmin taz_s_y (+ taz_s_zmax taz_s_zoffset)))
-    
-    (command "3DPOLY" taz_s_p1_nomargin taz_s_p4_nomargin "")
-    (command "_.CHPROP" (entlast) "" "LA" "taz_s_axes" "")
-    (command "3DPOLY" taz_s_p2_nomargin taz_s_p3_nomargin "")
-    (command "_.CHPROP" (entlast) "" "LA" "taz_s_axes" "")
 
     (command "3DPOLY" taz_s_p1 taz_s_p2 taz_s_p3 taz_s_p4 taz_s_p1 "")
     (command "EXTRUDE" (entlast) "" "1000" "0")
@@ -670,6 +698,19 @@
     ;; KROK 1: narysuj bryle tnaca i osie
     (setvar "CLAYER" "taz_s_execution_design")
     
+    (foreach taz_s_axis taz_s_axis_data_x
+
+      ;; Y z tekstu osi
+      (setq taz_s_y (taz_s_get_number taz_s_axis))
+
+      ;; punkty osi
+      (setq taz_s_p1_axis (list taz_s_x taz_s_y (+ taz_s_zmin taz_s_zoffset)))
+      (setq taz_s_p2_axis (list taz_s_x taz_s_y (+ taz_s_zmax taz_s_zoffset)))
+
+      (command "3DPOLY" taz_s_p1_axis taz_s_p2_axis "")
+      (command "_.CHPROP" (entlast) "" "LA" "taz_s_axes" "")
+    )
+    
     (setq taz_s_p1_nomargin (list taz_s_x taz_s_ymin_nomargin (+ taz_s_zmin taz_s_zoffset)))
     (setq taz_s_p2_nomargin (list taz_s_x taz_s_ymax_nomargin (+ taz_s_zmin taz_s_zoffset)))
     (setq taz_s_p3_nomargin (list taz_s_x taz_s_ymax_nomargin (+ taz_s_zmax taz_s_zoffset)))
@@ -679,11 +720,6 @@
     (setq taz_s_p2 (list taz_s_x taz_s_ymax (+ taz_s_zmin taz_s_zoffset)))
     (setq taz_s_p3 (list taz_s_x taz_s_ymax (+ taz_s_zmax taz_s_zoffset)))
     (setq taz_s_p4 (list taz_s_x taz_s_ymin (+ taz_s_zmax taz_s_zoffset)))
-    
-    (command "3DPOLY" taz_s_p1_nomargin taz_s_p4_nomargin "")
-    (command "_.CHPROP" (entlast) "" "LA" "taz_s_axes" "")
-    (command "3DPOLY" taz_s_p2_nomargin taz_s_p3_nomargin "")
-    (command "_.CHPROP" (entlast) "" "LA" "taz_s_axes" "")
 
     (command "3DPOLY" taz_s_p1 taz_s_p2 taz_s_p3 taz_s_p4 taz_s_p1 "")
     (command "EXTRUDE" (entlast) "" "1000" "0")
