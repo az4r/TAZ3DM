@@ -795,6 +795,50 @@
     ;; KROK 1: narysuj bryle tnaca i osie
     (setvar "CLAYER" "taz_s_execution_design")
     
+    ;; ----------------------------------------
+    ;; Osie X (linie równoległe do osi Y)
+    ;; ----------------------------------------
+
+    (foreach taz_s_axis taz_s_axis_data_y
+
+      (setq taz_s_x (taz_s_get_number taz_s_axis))
+
+      (setq taz_s_p1_axis
+            (list taz_s_x
+                  taz_s_ymin_nomargin
+                  (+ taz_s_z taz_s_zoffset)))
+
+      (setq taz_s_p2_axis
+            (list taz_s_x
+                  taz_s_ymax_nomargin
+                  (+ taz_s_z taz_s_zoffset)))
+
+      (command "3DPOLY" taz_s_p1_axis taz_s_p2_axis "")
+      (command "_.CHPROP" (entlast) "" "LA" "taz_s_axes" "")
+    )
+
+    ;; ----------------------------------------
+    ;; Osie Y (linie równoległe do osi X)
+    ;; ----------------------------------------
+
+    (foreach taz_s_axis taz_s_axis_data_x
+
+      (setq taz_s_y (taz_s_get_number taz_s_axis))
+
+      (setq taz_s_p1_axis
+            (list taz_s_xmin_nomargin
+                  taz_s_y
+                  (+ taz_s_z taz_s_zoffset)))
+
+      (setq taz_s_p2_axis
+            (list taz_s_xmax_nomargin
+                  taz_s_y
+                  (+ taz_s_z taz_s_zoffset)))
+
+      (command "3DPOLY" taz_s_p1_axis taz_s_p2_axis "")
+      (command "_.CHPROP" (entlast) "" "LA" "taz_s_axes" "")
+    )
+    
     (setq taz_s_p1_nomargin (list taz_s_xmin taz_s_ymin_nomargin (+ taz_s_z taz_s_zoffset)))
     (setq taz_s_p2_nomargin (list taz_s_xmin_nomargin taz_s_ymin (+ taz_s_z taz_s_zoffset)))
     (setq taz_s_p3_nomargin (list taz_s_xmax_nomargin taz_s_ymin (+ taz_s_z taz_s_zoffset)))
@@ -808,15 +852,6 @@
     (setq taz_s_p2 (list taz_s_xmax taz_s_ymin (+ taz_s_z taz_s_zoffset)))
     (setq taz_s_p3 (list taz_s_xmax taz_s_ymax (+ taz_s_z taz_s_zoffset)))
     (setq taz_s_p4 (list taz_s_xmin taz_s_ymax (+ taz_s_z taz_s_zoffset)))
-    
-    (command "3DPOLY" taz_s_p2_nomargin taz_s_p7_nomargin "")
-    (command "_.CHPROP" (entlast) "" "LA" "taz_s_axes" "")
-    (command "3DPOLY" taz_s_p3_nomargin taz_s_p6_nomargin "")
-    (command "_.CHPROP" (entlast) "" "LA" "taz_s_axes" "")
-    (command "3DPOLY" taz_s_p1_nomargin taz_s_p4_nomargin "")
-    (command "_.CHPROP" (entlast) "" "LA" "taz_s_axes" "")
-    (command "3DPOLY" taz_s_p5_nomargin taz_s_p8_nomargin "")
-    (command "_.CHPROP" (entlast) "" "LA" "taz_s_axes" "")
 
     (command "3DPOLY" taz_s_p1 taz_s_p2 taz_s_p3 taz_s_p4 taz_s_p1 "")
     (command "EXTRUDE" (entlast) "" "1000" "0")
