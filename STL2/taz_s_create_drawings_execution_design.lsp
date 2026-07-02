@@ -823,6 +823,10 @@
 
       (command "3DPOLY" taz_s_p1_axis taz_s_p2_axis "")
       (command "_.CHPROP" (entlast) "" "LA" "taz_s_axes" "")
+      (command "_.CIRCLE" (list taz_s_x (- taz_s_ymin 250.0) (+ taz_s_z taz_s_zoffset)) 250.0)
+      (command "_.CHPROP" (entlast) "" "LA" "taz_s_axes" "")
+      (command "_.CIRCLE" (list taz_s_x (+ taz_s_ymax 250.0) (+ taz_s_z taz_s_zoffset)) 250.0)
+      (command "_.CHPROP" (entlast) "" "LA" "taz_s_axes" "")
     )
 
     ;; ----------------------------------------
@@ -844,6 +848,10 @@
                   (+ taz_s_z taz_s_zoffset)))
 
       (command "3DPOLY" taz_s_p1_axis taz_s_p2_axis "")
+      (command "_.CHPROP" (entlast) "" "LA" "taz_s_axes" "")
+      (command "_.CIRCLE" (list (- taz_s_xmin 250.0) taz_s_y (+ taz_s_z taz_s_zoffset)) 250.0)
+      (command "_.CHPROP" (entlast) "" "LA" "taz_s_axes" "")
+      (command "_.CIRCLE" (list (+ taz_s_xmax 250.0) taz_s_y (+ taz_s_z taz_s_zoffset)) 250.0)
       (command "_.CHPROP" (entlast) "" "LA" "taz_s_axes" "")
     )
     
