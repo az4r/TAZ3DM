@@ -713,6 +713,10 @@
 
       (command "3DPOLY" taz_s_p1_axis taz_s_p2_axis "")
       (command "_.CHPROP" (entlast) "" "LA" "taz_s_axes" "")
+      (command "_.CIRCLE" (list taz_s_x taz_s_y (- (+ taz_s_zmin taz_s_zoffset) 250.0)) 250.0)
+      (setq taz_s_circle_center (list taz_s_x taz_s_y (- (+ taz_s_zmin taz_s_zoffset) 250.0)))
+      (command "_.ROTATE3D" (entlast) "" "Y" taz_s_circle_center "90")
+      (command "_.CHPROP" (entlast) "" "LA" "taz_s_axes" "")
     )
     
     (setq taz_s_p1_nomargin (list taz_s_x taz_s_ymin_nomargin (+ taz_s_zmin taz_s_zoffset)))
