@@ -818,6 +818,7 @@
     (foreach taz_s_axis taz_s_axis_data_y
 
       (setq taz_s_x (taz_s_get_number taz_s_axis))
+      (setq taz_s_axis_name (taz_s_get_axis_name taz_s_axis))
 
       (setq taz_s_p1_axis
             (list taz_s_x
@@ -831,9 +832,27 @@
 
       (command "3DPOLY" taz_s_p1_axis taz_s_p2_axis "")
       (command "_.CHPROP" (entlast) "" "LA" "taz_s_axes" "")
-      (command "_.CIRCLE" (list taz_s_x (- taz_s_ymin 250.0) (+ taz_s_z taz_s_zoffset)) 250.0)
+
+      ;; dolne kółko
+      (setq taz_s_circle_center
+            (list taz_s_x
+                  (- taz_s_ymin 250.0)
+                  (+ taz_s_z taz_s_zoffset)))
+
+      (command "_.CIRCLE" taz_s_circle_center 250.0)
       (command "_.CHPROP" (entlast) "" "LA" "taz_s_axes" "")
-      (command "_.CIRCLE" (list taz_s_x (+ taz_s_ymax 250.0) (+ taz_s_z taz_s_zoffset)) 250.0)
+      (command "_.TEXT" "_J" "_MC" taz_s_circle_center 150.0 0 taz_s_axis_name)
+      (command "_.CHPROP" (entlast) "" "LA" "taz_s_axes" "")
+
+      ;; górne kółko
+      (setq taz_s_circle_center
+            (list taz_s_x
+                  (+ taz_s_ymax 250.0)
+                  (+ taz_s_z taz_s_zoffset)))
+
+      (command "_.CIRCLE" taz_s_circle_center 250.0)
+      (command "_.CHPROP" (entlast) "" "LA" "taz_s_axes" "")
+      (command "_.TEXT" "_J" "_MC" taz_s_circle_center 150.0 0 taz_s_axis_name)
       (command "_.CHPROP" (entlast) "" "LA" "taz_s_axes" "")
     )
 
@@ -844,6 +863,7 @@
     (foreach taz_s_axis taz_s_axis_data_x
 
       (setq taz_s_y (taz_s_get_number taz_s_axis))
+      (setq taz_s_axis_name (taz_s_get_axis_name taz_s_axis))
 
       (setq taz_s_p1_axis
             (list taz_s_xmin
@@ -857,9 +877,27 @@
 
       (command "3DPOLY" taz_s_p1_axis taz_s_p2_axis "")
       (command "_.CHPROP" (entlast) "" "LA" "taz_s_axes" "")
-      (command "_.CIRCLE" (list (- taz_s_xmin 250.0) taz_s_y (+ taz_s_z taz_s_zoffset)) 250.0)
+
+      ;; lewe kółko
+      (setq taz_s_circle_center
+            (list (- taz_s_xmin 250.0)
+                  taz_s_y
+                  (+ taz_s_z taz_s_zoffset)))
+
+      (command "_.CIRCLE" taz_s_circle_center 250.0)
       (command "_.CHPROP" (entlast) "" "LA" "taz_s_axes" "")
-      (command "_.CIRCLE" (list (+ taz_s_xmax 250.0) taz_s_y (+ taz_s_z taz_s_zoffset)) 250.0)
+      (command "_.TEXT" "_J" "_MC" taz_s_circle_center 150.0 0 taz_s_axis_name)
+      (command "_.CHPROP" (entlast) "" "LA" "taz_s_axes" "")
+
+      ;; prawe kółko
+      (setq taz_s_circle_center
+            (list (+ taz_s_xmax 250.0)
+                  taz_s_y
+                  (+ taz_s_z taz_s_zoffset)))
+
+      (command "_.CIRCLE" taz_s_circle_center 250.0)
+      (command "_.CHPROP" (entlast) "" "LA" "taz_s_axes" "")
+      (command "_.TEXT" "_J" "_MC" taz_s_circle_center 150.0 0 taz_s_axis_name)
       (command "_.CHPROP" (entlast) "" "LA" "taz_s_axes" "")
     )
     
