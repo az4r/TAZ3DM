@@ -600,6 +600,7 @@
     (foreach taz_s_axis taz_s_axis_data_y
 
       (setq taz_s_x (taz_s_get_number taz_s_axis))
+      (setq taz_s_axis_name (taz_s_get_axis_name taz_s_axis))
 
       ;; linia osi (góra / dół)
       (setq taz_s_p1_axis (list taz_s_x taz_s_y (+ taz_s_zmin taz_s_zoffset)))
@@ -609,6 +610,9 @@
       (command "_.CHPROP" (entlast) "" "LA" "taz_s_axes" "")
       (command "_.CIRCLE" (list taz_s_x taz_s_y (- (+ taz_s_zmin taz_s_zoffset) 250.0)) 250.0)
       (setq taz_s_circle_center (list taz_s_x taz_s_y (- (+ taz_s_zmin taz_s_zoffset) 250.0)))
+      (command "_.ROTATE3D" (entlast) "" "X" taz_s_circle_center "90")
+      (command "_.CHPROP" (entlast) "" "LA" "taz_s_axes" "")
+      (command "_.TEXT" "_J" "_MC" taz_s_circle_center 150.0 0 taz_s_axis_name)
       (command "_.ROTATE3D" (entlast) "" "X" taz_s_circle_center "90")
       (command "_.CHPROP" (entlast) "" "LA" "taz_s_axes" "")
     )
