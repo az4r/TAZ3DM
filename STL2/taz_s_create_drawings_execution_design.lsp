@@ -444,33 +444,61 @@
   ;; Dla wszystkich elementow oprocz ostatniego: kopiuje bryle tnaca
   ;; w to samo miejsce i uzywa duplikatu. Ostatni element: uzywa
   ;; oryginalnej bryly tnacej bezposrednio (oszczednosc jednego COPY).
+  ;;
+  ;; Dodatkowo: przed kazdym intersectem sprawdzamy przez -INTERFERE
+  ;; (na warstwie "0") czy przeciecie danej pary w ogole wystepuje.
+  ;; Jesli tak - entlast sie zmienia (powstaje bryla interferencji) -
+  ;; wtedy sprzatamy wszystko co powstalo na warstwie "0". Jesli nie -
+  ;; entlast sie nie zmienia - nic nie sprzatamy, bo nic nie powstalo.
+  ;; Po samym -INTERFERE lecimy pusta komenda kilka razy, zeby
+  ;; wyzerowac linie polecen niezaleznie od tego czy padlo pytanie
+  ;; o utworzenie bryly wynikowej czy nie.
   ;; ---------------------------------
-
   (defun taz_s_intersect_pairs (taz_s_cut_ename taz_s_elems_list)
-
     (setq taz_s_ei 0)
     (setq taz_s_total_elems (length taz_s_elems_list))
-
     (while (< taz_s_ei taz_s_total_elems)
-
       (setq taz_s_target_ent (nth taz_s_ei taz_s_elems_list))
+
+      ;; --- SPRAWDZENIE CZY WYSTEPUJE PRZECIECIE (-INTERFERE) ---
+      (setvar "CLAYER" "0")
+      (setq taz_s_entlast_before (entlast))
+
+      (setq taz_s_if_set1 (ssadd))
+      (ssadd taz_s_cut_ename taz_s_if_set1)
+
+      (setq taz_s_if_set2 (ssadd))
+      (ssadd taz_s_target_ent taz_s_if_set2)
+
+      (command "-INTERFERE" taz_s_if_set1 "" taz_s_if_set2 "" "Y")
+      (command)
+      (command)
+      (command)
+
+      (setq taz_s_entlast_after (entlast))
+
+      (if (/= taz_s_entlast_before taz_s_entlast_after)
+        (progn
+          (setq taz_s_layer0_ss (ssget "X" (list (cons 8 "0"))))
+          (if taz_s_layer0_ss
+            (command "ERASE" taz_s_layer0_ss "")
+          )
+        )
+      )
+      ;; --- KONIEC SPRAWDZENIA ---
 
       ;; Zawsze kopiuj bryle tnaca - oryginał zostaje nienaruszony
       (setq taz_s_cut_ss1 (ssadd))
       (ssadd taz_s_cut_ename taz_s_cut_ss1)
       (command "COPY" taz_s_cut_ss1 "" "0,0,0" "0,0,0")
       (setq taz_s_cut_work_ent (entlast))
-
       (setvar "CLAYER" "taz_s_editing_layer")
-
       (setq taz_s_int_ss (ssadd))
       (ssadd taz_s_cut_work_ent taz_s_int_ss)
       (ssadd taz_s_target_ent   taz_s_int_ss)
       (command "INTERSECT" taz_s_int_ss "")
-
       (setq taz_s_ei (+ taz_s_ei 1))
     )
-
     ;; Oryginal bryly tnacej nigdy nie byl uzyty w INTERSECT
     ;; wiec na pewno nadal istnieje - kasujemy go tutaj
     (entdel taz_s_cut_ename)
