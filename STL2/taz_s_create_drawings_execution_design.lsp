@@ -417,6 +417,39 @@
   )
 
   ;; ---------------------------------
+  ;; POMOCNICZA: PRZENIES ATRYBUTY Z ORYGINALU NA KOPIE
+  ;; Zaraz po COPY oryginal i kopia istnieja obok siebie. Nowe
+  ;; kopie powstaja w tej samej kolejnosci co taz_s_orig_enames,
+  ;; wiec parujemy je pozycyjnie. Dla kazdej pary tworzymy nowa
+  ;; zmienna globalna pod handle KOPII, z wartoscia skopiowana
+  ;; z odpowiedniego oryginalu - jesli oryginal w ogole ja mial.
+  ;; ---------------------------------
+
+  (defun taz_s_copy_attrs_to_copies (taz_s_last_before)
+    (setq taz_s_new_ent (entnext taz_s_last_before))
+    (setq taz_s_map_index 0)
+    (while taz_s_new_ent
+      (setq taz_s_orig_h
+        (cdr (assoc 5 (entget (nth taz_s_map_index taz_s_orig_enames))))
+      )
+      (setq taz_s_new_h (cdr (assoc 5 (entget taz_s_new_ent))))
+
+      (setq taz_s_orig_attr6_sym (read (strcat "taz_s_" taz_s_orig_h "_attr6")))
+      (if (boundp taz_s_orig_attr6_sym)
+        (set (read (strcat "taz_s_" taz_s_new_h "_attr6")) (eval taz_s_orig_attr6_sym))
+      )
+
+      (setq taz_s_orig_attr7_sym (read (strcat "taz_s_" taz_s_orig_h "_attr7")))
+      (if (boundp taz_s_orig_attr7_sym)
+        (set (read (strcat "taz_s_" taz_s_new_h "_attr7")) (eval taz_s_orig_attr7_sym))
+      )
+
+      (setq taz_s_map_index (+ taz_s_map_index 1))
+      (setq taz_s_new_ent (entnext taz_s_new_ent))
+    )
+  )
+
+  ;; ---------------------------------
   ;; POMOCNICZA: sprawdz czy ename jest na liscie oryginalu
   ;; ---------------------------------
 
@@ -485,7 +518,7 @@
           )
           (print "Przeciecie wystepuje!")
           (print (eval (read (strcat "taz_s_" (cdr (assoc 5 (entget taz_s_target_ent))) "_attr6"))))
-          
+          (print (eval (read (strcat "taz_s_" (cdr (assoc 5 (entget taz_s_target_ent))) "_attr7"))))
         )
       )
       ;; --- KONIEC SPRAWDZENIA ---
@@ -497,7 +530,7 @@
       (setq taz_s_cut_work_ent (entlast))
       (setvar "CLAYER" "taz_s_editing_layer")
       (setq taz_s_int_ss (ssadd))
-      (ssadd taz_s_cut_work_ent taz_s_int_ss)
+      (ssadd taz_s_cut_work_ent taz_s_int_ss)      
       (ssadd taz_s_target_ent   taz_s_int_ss)
       (command "INTERSECT" taz_s_int_ss "")
       (setq taz_s_ei (+ taz_s_ei 1))
@@ -677,9 +710,11 @@
     (command "-VIEW" "_R" "taz_s_view_cutting_view")
 
     ;; KROK 2: skopiuj oryginalny model
+    (setq taz_s_last_before_copy (entlast))
     (if taz_s_orig_ss
       (command "COPY" taz_s_orig_ss "" "0,0,0" (list 0 0 taz_s_zoffset))
     )
+    (taz_s_copy_attrs_to_copies taz_s_last_before_copy)
 
     ;; KROK 3: zbierz enames kopii biezacego przypadku
     (setq taz_s_copy_enames (taz_s_collect_copy_enames))
@@ -786,9 +821,11 @@
     (command "-VIEW" "_R" "taz_s_view_cutting_view")
 
     ;; KROK 2: skopiuj oryginalny model
+    (setq taz_s_last_before_copy (entlast))
     (if taz_s_orig_ss
       (command "COPY" taz_s_orig_ss "" "0,0,0" (list 0 0 taz_s_zoffset))
     )
+    (taz_s_copy_attrs_to_copies taz_s_last_before_copy)
 
     ;; KROK 3: zbierz enames kopii biezacego przypadku
     (setq taz_s_copy_enames (taz_s_collect_copy_enames))
@@ -964,9 +1001,11 @@
     (command "-VIEW" "_R" "taz_s_view_cutting_view")
 
     ;; KROK 2: skopiuj oryginalny model
+    (setq taz_s_last_before_copy (entlast))
     (if taz_s_orig_ss
       (command "COPY" taz_s_orig_ss "" "0,0,0" (list 0 0 taz_s_zoffset))
     )
+    (taz_s_copy_attrs_to_copies taz_s_last_before_copy)
 
     ;; KROK 3: zbierz enames kopii biezacego przypadku
     (setq taz_s_copy_enames (taz_s_collect_copy_enames))
