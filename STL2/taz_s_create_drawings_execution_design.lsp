@@ -31,7 +31,7 @@
         )
 
         (if taz_s_blkss
-          (command "_.explode" taz_s_blkss "")
+          (command "_.explode" taz_s_blkss)
         )
 
         ;; Pobierz wszystkie obiekty po rozbiciu
@@ -95,7 +95,7 @@
         )
 
         (if taz_s_blkss
-          (command "_.explode" taz_s_blkss "")
+          (command "_.explode" taz_s_blkss)
         )
 
         ;; Pobierz wszystkie obiekty po rozbiciu
@@ -483,6 +483,7 @@
           (if taz_s_layer0_ss
             (command "ERASE" taz_s_layer0_ss "")
           )
+          (print "Przeciecie wystepuje!")
         )
       )
       ;; --- KONIEC SPRAWDZENIA ---
