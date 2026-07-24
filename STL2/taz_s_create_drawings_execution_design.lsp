@@ -484,6 +484,8 @@
             (command "ERASE" taz_s_layer0_ss "")
           )
           (print "Przeciecie wystepuje!")
+          (print (eval (read (strcat "taz_s_" (cdr (assoc 5 (entget taz_s_target_ent))) "_attr6"))))
+          
         )
       )
       ;; --- KONIEC SPRAWDZENIA ---
