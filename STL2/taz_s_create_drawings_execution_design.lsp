@@ -522,7 +522,7 @@
           (setq taz_s_annotation_text
           (strcat
             (eval (read (strcat "taz_s_" (cdr (assoc 5 (entget taz_s_target_ent))) "_attr6")))
-            "\\P"
+            " "
             (eval (read (strcat "taz_s_" (cdr (assoc 5 (entget taz_s_target_ent))) "_attr7")))
           )
           )          
@@ -532,11 +532,13 @@
               (cons 10 (list 0.0 0.0 0.0))
               (cons 1 taz_s_annotation_text)
               (cons 7 "Standard")
+              (cons 8 "taz_s_axes")   ; <- warstwa od razu przy tworzeniu
               (cons 40 2.5) ; wysokość tekstu
               (cons 71 1)   ; wyrównanie: 1 = górne lewe
+              (cons 90 16)
             )
           )
-          (command "_.CHPROP" (entlast) "" "LA" "taz_s_axes" "")          
+          ;;(command "_.CHPROP" (entlast) "" "LA" "taz_s_axes" "")          
         )
       )
       ;; --- KONIEC SPRAWDZENIA ---
