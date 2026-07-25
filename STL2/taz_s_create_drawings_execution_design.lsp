@@ -491,11 +491,11 @@
       (list
         (/ (+ (car taz_s_annotation_p1) (car taz_s_annotation_p2)) 2.0)
         (/ (+ (cadr taz_s_annotation_p1) (cadr taz_s_annotation_p2)) 2.0)
-        (/ (+ (caddr taz_s_annotation_p1) (caddr taz_s_annotation_p2)) 2.0)
+        (+ (/ (+ (caddr taz_s_annotation_p1) (caddr taz_s_annotation_p2)) 2.0) taz_s_zoffset)
       )
       (progn
         ;;(princ (strcat "\nUWAGA: brak danych linii sterujacej " taz_s_annotation_h ", uzywam (0,0,0)"))
-        (list 0.0 0.0 0.0)
+        (list 0.0 0.0 taz_s_zoffset)
       )
     )
   )
