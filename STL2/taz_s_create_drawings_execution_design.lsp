@@ -528,27 +528,22 @@
     (setq taz_s_total_elems (length taz_s_elems_list))
     (while (< taz_s_ei taz_s_total_elems)
       (setq taz_s_target_ent (nth taz_s_ei taz_s_elems_list))
-
       ;; --- SPRAWDZENIE CZY WYSTEPUJE PRZECIECIE (-INTERFERE) ---
       (setvar "CLAYER" "0")
-      (setq taz_s_entlast_before (entlast))
-
+      (setq taz_s_layer0_ss_before (ssget "X" (list (cons 8 "0"))))
+      (setq taz_s_layer0_count_before (if taz_s_layer0_ss_before (sslength taz_s_layer0_ss_before) 0))
       (setq taz_s_if_set1 (ssadd))
       (ssadd taz_s_cut_ename taz_s_if_set1)
-
       (setq taz_s_if_set2 (ssadd))
       (ssadd taz_s_target_ent taz_s_if_set2)
-
       (command "-INTERFERE" taz_s_if_set1 "" taz_s_if_set2 "" "Y")
       (command)
       (command)
       (command)
-
-      (setq taz_s_entlast_after (entlast))
-
-      (if (/= taz_s_entlast_before taz_s_entlast_after)
+      (setq taz_s_layer0_ss (ssget "X" (list (cons 8 "0"))))
+      (setq taz_s_layer0_count_after (if taz_s_layer0_ss (sslength taz_s_layer0_ss) 0))
+      (if (> taz_s_layer0_count_after taz_s_layer0_count_before)
         (progn
-          (setq taz_s_layer0_ss (ssget "X" (list (cons 8 "0"))))
           (if taz_s_layer0_ss
             (command "ERASE" taz_s_layer0_ss "")
           )
@@ -578,7 +573,6 @@
         )
       )
       ;; --- KONIEC SPRAWDZENIA ---
-
       ;; Zawsze kopiuj bryle tnaca - oryginał zostaje nienaruszony
       (setq taz_s_cut_ss1 (ssadd))
       (ssadd taz_s_cut_ename taz_s_cut_ss1)
