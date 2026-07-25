@@ -443,6 +443,16 @@
       (if (boundp taz_s_orig_attr7_sym)
         (set (read (strcat "taz_s_" taz_s_new_h "_attr7")) (eval taz_s_orig_attr7_sym))
       )
+      
+      (setq taz_s_orig_sweep_p1_sym (read (strcat "taz_s_" taz_s_orig_h "_sweep_p1")))
+      (if (boundp taz_s_orig_sweep_p1_sym)
+        (set (read (strcat "taz_s_" taz_s_new_h "_sweep_p1")) (eval taz_s_orig_sweep_p1_sym))
+      )
+
+      (setq taz_s_orig_sweep_p2_sym (read (strcat "taz_s_" taz_s_orig_h "_sweep_p2")))
+      (if (boundp taz_s_orig_sweep_p2_sym)
+        (set (read (strcat "taz_s_" taz_s_new_h "_sweep_p2")) (eval taz_s_orig_sweep_p2_sym))
+      )
 
       (setq taz_s_map_index (+ taz_s_map_index 1))
       (setq taz_s_new_ent (entnext taz_s_new_ent))
@@ -464,6 +474,32 @@
     )
     taz_s_found
   )
+  
+  ;; ---------------------------------
+  ;; POMOCNICZA: SRODEK SCIEZKI SWEEP ORYGINALNEGO PROFILU
+  ;; ---------------------------------
+
+  (defun taz_s_get_center (taz_s_ent)
+    (setq taz_s_annotation_h (cdr (assoc 5 (entget taz_s_ent))))
+    (setq taz_s_annotation_p1
+      (eval (read (strcat "taz_s_" taz_s_annotation_h "_sweep_p1")))
+    )
+    (setq taz_s_annotation_p2
+      (eval (read (strcat "taz_s_" taz_s_annotation_h "_sweep_p2")))
+    )
+    (if (and taz_s_annotation_p1 taz_s_annotation_p2)
+      (list
+        (/ (+ (car taz_s_annotation_p1) (car taz_s_annotation_p2)) 2.0)
+        (/ (+ (cadr taz_s_annotation_p1) (cadr taz_s_annotation_p2)) 2.0)
+        (/ (+ (caddr taz_s_annotation_p1) (caddr taz_s_annotation_p2)) 2.0)
+      )
+      (progn
+        ;;(princ (strcat "\nUWAGA: brak danych linii sterujacej " taz_s_annotation_h ", uzywam (0,0,0)"))
+        (list 0.0 0.0 0.0)
+      )
+    )
+  )
+  
 
   ;; ---------------------------------
   ;; POMOCNICZA: INTERSECT PARAMI
@@ -529,12 +565,12 @@
           (entmake
             (list
               (cons 0 "MTEXT")
-              (cons 10 (list 0.0 0.0 0.0))
+              (cons 10 (taz_s_get_center taz_s_target_ent))
               (cons 1 taz_s_annotation_text)
               (cons 7 "Standard")
               (cons 8 "taz_s_axes")   ; <- warstwa od razu przy tworzeniu
-              (cons 40 2.5) ; wysokość tekstu
-              (cons 71 1)   ; wyrównanie: 1 = górne lewe
+              (cons 40 150) ; wysokość tekstu
+              (cons 71 5)   ; wyrównanie: 1 = górne lewe
               (cons 90 16)
             )
           )
