@@ -1,4 +1,4 @@
-(defun c:taz_s_annotation_scale ( / dcl_id selected_index default_index taz_s_annotation_scale_dialog_result)
+(defun taz_s_annotation_scale ( / dcl_id selected_index default_index taz_s_annotation_scale_dialog_result)
 
   ;; jeśli zmienna istnieje – użyjemy jej jako propozycji
   ;; jeśli nie – ustawimy domyślnie 1
@@ -83,5 +83,44 @@
 
   ;; debug
   (princ (strcat "\nWybrana skala opisu = " (itoa taz_s_annotation_scale)))
+  ;; ustawienie wysokości tekstu na podstawie skali
+  ;; toporne if-y, jeden pod drugim
+
+  (if (= taz_s_annotation_scale 1)
+    (setq taz_s_annotation_scale_label 2.5)
+  )
+
+  (if (= taz_s_annotation_scale 2)
+    (setq taz_s_annotation_scale_label 5)
+  )
+
+  (if (= taz_s_annotation_scale 5)
+    (setq taz_s_annotation_scale_label 12.5)
+  )
+
+  (if (= taz_s_annotation_scale 10)
+    (setq taz_s_annotation_scale_label 25)
+  )
+
+  (if (= taz_s_annotation_scale 20)
+    (setq taz_s_annotation_scale_label 50)
+  )
+
+  (if (= taz_s_annotation_scale 25)
+    (setq taz_s_annotation_scale_label 62.5)
+  )
+
+  (if (= taz_s_annotation_scale 50)
+    (setq taz_s_annotation_scale_label 125)
+  )
+
+  (if (= taz_s_annotation_scale 100)
+    (setq taz_s_annotation_scale_label 250)
+  )
+
+  (if (= taz_s_annotation_scale 200)
+    (setq taz_s_annotation_scale_label 500)
+  )
+
   (princ)
 )

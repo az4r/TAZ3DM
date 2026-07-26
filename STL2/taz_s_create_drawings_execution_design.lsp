@@ -679,8 +679,8 @@
               (cons 1 taz_s_annotation_text)
               (cons 7 "Standard")
               (cons 8 "taz_s_labels")   ; <- warstwa od razu przy tworzeniu
-              (cons 40 150) ; wysokość tekstu
-              (cons 71 5)   ; wyrównanie: 1 = górne lewe
+              (cons 40 taz_s_annotation_scale_label) ; wysokość tekstu
+              (cons 71 5)   ; wyrównanie: 5 = środek centrum
               (cons 90 16)
             )
           )
@@ -796,6 +796,7 @@
   ;;   4. Intersect parami (wyniki na taz_s_editing_layer)
   ;; =================================================================
 
+  (taz_s_annotation_scale)
   (setq taz_s_copy_nr 1)
   
   (defun taz_s_get_number (taz_s_txt / taz_s_i taz_s_len taz_s_pos)
