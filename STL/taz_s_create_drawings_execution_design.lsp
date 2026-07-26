@@ -633,6 +633,29 @@
             (eval (read (strcat "taz_s_" (cdr (assoc 5 (entget taz_s_orig_ent))) "_attr7")))
           )
           )
+          
+          (if (= (eval (read (strcat "taz_s_" (cdr (assoc 5 (entget taz_s_orig_ent))) "_attr6"))) "Katownik rownoramienny")
+            (progn
+              (setq taz_s_annotation_text
+                (strcat
+                  "L "
+                  (eval (read (strcat "taz_s_" (cdr (assoc 5 (entget taz_s_orig_ent))) "_attr7")))
+                )
+              )
+            )
+          )
+          
+          (if (= (eval (read (strcat "taz_s_" (cdr (assoc 5 (entget taz_s_orig_ent))) "_attr6"))) "Katownik nierownoramienny")
+            (progn
+              (setq taz_s_annotation_text
+                (strcat
+                  "L "
+                  (eval (read (strcat "taz_s_" (cdr (assoc 5 (entget taz_s_orig_ent))) "_attr7")))
+                )
+              )
+            )
+          )
+          
           ;; Punkt wstawienia - skorygowany wzgledem plaszczyzny ciecia
           (setq taz_s_annotation_ins_pt (taz_s_get_center taz_s_orig_ent))
           (cond
