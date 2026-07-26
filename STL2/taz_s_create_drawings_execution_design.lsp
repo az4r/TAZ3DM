@@ -528,39 +528,50 @@
     (setq taz_s_total_elems (length taz_s_elems_list))
     (while (< taz_s_ei taz_s_total_elems)
       (setq taz_s_target_ent (nth taz_s_ei taz_s_elems_list))
+      (setq taz_s_orig_ent (nth taz_s_ei taz_s_orig_enames))
+
       ;; --- SPRAWDZENIE CZY WYSTEPUJE PRZECIECIE (-INTERFERE) ---
+      ;; Kopiujemy bryle tnaca na miejsce oryginalu (bez zoffset),
+      ;; sprawdzamy przeciecie wzgledem ORYGINALU, potem kasujemy kopie.
       (setvar "CLAYER" "0")
+
+      (setq taz_s_cut_tmp_ss (ssadd))
+      (ssadd taz_s_cut_ename taz_s_cut_tmp_ss)
+      (command "COPY" taz_s_cut_tmp_ss "" "0,0,0" (list 0 0 (- taz_s_zoffset)))
+      (setq taz_s_cut_tmp_ent (entlast))
+
       (setq taz_s_layer0_ss_before (ssget "X" (list (cons 8 "0"))))
       (setq taz_s_layer0_count_before (if taz_s_layer0_ss_before (sslength taz_s_layer0_ss_before) 0))
+
       (setq taz_s_if_set1 (ssadd))
-      (ssadd taz_s_cut_ename taz_s_if_set1)
+      (ssadd taz_s_cut_tmp_ent taz_s_if_set1)
       (setq taz_s_if_set2 (ssadd))
-      (ssadd taz_s_target_ent taz_s_if_set2)
+      (ssadd taz_s_orig_ent taz_s_if_set2)
+
       (command "-INTERFERE" taz_s_if_set1 "" taz_s_if_set2 "" "Y")
       (command)
       (command)
       (command)
+
       (setq taz_s_layer0_ss (ssget "X" (list (cons 8 "0"))))
       (setq taz_s_layer0_count_after (if taz_s_layer0_ss (sslength taz_s_layer0_ss) 0))
+
       (if (> taz_s_layer0_count_after taz_s_layer0_count_before)
         (progn
           (if taz_s_layer0_ss
             (command "ERASE" taz_s_layer0_ss "")
           )
-          ;;(print "Przeciecie wystepuje!")
-          ;;(print (eval (read (strcat "taz_s_" (cdr (assoc 5 (entget taz_s_target_ent))) "_attr6"))))
-          ;;(print (eval (read (strcat "taz_s_" (cdr (assoc 5 (entget taz_s_target_ent))) "_attr7"))))
           (setq taz_s_annotation_text
           (strcat
-            (eval (read (strcat "taz_s_" (cdr (assoc 5 (entget taz_s_target_ent))) "_attr6")))
+            (eval (read (strcat "taz_s_" (cdr (assoc 5 (entget taz_s_orig_ent))) "_attr6")))
             " "
-            (eval (read (strcat "taz_s_" (cdr (assoc 5 (entget taz_s_target_ent))) "_attr7")))
+            (eval (read (strcat "taz_s_" (cdr (assoc 5 (entget taz_s_orig_ent))) "_attr7")))
           )
           )          
           (entmake
             (list
               (cons 0 "MTEXT")
-              (cons 10 (taz_s_get_center taz_s_target_ent))
+              (cons 10 (taz_s_get_center taz_s_orig_ent))
               (cons 1 taz_s_annotation_text)
               (cons 7 "Standard")
               (cons 8 "taz_s_axes")   ; <- warstwa od razu przy tworzeniu
@@ -569,10 +580,13 @@
               (cons 90 16)
             )
           )
-          ;;(command "_.CHPROP" (entlast) "" "LA" "taz_s_axes" "")          
         )
       )
+
+      ;; usun tymczasowa kopie bryly tnacej - nie jest juz potrzebna
+      (entdel taz_s_cut_tmp_ent)
       ;; --- KONIEC SPRAWDZENIA ---
+
       ;; Zawsze kopiuj bryle tnaca - oryginał zostaje nienaruszony
       (setq taz_s_cut_ss1 (ssadd))
       (ssadd taz_s_cut_ename taz_s_cut_ss1)
