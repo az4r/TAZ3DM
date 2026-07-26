@@ -15,8 +15,8 @@
     (princ)
   )
   
-  ;; pobranie parametrów Rura okragla
-  (if (= taz_s_family "Rura okragla")
+  ;; pobranie parametrów CHS
+  (if (= taz_s_family "CHS")
     (taz_s_section_hsbeam_draw_parametres_rura_okragla)
     (princ)
   )
@@ -1891,7 +1891,7 @@
     )  
   )
   
-  (if (= taz_s_family "Rura okragla")
+  (if (= taz_s_family "CHS")
     (progn
     ;; ============================
     ;; WYPROWADZENIE WSPÓŁRZĘDNYCH
@@ -2076,8 +2076,8 @@
     (princ)
   )
   
-  ;; rysowanie Rura okragla
-  (if (= taz_s_family "Rura okragla")
+  ;; rysowanie CHS
+  (if (= taz_s_family "CHS")
     (progn
       (command "_CIRCLE" taz_s_p_center taz_s_R_out)
       (command "_CHPROP" (entlast) "" "C" "6" "")
@@ -2100,7 +2100,7 @@
     )
   )
   
-  (if (= taz_s_family "Rura okragla")
+  (if (= taz_s_family "CHS")
     (progn
   ;; wybór profilu
   (setq taz_s_create_beam_profile

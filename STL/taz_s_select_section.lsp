@@ -58,7 +58,7 @@
       (progn 
         (add_list "SHS")
         (add_list "RHS")
-        (add_list "Rura okragla")
+        (add_list "CHS")
       )
     )
 
@@ -531,8 +531,8 @@
       )
     )
 
-    ;; Rury - Rura okragla (CHS)
-    (if (and (= taz_s_cat_val "Rury") (= taz_s_fam_val "Rura okragla")) 
+    ;; Rury - CHS (CHS)
+    (if (and (= taz_s_cat_val "Rury") (= taz_s_fam_val "CHS")) 
       (progn 
         (add_list "508x12.7")
         (add_list "508x9.5")
@@ -751,7 +751,7 @@
     (progn 
       (if (= taz_s_tmp_family "SHS") (set_tile "taz_s_fam" "0"))
       (if (= taz_s_tmp_family "RHS") (set_tile "taz_s_fam" "1"))
-      (if (= taz_s_tmp_family "Rura okragla") (set_tile "taz_s_fam" "2"))
+      (if (= taz_s_tmp_family "CHS") (set_tile "taz_s_fam" "2"))
     )
   )
 
@@ -1627,8 +1627,8 @@
      )
     )
 
-    ;; Rury - Rura okragla (CHS)
-    ((= taz_s_tmp_family "Rura okragla")
+    ;; Rury - CHS (CHS)
+    ((= taz_s_tmp_family "CHS")
      (if (= taz_s_tmp_type "508x12.7") (set_tile "taz_s_typ" "0"))
      (if (= taz_s_tmp_type "508x9.5") (set_tile "taz_s_typ" "1"))
      (if (= taz_s_tmp_type "457.2x12.7") (set_tile "taz_s_typ" "2"))
@@ -1987,7 +1987,7 @@
       (progn 
         (add_list "SHS")
         (add_list "RHS")
-        (add_list "Rura okragla")
+        (add_list "CHS")
       )
     )
 
@@ -2463,8 +2463,8 @@
     )
 
 
-    ;; Rury - Rura okragla (CHS)
-    (if (= taz_s_tmp_family "Rura okragla") 
+    ;; Rury - CHS (CHS)
+    (if (= taz_s_tmp_family "CHS") 
       (progn 
         (add_list "508x12.7")
         (add_list "508x9.5")
@@ -2668,7 +2668,7 @@
       (progn (setq taz_s_tmp_type "50x25x2.5") (set_tile "taz_s_typ" "0"))
     )
 
-    (if (= taz_s_tmp_family "Rura okragla") 
+    (if (= taz_s_tmp_family "CHS") 
       (progn (setq taz_s_tmp_type "508x12.7") (set_tile "taz_s_typ" "0"))
     )
   )
@@ -2708,7 +2708,7 @@
       (progn 
         (if (= $value "0") (setq taz_s_tmp_family "SHS"))
         (if (= $value "1") (setq taz_s_tmp_family "RHS"))
-        (if (= $value "2") (setq taz_s_tmp_family "Rura okragla"))
+        (if (= $value "2") (setq taz_s_tmp_family "CHS"))
       )
     )
 
@@ -3169,8 +3169,8 @@
       )
     )
 
-    ;; Rury - Rura okragla (CHS)
-    (if (= taz_s_tmp_family "Rura okragla") 
+    ;; Rury - CHS (CHS)
+    (if (= taz_s_tmp_family "CHS") 
       (progn 
         (add_list "508x12.7")
         (add_list "508x9.5")
@@ -3374,7 +3374,7 @@
       (progn (setq taz_s_tmp_type "50x25x2.5") (set_tile "taz_s_typ" "0"))
     )
 
-    (if (= taz_s_tmp_family "Rura okragla") 
+    (if (= taz_s_tmp_family "CHS") 
       (progn (setq taz_s_tmp_type "508x12.7") (set_tile "taz_s_typ" "0"))
     )
   )
@@ -3841,8 +3841,8 @@
     )
 
 
-    ;; Rury - Rura okragla (CHS)
-    (if (= taz_s_tmp_family "Rura okragla") 
+    ;; Rury - CHS (CHS)
+    (if (= taz_s_tmp_family "CHS") 
       (progn 
         (if (= $value "0") (setq taz_s_tmp_type "508x12.7"))
         (if (= $value "1") (setq taz_s_tmp_type "508x9.5"))

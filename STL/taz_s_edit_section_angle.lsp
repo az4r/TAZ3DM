@@ -133,7 +133,7 @@
      (setq taz_s_category "Katowniki"))
     ((or (= taz_s_family "SHS")
          (= taz_s_family "RHS")
-         (= taz_s_family "Rura okragla"))
+         (= taz_s_family "CHS"))
      (setq taz_s_category "Rury"))
   )
   

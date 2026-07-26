@@ -1,7 +1,7 @@
 (defun taz_s_section_hsbeam_draw_parametres_rura_okragla ()
 
 ;; CHS 508x12.7
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "508x12.7"))
   (progn
     (setq taz_s_d 508.0)
@@ -10,7 +10,7 @@
 )
 
 ;; CHS 508x9.5
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "508x9.5"))
   (progn
     (setq taz_s_d 508.0)
@@ -19,7 +19,7 @@
 )
 
 ;; CHS 457.2x12.7
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "457.2x12.7"))
   (progn
     (setq taz_s_d 457.2)
@@ -28,7 +28,7 @@
 )
 
 ;; CHS 457.2x9.5
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "457.2x9.5"))
   (progn
     (setq taz_s_d 457.2)
@@ -37,7 +37,7 @@
 )
 
 ;; CHS 406.4x12.7
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "406.4x12.7"))
   (progn
     (setq taz_s_d 406.4)
@@ -46,7 +46,7 @@
 )
 
 ;; CHS 406.4x11.1
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "406.4x11.1"))
   (progn
     (setq taz_s_d 406.4)
@@ -55,7 +55,7 @@
 )
 
 ;; CHS 406.4x9.5
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "406.4x9.5"))
   (progn
     (setq taz_s_d 406.4)
@@ -64,7 +64,7 @@
 )
 
 ;; CHS 406.4x7.9
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "406.4x7.9"))
   (progn
     (setq taz_s_d 406.4)
@@ -74,7 +74,7 @@
 
 
 ;; CHS 355.6x12.7
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "355.6x12.7"))
   (progn
     (setq taz_s_d 355.6)
@@ -83,7 +83,7 @@
 )
 
 ;; CHS 355.6x9.5
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "355.6x9.5"))
   (progn
     (setq taz_s_d 355.6)
@@ -92,7 +92,7 @@
 )
 
 ;; CHS 355.6x7.9
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "355.6x7.9"))
   (progn
     (setq taz_s_d 355.6)
@@ -101,7 +101,7 @@
 )
 
 ;; CHS 323.9x12.7
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "323.9x12.7"))
   (progn
     (setq taz_s_d 323.9)
@@ -110,7 +110,7 @@
 )
 
 ;; CHS 323.9x9.5
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "323.9x9.5"))
   (progn
     (setq taz_s_d 323.9)
@@ -119,7 +119,7 @@
 )
 
 ;; CHS 323.9x6.4
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "323.9x6.4"))
   (progn
     (setq taz_s_d 323.9)
@@ -128,7 +128,7 @@
 )
 
 ;; CHS 317.5x15.9
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "317.5x15.9"))
   (progn
     (setq taz_s_d 317.5)
@@ -137,7 +137,7 @@
 )
 
 ;; CHS 317.5x12.7
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "317.5x12.7"))
   (progn
     (setq taz_s_d 317.5)
@@ -146,7 +146,7 @@
 )
 
 ;; CHS 317.5x9.5
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "317.5x9.5"))
   (progn
     (setq taz_s_d 317.5)
@@ -155,7 +155,7 @@
 )
 
 ;; CHS 317.5x7.9
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "317.5x7.9"))
   (progn
     (setq taz_s_d 317.5)
@@ -164,7 +164,7 @@
 )
 
 ;; CHS 317.5x6.4
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "317.5x6.4"))
   (progn
     (setq taz_s_d 317.5)
@@ -173,7 +173,7 @@
 )
 
 ;; CHS 317.5x4.8
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "317.5x4.8"))
   (progn
     (setq taz_s_d 317.5)
@@ -182,7 +182,7 @@
 )
 
 ;; CHS 312.8x15.9
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "312.8x15.9"))
   (progn
     (setq taz_s_d 312.8)
@@ -191,7 +191,7 @@
 )
 
 ;; CHS 312.8x12.7
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "312.8x12.7"))
   (progn
     (setq taz_s_d 312.8)
@@ -200,7 +200,7 @@
 )
 
 ;; CHS 312.8x9.5
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "312.8x9.5"))
   (progn
     (setq taz_s_d 312.8)
@@ -209,7 +209,7 @@
 )
 
 ;; CHS 312.8x7.9
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "312.8x7.9"))
   (progn
     (setq taz_s_d 312.8)
@@ -218,7 +218,7 @@
 )
 
 ;; CHS 312.8x6.4
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "312.8x6.4"))
   (progn
     (setq taz_s_d 312.8)
@@ -227,7 +227,7 @@
 )
 
 ;; CHS 312.8x4.8
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "312.8x4.8"))
   (progn
     (setq taz_s_d 312.8)
@@ -236,7 +236,7 @@
 )
 
 ;; CHS 311.2x15.9
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "311.2x15.9"))
   (progn
     (setq taz_s_d 311.2)
@@ -245,7 +245,7 @@
 )
 
 ;; CHS 311.2x12.7
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "311.2x12.7"))
   (progn
     (setq taz_s_d 311.2)
@@ -254,7 +254,7 @@
 )
 
 ;; CHS 311.2x9.5
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "311.2x9.5"))
   (progn
     (setq taz_s_d 311.2)
@@ -263,7 +263,7 @@
 )
 
 ;; CHS 311.2x7.9
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "311.2x7.9"))
   (progn
     (setq taz_s_d 311.2)
@@ -272,7 +272,7 @@
 )
 
 ;; CHS 311.2x6.4
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "311.2x6.4"))
   (progn
     (setq taz_s_d 311.2)
@@ -281,7 +281,7 @@
 )
 
 ;; CHS 311.2x4.8
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "311.2x4.8"))
   (progn
     (setq taz_s_d 311.2)
@@ -290,7 +290,7 @@
 )
 
 ;; CHS 285.8x15.9
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "285.8x15.9"))
   (progn
     (setq taz_s_d 285.8)
@@ -299,7 +299,7 @@
 )
 
 ;; CHS 285.8x12.7
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "285.8x12.7"))
   (progn
     (setq taz_s_d 285.8)
@@ -308,7 +308,7 @@
 )
 
 ;; CHS 285.8x9.5
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "285.8x9.5"))
   (progn
     (setq taz_s_d 285.8)
@@ -317,7 +317,7 @@
 )
 
 ;; CHS 285.8x7.9
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "285.8x7.9"))
   (progn
     (setq taz_s_d 285.8)
@@ -326,7 +326,7 @@
 )
 
 ;; CHS 285.8x6.4
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "285.8x6.4"))
   (progn
     (setq taz_s_d 285.8)
@@ -335,7 +335,7 @@
 )
 
 ;; CHS 285.8x4.8
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "285.8x4.8"))
   (progn
     (setq taz_s_d 285.8)
@@ -344,7 +344,7 @@
 )
 
 ;; CHS 273.1x12.7
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "273.1x12.7"))
   (progn
     (setq taz_s_d 273.1)
@@ -353,7 +353,7 @@
 )
 
 ;; CHS 273.1x9.3
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "273.1x9.3"))
   (progn
     (setq taz_s_d 273.1)
@@ -362,7 +362,7 @@
 )
 
 ;; CHS 273.1x6.4
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "273.1x6.4"))
   (progn
     (setq taz_s_d 273.1)
@@ -371,7 +371,7 @@
 )
 
 ;; CHS 254x15.9
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "254x15.9"))
   (progn
     (setq taz_s_d 254.0)
@@ -380,7 +380,7 @@
 )
 
 ;; CHS 254x12.7
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "254x12.7"))
   (progn
     (setq taz_s_d 254.0)
@@ -389,7 +389,7 @@
 )
 
 ;; CHS 254x9.5
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "254x9.5"))
   (progn
     (setq taz_s_d 254.0)
@@ -398,7 +398,7 @@
 )
 
 ;; CHS 254x7.9
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "254x7.9"))
   (progn
     (setq taz_s_d 254.0)
@@ -407,7 +407,7 @@
 )
 
 ;; CHS 254x6.4
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "254x6.4"))
   (progn
     (setq taz_s_d 254.0)
@@ -416,7 +416,7 @@
 )
 
 ;; CHS 254x4.8
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "254x4.8"))
   (progn
     (setq taz_s_d 254.0)
@@ -425,7 +425,7 @@
 )
 
 ;; CHS 244.5x12.7
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "244.5x12.7"))
   (progn
     (setq taz_s_d 244.5)
@@ -435,7 +435,7 @@
   
 
 ;; CHS 244.5x9.5
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "244.5x9.5"))
   (progn
     (setq taz_s_d 244.5)
@@ -444,7 +444,7 @@
 )
 
 ;; CHS 244.5x7.9
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "244.5x7.9"))
   (progn
     (setq taz_s_d 244.5)
@@ -453,7 +453,7 @@
 )
 
 ;; CHS 244.5x6.4
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "244.5x6.4"))
   (progn
     (setq taz_s_d 244.5)
@@ -462,7 +462,7 @@
 )
 
 ;; CHS 222.3x12.7
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "222.3x12.7"))
   (progn
     (setq taz_s_d 222.3)
@@ -471,7 +471,7 @@
 )
 
 ;; CHS 222.3x9.5
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "222.3x9.5"))
   (progn
     (setq taz_s_d 222.3)
@@ -480,7 +480,7 @@
 )
 
 ;; CHS 222.3x7.9
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "222.3x7.9"))
   (progn
     (setq taz_s_d 222.3)
@@ -489,7 +489,7 @@
 )
 
 ;; CHS 222.3x6.4
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "222.3x6.4"))
   (progn
     (setq taz_s_d 222.3)
@@ -498,7 +498,7 @@
 )
 
 ;; CHS 222.3x4.8
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "222.3x4.8"))
   (progn
     (setq taz_s_d 222.3)
@@ -507,7 +507,7 @@
 )
 
 ;; CHS 219.1x12.7
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "219.1x12.7"))
   (progn
     (setq taz_s_d 219.1)
@@ -516,7 +516,7 @@
 )
 
 ;; CHS 219.1x9.5
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "219.1x9.5"))
   (progn
     (setq taz_s_d 219.1)
@@ -525,7 +525,7 @@
 )
 
 ;; CHS 219.1x8.2
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "219.1x8.2"))
   (progn
     (setq taz_s_d 219.1)
@@ -534,7 +534,7 @@
 )
 
 ;; CHS 219.1x6.4
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "219.1x6.4"))
   (progn
     (setq taz_s_d 219.1)
@@ -543,7 +543,7 @@
 )
 
 ;; CHS 219.1x4.8
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "219.1x4.8"))
   (progn
     (setq taz_s_d 219.1)
@@ -552,7 +552,7 @@
 )
 
 ;; CHS 193.7x9.5
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "193.7x9.5"))
   (progn
     (setq taz_s_d 193.7)
@@ -561,7 +561,7 @@
 )
 
 ;; CHS 193.7x8.3
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "193.7x8.3"))
   (progn
     (setq taz_s_d 193.7)
@@ -570,7 +570,7 @@
 )
 
 ;; CHS 193.7x3.2
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "193.7x3.2"))
   (progn
     (setq taz_s_d 193.7)
@@ -579,7 +579,7 @@
 )
 
 ;; CHS 190.5x12.7
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "190.5x12.7"))
   (progn
     (setq taz_s_d 190.5)
@@ -588,7 +588,7 @@
 )
 
 ;; CHS 190.5x9.5
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "190.5x9.5"))
   (progn
     (setq taz_s_d 190.5)
@@ -597,7 +597,7 @@
 )
 
 ;; CHS 190.5x7.9
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "190.5x7.9"))
   (progn
     (setq taz_s_d 190.5)
@@ -606,7 +606,7 @@
 )
 
 ;; CHS 190.5x6.4
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "190.5x6.4"))
   (progn
     (setq taz_s_d 190.5)
@@ -615,7 +615,7 @@
 )
 
 ;; CHS 190.5x4.8
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "190.5x4.8"))
   (progn
     (setq taz_s_d 190.5)
@@ -624,7 +624,7 @@
 )
 
 ;; CHS 177.8x12.7
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "177.8x12.7"))
   (progn
     (setq taz_s_d 177.8)
@@ -633,7 +633,7 @@
 )
 
 ;; CHS 177.8x9.5
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "177.8x9.5"))
   (progn
     (setq taz_s_d 177.8)
@@ -642,7 +642,7 @@
 )
 
 ;; CHS 177.8x7.9
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "177.8x7.9"))
   (progn
     (setq taz_s_d 177.8)
@@ -651,7 +651,7 @@
 )
 
 ;; CHS 177.8x6.4
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "177.8x6.4"))
   (progn
     (setq taz_s_d 177.8)
@@ -660,7 +660,7 @@
 )
 
 ;; CHS 177.8x4.8
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "177.8x4.8"))
   (progn
     (setq taz_s_d 177.8)
@@ -669,7 +669,7 @@
 )
 
 ;; CHS 177.8x3.2
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "177.8x3.2"))
   (progn
     (setq taz_s_d 177.8)
@@ -678,7 +678,7 @@
 )
 
 ;; CHS 174.6x12.7
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "174.6x12.7"))
   (progn
     (setq taz_s_d 174.6)
@@ -687,7 +687,7 @@
 )
 
 ;; CHS 174.6x9.5
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "174.6x9.5"))
   (progn
     (setq taz_s_d 174.6)
@@ -696,7 +696,7 @@
 )
 
 ;; CHS 174.6x7.9
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "174.6x7.9"))
   (progn
     (setq taz_s_d 174.6)
@@ -705,7 +705,7 @@
 )
 
 ;; CHS 174.6x6.4
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "174.6x6.4"))
   (progn
     (setq taz_s_d 174.6)
@@ -714,7 +714,7 @@
 )
 
 ;; CHS 174.6x4.8
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "174.6x4.8"))
   (progn
     (setq taz_s_d 174.6)
@@ -724,7 +724,7 @@
   
 
 ;; CHS 168.3x12.7
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "168.3x12.7"))
   (progn
     (setq taz_s_d 168.3)
@@ -733,7 +733,7 @@
 )
 
 ;; CHS 168.3x11
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "168.3x11"))
   (progn
     (setq taz_s_d 168.3)
@@ -742,7 +742,7 @@
 )
 
 ;; CHS 168.3x9.5
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "168.3x9.5"))
   (progn
     (setq taz_s_d 168.3)
@@ -751,7 +751,7 @@
 )
 
 ;; CHS 168.3x7.9
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "168.3x7.9"))
   (progn
     (setq taz_s_d 168.3)
@@ -760,7 +760,7 @@
 )
 
 ;; CHS 168.3x7.1
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "168.3x7.1"))
   (progn
     (setq taz_s_d 168.3)
@@ -769,7 +769,7 @@
 )
 
 ;; CHS 168.3x6.4
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "168.3x6.4"))
   (progn
     (setq taz_s_d 168.3)
@@ -778,7 +778,7 @@
 )
 
 ;; CHS 168.3x4.8
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "168.3x4.8"))
   (progn
     (setq taz_s_d 168.3)
@@ -787,7 +787,7 @@
 )
 
 ;; CHS 168.3x3.2
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "168.3x3.2"))
   (progn
     (setq taz_s_d 168.3)
@@ -796,7 +796,7 @@
 )
 
 ;; CHS 155.6x12.7
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "155.6x12.7"))
   (progn
     (setq taz_s_d 155.6)
@@ -805,7 +805,7 @@
 )
 
 ;; CHS 155.6x9.5
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "155.6x9.5"))
   (progn
     (setq taz_s_d 155.6)
@@ -814,7 +814,7 @@
 )
 
 ;; CHS 155.6x7.9
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "155.6x7.9"))
   (progn
     (setq taz_s_d 155.6)
@@ -823,7 +823,7 @@
 )
 
 ;; CHS 155.6x6.4
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "155.6x6.4"))
   (progn
     (setq taz_s_d 155.6)
@@ -832,7 +832,7 @@
 )
 
 ;; CHS 155.6x4.8
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "155.6x4.8"))
   (progn
     (setq taz_s_d 155.6)
@@ -841,7 +841,7 @@
 )
 
 ;; CHS 152.4x12.7
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "152.4x12.7"))
   (progn
     (setq taz_s_d 152.4)
@@ -850,7 +850,7 @@
 )
 
 ;; CHS 152.4x9.5
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "152.4x9.5"))
   (progn
     (setq taz_s_d 152.4)
@@ -859,7 +859,7 @@
 )
 
 ;; CHS 152.4x7.9
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "152.4x7.9"))
   (progn
     (setq taz_s_d 152.4)
@@ -868,7 +868,7 @@
 )
 
 ;; CHS 152.4x7.1
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "152.4x7.1"))
   (progn
     (setq taz_s_d 152.4)
@@ -877,7 +877,7 @@
 )
 
 ;; CHS 152.4x6.4
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "152.4x6.4"))
   (progn
     (setq taz_s_d 152.4)
@@ -886,7 +886,7 @@
 )
 
 ;; CHS 152.4x4.8
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "152.4x4.8"))
   (progn
     (setq taz_s_d 152.4)
@@ -895,7 +895,7 @@
 )
 
 ;; CHS 152.4x3.2
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "152.4x3.2"))
   (progn
     (setq taz_s_d 152.4)
@@ -904,7 +904,7 @@
 )
 
 ;; CHS 141.3x9.5
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "141.3x9.5"))
   (progn
     (setq taz_s_d 141.3)
@@ -913,7 +913,7 @@
 )
 
 ;; CHS 141.3x6.6
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "141.3x6.6"))
   (progn
     (setq taz_s_d 141.3)
@@ -922,7 +922,7 @@
 )
 
 ;; CHS 141.3x4.8
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "141.3x4.8"))
   (progn
     (setq taz_s_d 141.3)
@@ -931,7 +931,7 @@
 )
 
 ;; CHS 141.3x3.4
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "141.3x3.4"))
   (progn
     (setq taz_s_d 141.3)
@@ -940,7 +940,7 @@
 )
 
 ;; CHS 139.7x12.7
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "139.7x12.7"))
   (progn
     (setq taz_s_d 139.7)
@@ -949,7 +949,7 @@
 )
 
 ;; CHS 139.7x9.5
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "139.7x9.5"))
   (progn
     (setq taz_s_d 139.7)
@@ -958,7 +958,7 @@
 )
 
 ;; CHS 139.7x6.6
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "139.7x6.6"))
   (progn
     (setq taz_s_d 139.7)
@@ -967,7 +967,7 @@
 )
 
 ;; CHS 127x12.7
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "127x12.7"))
   (progn
     (setq taz_s_d 127.0)
@@ -976,7 +976,7 @@
 )
 
 ;; CHS 127x9.5
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "127x9.5"))
   (progn
     (setq taz_s_d 127.0)
@@ -985,7 +985,7 @@
 )
 
 ;; CHS 127x7.9
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "127x7.9"))
   (progn
     (setq taz_s_d 127.0)
@@ -994,7 +994,7 @@
 )
 
 ;; CHS 127x6.6
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "127x6.6"))
   (progn
     (setq taz_s_d 127.0)
@@ -1003,7 +1003,7 @@
 )
 
 ;; CHS 127x6.4
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "127x6.4"))
   (progn
     (setq taz_s_d 127.0)
@@ -1012,7 +1012,7 @@
 )
 
 ;; CHS 127x4.8
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "127x4.8"))
   (progn
     (setq taz_s_d 127.0)
@@ -1021,7 +1021,7 @@
 )
 
 ;; CHS 127x3.2
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "127x3.2"))
   (progn
     (setq taz_s_d 127.0)
@@ -1030,7 +1030,7 @@
 )
 
 ;; CHS 114.3x8.6
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "114.3x8.6"))
   (progn
     (setq taz_s_d 114.3)
@@ -1039,7 +1039,7 @@
 )
 
 ;; CHS 114.3x6
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "114.3x6"))
   (progn
     (setq taz_s_d 114.3)
@@ -1048,7 +1048,7 @@
 )
 
 ;; CHS 114.3x4.8
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "114.3x4.8"))
   (progn
     (setq taz_s_d 114.3)
@@ -1057,7 +1057,7 @@
 )
 
 ;; CHS 114.3x3.2
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "114.3x3.2"))
   (progn
     (setq taz_s_d 114.3)
@@ -1066,7 +1066,7 @@
 )
 
 ;; CHS 101.6x8.6
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "101.6x8.6"))
   (progn
     (setq taz_s_d 101.6)
@@ -1076,7 +1076,7 @@
 
 
 ;; CHS 101.6x8
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "101.6x8"))
   (progn
     (setq taz_s_d 101.6)
@@ -1085,7 +1085,7 @@
 )
 
 ;; CHS 101.6x6.4
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "101.6x6.4"))
   (progn
     (setq taz_s_d 101.6)
@@ -1094,7 +1094,7 @@
 )
 
 ;; CHS 101.6x6
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "101.6x6"))
   (progn
     (setq taz_s_d 101.6)
@@ -1103,7 +1103,7 @@
 )
 
 ;; CHS 101.6x5.7
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "101.6x5.7"))
   (progn
     (setq taz_s_d 101.6)
@@ -1112,7 +1112,7 @@
 )
 
 ;; CHS 101.6x5.6
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "101.6x5.6"))
   (progn
     (setq taz_s_d 101.6)
@@ -1121,7 +1121,7 @@
 )
 
 ;; CHS 101.6x4.8
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "101.6x4.8"))
   (progn
     (setq taz_s_d 101.6)
@@ -1130,7 +1130,7 @@
 )
 
 ;; CHS 101.6x3.2
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "101.6x3.2"))
   (progn
     (setq taz_s_d 101.6)
@@ -1139,7 +1139,7 @@
 )
 
 ;; CHS 88.9x8
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "88.9x8"))
   (progn
     (setq taz_s_d 88.9)
@@ -1148,7 +1148,7 @@
 )
 
 ;; CHS 88.9x7.6
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "88.9x7.6"))
   (progn
     (setq taz_s_d 88.9)
@@ -1157,7 +1157,7 @@
 )
 
 ;; CHS 88.9x6.4
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "88.9x6.4"))
   (progn
     (setq taz_s_d 88.9)
@@ -1166,7 +1166,7 @@
 )
 
 ;; CHS 88.9x5.5
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "88.9x5.5"))
   (progn
     (setq taz_s_d 88.9)
@@ -1175,7 +1175,7 @@
 )
 
 ;; CHS 88.9x5.2
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "88.9x5.2"))
   (progn
     (setq taz_s_d 88.9)
@@ -1184,7 +1184,7 @@
 )
 
 ;; CHS 88.9x4.8
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "88.9x4.8"))
   (progn
     (setq taz_s_d 88.9)
@@ -1193,7 +1193,7 @@
 )
 
 ;; CHS 88.9x3.2
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "88.9x3.2"))
   (progn
     (setq taz_s_d 88.9)
@@ -1202,7 +1202,7 @@
 )
 
 ;; CHS 76.2x7.6
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "76.2x7.6"))
   (progn
     (setq taz_s_d 76.2)
@@ -1211,7 +1211,7 @@
 )
 
 ;; CHS 76.2x6.4
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "76.2x6.4"))
   (progn
     (setq taz_s_d 76.2)
@@ -1220,7 +1220,7 @@
 )
 
 ;; CHS 76.2x5.5
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "76.2x5.5"))
   (progn
     (setq taz_s_d 76.2)
@@ -1229,7 +1229,7 @@
 )
 
 ;; CHS 76.2x5.2
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "76.2x5.2"))
   (progn
     (setq taz_s_d 76.2)
@@ -1238,7 +1238,7 @@
 )
 
 ;; CHS 76.2x4.8
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "76.2x4.8"))
   (progn
     (setq taz_s_d 76.2)
@@ -1247,7 +1247,7 @@
 )
 
 ;; CHS 76.2x3.9
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "76.2x3.9"))
   (progn
     (setq taz_s_d 76.2)
@@ -1256,7 +1256,7 @@
 )
 
 ;; CHS 76.2x3.4
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "76.2x3.4"))
   (progn
     (setq taz_s_d 76.2)
@@ -1265,7 +1265,7 @@
 )
 
 ;; CHS 76.2x3
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "76.2x3"))
   (progn
     (setq taz_s_d 76.2)
@@ -1274,7 +1274,7 @@
 )
 
 ;; CHS 73x6.4
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "73x6.4"))
   (progn
     (setq taz_s_d 73.0)
@@ -1283,7 +1283,7 @@
 )
 
 ;; CHS 73x5.2
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "73x5.2"))
   (progn
     (setq taz_s_d 73.0)
@@ -1292,7 +1292,7 @@
 )
 
 ;; CHS 73x4.8
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "73x4.8"))
   (progn
     (setq taz_s_d 73.0)
@@ -1301,7 +1301,7 @@
 )
 
 ;; CHS 73x3.2
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "73x3.2"))
   (progn
     (setq taz_s_d 73.0)
@@ -1310,7 +1310,7 @@
 )
 
 ;; CHS 63.5x6.4
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "63.5x6.4"))
   (progn
     (setq taz_s_d 63.5)
@@ -1319,7 +1319,7 @@
 )
 
 ;; CHS 63.5x4.8
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "63.5x4.8"))
   (progn
     (setq taz_s_d 63.5)
@@ -1328,7 +1328,7 @@
 )
 
 ;; CHS 63.5x3.2
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "63.5x3.2"))
   (progn
     (setq taz_s_d 63.5)
@@ -1337,7 +1337,7 @@
 )
 
 ;; CHS 60.3x6.4
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "60.3x6.4"))
   (progn
     (setq taz_s_d 60.3)
@@ -1346,7 +1346,7 @@
 )
 
 ;; CHS 60.3x5.5
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "60.3x5.5"))
   (progn
     (setq taz_s_d 60.3)
@@ -1355,7 +1355,7 @@
 )
 
 ;; CHS 60.3x4.8
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "60.3x4.8"))
   (progn
     (setq taz_s_d 60.3)
@@ -1364,7 +1364,7 @@
 )
 
 ;; CHS 60.3x3.9
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "60.3x3.9"))
   (progn
     (setq taz_s_d 60.3)
@@ -1373,7 +1373,7 @@
 )
 
 ;; CHS 60.3x3.2
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "60.3x3.2"))
   (progn
     (setq taz_s_d 60.3)
@@ -1382,7 +1382,7 @@
 )
 
 ;; CHS 48.3x3.7
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "48.3x3.7"))
   (progn
     (setq taz_s_d 48.3)
@@ -1391,7 +1391,7 @@
 )
 
 ;; CHS 42.2x3.6
-(if (and (= taz_s_family "Rura okragla")
+(if (and (= taz_s_family "CHS")
           (= taz_s_type "42.2x3.6"))
   (progn
     (setq taz_s_d 42.2)

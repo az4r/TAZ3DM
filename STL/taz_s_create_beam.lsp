@@ -43,7 +43,7 @@
     (taz_s_section_hsbeam_draw_parametres_rura_prostokatna)
     (princ)
   )
-  (if (= taz_s_family "Rura okragla")
+  (if (= taz_s_family "CHS")
     (progn
     (taz_s_section_hsbeam_draw_parametres_rura_okragla)
     (setq taz_s_b (/ taz_s_d 2))
