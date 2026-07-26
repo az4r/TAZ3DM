@@ -83,43 +83,77 @@
 
   ;; debug
   (princ (strcat "\nWybrana skala opisu = " (itoa taz_s_annotation_scale)))
-  ;; ustawienie wysokości tekstu na podstawie skali
-  ;; toporne if-y, jeden pod drugim
-
+  
+  ;; 1:1
   (if (= taz_s_annotation_scale 1)
-    (setq taz_s_annotation_scale_label 2.5)
+    (progn
+      (setq taz_s_annotation_scale_label 2.5)
+      (setq taz_s_annotation_scale_axis 3.5)
+    )
   )
 
+  ;; 1:2
   (if (= taz_s_annotation_scale 2)
-    (setq taz_s_annotation_scale_label 5)
+    (progn
+      (setq taz_s_annotation_scale_label 5)
+      (setq taz_s_annotation_scale_axis 7)
+    )
   )
 
+  ;; 1:5
   (if (= taz_s_annotation_scale 5)
-    (setq taz_s_annotation_scale_label 12.5)
+    (progn
+      (setq taz_s_annotation_scale_label 12.5)
+      (setq taz_s_annotation_scale_axis 17.5)
+    )
   )
 
+  ;; 1:10
   (if (= taz_s_annotation_scale 10)
-    (setq taz_s_annotation_scale_label 25)
+    (progn
+      (setq taz_s_annotation_scale_label 25)
+      (setq taz_s_annotation_scale_axis 35)
+    )
   )
 
+  ;; 1:20
   (if (= taz_s_annotation_scale 20)
-    (setq taz_s_annotation_scale_label 50)
+    (progn
+      (setq taz_s_annotation_scale_label 50)
+      (setq taz_s_annotation_scale_axis 70)
+    )
   )
 
+  ;; 1:25
   (if (= taz_s_annotation_scale 25)
-    (setq taz_s_annotation_scale_label 62.5)
+    (progn
+      (setq taz_s_annotation_scale_label 62.5)
+      (setq taz_s_annotation_scale_axis 87.5)
+    )
   )
 
+  ;; 1:50
   (if (= taz_s_annotation_scale 50)
-    (setq taz_s_annotation_scale_label 125)
+    (progn
+      (setq taz_s_annotation_scale_label 125)
+      (setq taz_s_annotation_scale_axis 175)
+    )
   )
 
+  ;; 1:100
   (if (= taz_s_annotation_scale 100)
-    (setq taz_s_annotation_scale_label 250)
+    (progn
+      (setq taz_s_annotation_scale_label 250)
+      (setq taz_s_annotation_scale_axis 350)
+    )
   )
 
+  ;; 1:200
   (if (= taz_s_annotation_scale 200)
-    (setq taz_s_annotation_scale_label 500)
+    (progn
+      (setq taz_s_annotation_scale_label 500)
+      (setq taz_s_annotation_scale_axis 700)
+    )
   )
 
   (princ)
