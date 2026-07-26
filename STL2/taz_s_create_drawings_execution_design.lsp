@@ -532,12 +532,12 @@
       ;; --- SPRAWDZENIE CZY WYSTEPUJE PRZECIECIE (-INTERFERE) ---
       ;; Kopiujemy bryle tnaca na miejsce oryginalu (bez zoffset),
       ;; sprawdzamy przeciecie wzgledem ORYGINALU, potem kasujemy kopie.
-      (setvar "CLAYER" "0")
+      (setvar "CLAYER" "taz_s_editing_layer")
       (setq taz_s_cut_tmp_ss (ssadd))
       (ssadd taz_s_cut_ename taz_s_cut_tmp_ss)
       (command "COPY" taz_s_cut_tmp_ss "" "0,0,0" (list 0 0 (- taz_s_zoffset)))
       (setq taz_s_cut_tmp_ent (entlast))
-      (setq taz_s_layer0_ss_before (ssget "X" (list (cons 8 "0"))))
+      (setq taz_s_layer0_ss_before (ssget "X" (list (cons 8 "taz_s_editing_layer"))))
       (setq taz_s_layer0_count_before (if taz_s_layer0_ss_before (sslength taz_s_layer0_ss_before) 0))
       (setq taz_s_if_set1 (ssadd))
       (ssadd taz_s_cut_tmp_ent taz_s_if_set1)
@@ -547,7 +547,7 @@
       (command)
       (command)
       (command)
-      (setq taz_s_layer0_ss (ssget "X" (list (cons 8 "0"))))
+      (setq taz_s_layer0_ss (ssget "X" (list (cons 8 "taz_s_editing_layer"))))
       (setq taz_s_layer0_count_after (if taz_s_layer0_ss (sslength taz_s_layer0_ss) 0))
       (if (> taz_s_layer0_count_after taz_s_layer0_count_before)
         (progn
@@ -561,7 +561,6 @@
             (eval (read (strcat "taz_s_" (cdr (assoc 5 (entget taz_s_orig_ent))) "_attr7")))
           )
           )
-
           ;; Punkt wstawienia - skorygowany wzgledem plaszczyzny ciecia
           (setq taz_s_annotation_ins_pt (taz_s_get_center taz_s_orig_ent))
           (cond
@@ -593,7 +592,6 @@
              )
             )
           )
-
           (entmake
             (list
               (cons 0 "MTEXT")
@@ -606,7 +604,6 @@
               (cons 90 16)
             )
           )
-
           ;; Obrot etykiety do plaszczyzny ciecia (analogicznie do opisow osi)
           (cond
             ((= taz_s_case "X")
