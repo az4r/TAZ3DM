@@ -49,8 +49,8 @@
 
     (if (= taz_s_cat_val "Katowniki") 
       (progn 
-        (add_list "Katownik rownoramienny")
-        (add_list "Katownik nierownoramienny")
+        (add_list "LR")
+        (add_list "LN")
       )
     )
 
@@ -233,7 +233,7 @@
     ;; Katowniki rownoramienne
     (if 
       (and (= taz_s_cat_val "Katowniki") 
-           (= taz_s_fam_val "Katownik rownoramienny")
+           (= taz_s_fam_val "LR")
       )
       (progn 
         (add_list "20x3")
@@ -316,7 +316,7 @@
     ;; Katowniki nierownoramienne
     (if 
       (and (= taz_s_cat_val "Katowniki") 
-           (= taz_s_fam_val "Katownik nierownoramienny")
+           (= taz_s_fam_val "LN")
       )
       (progn 
         (add_list "30x20x3")
@@ -739,8 +739,8 @@
   ;; Katowniki
   (if (= taz_s_tmp_category "Katowniki") 
     (progn 
-      (if (= taz_s_tmp_family "Katownik rownoramienny") (set_tile "taz_s_fam" "0"))
-      (if (= taz_s_tmp_family "Katownik nierownoramienny") 
+      (if (= taz_s_tmp_family "LR") (set_tile "taz_s_fam" "0"))
+      (if (= taz_s_tmp_family "LN") 
         (set_tile "taz_s_fam" "1")
       )
     )
@@ -1054,7 +1054,7 @@
     )
 
     ;; Katowniki rownoramienne
-    ((= taz_s_tmp_family "Katownik rownoramienny")
+    ((= taz_s_tmp_family "LR")
      (if (= taz_s_tmp_type "20x3") (set_tile "taz_s_typ" "0"))
      (if (= taz_s_tmp_type "25x3") (set_tile "taz_s_typ" "1"))
      (if (= taz_s_tmp_type "25x4") (set_tile "taz_s_typ" "2"))
@@ -1210,7 +1210,7 @@
     )
 
     ;; Katowniki nierownoramienne
-    ((= taz_s_tmp_family "Katownik nierownoramienny")
+    ((= taz_s_tmp_family "LN")
      (if (= taz_s_tmp_type "30x20x3") (set_tile "taz_s_typ" "0"))
      (if (= taz_s_tmp_type "30x20x4") (set_tile "taz_s_typ" "1"))
      (if (= taz_s_tmp_type "40x20x3") (set_tile "taz_s_typ" "2"))
@@ -1978,8 +1978,8 @@
 
     (if (= taz_s_tmp_category "Katowniki") 
       (progn 
-        (add_list "Katownik rownoramienny")
-        (add_list "Katownik nierownoramienny")
+        (add_list "LR")
+        (add_list "LN")
       )
     )
 
@@ -1997,7 +1997,7 @@
     (if (= taz_s_tmp_category "Dwuteowniki") (setq taz_s_tmp_family "HEA"))
     (if (= taz_s_tmp_category "Ceowniki") (setq taz_s_tmp_family "UPE"))
     (if (= taz_s_tmp_category "Katowniki") 
-      (setq taz_s_tmp_family "Katownik rownoramienny")
+      (setq taz_s_tmp_family "LR")
     )
     (if (= taz_s_tmp_category "Rury") (setq taz_s_tmp_family "SHS"))
 
@@ -2167,7 +2167,7 @@
     )
 
     ;; Katowniki rownoramienne
-    (if (= taz_s_tmp_family "Katownik rownoramienny") 
+    (if (= taz_s_tmp_family "LR") 
       (progn 
         (add_list "20x3")
         (add_list "25x3")
@@ -2247,7 +2247,7 @@
     )
 
     ;; Katowniki nierownoramienne
-    (if (= taz_s_tmp_family "Katownik nierownoramienny") 
+    (if (= taz_s_tmp_family "LN") 
       (progn 
         (add_list "30x20x3")
         (add_list "30x20x4")
@@ -2652,11 +2652,11 @@
       (progn (setq taz_s_tmp_type "50") (set_tile "taz_s_typ" "0"))
     )
 
-    (if (= taz_s_tmp_family "Katownik rownoramienny") 
+    (if (= taz_s_tmp_family "LR") 
       (progn (setq taz_s_tmp_type "20x3") (set_tile "taz_s_typ" "0"))
     )
 
-    (if (= taz_s_tmp_family "Katownik nierownoramienny") 
+    (if (= taz_s_tmp_family "LN") 
       (progn (setq taz_s_tmp_type "30x20x3") (set_tile "taz_s_typ" "0"))
     )
 
@@ -2699,8 +2699,8 @@
 
     (if (= (get_tile "taz_s_cat") "2") 
       (progn 
-        (if (= $value "0") (setq taz_s_tmp_family "Katownik rownoramienny"))
-        (if (= $value "1") (setq taz_s_tmp_family "Katownik nierownoramienny"))
+        (if (= $value "0") (setq taz_s_tmp_family "LR"))
+        (if (= $value "1") (setq taz_s_tmp_family "LN"))
       )
     )
 
@@ -2875,7 +2875,7 @@
     )
 
     ;; Katowniki rownoramienne
-    (if (= taz_s_tmp_family "Katownik rownoramienny") 
+    (if (= taz_s_tmp_family "LR") 
       (progn 
         (add_list "20x3")
         (add_list "25x3")
@@ -2955,7 +2955,7 @@
     )
 
     ;; Katowniki nierownoramienne
-    (if (= taz_s_tmp_family "Katownik nierownoramienny") 
+    (if (= taz_s_tmp_family "LN") 
       (progn 
         (add_list "30x20x3")
         (add_list "30x20x4")
@@ -3358,11 +3358,11 @@
       (progn (setq taz_s_tmp_type "50") (set_tile "taz_s_typ" "0"))
     )
 
-    (if (= taz_s_tmp_family "Katownik rownoramienny") 
+    (if (= taz_s_tmp_family "LR") 
       (progn (setq taz_s_tmp_type "20x3") (set_tile "taz_s_typ" "0"))
     )
 
-    (if (= taz_s_tmp_family "Katownik nierownoramienny") 
+    (if (= taz_s_tmp_family "LN") 
       (progn (setq taz_s_tmp_type "30x20x3") (set_tile "taz_s_typ" "0"))
     )
 
@@ -3546,7 +3546,7 @@
     )
 
     ;; Katowniki rownoramienne
-    (if (= taz_s_tmp_family "Katownik rownoramienny") 
+    (if (= taz_s_tmp_family "LR") 
       (progn 
         (if (= $value "0") (setq taz_s_tmp_type "20x3"))
         (if (= $value "1") (setq taz_s_tmp_type "25x3"))
@@ -3626,7 +3626,7 @@
     )
 
     ;; Katowniki nierownoramienne
-    (if (= taz_s_tmp_family "Katownik nierownoramienny") 
+    (if (= taz_s_tmp_family "LN") 
       (progn 
         (if (= $value "0") (setq taz_s_tmp_type "30x20x3"))
         (if (= $value "1") (setq taz_s_tmp_type "30x20x4"))

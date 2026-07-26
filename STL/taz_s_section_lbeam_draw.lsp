@@ -3,14 +3,14 @@
   (setq taz_s_r1 1)
   (setq taz_s_r2 1)
 
-  ;; pobranie parametrów Katownik rownoramienny
-  (if (= taz_s_family "Katownik rownoramienny")
+  ;; pobranie parametrów LR
+  (if (= taz_s_family "LR")
     (taz_s_section_lbeam_draw_parametres_katownik_rownoramienny)
     (princ)
   )
 
-  ;; pobranie parametrów Katownik nierownoramienny
-  (if (= taz_s_family "Katownik nierownoramienny")
+  ;; pobranie parametrów LN
+  (if (= taz_s_family "LN")
     (taz_s_section_lbeam_draw_parametres_katownik_nierownoramienny)
     (princ)
   )
@@ -743,8 +743,8 @@
   ;; ###########################################################################
   
     
-  ;; rysowanie Katownik rownoramienny
-  (if (= taz_s_family "Katownik rownoramienny")
+  ;; rysowanie LR
+  (if (= taz_s_family "LR")
     (progn
       (command "_PLINE"
         taz_s_plp1
@@ -776,8 +776,8 @@
     (princ)
   )
   
-  ;; rysowanie Katownik nierownoramienny
-  (if (= taz_s_family "Katownik nierownoramienny")
+  ;; rysowanie LN
+  (if (= taz_s_family "LN")
     (progn
       (command "_PLINE"
         taz_s_plp1

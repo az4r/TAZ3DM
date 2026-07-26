@@ -634,7 +634,7 @@
           )
           )
           
-          (if (= (eval (read (strcat "taz_s_" (cdr (assoc 5 (entget taz_s_orig_ent))) "_attr6"))) "Katownik rownoramienny")
+          (if (= (eval (read (strcat "taz_s_" (cdr (assoc 5 (entget taz_s_orig_ent))) "_attr6"))) "LR")
             (progn
               (setq taz_s_annotation_text
                 (strcat
@@ -645,7 +645,7 @@
             )
           )
           
-          (if (= (eval (read (strcat "taz_s_" (cdr (assoc 5 (entget taz_s_orig_ent))) "_attr6"))) "Katownik nierownoramienny")
+          (if (= (eval (read (strcat "taz_s_" (cdr (assoc 5 (entget taz_s_orig_ent))) "_attr6"))) "LN")
             (progn
               (setq taz_s_annotation_text
                 (strcat

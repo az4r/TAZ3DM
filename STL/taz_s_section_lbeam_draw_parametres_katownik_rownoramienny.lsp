@@ -5,7 +5,7 @@
 ;; ============================================
 
 ;; L 20x3
-(if (and (= taz_s_family "Katownik rownoramienny")
+(if (and (= taz_s_family "LR")
          (= taz_s_type "20x3"))
   (progn
     (setq taz_s_h 20.0)
@@ -19,7 +19,7 @@
 )
 
 ;; L 25x3
-(if (and (= taz_s_family "Katownik rownoramienny")
+(if (and (= taz_s_family "LR")
          (= taz_s_type "25x3"))
   (progn
     (setq taz_s_h 25.0)
@@ -33,7 +33,7 @@
 )
 
 ;; L 25x4
-(if (and (= taz_s_family "Katownik rownoramienny")
+(if (and (= taz_s_family "LR")
          (= taz_s_type "25x4"))
   (progn
     (setq taz_s_h 25.0)
@@ -47,7 +47,7 @@
 )
 
 ;; L 30x3
-(if (and (= taz_s_family "Katownik rownoramienny")
+(if (and (= taz_s_family "LR")
          (= taz_s_type "30x3"))
   (progn
     (setq taz_s_h 30.0)
@@ -61,7 +61,7 @@
 )
 
 ;; L 30x4
-(if (and (= taz_s_family "Katownik rownoramienny")
+(if (and (= taz_s_family "LR")
          (= taz_s_type "30x4"))
   (progn
     (setq taz_s_h 30.0)
@@ -75,7 +75,7 @@
 )
 
 ;; L 30x5
-(if (and (= taz_s_family "Katownik rownoramienny")
+(if (and (= taz_s_family "LR")
          (= taz_s_type "30x5"))
   (progn
     (setq taz_s_h 30.0)
@@ -89,7 +89,7 @@
 )
 
 ;; L 35x4
-(if (and (= taz_s_family "Katownik rownoramienny")
+(if (and (= taz_s_family "LR")
          (= taz_s_type "35x4"))
   (progn
     (setq taz_s_h 35.0)
@@ -103,7 +103,7 @@
 )
 
 ;; L 35x5
-(if (and (= taz_s_family "Katownik rownoramienny")
+(if (and (= taz_s_family "LR")
          (= taz_s_type "35x5"))
   (progn
     (setq taz_s_h 35.0)
@@ -121,7 +121,7 @@
 ;; ============================================
 
 ;; L 40x4
-(if (and (= taz_s_family "Katownik rownoramienny")
+(if (and (= taz_s_family "LR")
          (= taz_s_type "40x4"))
   (progn
     (setq taz_s_h 40.0)
@@ -135,7 +135,7 @@
 )
 
 ;; L 40x5
-(if (and (= taz_s_family "Katownik rownoramienny")
+(if (and (= taz_s_family "LR")
          (= taz_s_type "40x5"))
   (progn
     (setq taz_s_h 40.0)
@@ -149,7 +149,7 @@
 )
 
 ;; L 45x4
-(if (and (= taz_s_family "Katownik rownoramienny")
+(if (and (= taz_s_family "LR")
          (= taz_s_type "45x4"))
   (progn
     (setq taz_s_h 45.0)
@@ -163,7 +163,7 @@
 )
 
 ;; L 45x5
-(if (and (= taz_s_family "Katownik rownoramienny")
+(if (and (= taz_s_family "LR")
          (= taz_s_type "45x5"))
   (progn
     (setq taz_s_h 45.0)
@@ -177,7 +177,7 @@
 )
 
 ;; L 50x5
-(if (and (= taz_s_family "Katownik rownoramienny")
+(if (and (= taz_s_family "LR")
          (= taz_s_type "50x5"))
   (progn
     (setq taz_s_h 50.0)
@@ -191,7 +191,7 @@
 )
 
 ;; L 50x6
-(if (and (= taz_s_family "Katownik rownoramienny")
+(if (and (= taz_s_family "LR")
          (= taz_s_type "50x6"))
   (progn
     (setq taz_s_h 50.0)
@@ -205,7 +205,7 @@
 )
 
 ;; L 50x7
-(if (and (= taz_s_family "Katownik rownoramienny")
+(if (and (= taz_s_family "LR")
          (= taz_s_type "50x7"))
   (progn
     (setq taz_s_h 50.0)
@@ -219,7 +219,7 @@
 )
 
 ;; L 55x6
-(if (and (= taz_s_family "Katownik rownoramienny")
+(if (and (= taz_s_family "LR")
          (= taz_s_type "55x6"))
   (progn
     (setq taz_s_h 55.0)
@@ -233,7 +233,7 @@
 )
 
 ;; L 60x5
-(if (and (= taz_s_family "Katownik rownoramienny")
+(if (and (= taz_s_family "LR")
          (= taz_s_type "60x5"))
   (progn
     (setq taz_s_h 60.0)
@@ -247,7 +247,7 @@
 )
 
 ;; L 60x6
-(if (and (= taz_s_family "Katownik rownoramienny")
+(if (and (= taz_s_family "LR")
          (= taz_s_type "60x6"))
   (progn
     (setq taz_s_h 60.0)
@@ -261,7 +261,7 @@
 )
 
 ;; L 60x8
-(if (and (= taz_s_family "Katownik rownoramienny")
+(if (and (= taz_s_family "LR")
          (= taz_s_type "60x8"))
   (progn
     (setq taz_s_h 60.0)
@@ -279,7 +279,7 @@
 ;; ============================================
 
 ;; L 65x7
-(if (and (= taz_s_family "Katownik rownoramienny")
+(if (and (= taz_s_family "LR")
          (= taz_s_type "65x7"))
   (progn
     (setq taz_s_h 65.0)
@@ -293,7 +293,7 @@
 )
 
 ;; L 70x6
-(if (and (= taz_s_family "Katownik rownoramienny")
+(if (and (= taz_s_family "LR")
          (= taz_s_type "70x6"))
   (progn
     (setq taz_s_h 70.0)
@@ -307,7 +307,7 @@
 )
 
 ;; L 70x7
-(if (and (= taz_s_family "Katownik rownoramienny")
+(if (and (= taz_s_family "LR")
          (= taz_s_type "70x7"))
   (progn
     (setq taz_s_h 70.0)
@@ -321,7 +321,7 @@
 )
 
 ;; L 70x9
-(if (and (= taz_s_family "Katownik rownoramienny")
+(if (and (= taz_s_family "LR")
          (= taz_s_type "70x9"))
   (progn
     (setq taz_s_h 70.0)
@@ -335,7 +335,7 @@
 )
 
 ;; L 75x7
-(if (and (= taz_s_family "Katownik rownoramienny")
+(if (and (= taz_s_family "LR")
          (= taz_s_type "75x7"))
   (progn
     (setq taz_s_h 75.0)
@@ -349,7 +349,7 @@
 )
 
 ;; L 75x8
-(if (and (= taz_s_family "Katownik rownoramienny")
+(if (and (= taz_s_family "LR")
          (= taz_s_type "75x8"))
   (progn
     (setq taz_s_h 75.0)
@@ -363,7 +363,7 @@
 )
 
 ;; L 80x6
-(if (and (= taz_s_family "Katownik rownoramienny")
+(if (and (= taz_s_family "LR")
          (= taz_s_type "80x6"))
   (progn
     (setq taz_s_h 80.0)
@@ -377,7 +377,7 @@
 )
 
 ;; L 80x8
-(if (and (= taz_s_family "Katownik rownoramienny")
+(if (and (= taz_s_family "LR")
          (= taz_s_type "80x8"))
   (progn
     (setq taz_s_h 80.0)
@@ -391,7 +391,7 @@
 )
 
 ;; L 80x10
-(if (and (= taz_s_family "Katownik rownoramienny")
+(if (and (= taz_s_family "LR")
          (= taz_s_type "80x10"))
   (progn
     (setq taz_s_h 80.0)
@@ -409,7 +409,7 @@
 ;; ============================================
 
 ;; L 90x7
-(if (and (= taz_s_family "Katownik rownoramienny")
+(if (and (= taz_s_family "LR")
          (= taz_s_type "90x7"))
   (progn
     (setq taz_s_h 90.0)
@@ -423,7 +423,7 @@
 )
 
 ;; L 90x8
-(if (and (= taz_s_family "Katownik rownoramienny")
+(if (and (= taz_s_family "LR")
          (= taz_s_type "90x8"))
   (progn
     (setq taz_s_h 90.0)
@@ -437,7 +437,7 @@
 )
 
 ;; L 90x9
-(if (and (= taz_s_family "Katownik rownoramienny")
+(if (and (= taz_s_family "LR")
          (= taz_s_type "90x9"))
   (progn
     (setq taz_s_h 90.0)
@@ -451,7 +451,7 @@
 )
 
 ;; L 100x8
-(if (and (= taz_s_family "Katownik rownoramienny")
+(if (and (= taz_s_family "LR")
          (= taz_s_type "100x8"))
   (progn
     (setq taz_s_h 100.0)
@@ -465,7 +465,7 @@
 )
 
 ;; L 100x10
-(if (and (= taz_s_family "Katownik rownoramienny")
+(if (and (= taz_s_family "LR")
          (= taz_s_type "100x10"))
   (progn
     (setq taz_s_h 100.0)
@@ -479,7 +479,7 @@
 )
 
 ;; L 100x12
-(if (and (= taz_s_family "Katownik rownoramienny")
+(if (and (= taz_s_family "LR")
          (= taz_s_type "100x12"))
   (progn
     (setq taz_s_h 100.0)
@@ -493,7 +493,7 @@
 )
 
 ;; L 100x14
-(if (and (= taz_s_family "Katownik rownoramienny")
+(if (and (= taz_s_family "LR")
          (= taz_s_type "100x14"))
   (progn
     (setq taz_s_h 100.0)
@@ -507,7 +507,7 @@
 )
 
 ;; L 110x10
-(if (and (= taz_s_family "Katownik rownoramienny")
+(if (and (= taz_s_family "LR")
          (= taz_s_type "110x10"))
   (progn
     (setq taz_s_h 110.0)
@@ -521,7 +521,7 @@
 )
 
 ;; L 110x12
-(if (and (= taz_s_family "Katownik rownoramienny")
+(if (and (= taz_s_family "LR")
          (= taz_s_type "110x12"))
   (progn
     (setq taz_s_h 110.0)
@@ -535,7 +535,7 @@
 )
 
 ;; L 120x10
-(if (and (= taz_s_family "Katownik rownoramienny")
+(if (and (= taz_s_family "LR")
          (= taz_s_type "120x10"))
   (progn
     (setq taz_s_h 120.0)
@@ -549,7 +549,7 @@
 )
 
 ;; L 120x11
-(if (and (= taz_s_family "Katownik rownoramienny")
+(if (and (= taz_s_family "LR")
          (= taz_s_type "120x11"))
   (progn
     (setq taz_s_h 120.0)
@@ -563,7 +563,7 @@
 )
 
 ;; L 120x12
-(if (and (= taz_s_family "Katownik rownoramienny")
+(if (and (= taz_s_family "LR")
          (= taz_s_type "120x12"))
   (progn
     (setq taz_s_h 120.0)
@@ -577,7 +577,7 @@
 )
 
 ;; L 120x13
-(if (and (= taz_s_family "Katownik rownoramienny")
+(if (and (= taz_s_family "LR")
          (= taz_s_type "120x13"))
   (progn
     (setq taz_s_h 120.0)
@@ -591,7 +591,7 @@
 )
 
 ;; L 120x15
-(if (and (= taz_s_family "Katownik rownoramienny")
+(if (and (= taz_s_family "LR")
          (= taz_s_type "120x15"))
   (progn
     (setq taz_s_h 120.0)
@@ -609,7 +609,7 @@
 ;; ============================================
 
 ;; L 130x12
-(if (and (= taz_s_family "Katownik rownoramienny")
+(if (and (= taz_s_family "LR")
          (= taz_s_type "130x12"))
   (progn
     (setq taz_s_h 130.0)
@@ -623,7 +623,7 @@
 )
 
 ;; L 140x10
-(if (and (= taz_s_family "Katownik rownoramienny")
+(if (and (= taz_s_family "LR")
          (= taz_s_type "140x10"))
   (progn
     (setq taz_s_h 140.0)
@@ -637,7 +637,7 @@
 )
 
 ;; L 140x13
-(if (and (= taz_s_family "Katownik rownoramienny")
+(if (and (= taz_s_family "LR")
          (= taz_s_type "140x13"))
   (progn
     (setq taz_s_h 140.0)
@@ -651,7 +651,7 @@
 )
 
 ;; L 140x15
-(if (and (= taz_s_family "Katownik rownoramienny")
+(if (and (= taz_s_family "LR")
          (= taz_s_type "140x15"))
   (progn
     (setq taz_s_h 140.0)
@@ -665,7 +665,7 @@
 )
 
 ;; L 150x10
-(if (and (= taz_s_family "Katownik rownoramienny")
+(if (and (= taz_s_family "LR")
          (= taz_s_type "150x10"))
   (progn
     (setq taz_s_h 150.0)
@@ -679,7 +679,7 @@
 )
 
 ;; L 150x12
-(if (and (= taz_s_family "Katownik rownoramienny")
+(if (and (= taz_s_family "LR")
          (= taz_s_type "150x12"))
   (progn
     (setq taz_s_h 150.0)
@@ -693,7 +693,7 @@
 )
 
 ;; L 150x14
-(if (and (= taz_s_family "Katownik rownoramienny")
+(if (and (= taz_s_family "LR")
          (= taz_s_type "150x14"))
   (progn
     (setq taz_s_h 150.0)
@@ -707,7 +707,7 @@
 )
 
 ;; L 150x15
-(if (and (= taz_s_family "Katownik rownoramienny")
+(if (and (= taz_s_family "LR")
          (= taz_s_type "150x15"))
   (progn
     (setq taz_s_h 150.0)
@@ -721,7 +721,7 @@
 )
 
 ;; L 150x16
-(if (and (= taz_s_family "Katownik rownoramienny")
+(if (and (= taz_s_family "LR")
          (= taz_s_type "150x16"))
   (progn
     (setq taz_s_h 150.0)
@@ -735,7 +735,7 @@
 )
 
 ;; L 150x18
-(if (and (= taz_s_family "Katownik rownoramienny")
+(if (and (= taz_s_family "LR")
          (= taz_s_type "150x18"))
   (progn
     (setq taz_s_h 150.0)
@@ -749,7 +749,7 @@
 )
 
 ;; L 150x20
-(if (and (= taz_s_family "Katownik rownoramienny")
+(if (and (= taz_s_family "LR")
          (= taz_s_type "150x20"))
   (progn
     (setq taz_s_h 150.0)
@@ -763,7 +763,7 @@
 )
 
 ;; L 160x15
-(if (and (= taz_s_family "Katownik rownoramienny")
+(if (and (= taz_s_family "LR")
          (= taz_s_type "160x15"))
   (progn
     (setq taz_s_h 160.0)
@@ -777,7 +777,7 @@
 )
 
 ;; L 160x17
-(if (and (= taz_s_family "Katownik rownoramienny")
+(if (and (= taz_s_family "LR")
          (= taz_s_type "160x17"))
   (progn
     (setq taz_s_h 160.0)
@@ -791,7 +791,7 @@
 )
 
 ;; L 160x19
-(if (and (= taz_s_family "Katownik rownoramienny")
+(if (and (= taz_s_family "LR")
          (= taz_s_type "160x19"))
   (progn
     (setq taz_s_h 160.0)
@@ -805,7 +805,7 @@
 )
 
 ;; L 180x16
-(if (and (= taz_s_family "Katownik rownoramienny")
+(if (and (= taz_s_family "LR")
          (= taz_s_type "180x16"))
   (progn
     (setq taz_s_h 180.0)
@@ -819,7 +819,7 @@
 )
 
 ;; L 180x18
-(if (and (= taz_s_family "Katownik rownoramienny")
+(if (and (= taz_s_family "LR")
          (= taz_s_type "180x18"))
   (progn
     (setq taz_s_h 180.0)
@@ -833,7 +833,7 @@
 )
 
 ;; L 180x20
-(if (and (= taz_s_family "Katownik rownoramienny")
+(if (and (= taz_s_family "LR")
          (= taz_s_type "180x20"))
   (progn
     (setq taz_s_h 180.0)
@@ -847,7 +847,7 @@
 )
 
 ;; L 180x22
-(if (and (= taz_s_family "Katownik rownoramienny")
+(if (and (= taz_s_family "LR")
          (= taz_s_type "180x22"))
   (progn
     (setq taz_s_h 180.0)
@@ -861,7 +861,7 @@
 )
 
 ;; L 200x16
-(if (and (= taz_s_family "Katownik rownoramienny")
+(if (and (= taz_s_family "LR")
          (= taz_s_type "200x16"))
   (progn
     (setq taz_s_h 200.0)
@@ -875,7 +875,7 @@
 )
 
 ;; L 200x18
-(if (and (= taz_s_family "Katownik rownoramienny")
+(if (and (= taz_s_family "LR")
          (= taz_s_type "200x18"))
   (progn
     (setq taz_s_h 200.0)
@@ -889,7 +889,7 @@
 )
 
 ;; L 200x20
-(if (and (= taz_s_family "Katownik rownoramienny")
+(if (and (= taz_s_family "LR")
          (= taz_s_type "200x20"))
   (progn
     (setq taz_s_h 200.0)
@@ -903,7 +903,7 @@
 )
 
 ;; L 200x22
-(if (and (= taz_s_family "Katownik rownoramienny")
+(if (and (= taz_s_family "LR")
          (= taz_s_type "200x22"))
   (progn
     (setq taz_s_h 200.0)
@@ -917,7 +917,7 @@
 )
 
 ;; L 200x24
-(if (and (= taz_s_family "Katownik rownoramienny")
+(if (and (= taz_s_family "LR")
          (= taz_s_type "200x24"))
   (progn
     (setq taz_s_h 200.0)
@@ -931,7 +931,7 @@
 )
 
 ;; L 200x26
-(if (and (= taz_s_family "Katownik rownoramienny")
+(if (and (= taz_s_family "LR")
          (= taz_s_type "200x26"))
   (progn
     (setq taz_s_h 200.0)
@@ -945,7 +945,7 @@
 )
 
 ;; L 200x28
-(if (and (= taz_s_family "Katownik rownoramienny")
+(if (and (= taz_s_family "LR")
          (= taz_s_type "200x28"))
   (progn
     (setq taz_s_h 200.0)
@@ -959,7 +959,7 @@
 )
 
 ;; L 200x30
-(if (and (= taz_s_family "Katownik rownoramienny")
+(if (and (= taz_s_family "LR")
          (= taz_s_type "200x30"))
   (progn
     (setq taz_s_h 200.0)
@@ -977,7 +977,7 @@
 ;; ============================================
 
 ;; L 250x18
-(if (and (= taz_s_family "Katownik rownoramienny")
+(if (and (= taz_s_family "LR")
          (= taz_s_type "250x18"))
   (progn
     (setq taz_s_h 250.0)
@@ -991,7 +991,7 @@
 )
 
 ;; L 250x20
-(if (and (= taz_s_family "Katownik rownoramienny")
+(if (and (= taz_s_family "LR")
          (= taz_s_type "250x20"))
   (progn
     (setq taz_s_h 250.0)
@@ -1005,7 +1005,7 @@
 )
 
 ;; L 250x22
-(if (and (= taz_s_family "Katownik rownoramienny")
+(if (and (= taz_s_family "LR")
          (= taz_s_type "250x22"))
   (progn
     (setq taz_s_h 250.0)
@@ -1019,7 +1019,7 @@
 )
 
 ;; L 250x24
-(if (and (= taz_s_family "Katownik rownoramienny")
+(if (and (= taz_s_family "LR")
          (= taz_s_type "250x24"))
   (progn
     (setq taz_s_h 250.0)
@@ -1033,7 +1033,7 @@
 )
 
 ;; L 250x26
-(if (and (= taz_s_family "Katownik rownoramienny")
+(if (and (= taz_s_family "LR")
          (= taz_s_type "250x26"))
   (progn
     (setq taz_s_h 250.0)
@@ -1047,7 +1047,7 @@
 )
 
 ;; L 250x28
-(if (and (= taz_s_family "Katownik rownoramienny")
+(if (and (= taz_s_family "LR")
          (= taz_s_type "250x28"))
   (progn
     (setq taz_s_h 250.0)
