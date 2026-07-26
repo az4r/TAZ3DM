@@ -1,4 +1,4 @@
-(defun c:taz_s_annotation_scale_dialog_run ( / dcl_id selected_index selected_value default_index)
+(defun c:taz_s_annotation_scale ( / dcl_id selected_index default_index taz_s_annotation_scale_dialog_result)
 
   ;; jeśli zmienna istnieje – użyjemy jej jako propozycji
   ;; jeśli nie – ustawimy domyślnie 1
@@ -53,15 +53,33 @@
         (if (= selected_index 7) (setq taz_s_annotation_scale 100))
         (if (= selected_index 8) (setq taz_s_annotation_scale 200))
 
-        (done_dialog)
+        (done_dialog 1)
+    )"
+  )
+
+  ;; obsługa ANULUJ
+  (action_tile "cancel"
+    "(progn
+        (done_dialog 0)
     )"
   )
 
   ;; uruchom dialog
-  (start_dialog)
+  (setq taz_s_annotation_scale_dialog_result (start_dialog))
 
   ;; zwolnij DCL
   (unload_dialog dcl_id)
+
+  ;; jeśli anulowano → przerwij skrypt
+  (if (= taz_s_annotation_scale_dialog_result 0)
+    (progn
+      (setq taz_s_old_error *error*)
+      (setq *error* (lambda (msg) (princ "")))
+      (exit)
+      (setq *error* taz_s_old_error)
+    )
+  )
+
 
   ;; debug
   (princ (strcat "\nWybrana skala opisu = " (itoa taz_s_annotation_scale)))
