@@ -583,6 +583,15 @@
                )
              )
             )
+            ((= taz_s_case "Z")
+             (setq taz_s_annotation_ins_pt
+               (list
+                 (car  taz_s_annotation_ins_pt)
+                 (cadr taz_s_annotation_ins_pt)
+                 (+ taz_s_z taz_s_zoffset)
+               )
+             )
+            )
           )
 
           (entmake
