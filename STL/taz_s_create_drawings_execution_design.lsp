@@ -219,11 +219,37 @@
   ;; WCZYTANIE DANYCH
   ;; ---------------------------------
 
-  (setq taz_s_x_data taz_s_axis_data_x)
-  (setq taz_s_y_data taz_s_axis_data_y)
-  (setq taz_s_z_data taz_s_axis_data_z)
+  ;;(setq taz_s_x_data taz_s_axis_data_x)
+  ;;(setq taz_s_y_data taz_s_axis_data_y)
+  ;;(setq taz_s_z_data taz_s_axis_data_z)
   
-  (load taz_s_data_file)
+  ;;(load taz_s_data_file)
+  
+  (if (findfile taz_s_data_file)
+    (load taz_s_data_file)
+    (progn
+      (setq taz_s_old_error *error*)
+      (setq *error* (lambda (msg) (princ "")))
+      (print "Brak konstrukcji - rysunki nie moga zostac wykonane!")
+      (exit)
+      (setq *error* taz_s_old_error)
+    )
+  )
+  
+  (if (findfile taz_s_axes_data_file)
+    (progn
+      (setq taz_s_x_data taz_s_axis_data_x)
+      (setq taz_s_y_data taz_s_axis_data_y)
+      (setq taz_s_z_data taz_s_axis_data_z)
+    )
+    (progn
+      (setq taz_s_old_error *error*)
+      (setq *error* (lambda (msg) (princ "")))
+      (print "Brak osi konstrukcyjnych - rysunki nie moga zostac wykonane!")
+      (exit)
+      (setq *error* taz_s_old_error)
+    )    
+  )
 
   ;; ---------------------------------
   ;; POBRANIE ODLEGLOSCI
