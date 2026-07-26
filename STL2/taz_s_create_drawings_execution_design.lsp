@@ -651,11 +651,23 @@
              )
             )
             ((= taz_s_case "Z")
-             (setq taz_s_annotation_ins_pt
-               (list
-                 (car  taz_s_annotation_ins_pt)
-                 (cadr taz_s_annotation_ins_pt)
-                 (+ taz_s_z taz_s_zoffset)
+             (setq taz_s_annotation_plane_pt
+               (taz_s_get_sweep_plane_point taz_s_orig_ent 2 taz_s_z)
+             )
+             (if taz_s_annotation_plane_pt
+               (setq taz_s_annotation_ins_pt
+                 (list
+                   (car  taz_s_annotation_plane_pt)
+                   (cadr taz_s_annotation_plane_pt)
+                   (+ taz_s_z taz_s_zoffset)
+                 )
+               )
+               (setq taz_s_annotation_ins_pt
+                 (list
+                   (car  taz_s_annotation_ins_pt)
+                   (cadr taz_s_annotation_ins_pt)
+                   (+ taz_s_z taz_s_zoffset)
+                 )
                )
              )
             )
