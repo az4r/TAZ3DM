@@ -605,6 +605,7 @@
             )
             ((= taz_s_case "Y")
              (command "_.ROTATE3D" (entlast) "" "Y" taz_s_annotation_ins_pt "90")
+             (command "_.ROTATE3D" (entlast) "" "X" taz_s_annotation_ins_pt "90")
             )
           )
         )
