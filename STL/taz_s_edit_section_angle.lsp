@@ -131,7 +131,7 @@
     ((or (= taz_s_family "Katownik rownoramienny")
          (= taz_s_family "Katownik nierownoramienny"))
      (setq taz_s_category "Katowniki"))
-    ((or (= taz_s_family "Rura kwadratowa")
+    ((or (= taz_s_family "SHS")
          (= taz_s_family "Rura prostokatna")
          (= taz_s_family "Rura okragla"))
      (setq taz_s_category "Rury"))

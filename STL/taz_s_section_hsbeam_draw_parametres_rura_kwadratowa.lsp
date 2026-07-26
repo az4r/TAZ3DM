@@ -5,7 +5,7 @@
 ;; ============================================
 
 ;; SHS 38x38x2.5
-(if (and (= taz_s_family "Rura kwadratowa")
+(if (and (= taz_s_family "SHS")
          (= taz_s_type "38x38x2.5"))
   (progn
     (setq taz_s_h 38.0)
@@ -17,7 +17,7 @@
 )
 
 ;; SHS 38x38x3
-(if (and (= taz_s_family "Rura kwadratowa")
+(if (and (= taz_s_family "SHS")
          (= taz_s_type "38x38x3"))
   (progn
     (setq taz_s_h 38.0)
@@ -29,7 +29,7 @@
 )
 
 ;; SHS 38x38x3.5
-(if (and (= taz_s_family "Rura kwadratowa")
+(if (and (= taz_s_family "SHS")
          (= taz_s_type "38x38x3.5"))
   (progn
     (setq taz_s_h 38.0)
@@ -41,7 +41,7 @@
 )
 
 ;; SHS 50x50x2.5
-(if (and (= taz_s_family "Rura kwadratowa")
+(if (and (= taz_s_family "SHS")
          (= taz_s_type "50x50x2.5"))
   (progn
     (setq taz_s_h 50.0)
@@ -53,7 +53,7 @@
 )
 
 ;; SHS 50x50x3
-(if (and (= taz_s_family "Rura kwadratowa")
+(if (and (= taz_s_family "SHS")
          (= taz_s_type "50x50x3"))
   (progn
     (setq taz_s_h 50.0)
@@ -65,7 +65,7 @@
 )
 
 ;; SHS 50x50x3.5
-(if (and (= taz_s_family "Rura kwadratowa")
+(if (and (= taz_s_family "SHS")
          (= taz_s_type "50x50x3.5"))
   (progn
     (setq taz_s_h 50.0)
@@ -77,7 +77,7 @@
 )
 
 ;; SHS 50x50x4
-(if (and (= taz_s_family "Rura kwadratowa")
+(if (and (= taz_s_family "SHS")
          (= taz_s_type "50x50x4"))
   (progn
     (setq taz_s_h 50.0)
@@ -89,7 +89,7 @@
 )
 
 ;; SHS 50x50x4.5
-(if (and (= taz_s_family "Rura kwadratowa")
+(if (and (= taz_s_family "SHS")
          (= taz_s_type "50x50x4.5"))
   (progn
     (setq taz_s_h 50.0)
@@ -101,7 +101,7 @@
 )
 
 ;; SHS 60x60x2.5
-(if (and (= taz_s_family "Rura kwadratowa")
+(if (and (= taz_s_family "SHS")
          (= taz_s_type "60x60x2.5"))
   (progn
     (setq taz_s_h 60.0)
@@ -113,7 +113,7 @@
 )
 
 ;; SHS 60x60x3
-(if (and (= taz_s_family "Rura kwadratowa")
+(if (and (= taz_s_family "SHS")
          (= taz_s_type "60x60x3"))
   (progn
     (setq taz_s_h 60.0)
@@ -125,7 +125,7 @@
 )
 
 ;; SHS 60x60x3.5
-(if (and (= taz_s_family "Rura kwadratowa")
+(if (and (= taz_s_family "SHS")
          (= taz_s_type "60x60x3.5"))
   (progn
     (setq taz_s_h 60.0)
@@ -137,7 +137,7 @@
 )
 
 ;; SHS 60x60x4
-(if (and (= taz_s_family "Rura kwadratowa")
+(if (and (= taz_s_family "SHS")
          (= taz_s_type "60x60x4"))
   (progn
     (setq taz_s_h 60.0)
@@ -149,7 +149,7 @@
 )
 
 ;; SHS 60x60x4.5
-(if (and (= taz_s_family "Rura kwadratowa")
+(if (and (= taz_s_family "SHS")
          (= taz_s_type "60x60x4.5"))
   (progn
     (setq taz_s_h 60.0)
@@ -165,7 +165,7 @@
 ;; ============================================
 
 ;; SHS 75x75x2.5
-(if (and (= taz_s_family "Rura kwadratowa")
+(if (and (= taz_s_family "SHS")
          (= taz_s_type "75x75x2.5"))
   (progn
     (setq taz_s_h 75.0)
@@ -177,7 +177,7 @@
 )
 
 ;; SHS 75x75x3
-(if (and (= taz_s_family "Rura kwadratowa")
+(if (and (= taz_s_family "SHS")
          (= taz_s_type "75x75x3"))
   (progn
     (setq taz_s_h 75.0)
@@ -189,7 +189,7 @@
 )
 
 ;; SHS 75x75x3.5
-(if (and (= taz_s_family "Rura kwadratowa")
+(if (and (= taz_s_family "SHS")
          (= taz_s_type "75x75x3.5"))
   (progn
     (setq taz_s_h 75.0)
@@ -201,7 +201,7 @@
 )
 
 ;; SHS 75x75x4
-(if (and (= taz_s_family "Rura kwadratowa")
+(if (and (= taz_s_family "SHS")
          (= taz_s_type "75x75x4"))
   (progn
     (setq taz_s_h 75.0)
@@ -213,7 +213,7 @@
 )
 
 ;; SHS 75x75x4.5
-(if (and (= taz_s_family "Rura kwadratowa")
+(if (and (= taz_s_family "SHS")
          (= taz_s_type "75x75x4.5"))
   (progn
     (setq taz_s_h 75.0)
@@ -225,7 +225,7 @@
 )
 
 ;; SHS 75x75x5
-(if (and (= taz_s_family "Rura kwadratowa")
+(if (and (= taz_s_family "SHS")
          (= taz_s_type "75x75x5"))
   (progn
     (setq taz_s_h 75.0)
@@ -237,7 +237,7 @@
 )
 
 ;; SHS 80x80x2.5
-(if (and (= taz_s_family "Rura kwadratowa")
+(if (and (= taz_s_family "SHS")
          (= taz_s_type "80x80x2.5"))
   (progn
     (setq taz_s_h 80.0)
@@ -249,7 +249,7 @@
 )
 
 ;; SHS 80x80x3
-(if (and (= taz_s_family "Rura kwadratowa")
+(if (and (= taz_s_family "SHS")
          (= taz_s_type "80x80x3"))
   (progn
     (setq taz_s_h 80.0)
@@ -261,7 +261,7 @@
 )
 
 ;; SHS 80x80x3.5
-(if (and (= taz_s_family "Rura kwadratowa")
+(if (and (= taz_s_family "SHS")
          (= taz_s_type "80x80x3.5"))
   (progn
     (setq taz_s_h 80.0)
@@ -273,7 +273,7 @@
 )
 
 ;; SHS 80x80x4
-(if (and (= taz_s_family "Rura kwadratowa")
+(if (and (= taz_s_family "SHS")
          (= taz_s_type "80x80x4"))
   (progn
     (setq taz_s_h 80.0)
@@ -285,7 +285,7 @@
 )
 
 ;; SHS 80x80x4.5
-(if (and (= taz_s_family "Rura kwadratowa")
+(if (and (= taz_s_family "SHS")
          (= taz_s_type "80x80x4.5"))
   (progn
     (setq taz_s_h 80.0)
@@ -297,7 +297,7 @@
 )
 
 ;; SHS 80x80x5
-(if (and (= taz_s_family "Rura kwadratowa")
+(if (and (= taz_s_family "SHS")
          (= taz_s_type "80x80x5"))
   (progn
     (setq taz_s_h 80.0)
@@ -309,7 +309,7 @@
 )
 
 ;; SHS 80x80x6
-(if (and (= taz_s_family "Rura kwadratowa")
+(if (and (= taz_s_family "SHS")
          (= taz_s_type "80x80x6"))
   (progn
     (setq taz_s_h 80.0)
@@ -321,7 +321,7 @@
 )
 
 ;; SHS 100x100x2.5
-(if (and (= taz_s_family "Rura kwadratowa")
+(if (and (= taz_s_family "SHS")
          (= taz_s_type "100x100x2.5"))
   (progn
     (setq taz_s_h 100.0)
@@ -333,7 +333,7 @@
 )
 
 ;; SHS 100x100x3
-(if (and (= taz_s_family "Rura kwadratowa")
+(if (and (= taz_s_family "SHS")
          (= taz_s_type "100x100x3"))
   (progn
     (setq taz_s_h 100.0)
@@ -345,7 +345,7 @@
 )
 
 ;; SHS 100x100x3.5
-(if (and (= taz_s_family "Rura kwadratowa")
+(if (and (= taz_s_family "SHS")
          (= taz_s_type "100x100x3.5"))
   (progn
     (setq taz_s_h 100.0)
@@ -357,7 +357,7 @@
 )
 
 ;; SHS 100x100x4
-(if (and (= taz_s_family "Rura kwadratowa")
+(if (and (= taz_s_family "SHS")
          (= taz_s_type "100x100x4"))
   (progn
     (setq taz_s_h 100.0)
@@ -369,7 +369,7 @@
 )
 
 ;; SHS 100x100x4.5
-(if (and (= taz_s_family "Rura kwadratowa")
+(if (and (= taz_s_family "SHS")
          (= taz_s_type "100x100x4.5"))
   (progn
     (setq taz_s_h 100.0)
@@ -381,7 +381,7 @@
 )
 
 ;; SHS 100x100x5
-(if (and (= taz_s_family "Rura kwadratowa")
+(if (and (= taz_s_family "SHS")
          (= taz_s_type "100x100x5"))
   (progn
     (setq taz_s_h 100.0)
@@ -393,7 +393,7 @@
 )
 
 ;; SHS 100x100x6
-(if (and (= taz_s_family "Rura kwadratowa")
+(if (and (= taz_s_family "SHS")
          (= taz_s_type "100x100x6"))
   (progn
     (setq taz_s_h 100.0)
@@ -409,7 +409,7 @@
 ;; ============================================
 
 ;; SHS 120x120x3
-(if (and (= taz_s_family "Rura kwadratowa")
+(if (and (= taz_s_family "SHS")
          (= taz_s_type "120x120x3"))
   (progn
     (setq taz_s_h 120.0)
@@ -421,7 +421,7 @@
 )
 
 ;; SHS 120x120x3.5
-(if (and (= taz_s_family "Rura kwadratowa")
+(if (and (= taz_s_family "SHS")
          (= taz_s_type "120x120x3.5"))
   (progn
     (setq taz_s_h 120.0)
@@ -433,7 +433,7 @@
 )
 
 ;; SHS 120x120x4
-(if (and (= taz_s_family "Rura kwadratowa")
+(if (and (= taz_s_family "SHS")
          (= taz_s_type "120x120x4"))
   (progn
     (setq taz_s_h 120.0)
@@ -445,7 +445,7 @@
 )
 
 ;; SHS 120x120x4.5
-(if (and (= taz_s_family "Rura kwadratowa")
+(if (and (= taz_s_family "SHS")
          (= taz_s_type "120x120x4.5"))
   (progn
     (setq taz_s_h 120.0)
@@ -457,7 +457,7 @@
 )
 
 ;; SHS 120x120x5
-(if (and (= taz_s_family "Rura kwadratowa")
+(if (and (= taz_s_family "SHS")
          (= taz_s_type "120x120x5"))
   (progn
     (setq taz_s_h 120.0)
@@ -469,7 +469,7 @@
 )
 
 ;; SHS 120x120x6
-(if (and (= taz_s_family "Rura kwadratowa")
+(if (and (= taz_s_family "SHS")
          (= taz_s_type "120x120x6"))
   (progn
     (setq taz_s_h 120.0)
@@ -481,7 +481,7 @@
 )
 
 ;; SHS 150x150x4
-(if (and (= taz_s_family "Rura kwadratowa")
+(if (and (= taz_s_family "SHS")
          (= taz_s_type "150x150x4"))
   (progn
     (setq taz_s_h 150.0)
@@ -493,7 +493,7 @@
 )
 
 ;; SHS 150x150x4.5
-(if (and (= taz_s_family "Rura kwadratowa")
+(if (and (= taz_s_family "SHS")
          (= taz_s_type "150x150x4.5"))
   (progn
     (setq taz_s_h 150.0)
@@ -505,7 +505,7 @@
 )
 
 ;; SHS 150x150x6
-(if (and (= taz_s_family "Rura kwadratowa")
+(if (and (= taz_s_family "SHS")
          (= taz_s_type "150x150x6"))
   (progn
     (setq taz_s_h 150.0)
@@ -517,7 +517,7 @@
 )
 
 ;; SHS 150x150x8
-(if (and (= taz_s_family "Rura kwadratowa")
+(if (and (= taz_s_family "SHS")
          (= taz_s_type "150x150x8"))
   (progn
     (setq taz_s_h 150.0)
@@ -529,7 +529,7 @@
 )
 
 ;; SHS 150x150x10
-(if (and (= taz_s_family "Rura kwadratowa")
+(if (and (= taz_s_family "SHS")
          (= taz_s_type "150x150x10"))
   (progn
     (setq taz_s_h 150.0)
@@ -545,7 +545,7 @@
 ;; ============================================
 
 ;; SHS 175x175x4
-(if (and (= taz_s_family "Rura kwadratowa")
+(if (and (= taz_s_family "SHS")
          (= taz_s_type "175x175x4"))
   (progn
     (setq taz_s_h 175.0)
@@ -557,7 +557,7 @@
 )
 
 ;; SHS 175x175x4.5
-(if (and (= taz_s_family "Rura kwadratowa")
+(if (and (= taz_s_family "SHS")
          (= taz_s_type "175x175x4.5"))
   (progn
     (setq taz_s_h 175.0)
@@ -569,7 +569,7 @@
 )
 
 ;; SHS 175x175x6
-(if (and (= taz_s_family "Rura kwadratowa")
+(if (and (= taz_s_family "SHS")
          (= taz_s_type "175x175x6"))
   (progn
     (setq taz_s_h 175.0)
@@ -581,7 +581,7 @@
 )
 
 ;; SHS 175x175x8
-(if (and (= taz_s_family "Rura kwadratowa")
+(if (and (= taz_s_family "SHS")
          (= taz_s_type "175x175x8"))
   (progn
     (setq taz_s_h 175.0)
@@ -593,7 +593,7 @@
 )
 
 ;; SHS 175x175x10
-(if (and (= taz_s_family "Rura kwadratowa")
+(if (and (= taz_s_family "SHS")
          (= taz_s_type "175x175x10"))
   (progn
     (setq taz_s_h 175.0)
@@ -605,7 +605,7 @@
 )
 
 ;; SHS 200x200x4.5
-(if (and (= taz_s_family "Rura kwadratowa")
+(if (and (= taz_s_family "SHS")
          (= taz_s_type "200x200x4.5"))
   (progn
     (setq taz_s_h 200.0)
@@ -617,7 +617,7 @@
 )
 
 ;; SHS 200x200x6
-(if (and (= taz_s_family "Rura kwadratowa")
+(if (and (= taz_s_family "SHS")
          (= taz_s_type "200x200x6"))
   (progn
     (setq taz_s_h 200.0)
@@ -629,7 +629,7 @@
 )
 
 ;; SHS 200x200x8
-(if (and (= taz_s_family "Rura kwadratowa")
+(if (and (= taz_s_family "SHS")
          (= taz_s_type "200x200x8"))
   (progn
     (setq taz_s_h 200.0)
@@ -641,7 +641,7 @@
 )
 
 ;; SHS 200x200x10
-(if (and (= taz_s_family "Rura kwadratowa")
+(if (and (= taz_s_family "SHS")
          (= taz_s_type "200x200x10"))
   (progn
     (setq taz_s_h 200.0)
@@ -657,7 +657,7 @@
 ;; ============================================
 
 ;; SHS 220x220x6
-(if (and (= taz_s_family "Rura kwadratowa")
+(if (and (= taz_s_family "SHS")
          (= taz_s_type "220x220x6"))
   (progn
     (setq taz_s_h 220.0)
@@ -669,7 +669,7 @@
 )
 
 ;; SHS 220x220x8
-(if (and (= taz_s_family "Rura kwadratowa")
+(if (and (= taz_s_family "SHS")
          (= taz_s_type "220x220x8"))
   (progn
     (setq taz_s_h 220.0)
@@ -681,7 +681,7 @@
 )
 
 ;; SHS 220x220x10
-(if (and (= taz_s_family "Rura kwadratowa")
+(if (and (= taz_s_family "SHS")
          (= taz_s_type "220x220x10"))
   (progn
     (setq taz_s_h 220.0)
@@ -693,7 +693,7 @@
 )
 
 ;; SHS 250x250x4.5
-(if (and (= taz_s_family "Rura kwadratowa")
+(if (and (= taz_s_family "SHS")
          (= taz_s_type "250x250x4.5"))
   (progn
     (setq taz_s_h 250.0)
@@ -705,7 +705,7 @@
 )
 
 ;; SHS 250x250x6
-(if (and (= taz_s_family "Rura kwadratowa")
+(if (and (= taz_s_family "SHS")
          (= taz_s_type "250x250x6"))
   (progn
     (setq taz_s_h 250.0)
@@ -717,7 +717,7 @@
 )
 
 ;; SHS 250x250x8
-(if (and (= taz_s_family "Rura kwadratowa")
+(if (and (= taz_s_family "SHS")
          (= taz_s_type "250x250x8"))
   (progn
     (setq taz_s_h 250.0)
@@ -729,7 +729,7 @@
 )
 
 ;; SHS 250x250x10
-(if (and (= taz_s_family "Rura kwadratowa")
+(if (and (= taz_s_family "SHS")
          (= taz_s_type "250x250x10"))
   (progn
     (setq taz_s_h 250.0)
@@ -745,7 +745,7 @@
 ;; ============================================
 
 ;; SHS 285x285x8
-(if (and (= taz_s_family "Rura kwadratowa")
+(if (and (= taz_s_family "SHS")
          (= taz_s_type "285x285x8"))
   (progn
     (setq taz_s_h 285.0)
@@ -757,7 +757,7 @@
 )
 
 ;; SHS 285x285x10
-(if (and (= taz_s_family "Rura kwadratowa")
+(if (and (= taz_s_family "SHS")
          (= taz_s_type "285x285x10"))
   (progn
     (setq taz_s_h 285.0)

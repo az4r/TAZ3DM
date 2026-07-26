@@ -3,8 +3,8 @@
   (setq taz_s_r1 1)
   (setq taz_s_r2 1)
 
-  ;; pobranie parametrów Rura kwadratowa
-  (if (= taz_s_family "Rura kwadratowa")
+  ;; pobranie parametrów SHS
+  (if (= taz_s_family "SHS")
     (taz_s_section_hsbeam_draw_parametres_rura_kwadratowa)
     (princ)
   )
@@ -29,7 +29,7 @@
   ;; Punkt bazowy – zewnętrzny narożnik
   (setq taz_s_p '(0 0 0))
   
-  (if (or (= taz_s_family "Rura kwadratowa") (= taz_s_family "Rura prostokatna"))
+  (if (or (= taz_s_family "SHS") (= taz_s_family "Rura prostokatna"))
     (progn
 
   ;; ============================
@@ -1942,8 +1942,8 @@
   (setq taz_s_create_beam_path_cut
         (cdr (assoc -1 (entget (entlast)))))
       
-  ;; rysowanie Rura kwadratowa
-  (if (= taz_s_family "Rura kwadratowa")
+  ;; rysowanie SHS
+  (if (= taz_s_family "SHS")
     (progn
       (command "_PLINE"
         taz_s_plp4_3       
@@ -2087,7 +2087,7 @@
     (princ)
   )
 
-  (if (or (= taz_s_family "Rura kwadratowa") (= taz_s_family "Rura prostokatna"))
+  (if (or (= taz_s_family "SHS") (= taz_s_family "Rura prostokatna"))
     (progn
   ;; wybór profilu
   (setq taz_s_create_beam_profile

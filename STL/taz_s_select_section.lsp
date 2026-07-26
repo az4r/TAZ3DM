@@ -56,7 +56,7 @@
 
     (if (= taz_s_cat_val "Rury") 
       (progn 
-        (add_list "Rura kwadratowa")
+        (add_list "SHS")
         (add_list "Rura prostokatna")
         (add_list "Rura okragla")
       )
@@ -387,8 +387,8 @@
       )
     )
 
-    ;; Rury - Rura kwadratowa (SHS)
-    (if (and (= taz_s_cat_val "Rury") (= taz_s_fam_val "Rura kwadratowa")) 
+    ;; Rury - SHS (SHS)
+    (if (and (= taz_s_cat_val "Rury") (= taz_s_fam_val "SHS")) 
       (progn 
         (add_list "38x38x2.5")
         (add_list "38x38x3")
@@ -749,7 +749,7 @@
   ;; Rury
   (if (= taz_s_tmp_category "Rury") 
     (progn 
-      (if (= taz_s_tmp_family "Rura kwadratowa") (set_tile "taz_s_fam" "0"))
+      (if (= taz_s_tmp_family "SHS") (set_tile "taz_s_fam" "0"))
       (if (= taz_s_tmp_family "Rura prostokatna") (set_tile "taz_s_fam" "1"))
       (if (= taz_s_tmp_family "Rura okragla") (set_tile "taz_s_fam" "2"))
     )
@@ -1347,8 +1347,8 @@
      )
     )
 
-    ;; Rury - Rura kwadratowa (SHS)
-    ((= taz_s_tmp_family "Rura kwadratowa")
+    ;; Rury - SHS (SHS)
+    ((= taz_s_tmp_family "SHS")
      (if (= taz_s_tmp_type "38x38x2.5") (set_tile "taz_s_typ" "0"))
      (if (= taz_s_tmp_type "38x38x3") (set_tile "taz_s_typ" "1"))
      (if (= taz_s_tmp_type "38x38x3.5") (set_tile "taz_s_typ" "2"))
@@ -1985,7 +1985,7 @@
 
     (if (= taz_s_tmp_category "Rury") 
       (progn 
-        (add_list "Rura kwadratowa")
+        (add_list "SHS")
         (add_list "Rura prostokatna")
         (add_list "Rura okragla")
       )
@@ -1999,7 +1999,7 @@
     (if (= taz_s_tmp_category "Katowniki") 
       (setq taz_s_tmp_family "Katownik rownoramienny")
     )
-    (if (= taz_s_tmp_category "Rury") (setq taz_s_tmp_family "Rura kwadratowa"))
+    (if (= taz_s_tmp_category "Rury") (setq taz_s_tmp_family "SHS"))
 
     ;; Ustawienie indeksu rodziny na 0
     (set_tile "taz_s_fam" "0")
@@ -2317,8 +2317,8 @@
       )
     )
 
-    ;; Rury - Rura kwadratowa (SHS)
-    (if (= taz_s_tmp_family "Rura kwadratowa") 
+    ;; Rury - SHS (SHS)
+    (if (= taz_s_tmp_family "SHS") 
       (progn 
         (add_list "38x38x2.5")
         (add_list "38x38x3")
@@ -2660,7 +2660,7 @@
       (progn (setq taz_s_tmp_type "30x20x3") (set_tile "taz_s_typ" "0"))
     )
 
-    (if (= taz_s_tmp_family "Rura kwadratowa") 
+    (if (= taz_s_tmp_family "SHS") 
       (progn (setq taz_s_tmp_type "38x38x2.5") (set_tile "taz_s_typ" "0"))
     )
 
@@ -2706,7 +2706,7 @@
 
     (if (= (get_tile "taz_s_cat") "3") 
       (progn 
-        (if (= $value "0") (setq taz_s_tmp_family "Rura kwadratowa"))
+        (if (= $value "0") (setq taz_s_tmp_family "SHS"))
         (if (= $value "1") (setq taz_s_tmp_family "Rura prostokatna"))
         (if (= $value "2") (setq taz_s_tmp_family "Rura okragla"))
       )
@@ -3025,8 +3025,8 @@
       )
     )
 
-    ;; Rury - Rura kwadratowa (SHS)
-    (if (= taz_s_tmp_family "Rura kwadratowa") 
+    ;; Rury - SHS (SHS)
+    (if (= taz_s_tmp_family "SHS") 
       (progn 
         (add_list "38x38x2.5")
         (add_list "38x38x3")
@@ -3366,7 +3366,7 @@
       (progn (setq taz_s_tmp_type "30x20x3") (set_tile "taz_s_typ" "0"))
     )
 
-    (if (= taz_s_tmp_family "Rura kwadratowa") 
+    (if (= taz_s_tmp_family "SHS") 
       (progn (setq taz_s_tmp_type "38x38x2.5") (set_tile "taz_s_typ" "0"))
     )
 
@@ -3696,8 +3696,8 @@
       )
     )
 
-    ;; Rury - Rura kwadratowa (SHS)
-    (if (= taz_s_tmp_family "Rura kwadratowa") 
+    ;; Rury - SHS (SHS)
+    (if (= taz_s_tmp_family "SHS") 
       (progn 
         (if (= $value "0") (setq taz_s_tmp_type "38x38x2.5"))
         (if (= $value "1") (setq taz_s_tmp_type "38x38x3"))

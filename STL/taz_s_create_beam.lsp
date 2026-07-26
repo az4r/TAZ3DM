@@ -35,7 +35,7 @@
     (taz_s_section_lbeam_draw_parametres_katownik_nierownoramienny)
     (princ)
   )
-  (if (= taz_s_family "Rura kwadratowa")
+  (if (= taz_s_family "SHS")
     (taz_s_section_hsbeam_draw_parametres_rura_kwadratowa)
     (princ)
   )
