@@ -523,39 +523,32 @@
   ;; wyzerowac linie polecen niezaleznie od tego czy padlo pytanie
   ;; o utworzenie bryly wynikowej czy nie.
   ;; ---------------------------------
-  (defun taz_s_intersect_pairs (taz_s_cut_ename taz_s_elems_list)
+  (defun taz_s_intersect_pairs (taz_s_cut_ename taz_s_elems_list taz_s_case)
     (setq taz_s_ei 0)
     (setq taz_s_total_elems (length taz_s_elems_list))
     (while (< taz_s_ei taz_s_total_elems)
       (setq taz_s_target_ent (nth taz_s_ei taz_s_elems_list))
       (setq taz_s_orig_ent (nth taz_s_ei taz_s_orig_enames))
-
       ;; --- SPRAWDZENIE CZY WYSTEPUJE PRZECIECIE (-INTERFERE) ---
       ;; Kopiujemy bryle tnaca na miejsce oryginalu (bez zoffset),
       ;; sprawdzamy przeciecie wzgledem ORYGINALU, potem kasujemy kopie.
       (setvar "CLAYER" "0")
-
       (setq taz_s_cut_tmp_ss (ssadd))
       (ssadd taz_s_cut_ename taz_s_cut_tmp_ss)
       (command "COPY" taz_s_cut_tmp_ss "" "0,0,0" (list 0 0 (- taz_s_zoffset)))
       (setq taz_s_cut_tmp_ent (entlast))
-
       (setq taz_s_layer0_ss_before (ssget "X" (list (cons 8 "0"))))
       (setq taz_s_layer0_count_before (if taz_s_layer0_ss_before (sslength taz_s_layer0_ss_before) 0))
-
       (setq taz_s_if_set1 (ssadd))
       (ssadd taz_s_cut_tmp_ent taz_s_if_set1)
       (setq taz_s_if_set2 (ssadd))
       (ssadd taz_s_orig_ent taz_s_if_set2)
-
       (command "-INTERFERE" taz_s_if_set1 "" taz_s_if_set2 "" "Y")
       (command)
       (command)
       (command)
-
       (setq taz_s_layer0_ss (ssget "X" (list (cons 8 "0"))))
       (setq taz_s_layer0_count_after (if taz_s_layer0_ss (sslength taz_s_layer0_ss) 0))
-
       (if (> taz_s_layer0_count_after taz_s_layer0_count_before)
         (progn
           (if taz_s_layer0_ss
@@ -567,11 +560,35 @@
             " "
             (eval (read (strcat "taz_s_" (cdr (assoc 5 (entget taz_s_orig_ent))) "_attr7")))
           )
-          )          
+          )
+
+          ;; Punkt wstawienia - skorygowany wzgledem plaszczyzny ciecia
+          (setq taz_s_annotation_ins_pt (taz_s_get_center taz_s_orig_ent))
+          (cond
+            ((= taz_s_case "X")
+             (setq taz_s_annotation_ins_pt
+               (list
+                 (car   taz_s_annotation_ins_pt)
+                 taz_s_y
+                 (caddr taz_s_annotation_ins_pt)
+               )
+             )
+            )
+            ((= taz_s_case "Y")
+             (setq taz_s_annotation_ins_pt
+               (list
+                 taz_s_x
+                 (cadr  taz_s_annotation_ins_pt)
+                 (caddr taz_s_annotation_ins_pt)
+               )
+             )
+            )
+          )
+
           (entmake
             (list
               (cons 0 "MTEXT")
-              (cons 10 (taz_s_get_center taz_s_orig_ent))
+              (cons 10 taz_s_annotation_ins_pt)
               (cons 1 taz_s_annotation_text)
               (cons 7 "Standard")
               (cons 8 "taz_s_axes")   ; <- warstwa od razu przy tworzeniu
@@ -580,13 +597,21 @@
               (cons 90 16)
             )
           )
+
+          ;; Obrot etykiety do plaszczyzny ciecia (analogicznie do opisow osi)
+          (cond
+            ((= taz_s_case "X")
+             (command "_.ROTATE3D" (entlast) "" "X" taz_s_annotation_ins_pt "90")
+            )
+            ((= taz_s_case "Y")
+             (command "_.ROTATE3D" (entlast) "" "Y" taz_s_annotation_ins_pt "90")
+            )
+          )
         )
       )
-
       ;; usun tymczasowa kopie bryly tnacej - nie jest juz potrzebna
       (entdel taz_s_cut_tmp_ent)
       ;; --- KONIEC SPRAWDZENIA ---
-
       ;; Zawsze kopiuj bryle tnaca - oryginał zostaje nienaruszony
       (setq taz_s_cut_ss1 (ssadd))
       (ssadd taz_s_cut_ename taz_s_cut_ss1)
@@ -785,7 +810,7 @@
 
     ;; KROK 4: intersect parami
     (if (> (length taz_s_copy_enames) 0)
-      (taz_s_intersect_pairs taz_s_cutting_ename taz_s_copy_enames)
+      (taz_s_intersect_pairs taz_s_cutting_ename taz_s_copy_enames "X")
       (princ (strcat "\nPrzypadek X nr " (itoa taz_s_copy_nr) ": brak elementow kopii - pomijam."))
     )
 
@@ -896,7 +921,7 @@
 
     ;; KROK 4: intersect parami
     (if (> (length taz_s_copy_enames) 0)
-      (taz_s_intersect_pairs taz_s_cutting_ename taz_s_copy_enames)
+      (taz_s_intersect_pairs taz_s_cutting_ename taz_s_copy_enames "Y")
       (princ (strcat "\nPrzypadek Y nr " (itoa taz_s_copy_nr) ": brak elementow kopii - pomijam."))
     )
 
@@ -1076,7 +1101,7 @@
 
     ;; KROK 4: intersect parami
     (if (> (length taz_s_copy_enames) 0)
-      (taz_s_intersect_pairs taz_s_cutting_ename taz_s_copy_enames)
+      (taz_s_intersect_pairs taz_s_cutting_ename taz_s_copy_enames "Z")
       (princ (strcat "\nPrzypadek Z nr " (itoa taz_s_copy_nr) ": brak elementow kopii - pomijam."))
     )
 
