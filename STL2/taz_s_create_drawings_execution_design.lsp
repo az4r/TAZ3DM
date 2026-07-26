@@ -1058,93 +1058,75 @@
     ;; KROK 1: narysuj bryle tnaca i osie
     (setvar "CLAYER" "taz_s_execution_design")
     
+    (setq taz_s_circle_radius (* taz_s_annotation_scale_axis (/ 250.0 150.0)))
     ;; ----------------------------------------
     ;; Osie X (linie równoległe do osi Y)
     ;; ----------------------------------------
-
     (foreach taz_s_axis taz_s_axis_data_y
-
       (setq taz_s_x (taz_s_get_number taz_s_axis))
       (setq taz_s_axis_name (taz_s_get_axis_name taz_s_axis))
-
       (setq taz_s_p1_axis
             (list taz_s_x
                   taz_s_ymin
                   (+ taz_s_z taz_s_zoffset)))
-
       (setq taz_s_p2_axis
             (list taz_s_x
                   taz_s_ymax
                   (+ taz_s_z taz_s_zoffset)))
-
       (command "3DPOLY" taz_s_p1_axis taz_s_p2_axis "")
       (command "_.CHPROP" (entlast) "" "LA" "taz_s_axes" "")
-
       ;; dolne kółko
       (setq taz_s_circle_center
             (list taz_s_x
-                  (- taz_s_ymin 250.0)
+                  (- taz_s_ymin taz_s_circle_radius)
                   (+ taz_s_z taz_s_zoffset)))
-
-      (command "_.CIRCLE" taz_s_circle_center 250.0)
+      (command "_.CIRCLE" taz_s_circle_center taz_s_circle_radius)
       (command "_.CHPROP" (entlast) "" "LA" "taz_s_axes" "")
-      (command "_.TEXT" "_J" "_MC" taz_s_circle_center 150.0 0 taz_s_axis_name)
+      (command "_.TEXT" "_J" "_MC" taz_s_circle_center taz_s_annotation_scale_axis 0 taz_s_axis_name)
       (command "_.CHPROP" (entlast) "" "LA" "taz_s_axes" "")
-
       ;; górne kółko
       (setq taz_s_circle_center
             (list taz_s_x
-                  (+ taz_s_ymax 250.0)
+                  (+ taz_s_ymax taz_s_circle_radius)
                   (+ taz_s_z taz_s_zoffset)))
-
-      (command "_.CIRCLE" taz_s_circle_center 250.0)
+      (command "_.CIRCLE" taz_s_circle_center taz_s_circle_radius)
       (command "_.CHPROP" (entlast) "" "LA" "taz_s_axes" "")
-      (command "_.TEXT" "_J" "_MC" taz_s_circle_center 150.0 0 taz_s_axis_name)
+      (command "_.TEXT" "_J" "_MC" taz_s_circle_center taz_s_annotation_scale_axis 0 taz_s_axis_name)
       (command "_.CHPROP" (entlast) "" "LA" "taz_s_axes" "")
     )
-
     ;; ----------------------------------------
     ;; Osie Y (linie równoległe do osi X)
     ;; ----------------------------------------
-
     (foreach taz_s_axis taz_s_axis_data_x
-
       (setq taz_s_y (taz_s_get_number taz_s_axis))
       (setq taz_s_axis_name (taz_s_get_axis_name taz_s_axis))
-
       (setq taz_s_p1_axis
             (list taz_s_xmin
                   taz_s_y
                   (+ taz_s_z taz_s_zoffset)))
-
       (setq taz_s_p2_axis
             (list taz_s_xmax
                   taz_s_y
                   (+ taz_s_z taz_s_zoffset)))
-
       (command "3DPOLY" taz_s_p1_axis taz_s_p2_axis "")
       (command "_.CHPROP" (entlast) "" "LA" "taz_s_axes" "")
-
       ;; lewe kółko
       (setq taz_s_circle_center
-            (list (- taz_s_xmin 250.0)
+            (list (- taz_s_xmin taz_s_circle_radius)
                   taz_s_y
                   (+ taz_s_z taz_s_zoffset)))
-
-      (command "_.CIRCLE" taz_s_circle_center 250.0)
+      (command "_.CIRCLE" taz_s_circle_center taz_s_circle_radius)
       (command "_.CHPROP" (entlast) "" "LA" "taz_s_axes" "")
-      (command "_.TEXT" "_J" "_MC" taz_s_circle_center 150.0 0 taz_s_axis_name)
+      (command "_.TEXT" "_J" "_MC" taz_s_circle_center taz_s_annotation_scale_axis 0 taz_s_axis_name)
       (command "_.CHPROP" (entlast) "" "LA" "taz_s_axes" "")
-
       ;; prawe kółko
       (setq taz_s_circle_center
-            (list (+ taz_s_xmax 250.0)
+            (list (+ taz_s_xmax taz_s_circle_radius)
                   taz_s_y
                   (+ taz_s_z taz_s_zoffset)))
-
-      (command "_.CIRCLE" taz_s_circle_center 250.0)
+      (command "_.CIRCLE" taz_s_circle_center taz_s_circle_radius)
       (command "_.CHPROP" (entlast) "" "LA" "taz_s_axes" "")
-      (command "_.TEXT" "_J" "_MC" taz_s_circle_center 150.0 0 taz_s_axis_name)
+      (command "_.TEXT" "_J" "_MC" taz_s_circle_center taz_s_annotation_scale_axis 0 taz_s_axis_name)
       (command "_.CHPROP" (entlast) "" "LA" "taz_s_axes" "")
     )
     
