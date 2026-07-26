@@ -9,8 +9,8 @@
     (princ)
   )
 
-  ;; pobranie parametrów Rura prostokatna
-  (if (= taz_s_family "Rura prostokatna")
+  ;; pobranie parametrów RHS
+  (if (= taz_s_family "RHS")
     (taz_s_section_hsbeam_draw_parametres_rura_prostokatna)
     (princ)
   )
@@ -29,7 +29,7 @@
   ;; Punkt bazowy – zewnętrzny narożnik
   (setq taz_s_p '(0 0 0))
   
-  (if (or (= taz_s_family "SHS") (= taz_s_family "Rura prostokatna"))
+  (if (or (= taz_s_family "SHS") (= taz_s_family "RHS"))
     (progn
 
   ;; ============================
@@ -2009,8 +2009,8 @@
     (princ)
   )
   
-  ;; rysowanie Rura prostokatna
-  (if (= taz_s_family "Rura prostokatna")
+  ;; rysowanie RHS
+  (if (= taz_s_family "RHS")
     (progn
       (command "_PLINE"
         taz_s_plp4_3       
@@ -2087,7 +2087,7 @@
     (princ)
   )
 
-  (if (or (= taz_s_family "SHS") (= taz_s_family "Rura prostokatna"))
+  (if (or (= taz_s_family "SHS") (= taz_s_family "RHS"))
     (progn
   ;; wybór profilu
   (setq taz_s_create_beam_profile

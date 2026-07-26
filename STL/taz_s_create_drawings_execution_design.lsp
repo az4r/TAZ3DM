@@ -222,6 +222,8 @@
   (setq taz_s_x_data taz_s_axis_data_x)
   (setq taz_s_y_data taz_s_axis_data_y)
   (setq taz_s_z_data taz_s_axis_data_z)
+  
+  (load taz_s_data_file)
 
   ;; ---------------------------------
   ;; POBRANIE ODLEGLOSCI

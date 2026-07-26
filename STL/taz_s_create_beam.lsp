@@ -39,7 +39,7 @@
     (taz_s_section_hsbeam_draw_parametres_rura_kwadratowa)
     (princ)
   )
-  (if (= taz_s_family "Rura prostokatna")
+  (if (= taz_s_family "RHS")
     (taz_s_section_hsbeam_draw_parametres_rura_prostokatna)
     (princ)
   )

@@ -57,7 +57,7 @@
     (if (= taz_s_cat_val "Rury") 
       (progn 
         (add_list "SHS")
-        (add_list "Rura prostokatna")
+        (add_list "RHS")
         (add_list "Rura okragla")
       )
     )
@@ -455,8 +455,8 @@
       )
     )
 
-    ;; Rury - Rura prostokatna (RHS)
-    (if (and (= taz_s_cat_val "Rury") (= taz_s_fam_val "Rura prostokatna")) 
+    ;; Rury - RHS (RHS)
+    (if (and (= taz_s_cat_val "Rury") (= taz_s_fam_val "RHS")) 
       (progn 
         (add_list "50x25x2.5")
         (add_list "50x25x3")
@@ -750,7 +750,7 @@
   (if (= taz_s_tmp_category "Rury") 
     (progn 
       (if (= taz_s_tmp_family "SHS") (set_tile "taz_s_fam" "0"))
-      (if (= taz_s_tmp_family "Rura prostokatna") (set_tile "taz_s_fam" "1"))
+      (if (= taz_s_tmp_family "RHS") (set_tile "taz_s_fam" "1"))
       (if (= taz_s_tmp_family "Rura okragla") (set_tile "taz_s_fam" "2"))
     )
   )
@@ -1479,8 +1479,8 @@
      )
     )
 
-    ;; Rury - Rura prostokatna (RHS)
-    ((= taz_s_tmp_family "Rura prostokatna")
+    ;; Rury - RHS (RHS)
+    ((= taz_s_tmp_family "RHS")
      (if (= taz_s_tmp_type "50x25x2.5") (set_tile "taz_s_typ" "0"))
      (if (= taz_s_tmp_type "50x25x3") (set_tile "taz_s_typ" "1"))
      (if (= taz_s_tmp_type "50x25x3.5") (set_tile "taz_s_typ" "2"))
@@ -1986,7 +1986,7 @@
     (if (= taz_s_tmp_category "Rury") 
       (progn 
         (add_list "SHS")
-        (add_list "Rura prostokatna")
+        (add_list "RHS")
         (add_list "Rura okragla")
       )
     )
@@ -2386,8 +2386,8 @@
     )
 
 
-    ;; Rury - Rura prostokatna (RHS)
-    (if (= taz_s_tmp_family "Rura prostokatna") 
+    ;; Rury - RHS (RHS)
+    (if (= taz_s_tmp_family "RHS") 
       (progn 
         (add_list "50x25x2.5")
         (add_list "50x25x3")
@@ -2664,7 +2664,7 @@
       (progn (setq taz_s_tmp_type "38x38x2.5") (set_tile "taz_s_typ" "0"))
     )
 
-    (if (= taz_s_tmp_family "Rura prostokatna") 
+    (if (= taz_s_tmp_family "RHS") 
       (progn (setq taz_s_tmp_type "50x25x2.5") (set_tile "taz_s_typ" "0"))
     )
 
@@ -2707,7 +2707,7 @@
     (if (= (get_tile "taz_s_cat") "3") 
       (progn 
         (if (= $value "0") (setq taz_s_tmp_family "SHS"))
-        (if (= $value "1") (setq taz_s_tmp_family "Rura prostokatna"))
+        (if (= $value "1") (setq taz_s_tmp_family "RHS"))
         (if (= $value "2") (setq taz_s_tmp_family "Rura okragla"))
       )
     )
@@ -3093,8 +3093,8 @@
       )
     )
 
-    ;; Rury - Rura prostokatna (RHS)
-    (if (= taz_s_tmp_family "Rura prostokatna") 
+    ;; Rury - RHS (RHS)
+    (if (= taz_s_tmp_family "RHS") 
       (progn 
         (add_list "50x25x2.5")
         (add_list "50x25x3")
@@ -3370,7 +3370,7 @@
       (progn (setq taz_s_tmp_type "38x38x2.5") (set_tile "taz_s_typ" "0"))
     )
 
-    (if (= taz_s_tmp_family "Rura prostokatna") 
+    (if (= taz_s_tmp_family "RHS") 
       (progn (setq taz_s_tmp_type "50x25x2.5") (set_tile "taz_s_typ" "0"))
     )
 
@@ -3764,8 +3764,8 @@
       )
     )
 
-    ;; Rury - Rura prostokatna (RHS)
-    (if (= taz_s_tmp_family "Rura prostokatna") 
+    ;; Rury - RHS (RHS)
+    (if (= taz_s_tmp_family "RHS") 
       (progn 
         (if (= $value "0") (setq taz_s_tmp_type "50x25x2.5"))
         (if (= $value "1") (setq taz_s_tmp_type "50x25x3"))
