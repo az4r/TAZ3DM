@@ -598,7 +598,7 @@
               (cons 10 taz_s_annotation_ins_pt)
               (cons 1 taz_s_annotation_text)
               (cons 7 "Standard")
-              (cons 8 "taz_s_axes")   ; <- warstwa od razu przy tworzeniu
+              (cons 8 "taz_s_labels")   ; <- warstwa od razu przy tworzeniu
               (cons 40 150) ; wysokość tekstu
               (cons 71 5)   ; wyrównanie: 1 = górne lewe
               (cons 90 16)

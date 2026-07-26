@@ -30,6 +30,7 @@
   (command "_LAYER" "_U" "taz_s_axes" "")
   (command "_LAYER" "_U" "taz_s_visible" "")
   (command "_LAYER" "_U" "taz_s_hidden" "")
+  (command "_LAYER" "_U" "taz_s_labels" "")
 )
 
 ;; ---------------------------------------------------------
@@ -43,6 +44,7 @@
   (command "_LAYER" "_LO" "taz_s_axes" "")
   (command "_LAYER" "_LO" "taz_s_visible" "")
   (command "_LAYER" "_LO" "taz_s_hidden" "")
+  (command "_LAYER" "_LO" "taz_s_labels" "")
 )
 
 ;; ---------------------------------------------------------
@@ -211,6 +213,10 @@
   (if (tblsearch "LAYER" "taz_s_hidden")
     (princ)
     (command "_LAYER" "_M" "taz_s_hidden" "_C" "4" "" "_LO" "taz_s_hidden" "")
+  )
+  (if (tblsearch "LAYER" "taz_s_labels")
+    (princ)
+    (command "_LAYER" "_M" "taz_s_labels" "_C" "7" "" "_LO" "taz_s_labels" "")
   )
 
   ;; Jeśli model nie jest pusty — projekt już zapisany, nic nie rób
