@@ -500,6 +500,50 @@
     )
   )
   
+  ;; ---------------------------------
+  ;; POMOCNICZA: PRZECIECIE ODCINKA Z PLASZCZYZNA (X=const lub Y=const)
+  ;; taz_s_annotation_coord_index: 0 = wspolrzedna X, 1 = wspolrzedna Y
+  ;; Zwraca punkt przeciecia jesli odcinek p1-p2 rzeczywiscie
+  ;; przecina te plaszczyzne (t w zakresie 0..1), w przeciwnym
+  ;; razie nil (linia rownolegla do plaszczyzny lub przeciecie
+  ;; poza odcinkiem).
+  ;; ---------------------------------
+
+  (defun taz_s_line_plane_intersect (taz_s_annotation_p1 taz_s_annotation_p2 taz_s_annotation_coord_index taz_s_annotation_target_val)
+    (setq taz_s_annotation_v1 (nth taz_s_annotation_coord_index taz_s_annotation_p1))
+    (setq taz_s_annotation_v2 (nth taz_s_annotation_coord_index taz_s_annotation_p2))
+    (setq taz_s_annotation_denom (- taz_s_annotation_v2 taz_s_annotation_v1))
+    (if (equal taz_s_annotation_denom 0.0 1e-8)
+      nil
+      (progn
+        (setq taz_s_annotation_t (/ (- taz_s_annotation_target_val taz_s_annotation_v1) taz_s_annotation_denom))
+        (if (and (>= taz_s_annotation_t 0.0) (<= taz_s_annotation_t 1.0))
+          (list
+            (+ (car   taz_s_annotation_p1) (* taz_s_annotation_t (- (car   taz_s_annotation_p2) (car   taz_s_annotation_p1))))
+            (+ (cadr  taz_s_annotation_p1) (* taz_s_annotation_t (- (cadr  taz_s_annotation_p2) (cadr  taz_s_annotation_p1))))
+            (+ (caddr taz_s_annotation_p1) (* taz_s_annotation_t (- (caddr taz_s_annotation_p2) (caddr taz_s_annotation_p1))))
+          )
+          nil
+        )
+      )
+    )
+  )
+
+  ;; ---------------------------------
+  ;; POMOCNICZA: PUNKT PRZECIECIA SCIEZKI SWEEP Z PLASZCZYZNA CIECIA
+  ;; Zwraca punkt lub nil jesli sciezka nie przecina danej plaszczyzny
+  ;; ---------------------------------
+
+  (defun taz_s_get_sweep_plane_point (taz_s_annotation_ent taz_s_annotation_coord_index taz_s_annotation_target_val)
+    (setq taz_s_annotation_sp_h (cdr (assoc 5 (entget taz_s_annotation_ent))))
+    (setq taz_s_annotation_sp1 (eval (read (strcat "taz_s_" taz_s_annotation_sp_h "_sweep_p1"))))
+    (setq taz_s_annotation_sp2 (eval (read (strcat "taz_s_" taz_s_annotation_sp_h "_sweep_p2"))))
+    (if (and taz_s_annotation_sp1 taz_s_annotation_sp2)
+      (taz_s_line_plane_intersect taz_s_annotation_sp1 taz_s_annotation_sp2 taz_s_annotation_coord_index taz_s_annotation_target_val)
+      nil
+    )
+  )
+  
 
   ;; ---------------------------------
   ;; POMOCNICZA: INTERSECT PARAMI
@@ -565,20 +609,44 @@
           (setq taz_s_annotation_ins_pt (taz_s_get_center taz_s_orig_ent))
           (cond
             ((= taz_s_case "X")
-             (setq taz_s_annotation_ins_pt
-               (list
-                 (car   taz_s_annotation_ins_pt)
-                 taz_s_y
-                 (caddr taz_s_annotation_ins_pt)
+             (setq taz_s_annotation_plane_pt
+               (taz_s_get_sweep_plane_point taz_s_orig_ent 1 taz_s_y)
+             )
+             (if taz_s_annotation_plane_pt
+               (setq taz_s_annotation_ins_pt
+                 (list
+                   (car   taz_s_annotation_plane_pt)
+                   taz_s_y
+                   (+ (caddr taz_s_annotation_plane_pt) taz_s_zoffset)
+                 )
+               )
+               (setq taz_s_annotation_ins_pt
+                 (list
+                   (car   taz_s_annotation_ins_pt)
+                   taz_s_y
+                   (caddr taz_s_annotation_ins_pt)
+                 )
                )
              )
             )
             ((= taz_s_case "Y")
-             (setq taz_s_annotation_ins_pt
-               (list
-                 taz_s_x
-                 (cadr  taz_s_annotation_ins_pt)
-                 (caddr taz_s_annotation_ins_pt)
+             (setq taz_s_annotation_plane_pt
+               (taz_s_get_sweep_plane_point taz_s_orig_ent 0 taz_s_x)
+             )
+             (if taz_s_annotation_plane_pt
+               (setq taz_s_annotation_ins_pt
+                 (list
+                   taz_s_x
+                   (cadr  taz_s_annotation_plane_pt)
+                   (+ (caddr taz_s_annotation_plane_pt) taz_s_zoffset)
+                 )
+               )
+               (setq taz_s_annotation_ins_pt
+                 (list
+                   taz_s_x
+                   (cadr  taz_s_annotation_ins_pt)
+                   (caddr taz_s_annotation_ins_pt)
+                 )
                )
              )
             )
