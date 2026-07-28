@@ -201,12 +201,27 @@
 
   (action_tile "cancel" "(done_dialog 0)")
   
-  ;; ---------------------------------------------------------
-  ;; START
-  ;; ---------------------------------------------------------
-
-  (start_dialog)
+  ;; ---------------------------
+  ;; Uruchomienie dialogu
+  ;; ---------------------------
+  (setq taz_s_edit_attributes_dialog_result (start_dialog))
+  
+  ;; ---------------------------
+  ;; Zwolnij DCL
+  ;; ---------------------------
   (unload_dialog taz_s_dcl_id)
+  
+  (if (= taz_s_edit_attributes_dialog_result 1)
+    (princ)
+    (progn
+      (princ "\nAnulowano.")
+      (setq taz_s_old_error *error*)
+      (setq *error* (lambda (msg) (princ "")))
+      ;;(taz_s_lock_all_layers)
+      ;;(taz_s_current_settings_restore)
+      (exit)
+    )
+  )
 
   ;; ---------------------------------------------------------
   ;; ZAPIS ZMIENNYCH GLOBALNYCH Z POWROTEM DO PLIKU TXT
@@ -233,11 +248,45 @@
     (write-line (strcat "(setq taz_s_" taz_s_attribs_object_name "_attr9 \"" (eval (read (strcat "taz_s_" taz_s_attribs_object_name "_attr9"))) "\")") taz_s_f_beam_data)
     (write-line (strcat "(setq taz_s_" taz_s_attribs_object_name "_attr10 \"" (eval (read (strcat "taz_s_" taz_s_attribs_object_name "_attr10"))) "\")") taz_s_f_beam_data)
     
-    (write-line (strcat "(setq taz_s_" taz_s_attribs_object_name "_section_angle "    (rtos taz_s_section_angle_old 2 6) ")") taz_s_f_beam_data)
-    (write-line (strcat "(setq taz_s_" taz_s_attribs_object_name "_section_position " (itoa taz_s_section_position_old) ")") taz_s_f_beam_data)
+    ;;(write-line (strcat "(setq taz_s_" taz_s_attribs_object_name "_section_angle "    (rtos taz_s_section_angle_old 2 6) ")") taz_s_f_beam_data)
+    ;;(write-line (strcat "(setq taz_s_" taz_s_attribs_object_name "_section_position " (itoa taz_s_section_position_old) ")") taz_s_f_beam_data)
     
-    (write-line (strcat "(setq taz_s_" taz_s_attribs_object_name "_sweep_p1 (list " (rtos taz_s_p1x 2 6) " " (rtos taz_s_p1y 2 6) " " (rtos taz_s_p1z 2 6) "))") taz_s_f_beam_data)
-    (write-line (strcat "(setq taz_s_" taz_s_attribs_object_name "_sweep_p2 (list " (rtos taz_s_p2x 2 6) " " (rtos taz_s_p2y 2 6) " " (rtos taz_s_p2z 2 6) "))") taz_s_f_beam_data)
+    ;;(write-line (strcat "(setq taz_s_" taz_s_attribs_object_name "_sweep_p1 (list " (rtos taz_s_p1x 2 6) " " (rtos taz_s_p1y 2 6) " " (rtos taz_s_p1z 2 6) "))") taz_s_f_beam_data)
+    ;;(write-line (strcat "(setq taz_s_" taz_s_attribs_object_name "_sweep_p2 (list " (rtos taz_s_p2x 2 6) " " (rtos taz_s_p2y 2 6) " " (rtos taz_s_p2z 2 6) "))") taz_s_f_beam_data)
+    
+    ;; Section angle
+    (write-line 
+      (strcat "(setq taz_s_" taz_s_attribs_object_name "_section_angle " 
+              (rtos (eval (read (strcat "taz_s_" taz_s_attribs_object_name "_section_angle"))) 2 6) 
+              ")") 
+      taz_s_f_beam_data)
+
+    ;; Section position
+    (write-line 
+      (strcat "(setq taz_s_" taz_s_attribs_object_name "_section_position " 
+              (itoa (eval (read (strcat "taz_s_" taz_s_attribs_object_name "_section_position")))) 
+              ")") 
+      taz_s_f_beam_data)
+
+    ;; Sweep p1
+    (setq taz_s_tmp_p1 (eval (read (strcat "taz_s_" taz_s_attribs_object_name "_sweep_p1"))))
+    (write-line 
+      (strcat "(setq taz_s_" taz_s_attribs_object_name "_sweep_p1 (list " 
+              (rtos (nth 0 taz_s_tmp_p1) 2 6) " " 
+              (rtos (nth 1 taz_s_tmp_p1) 2 6) " " 
+              (rtos (nth 2 taz_s_tmp_p1) 2 6) 
+              "))") 
+      taz_s_f_beam_data)
+
+    ;; Sweep p2
+    (setq taz_s_tmp_p2 (eval (read (strcat "taz_s_" taz_s_attribs_object_name "_sweep_p2"))))
+    (write-line 
+      (strcat "(setq taz_s_" taz_s_attribs_object_name "_sweep_p2 (list " 
+              (rtos (nth 0 taz_s_tmp_p2) 2 6) " " 
+              (rtos (nth 1 taz_s_tmp_p2) 2 6) " " 
+              (rtos (nth 2 taz_s_tmp_p2) 2 6) 
+              "))") 
+      taz_s_f_beam_data)
 
 
     (setq taz_s_attribs_count_index (1+ taz_s_attribs_count_index))
