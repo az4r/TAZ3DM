@@ -375,8 +375,27 @@
   (action_tile "accept" "(taz_s_draw_axes)(done_dialog 1)")
   (action_tile "cancel" "(done_dialog 0)")
 
-  (start_dialog)
+  ;; ---------------------------
+  ;; Uruchomienie dialogu
+  ;; ---------------------------
+  (setq taz_s_axes_dialog_result (start_dialog))
+  
+  ;; ---------------------------
+  ;; Zwolnij DCL
+  ;; ---------------------------
   (unload_dialog taz_s_dcl_id)
+  
+  (if (= taz_s_axes_dialog_result 1)
+    (princ)
+    (progn
+      (princ "\nAnulowano.")
+      (setq taz_s_old_error *error*)
+      (setq *error* (lambda (msg) (princ "")))
+      (taz_s_lock_all_layers)
+      (taz_s_current_settings_restore)
+      (exit)
+    )
+  )
 
   ;; ---------------------------------------------------------
   ;; ZAPIS ZMIENNYCH GLOBALNYCH Z POWROTEM DO PLIKU TXT
