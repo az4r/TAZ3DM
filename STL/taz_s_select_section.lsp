@@ -4028,16 +4028,28 @@
   ;; ---------------------------
   ;; Uruchomienie dialogu
   ;; ---------------------------
-  (if (= (start_dialog) 1) 
-    (progn 
+  (setq taz_s_select_section_dialog_result (start_dialog))
+  
+  ;; ---------------------------
+  ;; Zwolnij DCL
+  ;; ---------------------------
+  (unload_dialog taz_s_dcl_id)
+  
+  (if (= taz_s_select_section_dialog_result 1)
+    (progn
       (princ "\nWybrane wartosci:")
       (princ (strcat "\nKategoria: " taz_s_category))
       (princ (strcat "\nRodzina:   " taz_s_family))
       (princ (strcat "\nTyp:       " taz_s_type))
     )
-    (princ "\nAnulowano.")
+    (progn
+      (princ "\nAnulowano.")
+      (setq taz_s_old_error *error*)
+      (setq *error* (lambda (msg) (princ "")))
+      (taz_s_lock_all_layers)
+      (taz_s_current_settings_restore)
+      (exit)
+    )
   )
-
-  (unload_dialog taz_s_dcl_id)
   (princ)
 )

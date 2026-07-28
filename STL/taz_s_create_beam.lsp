@@ -264,6 +264,15 @@
       (command "-VIEW" "_S" "taz_s_current_view")
     )
   )
+  
+  ;; ---------------------------------------------------------
+  ;; WYBOR PRZEKROJU
+  ;; ---------------------------------------------------------
+  
+  (if (not taz_s_edit_mode)
+    (taz_s_select_section)
+    (princ)
+  )
 
   ;; ---------------------------------------------------------
   ;; RYSOWANIE LINII ŚCIEŻKI
@@ -333,11 +342,6 @@
   ;; ---------------------------------------------------------
   ;; WYBÓR I RYSOWANIE PRZEKROJU BELKI
   ;; ---------------------------------------------------------
-
-  (if (not taz_s_edit_mode)
-    (taz_s_select_section)
-    (princ)
-  )
   
   (if (= taz_s_category "Dwuteowniki")
     (taz_s_section_ibeam_draw)

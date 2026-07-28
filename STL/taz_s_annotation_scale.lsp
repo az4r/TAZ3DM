@@ -76,7 +76,6 @@
       (setq taz_s_old_error *error*)
       (setq *error* (lambda (msg) (princ "")))
       (exit)
-      (setq *error* taz_s_old_error)
     )
   )
 
