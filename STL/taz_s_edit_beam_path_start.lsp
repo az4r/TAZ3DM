@@ -150,14 +150,28 @@
                 (write-line (strcat "(setq taz_s_" taz_s_attribs_object_name_new "_section_angle "    (rtos taz_s_section_angle_old 2 6) ")") taz_s_f_beam_data)
                 (write-line (strcat "(setq taz_s_" taz_s_attribs_object_name_new "_section_position " (itoa taz_s_section_position_old) ")") taz_s_f_beam_data)
                 
-                (write-line (strcat "(setq taz_s_" taz_s_attribs_object_name_new "_sweep_p1 (list " (rtos taz_s_p1x 2 6) " " (rtos taz_s_p1y 2 6) " " (rtos taz_s_p1z 2 6) "))") taz_s_f_beam_data)
-                (write-line (strcat "(setq taz_s_" taz_s_attribs_object_name_new "_sweep_p2 (list " (rtos taz_s_p2x 2 6) " " (rtos taz_s_p2y 2 6) " " (rtos taz_s_p2z 2 6) "))") taz_s_f_beam_data)
+                ;;(write-line (strcat "(setq taz_s_" taz_s_attribs_object_name_new "_sweep_p1 (list " (rtos taz_s_p1x 2 6) " " (rtos taz_s_p1y 2 6) " " (rtos taz_s_p1z 2 6) "))") taz_s_f_beam_data)
+                ;;(write-line (strcat "(setq taz_s_" taz_s_attribs_object_name_new "_sweep_p2 (list " (rtos taz_s_p2x 2 6) " " (rtos taz_s_p2y 2 6) " " (rtos taz_s_p2z 2 6) "))") taz_s_f_beam_data)
+                
+                ;; -- punkt początkowy ścieżki sterującej --
+                (setq taz_s_p1x (car taz_s_edit_new_path_p1))
+                (setq taz_s_p1y (cadr taz_s_edit_new_path_p1))
+                (setq taz_s_p1z (caddr taz_s_edit_new_path_p1))
+                (write-line (strcat "(setq taz_s_" taz_s_attribs_object_name "_sweep_p1 (list " (rtos taz_s_p1x 2 6) " " (rtos taz_s_p1y 2 6) " " (rtos taz_s_p1z 2 6) "))") taz_s_f_beam_data)
+
+                ;; -- punkt końcowy ścieżki sterującej --
+                (setq taz_s_p2x (car taz_s_edit_new_path_p2))
+                (setq taz_s_p2y (cadr taz_s_edit_new_path_p2))
+                (setq taz_s_p2z (caddr taz_s_edit_new_path_p2))
+                (write-line (strcat "(setq taz_s_" taz_s_attribs_object_name "_sweep_p2 (list " (rtos taz_s_p2x 2 6) " " (rtos taz_s_p2y 2 6) " " (rtos taz_s_p2z 2 6) "))") taz_s_f_beam_data)
 
                 (close taz_s_f_beam_data)
                 
                 ;;(setq taz_s_data_file taz_s_f_beam_data)
                 ;;(taz_s_cleanup_data_file)
 
+                (setq taz_s_edit_new_path_p1 nil)
+                (setq taz_s_edit_new_path_p2 nil)
                 (princ "\nNowa bryła wygenerowana – linia sterująca gotowa do kolejnej edycji.")
               )
               (princ)
@@ -322,7 +336,7 @@
     )
   )
 
-  (princ "\nEdycja ścieżki otwarta – przesuń, obróć lub rozciągnij linię sterującą.")
+  (princ "\nEdycja ścieżki otwarta - przesuń, obróć lub rozciągnij linię sterującą.")
   (princ "\nAby zakończyć edycję wpisz: taz_s_edit_beam_path_stop")
   
   (princ)

@@ -383,7 +383,7 @@
   ;; "a" oznacza dopisywanie na koniec - poprzednie dane nie znikają
   ;; ---------------------------------------------------------
 
-  (if (or taz_s_edit_section_angle_mode taz_s_edit_section_position_mode)
+  (if taz_s_edit_mode
     
   (princ)
   (progn
@@ -437,8 +437,8 @@
   ;; WYCZYSZCZENIE ZMIENNYCH EDYCJI
   ;; ---------------------------------------------------------
 
-  (setq taz_s_edit_new_path_p1 nil)
-  (setq taz_s_edit_new_path_p2 nil)
+  ;;(setq taz_s_edit_new_path_p1 nil)
+  ;;(setq taz_s_edit_new_path_p2 nil)
   
   (setq taz_s_create_beam_profile nil)
   (setq taz_s_create_beam_path nil)
