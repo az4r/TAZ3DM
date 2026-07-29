@@ -2115,8 +2115,15 @@
   ;; SWEEP
   (if taz_s_edit_beam_path_mode
     (progn
-      (command "_pedit" taz_s_create_beam_profile "_O" "")
-      (command "_pedit" taz_s_create_beam_profile_cut "_O" "")
+      
+      (if (= taz_s_family "CHS")
+        (princ)
+        (progn
+          (command "_pedit" taz_s_create_beam_profile "_O" "")
+          (command "_pedit" taz_s_create_beam_profile_cut "_O" "")
+        )
+      )
+      
       (command "REGION" taz_s_create_beam_profile "")
       (setq taz_s_region1 (entlast))
       (command "REGION" taz_s_create_beam_profile_cut "")
@@ -2126,8 +2133,15 @@
       (command "_SWEEP" taz_s_create_beam_profile "" taz_s_create_beam_path)
     )
     (progn
-      (command "_pedit" taz_s_create_beam_profile "_O" "")
-      (command "_pedit" taz_s_create_beam_profile_cut "_O" "")
+      
+      (if (= taz_s_family "CHS")
+        (princ)
+        (progn
+          (command "_pedit" taz_s_create_beam_profile "_O" "")
+          (command "_pedit" taz_s_create_beam_profile_cut "_O" "")
+        )
+      )
+      
       (command "REGION" taz_s_create_beam_profile "")
       (setq taz_s_region1 (entlast))
       (command "REGION" taz_s_create_beam_profile_cut "")
