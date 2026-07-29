@@ -1938,9 +1938,8 @@
   ;; RYSOWANIE LINII ŚCIEŻKI WYCIĘCIA
   ;; ---------------------------------------------------------
 
-  (command "_COPY" taz_s_create_beam_path "" (list 0 0) (list 0 0))
-  (setq taz_s_create_beam_path_cut
-        (cdr (assoc -1 (entget (entlast)))))
+  ;;(command "_COPY" taz_s_create_beam_path "" (list 0 0) (list 0 0))
+  ;;(setq taz_s_create_beam_path_cut (cdr (assoc -1 (entget (entlast)))))
       
   ;; rysowanie SHS
   (if (= taz_s_family "SHS")
@@ -2114,21 +2113,28 @@
   )
 
   ;; SWEEP
-  
   (if taz_s_edit_beam_path_mode
     (progn
-      (command "_SWEEP" taz_s_create_beam_profile "" taz_s_create_beam_path )
-      (setq taz_s_substract_solid1 (entlast))
-      (command "_SWEEP" taz_s_create_beam_profile_cut "" "B" (list 0 0) taz_s_create_beam_path_cut)
-      (setq taz_s_substract_solid2 (entlast))
-      (command "SUBTRACT" taz_s_substract_solid1 "" taz_s_substract_solid2 "")
+      (command "_pedit" taz_s_create_beam_profile "_O" "")
+      (command "_pedit" taz_s_create_beam_profile_cut "_O" "")
+      (command "REGION" taz_s_create_beam_profile "")
+      (setq taz_s_region1 (entlast))
+      (command "REGION" taz_s_create_beam_profile_cut "")
+      (setq taz_s_region2 (entlast))
+      (command "SUBTRACT" taz_s_region1 "" taz_s_region2 "")
+      (setq taz_s_create_beam_profile (entlast))
+      (command "_SWEEP" taz_s_create_beam_profile "" taz_s_create_beam_path)
     )
     (progn
+      (command "_pedit" taz_s_create_beam_profile "_O" "")
+      (command "_pedit" taz_s_create_beam_profile_cut "_O" "")
+      (command "REGION" taz_s_create_beam_profile "")
+      (setq taz_s_region1 (entlast))
+      (command "REGION" taz_s_create_beam_profile_cut "")
+      (setq taz_s_region2 (entlast))
+      (command "SUBTRACT" taz_s_region1 "" taz_s_region2 "")
+      (setq taz_s_create_beam_profile (entlast))
       (command "_SWEEP" taz_s_create_beam_profile "" taz_s_create_beam_path "")
-      (setq taz_s_substract_solid1 (entlast))
-      (command "_SWEEP" taz_s_create_beam_profile_cut "" "B" (list 0 0) taz_s_create_beam_path_cut "")
-      (setq taz_s_substract_solid2 (entlast))
-      (command "SUBTRACT" taz_s_substract_solid1 "" taz_s_substract_solid2 "")
     )
   )
   
