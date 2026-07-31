@@ -443,6 +443,9 @@
   (setq taz_s_edit_new_path_p1 nil)
   (setq taz_s_edit_new_path_p2 nil)
   
+  (setq taz_s_create_beam_p1 nil)
+  (setq taz_s_create_beam_p2 nil)
+  
   (setq taz_s_create_beam_profile nil)
   (setq taz_s_create_beam_profile_cut nil)
   (setq taz_s_create_beam_path nil)
