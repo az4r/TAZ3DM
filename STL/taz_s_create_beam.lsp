@@ -426,6 +426,18 @@
   )    
   )
   
+  (if (and taz_s_edit_new_path_p1 taz_s_edit_new_path_p2)
+    (progn
+    (setq taz_s_p1x (car   taz_s_edit_new_path_p1))
+    (setq taz_s_p1y (cadr  taz_s_edit_new_path_p1))
+    (setq taz_s_p1z (caddr taz_s_edit_new_path_p1))
+    (setq taz_s_p2x (car   taz_s_edit_new_path_p2))
+    (setq taz_s_p2y (cadr  taz_s_edit_new_path_p2))
+    (setq taz_s_p2z (caddr taz_s_edit_new_path_p2))
+    )
+    (princ)
+  )
+  
   ;;(setq taz_s_data_file taz_s_f_beam_data)
   ;;(taz_s_cleanup_data_file)
   

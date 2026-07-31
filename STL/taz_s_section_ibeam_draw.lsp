@@ -2110,6 +2110,7 @@
 
   ;; SWEEP
   (command "_SWEEP" taz_s_create_beam_profile "" taz_s_create_beam_path)
+  (command)
   
   ;; zmiana warstwy
   (command "_CHPROP" (ssadd (entlast)) "" "_LA" "taz_s_beam" "")
