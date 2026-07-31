@@ -144,7 +144,7 @@
   
   (if (= (rtos (eval (read (strcat "taz_s_" taz_s_attribs_object_name "_section_position"))) 2 2) "1")
     (progn
-    (setq taz_s_edit_section_position_parametres_origin (list (/ (- taz_s_b) 2) (/ (- taz_s_h) 2) 0))
+    (setq taz_s_edit_section_position_parametres_origin (list (/ (- taz_s_b) 2) (/ taz_s_h 2) 0))
     (command "_ZOOM" "_SCALE" "1000X")
     (command "_.UCS" "_O" taz_s_edit_section_position_parametres_origin)
     (command "_ZOOM" "_SCALE" "0.001X")
@@ -154,7 +154,7 @@
   
   (if (= (rtos (eval (read (strcat "taz_s_" taz_s_attribs_object_name "_section_position"))) 2 2) "2")
     (progn
-    (setq taz_s_edit_section_position_parametres_origin (list 0 (/ (- taz_s_h) 2) 0))
+    (setq taz_s_edit_section_position_parametres_origin (list 0 (/ taz_s_h 2) 0))
     (command "_ZOOM" "_SCALE" "1000X")
     (command "_.UCS" "_O" taz_s_edit_section_position_parametres_origin)
     (command "_ZOOM" "_SCALE" "0.001X")
@@ -164,7 +164,7 @@
   
   (if (= (rtos (eval (read (strcat "taz_s_" taz_s_attribs_object_name "_section_position"))) 2 2) "3")
     (progn
-    (setq taz_s_edit_section_position_parametres_origin (list (/ taz_s_b 2) (/ (- taz_s_h) 2) 0))
+    (setq taz_s_edit_section_position_parametres_origin (list (/ taz_s_b 2) (/ taz_s_h 2) 0))
     (command "_ZOOM" "_SCALE" "1000X")
     (command "_.UCS" "_O" taz_s_edit_section_position_parametres_origin)
     (command "_ZOOM" "_SCALE" "0.001X")
@@ -204,7 +204,7 @@
   
   (if (= (rtos (eval (read (strcat "taz_s_" taz_s_attribs_object_name "_section_position"))) 2 2) "7")
     (progn
-    (setq taz_s_edit_section_position_parametres_origin (list (/ (- taz_s_b) 2) (/ taz_s_h 2) 0))
+    (setq taz_s_edit_section_position_parametres_origin (list (/ (- taz_s_b) 2) (/ (- taz_s_h) 2) 0))
     (command "_ZOOM" "_SCALE" "1000X")
     (command "_.UCS" "_O" taz_s_edit_section_position_parametres_origin)
     (command "_ZOOM" "_SCALE" "0.001X")
@@ -214,7 +214,7 @@
   
   (if (= (rtos (eval (read (strcat "taz_s_" taz_s_attribs_object_name "_section_position"))) 2 2) "8")
     (progn
-    (setq taz_s_edit_section_position_parametres_origin (list 0 (/ taz_s_h 2) 0))
+    (setq taz_s_edit_section_position_parametres_origin (list 0 (/ (- taz_s_h) 2) 0))
     (command "_ZOOM" "_SCALE" "1000X")
     (command "_.UCS" "_O" taz_s_edit_section_position_parametres_origin)
     (command "_ZOOM" "_SCALE" "0.001X")
@@ -224,7 +224,7 @@
   
   (if (= (rtos (eval (read (strcat "taz_s_" taz_s_attribs_object_name "_section_position"))) 2 2) "9")
     (progn
-    (setq taz_s_edit_section_position_parametres_origin (list (/ taz_s_b 2) (/ taz_s_h 2) 0))
+    (setq taz_s_edit_section_position_parametres_origin (list (/ taz_s_b 2) (/ (- taz_s_h) 2) 0))
     (command "_ZOOM" "_SCALE" "1000X")
     (command "_.UCS" "_O" taz_s_edit_section_position_parametres_origin)
     (command "_ZOOM" "_SCALE" "0.001X")
