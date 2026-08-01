@@ -2110,10 +2110,19 @@
   )
 
   ;; SWEEP
-  (command "_pedit" taz_s_create_beam_profile "O" "")
+  
+  (if (= taz_s_family "CHS")
+        (princ)
+        (progn
+          (command "_pedit" taz_s_create_beam_profile "O" "")
+          (command "_pedit" taz_s_create_beam_profile_cut "O" "")
+        )
+  )
+  
+  ;;(command "_pedit" taz_s_create_beam_profile "O" "")
   (command "REGION" taz_s_create_beam_profile "")
   (setq taz_s_region1 (entlast))
-  (command "_pedit" taz_s_create_beam_profile_cut "O" "")
+  ;;(command "_pedit" taz_s_create_beam_profile_cut "O" "")
   (command "REGION" taz_s_create_beam_profile_cut "")
   (setq taz_s_region2 (entlast))
   (command "SUBTRACT" taz_s_region1 "" taz_s_region2 "")
