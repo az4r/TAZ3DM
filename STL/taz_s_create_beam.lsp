@@ -43,12 +43,21 @@
     (taz_s_section_hsbeam_draw_parametres_rura_prostokatna)
     (princ)
   )
+  ;;(if (= taz_s_family "CHS")
+    ;;(progn
+      ;;(taz_s_section_hsbeam_draw_parametres_rura_okragla)
+      ;;(setq taz_s_chs_eps 0.01)   ;; mikroskopijny margines, pomijalny konstrukcyjnie
+      ;;(setq taz_s_b (+ taz_s_d taz_s_chs_eps))
+      ;;(setq taz_s_h (+ taz_s_d taz_s_chs_eps))
+    ;;)
+    ;;(princ)
+  ;;)
+  
   (if (= taz_s_family "CHS")
     (progn
-      (taz_s_section_hsbeam_draw_parametres_rura_okragla)
-      (setq taz_s_chs_eps 0.01)   ;; mikroskopijny margines, pomijalny konstrukcyjnie
-      (setq taz_s_b (+ taz_s_d taz_s_chs_eps))
-      (setq taz_s_h (+ taz_s_d taz_s_chs_eps))
+    (taz_s_section_hsbeam_draw_parametres_rura_okragla)
+    (setq taz_s_b taz_s_d)
+    (setq taz_s_h taz_s_d)
     )
     (princ)
   )

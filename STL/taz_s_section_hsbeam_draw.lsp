@@ -2118,18 +2118,16 @@
           (command "_pedit" taz_s_create_beam_profile_cut "O" "")
         )
   )
-  
-  ;;(command "_pedit" taz_s_create_beam_profile "O" "")
+
   (command "REGION" taz_s_create_beam_profile "")
   (setq taz_s_region1 (entlast))
-  ;;(command "_pedit" taz_s_create_beam_profile_cut "O" "")
   (command "REGION" taz_s_create_beam_profile_cut "")
   (setq taz_s_region2 (entlast))
   (command "SUBTRACT" taz_s_region1 "" taz_s_region2 "")
   (setq taz_s_create_beam_profile (entlast))
-  (command "_UCS" "_OB" taz_s_create_beam_path)
-  ;;(command "_SWEEP" taz_s_create_beam_profile "" taz_s_create_beam_path)
-  (command "_.SWEEP" taz_s_create_beam_profile "" "B" '(0 0 0) taz_s_create_beam_path)
+  ;;(command "_UCS" "_OB" taz_s_create_beam_path)
+  (command "_SWEEP" taz_s_create_beam_profile "" taz_s_create_beam_path)
+  ;;(command "_.SWEEP" taz_s_create_beam_profile "" "B" '(0 0 0) taz_s_create_beam_path)
   (command)
   
   ;; zmiana warstwy
