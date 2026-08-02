@@ -304,7 +304,7 @@
       (if taz_s_temp_angle_val
         (set (read (strcat "taz_s_" taz_s_attribs_object_name "_section_angle")) taz_s_temp_angle_val)
       )
-      (command "-VIEW" "_S" "taz_s_current_view")
+      ;;(command "-VIEW" "_S" "taz_s_current_view")
       (command "_ZOOM" "_SCALE" "1000X")
       (command "_.UCS" "_Z" (eval (read (strcat "taz_s_" taz_s_attribs_object_name "_section_angle"))))
       (taz_s_edit_section_position_parametres)
@@ -323,7 +323,7 @@
       (if taz_s_temp_position_val
         (set (read (strcat "taz_s_" taz_s_attribs_object_name "_section_position")) taz_s_temp_position_val)
       )
-      (command "-VIEW" "_S" "taz_s_current_view")
+      ;;(command "-VIEW" "_S" "taz_s_current_view")
       (command "_ZOOM" "_SCALE" "1000X")
       (command "_.UCS" "_Z" (eval (read (strcat "taz_s_" taz_s_attribs_object_name "_section_angle"))))
       (taz_s_edit_section_position_parametres)
