@@ -1,14 +1,20 @@
 ;; ============================================================
-;; TAZ_S_DELETE_BEAM.LSP
+;; TAZ_S_DELETE_BEAM.LSP  (wersja uproszczona)
 ;;
 ;; Co robi:
 ;;  1. Pobiera zaznaczony obiekt (bryla 3D) i jego uchwyt (handle)
 ;;  2. Wczytuje plik taz_s_data_file (taz_s_beam_data.txt)
-;;  3. Odnajduje na rysunku wszystkie bryly 3D na warstwie
-;;     "taz_s_beam" (tak jak w taz_s_rebuild_data)
-;;  4. Czysci plik i zapisuje go od nowa - ale POMIJA wpisy
-;;     dotyczace bryly, ktora zaznaczylismy do usuniecia
-;;  5. Na koniec usuwa (entdel) zaznaczona bryle z rysunku
+;;  3. Czyta plik linia po linii i pomija linie dotyczace
+;;     zaznaczonej bryly (rozpoznawane po handle w nazwie zmiennej)
+;;  4. Zapisuje plik ponownie - juz bez wpisow usuwanej bryly
+;;  5. Czysci rowniez odpowiadajace zmienne w pamieci (ustawia na nil)
+;;  6. Usuwa (entdel) zaznaczona bryle z rysunku
+;;
+;; Uwaga: to NIE jest pelne "sprzatanie" bazy (np. wpisow po
+;; brylach usunietych recznie z rysunku bez tego skryptu) -
+;; do tego sluzy taz_s_rebuild_data. Jesli chcemy pelne
+;; posprzatanie, wystarczy na koncu odpalic (c:taz_s_rebuild_data)
+;; - patrz zakomentowana linia na dole.
 ;; ============================================================
 
 (defun c:taz_s_delete_beam ()
@@ -28,7 +34,6 @@
 
   (setq taz_s_delete_selection (ssget "_I"))
 
-  ;; jesli zaznaczono wiecej niz jeden obiekt -> wymus wybor jednego
   (if (and taz_s_delete_selection
            (> (sslength taz_s_delete_selection) 1))
     (progn
@@ -37,12 +42,10 @@
     )
   )
 
-  ;; jesli brak selekcji -> popros o wskazanie
   (if (null taz_s_delete_selection)
     (setq taz_s_delete_selection (ssget "_+.:E:S"))
   )
 
-  ;; jesli nadal brak selekcji -> zakoncz
   (if (null taz_s_delete_selection)
     (progn
       (print "Nie wybrano obiektu.")
@@ -51,7 +54,6 @@
     )
   )
 
-  ;; pobierz obiekt
   (setq taz_s_delete_object (ssname taz_s_delete_selection 0))
 
   ;; sprawdz typ
@@ -63,125 +65,64 @@
     )
   )
 
-  ;; pobierz uchwyt (handle) obiektu do usuniecia
+  ;; uchwyt bryly do usuniecia + fragment po ktorym rozpoznamy jej linie w pliku
   (setq taz_s_delete_object_handle
         (cdr (assoc 5 (entget taz_s_delete_object))))
+  (setq taz_s_delete_tag
+        (strcat "taz_s_" taz_s_delete_object_handle "_"))
 
   ;; ---------------------------------------------------------
-  ;; WCZYTAJ BAZE - w pamieci zostana ostatnie/aktualne wartosci
+  ;; ZALADUJ BAZE (jak dotychczas - dane trafiaja do pamieci)
   ;; ---------------------------------------------------------
 
   (load taz_s_data_file)
 
   ;; ---------------------------------------------------------
-  ;; SZUKAMY WSZYSTKICH BRYL 3D NA WARSTWIE taz_s_beam
+  ;; WCZYTAJ PLIK LINIA PO LINII, POMIJAJAC WPISY USUWANEJ BRYLY
   ;; ---------------------------------------------------------
 
-  (setq taz_s_selection_set (ssget "_X" '((0 . "3DSOLID") (8 . "taz_s_beam"))))
+  (setq taz_s_lines_kept nil)
+  (setq taz_s_f_read (open taz_s_data_file "r"))
 
-  (if (= taz_s_selection_set nil)
-
-    (princ "\nNie znaleziono zadnych bryl 3D na warstwie taz_s_beam.")
-
-    (progn
-
-      ;; -- otwieramy plik do zapisu, tryb "w" czysci cala zawartosc --
-      (setq taz_s_output_file (open taz_s_data_file "w"))
-
-      (setq taz_s_ok_count 0)
-      (setq taz_s_selection_count (sslength taz_s_selection_set))
-      (setq taz_s_selection_index 0)
-
-      (while (< taz_s_selection_index taz_s_selection_count)
-
-        (setq taz_s_entity_name (ssname taz_s_selection_set taz_s_selection_index))
-        (setq taz_s_entity_data (entget taz_s_entity_name))
-        (setq taz_s_entity_handle (cdr (assoc 5 taz_s_entity_data)))
-
-        ;; -- pomijamy bryle, ktora usuwamy --
-        (if (/= taz_s_entity_handle taz_s_delete_object_handle)
-          (progn
-
-            ;; -- pobieramy z pamieci aktualne wartosci tej bryly --
-            (setq taz_s_var_symbol (read (strcat "taz_s_" taz_s_entity_handle "_attr1")))
-            (setq taz_s_current_attr1 (eval taz_s_var_symbol))
-
-            (setq taz_s_var_symbol (read (strcat "taz_s_" taz_s_entity_handle "_attr2")))
-            (setq taz_s_current_attr2 (eval taz_s_var_symbol))
-
-            (setq taz_s_var_symbol (read (strcat "taz_s_" taz_s_entity_handle "_attr3")))
-            (setq taz_s_current_attr3 (eval taz_s_var_symbol))
-
-            (setq taz_s_var_symbol (read (strcat "taz_s_" taz_s_entity_handle "_attr4")))
-            (setq taz_s_current_attr4 (eval taz_s_var_symbol))
-
-            (setq taz_s_var_symbol (read (strcat "taz_s_" taz_s_entity_handle "_attr5")))
-            (setq taz_s_current_attr5 (eval taz_s_var_symbol))
-
-            (setq taz_s_var_symbol (read (strcat "taz_s_" taz_s_entity_handle "_attr6")))
-            (setq taz_s_current_attr6 (eval taz_s_var_symbol))
-
-            (setq taz_s_var_symbol (read (strcat "taz_s_" taz_s_entity_handle "_attr7")))
-            (setq taz_s_current_attr7 (eval taz_s_var_symbol))
-
-            (setq taz_s_var_symbol (read (strcat "taz_s_" taz_s_entity_handle "_attr8")))
-            (setq taz_s_current_attr8 (eval taz_s_var_symbol))
-
-            (setq taz_s_var_symbol (read (strcat "taz_s_" taz_s_entity_handle "_attr9")))
-            (setq taz_s_current_attr9 (eval taz_s_var_symbol))
-
-            (setq taz_s_var_symbol (read (strcat "taz_s_" taz_s_entity_handle "_attr10")))
-            (setq taz_s_current_attr10 (eval taz_s_var_symbol))
-
-            (setq taz_s_var_symbol (read (strcat "taz_s_" taz_s_entity_handle "_section_angle")))
-            (setq taz_s_current_section_angle (eval taz_s_var_symbol))
-
-            (setq taz_s_var_symbol (read (strcat "taz_s_" taz_s_entity_handle "_section_position")))
-            (setq taz_s_current_section_position (eval taz_s_var_symbol))
-
-            (setq taz_s_var_symbol (read (strcat "taz_s_" taz_s_entity_handle "_sweep_p1")))
-            (setq taz_s_current_sweep_p1 (eval taz_s_var_symbol))
-
-            (setq taz_s_var_symbol (read (strcat "taz_s_" taz_s_entity_handle "_sweep_p2")))
-            (setq taz_s_current_sweep_p2 (eval taz_s_var_symbol))
-
-            ;; -- zapisujemy komplet danych tej bryly do pliku --
-            (write-line (strcat "(setq taz_s_" taz_s_entity_handle "_attr1 \"" taz_s_current_attr1 "\")") taz_s_output_file)
-            (write-line (strcat "(setq taz_s_" taz_s_entity_handle "_attr2 \"" taz_s_current_attr2 "\")") taz_s_output_file)
-            (write-line (strcat "(setq taz_s_" taz_s_entity_handle "_attr3 \"" taz_s_current_attr3 "\")") taz_s_output_file)
-            (write-line (strcat "(setq taz_s_" taz_s_entity_handle "_attr4 \"" taz_s_current_attr4 "\")") taz_s_output_file)
-            (write-line (strcat "(setq taz_s_" taz_s_entity_handle "_attr5 \"" taz_s_current_attr5 "\")") taz_s_output_file)
-            (write-line (strcat "(setq taz_s_" taz_s_entity_handle "_attr6 \"" taz_s_current_attr6 "\")") taz_s_output_file)
-            (write-line (strcat "(setq taz_s_" taz_s_entity_handle "_attr7 \"" taz_s_current_attr7 "\")") taz_s_output_file)
-            (write-line (strcat "(setq taz_s_" taz_s_entity_handle "_attr8 \"" taz_s_current_attr8 "\")") taz_s_output_file)
-            (write-line (strcat "(setq taz_s_" taz_s_entity_handle "_attr9 \"" taz_s_current_attr9 "\")") taz_s_output_file)
-            (write-line (strcat "(setq taz_s_" taz_s_entity_handle "_attr10 \"" taz_s_current_attr10 "\")") taz_s_output_file)
-            (write-line (strcat "(setq taz_s_" taz_s_entity_handle "_section_angle " (itoa taz_s_current_section_angle) ")") taz_s_output_file)
-            (write-line (strcat "(setq taz_s_" taz_s_entity_handle "_section_position " (itoa taz_s_current_section_position) ")") taz_s_output_file)
-
-            (setq taz_s_p1x (car taz_s_current_sweep_p1))
-            (setq taz_s_p1y (cadr taz_s_current_sweep_p1))
-            (setq taz_s_p1z (caddr taz_s_current_sweep_p1))
-            (write-line (strcat "(setq taz_s_" taz_s_entity_handle "_sweep_p1 (list " (rtos taz_s_p1x 2 6) " " (rtos taz_s_p1y 2 6) " " (rtos taz_s_p1z 2 6) "))") taz_s_output_file)
-
-            (setq taz_s_p2x (car taz_s_current_sweep_p2))
-            (setq taz_s_p2y (cadr taz_s_current_sweep_p2))
-            (setq taz_s_p2z (caddr taz_s_current_sweep_p2))
-            (write-line (strcat "(setq taz_s_" taz_s_entity_handle "_sweep_p2 (list " (rtos taz_s_p2x 2 6) " " (rtos taz_s_p2y 2 6) " " (rtos taz_s_p2z 2 6) "))") taz_s_output_file)
-
-            (setq taz_s_ok_count (+ taz_s_ok_count 1))
-          )
-          ;; ELSE - to jest bryla usuwana, jej wpisow nie zapisujemy
-        )
-
-        (setq taz_s_selection_index (+ taz_s_selection_index 1))
-      )
-
-      (close taz_s_output_file)
-
-      (princ (strcat "\nZapisano dane dla: " (itoa taz_s_ok_count) " bryl (pominieto usuwana)."))
+  (while (setq taz_s_line (read-line taz_s_f_read))
+    (if (not (wcmatch taz_s_line (strcat "*" taz_s_delete_tag "*")))
+      (setq taz_s_lines_kept (cons taz_s_line taz_s_lines_kept))
     )
   )
+
+  (close taz_s_f_read)
+  (setq taz_s_lines_kept (reverse taz_s_lines_kept))
+
+  ;; ---------------------------------------------------------
+  ;; ZAPISZ PLIK PONOWNIE - BEZ WPISOW USUWANEJ BRYLY
+  ;; ---------------------------------------------------------
+
+  (setq taz_s_f_write (open taz_s_data_file "w"))
+
+  (foreach taz_s_line taz_s_lines_kept
+    (write-line taz_s_line taz_s_f_write)
+  )
+
+  (close taz_s_f_write)
+
+  ;; ---------------------------------------------------------
+  ;; WYCZYSC DANE USUWANEJ BRYLY TAKZE Z PAMIECI
+  ;; ---------------------------------------------------------
+
+  (set (read (strcat "taz_s_" taz_s_delete_object_handle "_attr1"))  nil)
+  (set (read (strcat "taz_s_" taz_s_delete_object_handle "_attr2"))  nil)
+  (set (read (strcat "taz_s_" taz_s_delete_object_handle "_attr3"))  nil)
+  (set (read (strcat "taz_s_" taz_s_delete_object_handle "_attr4"))  nil)
+  (set (read (strcat "taz_s_" taz_s_delete_object_handle "_attr5"))  nil)
+  (set (read (strcat "taz_s_" taz_s_delete_object_handle "_attr6"))  nil)
+  (set (read (strcat "taz_s_" taz_s_delete_object_handle "_attr7"))  nil)
+  (set (read (strcat "taz_s_" taz_s_delete_object_handle "_attr8"))  nil)
+  (set (read (strcat "taz_s_" taz_s_delete_object_handle "_attr9"))  nil)
+  (set (read (strcat "taz_s_" taz_s_delete_object_handle "_attr10")) nil)
+  (set (read (strcat "taz_s_" taz_s_delete_object_handle "_section_angle"))    nil)
+  (set (read (strcat "taz_s_" taz_s_delete_object_handle "_section_position")) nil)
+  (set (read (strcat "taz_s_" taz_s_delete_object_handle "_sweep_p1")) nil)
+  (set (read (strcat "taz_s_" taz_s_delete_object_handle "_sweep_p2")) nil)
 
   ;; ---------------------------------------------------------
   ;; USUN BRYLE Z RYSUNKU
@@ -194,12 +135,17 @@
   (command "_LAYER" "_LO" "taz_s_beam" "")
 
   ;; ---------------------------------------------------------
-  ;; SPRZATANIE ZMIENNYCH
+  ;; SPRZATANIE ZMIENNYCH POMOCNICZYCH
   ;; ---------------------------------------------------------
 
   (setq taz_s_delete_selection nil)
   (setq taz_s_delete_object nil)
   (setq taz_s_delete_object_handle nil)
+  (setq taz_s_delete_tag nil)
+  (setq taz_s_lines_kept nil)
+
+  ;; -- opcjonalnie: pelne posprzatanie bazy na podstawie stanu modelu --
+  ;; (c:taz_s_rebuild_data)
 
   (taz_s_current_settings_restore)
 
