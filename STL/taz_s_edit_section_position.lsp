@@ -44,6 +44,10 @@
   (if (null taz_s_attribs_selection)
     (progn
       (print "Nie wybrano obiektu.")
+      (setq taz_s_edit_mode nil)
+      (setq taz_s_edit_section_position_mode nil)
+      (command "_LAYER" "_LO" "taz_s_editing_layer" "")
+      (taz_s_current_settings_restore)
       (exit)
     )
   )
@@ -60,6 +64,10 @@
   (if (/= (cdr (assoc 0 (entget taz_s_attribs_object))) "3DSOLID")
     (progn
       (print "Wybrany obiekt nie jest bryłą 3D.")
+      (setq taz_s_edit_mode nil)
+      (setq taz_s_edit_section_position_mode nil)
+      (command "_LAYER" "_LO" "taz_s_editing_layer" "")
+      (taz_s_current_settings_restore)
       (exit)
     )
   )
