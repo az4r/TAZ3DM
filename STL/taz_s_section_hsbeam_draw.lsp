@@ -2072,12 +2072,102 @@
     (princ)
   )
   
+  ;; rysowanie CHS  
+  ;; --- punkty okregu zewnetrznego (R_out) - 20 punktow co 18 stopni (pi/10 rad) ---
+  (setq taz_s_pt_out_01 (polar taz_s_p_center (*  0 (/ pi 10)) taz_s_R_out))
+  (setq taz_s_pt_out_02 (polar taz_s_p_center (*  1 (/ pi 10)) taz_s_R_out))
+  (setq taz_s_pt_out_03 (polar taz_s_p_center (*  2 (/ pi 10)) taz_s_R_out))
+  (setq taz_s_pt_out_04 (polar taz_s_p_center (*  3 (/ pi 10)) taz_s_R_out))
+  (setq taz_s_pt_out_05 (polar taz_s_p_center (*  4 (/ pi 10)) taz_s_R_out))
+  (setq taz_s_pt_out_06 (polar taz_s_p_center (*  5 (/ pi 10)) taz_s_R_out))
+  (setq taz_s_pt_out_07 (polar taz_s_p_center (*  6 (/ pi 10)) taz_s_R_out))
+  (setq taz_s_pt_out_08 (polar taz_s_p_center (*  7 (/ pi 10)) taz_s_R_out))
+  (setq taz_s_pt_out_09 (polar taz_s_p_center (*  8 (/ pi 10)) taz_s_R_out))
+  (setq taz_s_pt_out_10 (polar taz_s_p_center (*  9 (/ pi 10)) taz_s_R_out))
+  (setq taz_s_pt_out_11 (polar taz_s_p_center (* 10 (/ pi 10)) taz_s_R_out))
+  (setq taz_s_pt_out_12 (polar taz_s_p_center (* 11 (/ pi 10)) taz_s_R_out))
+  (setq taz_s_pt_out_13 (polar taz_s_p_center (* 12 (/ pi 10)) taz_s_R_out))
+  (setq taz_s_pt_out_14 (polar taz_s_p_center (* 13 (/ pi 10)) taz_s_R_out))
+  (setq taz_s_pt_out_15 (polar taz_s_p_center (* 14 (/ pi 10)) taz_s_R_out))
+  (setq taz_s_pt_out_16 (polar taz_s_p_center (* 15 (/ pi 10)) taz_s_R_out))
+  (setq taz_s_pt_out_17 (polar taz_s_p_center (* 16 (/ pi 10)) taz_s_R_out))
+  (setq taz_s_pt_out_18 (polar taz_s_p_center (* 17 (/ pi 10)) taz_s_R_out))
+  (setq taz_s_pt_out_19 (polar taz_s_p_center (* 18 (/ pi 10)) taz_s_R_out))
+  (setq taz_s_pt_out_20 (polar taz_s_p_center (* 19 (/ pi 10)) taz_s_R_out))
+
+  ;; --- punkty okregu wewnetrznego (R_in) - 20 punktow co 18 stopni (pi/10 rad) ---
+  (setq taz_s_pt_in_01 (polar taz_s_p_center (*  0 (/ pi 10)) taz_s_R_in))
+  (setq taz_s_pt_in_02 (polar taz_s_p_center (*  1 (/ pi 10)) taz_s_R_in))
+  (setq taz_s_pt_in_03 (polar taz_s_p_center (*  2 (/ pi 10)) taz_s_R_in))
+  (setq taz_s_pt_in_04 (polar taz_s_p_center (*  3 (/ pi 10)) taz_s_R_in))
+  (setq taz_s_pt_in_05 (polar taz_s_p_center (*  4 (/ pi 10)) taz_s_R_in))
+  (setq taz_s_pt_in_06 (polar taz_s_p_center (*  5 (/ pi 10)) taz_s_R_in))
+  (setq taz_s_pt_in_07 (polar taz_s_p_center (*  6 (/ pi 10)) taz_s_R_in))
+  (setq taz_s_pt_in_08 (polar taz_s_p_center (*  7 (/ pi 10)) taz_s_R_in))
+  (setq taz_s_pt_in_09 (polar taz_s_p_center (*  8 (/ pi 10)) taz_s_R_in))
+  (setq taz_s_pt_in_10 (polar taz_s_p_center (*  9 (/ pi 10)) taz_s_R_in))
+  (setq taz_s_pt_in_11 (polar taz_s_p_center (* 10 (/ pi 10)) taz_s_R_in))
+  (setq taz_s_pt_in_12 (polar taz_s_p_center (* 11 (/ pi 10)) taz_s_R_in))
+  (setq taz_s_pt_in_13 (polar taz_s_p_center (* 12 (/ pi 10)) taz_s_R_in))
+  (setq taz_s_pt_in_14 (polar taz_s_p_center (* 13 (/ pi 10)) taz_s_R_in))
+  (setq taz_s_pt_in_15 (polar taz_s_p_center (* 14 (/ pi 10)) taz_s_R_in))
+  (setq taz_s_pt_in_16 (polar taz_s_p_center (* 15 (/ pi 10)) taz_s_R_in))
+  (setq taz_s_pt_in_17 (polar taz_s_p_center (* 16 (/ pi 10)) taz_s_R_in))
+  (setq taz_s_pt_in_18 (polar taz_s_p_center (* 17 (/ pi 10)) taz_s_R_in))
+  (setq taz_s_pt_in_19 (polar taz_s_p_center (* 18 (/ pi 10)) taz_s_R_in))
+  (setq taz_s_pt_in_20 (polar taz_s_p_center (* 19 (/ pi 10)) taz_s_R_in))
+
   ;; rysowanie CHS
   (if (= taz_s_family "CHS")
     (progn
-      (command "_CIRCLE" taz_s_p_center taz_s_R_out)
+      (command "_PLINE"
+        taz_s_pt_out_01
+        taz_s_pt_out_02
+        taz_s_pt_out_03
+        taz_s_pt_out_04
+        taz_s_pt_out_05
+        taz_s_pt_out_06
+        taz_s_pt_out_07
+        taz_s_pt_out_08
+        taz_s_pt_out_09
+        taz_s_pt_out_10
+        taz_s_pt_out_11
+        taz_s_pt_out_12
+        taz_s_pt_out_13
+        taz_s_pt_out_14
+        taz_s_pt_out_15
+        taz_s_pt_out_16
+        taz_s_pt_out_17
+        taz_s_pt_out_18
+        taz_s_pt_out_19
+        taz_s_pt_out_20
+        "C"
+      )
       (command "_CHPROP" (entlast) "" "C" "6" "")
-      (command "_CIRCLE" taz_s_p_center taz_s_R_in)
+
+      (command "_PLINE"
+        taz_s_pt_in_01
+        taz_s_pt_in_02
+        taz_s_pt_in_03
+        taz_s_pt_in_04
+        taz_s_pt_in_05
+        taz_s_pt_in_06
+        taz_s_pt_in_07
+        taz_s_pt_in_08
+        taz_s_pt_in_09
+        taz_s_pt_in_10
+        taz_s_pt_in_11
+        taz_s_pt_in_12
+        taz_s_pt_in_13
+        taz_s_pt_in_14
+        taz_s_pt_in_15
+        taz_s_pt_in_16
+        taz_s_pt_in_17
+        taz_s_pt_in_18
+        taz_s_pt_in_19
+        taz_s_pt_in_20
+        "C"
+      )
       (command "_CHPROP" (entlast) "" "C" "210" "")
     )
     (princ)
@@ -2100,11 +2190,11 @@
     (progn
   ;; wybór profilu
   (setq taz_s_create_beam_profile
-        (ssname (ssget "_X" '((0 . "CIRCLE") (62 . 6))) 0))
+        (ssname (ssget "_X" '((0 . "LWPOLYLINE") (62 . 6))) 0))
   (command "REGEN")
   
   (setq taz_s_create_beam_profile_cut
-        (ssname (ssget "_X" '((0 . "CIRCLE") (62 . 210))) 0))
+        (ssname (ssget "_X" '((0 . "LWPOLYLINE") (62 . 210))) 0))
   (command "REGEN")
     )
   )
