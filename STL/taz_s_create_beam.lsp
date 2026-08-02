@@ -290,6 +290,14 @@
 
   (command "_.LINE" taz_s_create_beam_p1 taz_s_create_beam_p2 "")
   (setq taz_s_create_beam_path (cdr (assoc -1 (entget (entlast)))))
+  
+  (if (= taz_s_category "Rury")
+    (progn
+    (command "_.LINE" taz_s_create_beam_p1 taz_s_create_beam_p2 "")
+    (setq taz_s_create_beam_profile_cut_path (cdr (assoc -1 (entget (entlast)))))
+    )
+    (princ)
+  )
 
   ;; ---------------------------------------------------------
   ;; USTAWIENIE UCS DO OBIEKTU I OBROTY
@@ -471,6 +479,7 @@
   (setq taz_s_create_beam_profile nil)
   (setq taz_s_create_beam_profile_cut nil)
   (setq taz_s_create_beam_path nil)
+  (setq taz_s_create_beam_profile_cut_path nil)
   
   (setq taz_s_p nil)
   
