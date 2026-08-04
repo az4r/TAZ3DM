@@ -27,6 +27,12 @@ taz_s_move_copy_dialog : dialog {
 
     spacer;
 
+    : row {
+      : button { key="taz_s_point"; label="Point"; }
+    }
+
+    spacer;
+
     ok_cancel;
 
   }

@@ -69,16 +69,29 @@
 
   ;; ---------------------------------------------------------
   ;; OKNO DIALOGOWE
+  ;; Wynik 0 = Anuluj, 1 = OK, 2 = kliknięto "Point"
+  ;; Jeśli 2 -> pobieramy punkty, liczymy wektor i otwieramy
+  ;; okno ponownie z uzupełnionymi polami.
   ;; ---------------------------------------------------------
 
+  (setq taz_s_move_copy_dialog_result 2)
+
   (if taz_s_move_copy_ok
-    (progn
+    (while (= taz_s_move_copy_dialog_result 2)
 
       (setq taz_s_move_copy_dcl_id (load_dialog "taz_s_move_copy.dcl"))
       (new_dialog "taz_s_move_copy_dialog" taz_s_move_copy_dcl_id)
 
-      (set_tile "taz_s_mode_move" "1")
-      (set_tile "taz_s_mode_copy" "0")
+      (if (= taz_s_move_copy_mode "1")
+        (progn
+          (set_tile "taz_s_mode_move" "1")
+          (set_tile "taz_s_mode_copy" "0")
+        )
+        (progn
+          (set_tile "taz_s_mode_move" "0")
+          (set_tile "taz_s_mode_copy" "1")
+        )
+      )
 
       (set_tile "taz_s_x" taz_s_move_copy_x)
       (set_tile "taz_s_y" taz_s_move_copy_y)
@@ -87,12 +100,18 @@
       (action_tile "taz_s_mode_move" "(setq taz_s_move_copy_mode \"1\")")
       (action_tile "taz_s_mode_copy" "(setq taz_s_move_copy_mode \"0\")")
 
+      (action_tile "taz_s_point" "(taz_s_move_copy_read_values)(done_dialog 2)")
       (action_tile "accept" "(taz_s_move_copy_read_values)(done_dialog 1)")
       (action_tile "cancel" "(done_dialog 0)")
 
       (setq taz_s_move_copy_dialog_result (start_dialog))
 
       (unload_dialog taz_s_move_copy_dcl_id)
+
+      (if (= taz_s_move_copy_dialog_result 2)
+        (taz_s_move_copy_pick_vector)
+        (princ)
+      )
 
     )
     (princ)
@@ -167,6 +186,42 @@
   (if (= taz_s_move_copy_x "") (setq taz_s_move_copy_x "0") (princ))
   (if (= taz_s_move_copy_y "") (setq taz_s_move_copy_y "0") (princ))
   (if (= taz_s_move_copy_z "") (setq taz_s_move_copy_z "0") (princ))
+
+  (princ)
+
+)
+
+;; ---------------------------------------------------------
+;; POBRANIE WEKTORA PRZESUNIĘCIA Z DWÓCH PUNKTÓW
+;; ---------------------------------------------------------
+
+(defun taz_s_move_copy_pick_vector ()
+
+  (setq taz_s_move_copy_pt1 nil)
+  (setq taz_s_move_copy_pt2 nil)
+
+  (setq taz_s_move_copy_pt1 (getpoint "\nPodaj pierwszy punkt wektora przesunięcia: "))
+
+  (if taz_s_move_copy_pt1
+    (setq taz_s_move_copy_pt2 (getpoint taz_s_move_copy_pt1 "\nPodaj drugi punkt wektora przesunięcia: "))
+    (princ)
+  )
+
+  (if (and taz_s_move_copy_pt1 taz_s_move_copy_pt2)
+    (progn
+      (setq taz_s_move_copy_vecx (- (car taz_s_move_copy_pt2) (car taz_s_move_copy_pt1)))
+      (setq taz_s_move_copy_vecy (- (cadr taz_s_move_copy_pt2) (cadr taz_s_move_copy_pt1)))
+      (setq taz_s_move_copy_vecz (- (caddr taz_s_move_copy_pt2) (caddr taz_s_move_copy_pt1)))
+
+      (setq taz_s_move_copy_x (rtos taz_s_move_copy_vecx 2 6))
+      (setq taz_s_move_copy_y (rtos taz_s_move_copy_vecy 2 6))
+      (setq taz_s_move_copy_z (rtos taz_s_move_copy_vecz 2 6))
+    )
+    (princ)
+  )
+
+  (setq taz_s_move_copy_pt1 nil)
+  (setq taz_s_move_copy_pt2 nil)
 
   (princ)
 
