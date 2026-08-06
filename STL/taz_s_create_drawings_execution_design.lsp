@@ -947,6 +947,14 @@
 
     ;; KROK 3: zbierz enames kopii biezacego przypadku
     (setq taz_s_copy_enames (taz_s_collect_copy_enames))
+    
+    ;; KROK 3.5: tabela zestawienia stali dla tego przypadku
+    (taz_s_create_steel_table
+      taz_s_cutting_ename
+      taz_s_orig_enames
+      taz_s_zoffset
+      (list (+ taz_s_xmax 5000.0) taz_s_y taz_s_zoffset)
+    )
 
     ;; KROK 4: intersect parami
     (if (> (length taz_s_copy_enames) 0)
@@ -1059,6 +1067,13 @@
 
     ;; KROK 3: zbierz enames kopii biezacego przypadku
     (setq taz_s_copy_enames (taz_s_collect_copy_enames))
+    
+    (taz_s_create_steel_table
+      taz_s_cutting_ename
+      taz_s_orig_enames
+      taz_s_zoffset
+      (list (+ taz_s_x 5000.0) taz_s_ymax taz_s_zoffset)
+    )
 
     ;; KROK 4: intersect parami
     (if (> (length taz_s_copy_enames) 0)
@@ -1221,6 +1236,13 @@
 
     ;; KROK 3: zbierz enames kopii biezacego przypadku
     (setq taz_s_copy_enames (taz_s_collect_copy_enames))
+    
+    (taz_s_create_steel_table
+      taz_s_cutting_ename
+      taz_s_orig_enames
+      taz_s_zoffset
+      (list (+ taz_s_xmax 5000.0) taz_s_ymax taz_s_zoffset)
+    )
 
     ;; KROK 4: intersect parami
     (if (> (length taz_s_copy_enames) 0)

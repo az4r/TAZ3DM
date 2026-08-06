@@ -200,6 +200,8 @@
   (setq taz_s_move_copy_pt1 nil)
   (setq taz_s_move_copy_pt2 nil)
 
+  (print "Współrzędne wyczyszczone!")
+
   (setq taz_s_move_copy_pt1 (getpoint "\nPodaj pierwszy punkt wektora przesunięcia: "))
 
   (if taz_s_move_copy_pt1
