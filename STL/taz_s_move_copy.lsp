@@ -14,6 +14,8 @@
   (setq taz_s_move_copy_x "0")
   (setq taz_s_move_copy_y "0")
   (setq taz_s_move_copy_z "0")
+  
+  (setq taz_s_move_copy_counter 1)   ;; <-- DODANE
 
   (setq taz_s_move_copy_dialog_result 0)
 
@@ -200,7 +202,16 @@
   (setq taz_s_move_copy_pt1 nil)
   (setq taz_s_move_copy_pt2 nil)
 
-  (print "Współrzędne wyczyszczone!")
+  ;; -----------------------------------------------------------
+  ;; Obejście problemu z "widmowym" punktem przy DRUGIM cyklu:
+  ;; jeśli licznik ma wartość 2, "pochłaniamy" zalegające
+  ;; zdarzenie pustym getpoint przed właściwym pobraniem punktów.
+  ;; -----------------------------------------------------------
+
+  (if (= taz_s_move_copy_counter 2)
+    (getpoint)
+    (princ)
+  )
 
   (setq taz_s_move_copy_pt1 (getpoint "\nPodaj pierwszy punkt wektora przesunięcia: "))
 
@@ -224,6 +235,9 @@
 
   (setq taz_s_move_copy_pt1 nil)
   (setq taz_s_move_copy_pt2 nil)
+
+  ;; licznik cykli - inkrementacja na końcu każdego przebiegu
+  (setq taz_s_move_copy_counter (+ taz_s_move_copy_counter 1))
 
   (princ)
 
@@ -437,6 +451,8 @@
   (setq taz_s_edit_mode nil)
   (setq taz_s_edit_beam_path_mode nil)
 
+  (setq taz_s_move_copy_counter 1)
+  
   (princ)
 
 )

@@ -11,6 +11,12 @@
 ;; Dane profilu/dlugosci/materialu pobierane sa z globalnych zmiennych
 ;; wczytanych z taz_s_beam_data.txt (musza byc juz zaladowane - load w skrypcie
 ;; glownym, tak jak dotychczas).
+;;
+;; Tabela jest rysowana plasko (w plaszczyznie X-Y przy zoffset), a nastepnie
+;; obracana ROTATE3D dokladnie tak samo jak etykiety w taz_s_intersect_pairs
+;; (przypadek X: obrot wokol osi X o 90; przypadek Y: obrot wokol osi Y o 90,
+;; potem wokol osi X o 90; przypadek Z: bez obrotu). Dzieki temu tabela ladu
+;; sie w tej samej plaszczyznie co etykiety w danym przypadku.
 ;; =====================================================================================
 
 ;; ---------------------------------------------------------------------
@@ -44,6 +50,8 @@
 
 ;; ---------------------------------------------------------------------
 ;; POMOCNICZA: linia (uzywana do siatki tabeli)
+;; Kazda utworzona encja jest dopisywana do taz_s_st_created_ss,
+;; zeby na koncu mozna bylo obrocic cala tabele jednym ROTATE3D.
 ;; ---------------------------------------------------------------------
 
 (defun taz_s_st_line (taz_s_st_p1 taz_s_st_p2)
@@ -54,6 +62,9 @@
       (cons 10 taz_s_st_p1)
       (cons 11 taz_s_st_p2)
     )
+  )
+  (if taz_s_st_created_ss
+    (ssadd (entlast) taz_s_st_created_ss)
   )
 )
 
@@ -74,6 +85,9 @@
       (cons 73 2)   ;; middle
       (cons 11 (list taz_s_st_x taz_s_st_y taz_s_st_z))
     )
+  )
+  (if taz_s_st_created_ss
+    (ssadd (entlast) taz_s_st_created_ss)
   )
 )
 
@@ -284,9 +298,12 @@
 ;;   taz_s_st_zoffset     - zoffset biezacego przypadku (taz_s_zoffset)
 ;;   taz_s_st_ins_pt      - punkt wstawienia (lewy-gorny rog naglowka tabeli),
 ;;                          np. (list (+ taz_s_xmax 5000) taz_s_y taz_s_zoffset)
+;;   taz_s_st_case        - "X" / "Y" / "Z" - decyduje o obrocie tabeli do
+;;                          plaszczyzny etykiet danego przypadku (tak jak
+;;                          w taz_s_intersect_pairs)
 ;; =======================================================================================
 
-(defun taz_s_create_steel_table (taz_s_st_cut_ename taz_s_st_orig_list taz_s_st_zoffset taz_s_st_ins_pt)
+(defun taz_s_create_steel_table (taz_s_st_cut_ename taz_s_st_orig_list taz_s_st_zoffset taz_s_st_ins_pt taz_s_st_case)
 
   (setq taz_s_st_rows '())  ;; lista: (profil dlugosc material ilosc)
 
@@ -336,7 +353,27 @@
   )
 
   (if taz_s_st_rows
-    (taz_s_st_draw_table taz_s_st_rows taz_s_st_ins_pt)
+    (progn
+      ;; nowy, pusty zbior - do niego trafia kazda encja tabeli (linie + teksty)
+      (setq taz_s_st_created_ss (ssadd))
+
+      (taz_s_st_draw_table taz_s_st_rows taz_s_st_ins_pt)
+
+      ;; ---- obrot calej tabeli do plaszczyzny etykiet danego przypadku ----
+      ;; identyczna logika jak przy obrocie etykiet w taz_s_intersect_pairs
+      (cond
+        ((= taz_s_st_case "X")
+         (command "_.ROTATE3D" taz_s_st_created_ss "" "X" taz_s_st_ins_pt "90")
+        )
+        ((= taz_s_st_case "Y")
+         (command "_.ROTATE3D" taz_s_st_created_ss "" "Y" taz_s_st_ins_pt "90")
+         (command "_.ROTATE3D" taz_s_st_created_ss "" "X" taz_s_st_ins_pt "90")
+        )
+        ;; przypadek "Z" - bez obrotu, plaszczyzna pozioma juz jest wlasciwa
+      )
+
+      (setq taz_s_st_created_ss nil)
+    )
   )
 
   (princ)
