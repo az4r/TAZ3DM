@@ -1076,18 +1076,11 @@
     ;; KROK 3: zbierz enames kopii biezacego przypadku
     (setq taz_s_copy_enames (taz_s_collect_copy_enames))
     
-    ;;(taz_s_create_steel_table
-      ;;taz_s_cutting_ename
-      ;;taz_s_orig_enames
-      ;;taz_s_zoffset
-      ;;(list (+ taz_s_x 5000.0) taz_s_ymax taz_s_zoffset)
-    ;;)
-    
     (taz_s_create_steel_table
       taz_s_cutting_ename
       taz_s_orig_enames
       taz_s_zoffset
-      (list (+ taz_s_x 5000.0) taz_s_ymax taz_s_zoffset)
+      (list taz_s_x (+ taz_s_ymax 5000.0) taz_s_zoffset)
       "Y"
     )
 
@@ -1253,18 +1246,11 @@
     ;; KROK 3: zbierz enames kopii biezacego przypadku
     (setq taz_s_copy_enames (taz_s_collect_copy_enames))
     
-    ;;(taz_s_create_steel_table
-      ;;taz_s_cutting_ename
-      ;;taz_s_orig_enames
-      ;;taz_s_zoffset
-      ;;(list (+ taz_s_xmax 5000.0) taz_s_ymax taz_s_zoffset)
-    ;;)
-    
     (taz_s_create_steel_table
       taz_s_cutting_ename
       taz_s_orig_enames
       taz_s_zoffset
-      (list (+ taz_s_xmax 5000.0) taz_s_ymax taz_s_zoffset)
+      (list (+ taz_s_xmax 5000.0) taz_s_ymax (+ taz_s_z taz_s_zoffset))
       "Z"
     )
 
