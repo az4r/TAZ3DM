@@ -3,14 +3,32 @@
 ;; Tworzy tabele z lista profili WIDOCZNYCH w danym przypadku (X / Y / Z)
 ;; obok geometrii tego przypadku.
 ;;
-;; Widocznosc elementu ustalana jest tak samo jak przy tworzeniu etykiet
-;; w taz_s_intersect_pairs (kopia bryly tnacej + -INTERFERE wzgledem oryginalu).
-;; Dlatego ta funkcja MUSI byc wywolana PRZED taz_s_intersect_pairs w danej
-;; iteracji petli (bo taz_s_intersect_pairs na koncu kasuje taz_s_cutting_ename).
+;; WYDAJNOSC: ta wersja NIE robi wlasnego testu -INTERFERE. Widocznosc
+;; elementow jest ustalana JEDEN RAZ, w taz_s_intersect_pairs (w skrypcie
+;; taz_s_create_drawings_execution_design.lsp), ktora zbiera uchwyty
+;; widocznych elementow do globalnej listy taz_s_visible_handles. Tabela
+;; dostaje juz gotowa liste - dzieki temu -INTERFERE liczy sie tylko raz
+;; na element/przypadek, a nie dwa razy (jak w poprzedniej wersji, gdzie
+;; taz_s_create_steel_table robila to samo co taz_s_intersect_pairs,
+;; niezaleznie i po raz drugi - to bylo zrodlem spowolnienia).
+;;
+;; Dlatego KOLEJNOSC WYWOLANIA w petli glownej musi byc:
+;;   1. taz_s_intersect_pairs (zbiera taz_s_visible_handles)
+;;   2. taz_s_create_steel_table (korzysta z taz_s_visible_handles)
+;; (odwrotnie niz w poprzednich wersjach tego skryptu).
 ;;
 ;; Dane profilu/dlugosci/materialu pobierane sa z globalnych zmiennych
 ;; wczytanych z taz_s_beam_data.txt (musza byc juz zaladowane - load w skrypcie
 ;; glownym, tak jak dotychczas).
+;;
+;; Pole powierzchni przekroju (kolumna "Powierzchnia") pobierane jest przez
+;; wywolanie wlasciwej funkcji taz_s_section_..._draw_parametres_..., ktora
+;; jako efekt uboczny ustawia globalna zmienna taz_s_section_area. Wywolanie
+;; to nadpisuje przy okazji taz_s_h/taz_s_b/taz_s_tw/... - jest to bezpieczne
+;; TYLKO dlatego, ze taz_s_create_steel_table wywolywane jest w petli glownej
+;; PRZED jakimkolwiek dalszym rysowaniem przekroju w tej samej iteracji.
+;; taz_s_family/taz_s_type/taz_s_category sa zapisywane i przywracane po
+;; odczycie, dla bezpieczenstwa.
 ;;
 ;; Tabela jest rysowana plasko (w plaszczyznie X-Y przy zoffset), a nastepnie
 ;; obracana ROTATE3D dokladnie tak samo jak etykiety w taz_s_intersect_pairs
@@ -32,10 +50,11 @@
 (setq taz_s_st_h_txt  125)
 
 ;; szerokosci kolumn
-(setq taz_s_st_col_profil   1200.0)
-(setq taz_s_st_col_dlugosc   800.0)
-(setq taz_s_st_col_material  800.0)
-(setq taz_s_st_col_ilosc     500.0)
+(setq taz_s_st_col_profil       1200.0)
+(setq taz_s_st_col_dlugosc       800.0)
+(setq taz_s_st_col_material      800.0)
+(setq taz_s_st_col_powierzchnia  700.0)
+(setq taz_s_st_col_ilosc         500.0)
 
 ;; wysokosci wierszy
 (setq taz_s_st_row_h  400.0)
@@ -92,53 +111,6 @@
 )
 
 ;; ---------------------------------------------------------------------
-;; POMOCNICZA: sprawdz czy dany oryginalny element jest widoczny
-;; w biezacym przypadku (przecina sie z bryla tnaca).
-;; Logika identyczna jak w taz_s_intersect_pairs.
-;; ---------------------------------------------------------------------
-
-(defun taz_s_st_is_visible (taz_s_st_cut_ename taz_s_st_orig_ent taz_s_st_zoffset)
-
-  (setvar "CLAYER" "taz_s_editing_layer")
-
-  ;; kopiuj bryle tnaca na miejsce oryginalu (bez zoffset)
-  (setq taz_s_st_cut_tmp_ss (ssadd))
-  (ssadd taz_s_st_cut_ename taz_s_st_cut_tmp_ss)
-  (command "COPY" taz_s_st_cut_tmp_ss "" "0,0,0" (list 0 0 (- taz_s_st_zoffset)))
-  (setq taz_s_st_cut_tmp_ent (entlast))
-
-  (setq taz_s_st_before_ss (ssget "X" (list (cons 8 "taz_s_editing_layer"))))
-  (setq taz_s_st_before_cnt (if taz_s_st_before_ss (sslength taz_s_st_before_ss) 0))
-
-  (setq taz_s_st_if_set1 (ssadd))
-  (ssadd taz_s_st_cut_tmp_ent taz_s_st_if_set1)
-  (setq taz_s_st_if_set2 (ssadd))
-  (ssadd taz_s_st_orig_ent taz_s_st_if_set2)
-
-  (command "-INTERFERE" taz_s_st_if_set1 "" taz_s_st_if_set2 "" "Y")
-  (command)
-  (command)
-  (command)
-
-  (setq taz_s_st_after_ss (ssget "X" (list (cons 8 "taz_s_editing_layer"))))
-  (setq taz_s_st_after_cnt (if taz_s_st_after_ss (sslength taz_s_st_after_ss) 0))
-
-  (setq taz_s_st_result nil)
-  (if (> taz_s_st_after_cnt taz_s_st_before_cnt)
-    (progn
-      (setq taz_s_st_result T)
-      (if taz_s_st_after_ss
-        (command "ERASE" taz_s_st_after_ss "")
-      )
-    )
-  )
-
-  (entdel taz_s_st_cut_tmp_ent)
-
-  taz_s_st_result
-)
-
-;; ---------------------------------------------------------------------
 ;; POMOCNICZE: odczyt danych elementu po handlu (z taz_s_beam_data.txt)
 ;; ---------------------------------------------------------------------
 
@@ -165,6 +137,76 @@
   (if (boundp taz_s_st_sym)
     (eval taz_s_st_sym)
     ""
+  )
+)
+
+;; ---------------------------------------------------------------------
+;; POMOCNICZA: odczyt pola powierzchni przekroju (taz_s_section_area)
+;;
+;; Odtwarza taz_s_family / taz_s_type / taz_s_category z atrybutow
+;; elementu, wywoluje wlasciwa funkcje taz_s_section_..._draw_parametres_...,
+;; ktora ustawia taz_s_section_area (czysta arytmetyka, bez zadnych
+;; komend CAD - szybkie), a nastepnie PRZYWRACA poprzednie wartosci
+;; taz_s_family/taz_s_type/taz_s_category.
+;; ---------------------------------------------------------------------
+
+(defun taz_s_st_get_area (taz_s_st_h)
+
+  (setq taz_s_st_area_family (eval (read (strcat "taz_s_" taz_s_st_h "_attr6"))))
+  (setq taz_s_st_area_type   (eval (read (strcat "taz_s_" taz_s_st_h "_attr7"))))
+
+  ;; zapamietaj biezacy stan (jesli w ogole byl ustawiony)
+  (setq taz_s_st_saved_family   (if (boundp 'taz_s_family)   taz_s_family   nil))
+  (setq taz_s_st_saved_type     (if (boundp 'taz_s_type)     taz_s_type     nil))
+  (setq taz_s_st_saved_category (if (boundp 'taz_s_category) taz_s_category nil))
+
+  (setq taz_s_family taz_s_st_area_family)
+  (setq taz_s_type   taz_s_st_area_type)
+
+  (cond
+    ((or (= taz_s_family "HEA")
+         (= taz_s_family "HEB")
+         (= taz_s_family "IPE")
+         (= taz_s_family "IPN"))
+     (setq taz_s_category "Dwuteowniki"))
+    ((or (= taz_s_family "UPE")
+         (= taz_s_family "UPN"))
+     (setq taz_s_category "Ceowniki"))
+    ((or (= taz_s_family "LR")
+         (= taz_s_family "LN"))
+     (setq taz_s_category "Katowniki"))
+    ((or (= taz_s_family "SHS")
+         (= taz_s_family "RHS")
+         (= taz_s_family "CHS"))
+     (setq taz_s_category "Rury"))
+  )
+
+  (setq taz_s_section_area nil)
+
+  (cond
+    ((= taz_s_family "HEA") (taz_s_section_ibeam_draw_parametres_hea))
+    ((= taz_s_family "HEB") (taz_s_section_ibeam_draw_parametres_heb))
+    ((= taz_s_family "IPE") (taz_s_section_ibeam_draw_parametres_ipe))
+    ((= taz_s_family "IPN") (taz_s_section_ibeam_draw_parametres_ipn))
+    ((= taz_s_family "UPE") (taz_s_section_cbeam_draw_parametres_upe))
+    ((= taz_s_family "UPN") (taz_s_section_cbeam_draw_parametres_upn))
+    ((= taz_s_family "LR")  (taz_s_section_lbeam_draw_parametres_katownik_rownoramienny))
+    ((= taz_s_family "LN")  (taz_s_section_lbeam_draw_parametres_katownik_nierownoramienny))
+    ((= taz_s_family "SHS") (taz_s_section_hsbeam_draw_parametres_rura_kwadratowa))
+    ((= taz_s_family "RHS") (taz_s_section_hsbeam_draw_parametres_rura_prostokatna))
+    ((= taz_s_family "CHS") (taz_s_section_hsbeam_draw_parametres_rura_okragla))
+  )
+
+  (setq taz_s_st_area_result taz_s_section_area)
+
+  ;; przywroc poprzedni stan
+  (setq taz_s_family   taz_s_st_saved_family)
+  (setq taz_s_type     taz_s_st_saved_type)
+  (setq taz_s_category taz_s_st_saved_category)
+
+  (if taz_s_st_area_result
+    taz_s_st_area_result
+    0.0
   )
 )
 
@@ -224,7 +266,7 @@
   (setq taz_s_st_z0 (caddr taz_s_st_ins_pt))
 
   (setq taz_s_st_table_w
-    (+ taz_s_st_col_profil taz_s_st_col_dlugosc taz_s_st_col_material taz_s_st_col_ilosc)
+    (+ taz_s_st_col_profil taz_s_st_col_dlugosc taz_s_st_col_material taz_s_st_col_powierzchnia taz_s_st_col_ilosc)
   )
 
   (setq taz_s_st_nrows (length taz_s_st_rows))
@@ -241,15 +283,18 @@
   (setq taz_s_st_row_y (- taz_s_st_y0 taz_s_st_head_h (/ taz_s_st_row_h 2.0)))
   (setq taz_s_st_col_x taz_s_st_x0)
 
-  (taz_s_st_write_cell "Profil"   (+ taz_s_st_col_x (/ taz_s_st_col_profil 2.0))   taz_s_st_row_y taz_s_st_z0 taz_s_st_h_txt)
+  (taz_s_st_write_cell "Profil"       (+ taz_s_st_col_x (/ taz_s_st_col_profil 2.0))       taz_s_st_row_y taz_s_st_z0 taz_s_st_h_txt)
   (setq taz_s_st_col_x (+ taz_s_st_col_x taz_s_st_col_profil))
-  (taz_s_st_write_cell "Dlugosc"  (+ taz_s_st_col_x (/ taz_s_st_col_dlugosc 2.0))  taz_s_st_row_y taz_s_st_z0 taz_s_st_h_txt)
+  (taz_s_st_write_cell "Dlugosc"      (+ taz_s_st_col_x (/ taz_s_st_col_dlugosc 2.0))      taz_s_st_row_y taz_s_st_z0 taz_s_st_h_txt)
   (setq taz_s_st_col_x (+ taz_s_st_col_x taz_s_st_col_dlugosc))
-  (taz_s_st_write_cell "Material" (+ taz_s_st_col_x (/ taz_s_st_col_material 2.0)) taz_s_st_row_y taz_s_st_z0 taz_s_st_h_txt)
+  (taz_s_st_write_cell "Material"     (+ taz_s_st_col_x (/ taz_s_st_col_material 2.0))     taz_s_st_row_y taz_s_st_z0 taz_s_st_h_txt)
   (setq taz_s_st_col_x (+ taz_s_st_col_x taz_s_st_col_material))
-  (taz_s_st_write_cell "Ilosc"    (+ taz_s_st_col_x (/ taz_s_st_col_ilosc 2.0))    taz_s_st_row_y taz_s_st_z0 taz_s_st_h_txt)
+  (taz_s_st_write_cell "Powierzchnia" (+ taz_s_st_col_x (/ taz_s_st_col_powierzchnia 2.0)) taz_s_st_row_y taz_s_st_z0 taz_s_st_h_txt)
+  (setq taz_s_st_col_x (+ taz_s_st_col_x taz_s_st_col_powierzchnia))
+  (taz_s_st_write_cell "Ilosc"        (+ taz_s_st_col_x (/ taz_s_st_col_ilosc 2.0))        taz_s_st_row_y taz_s_st_z0 taz_s_st_h_txt)
 
   ;; ---- wiersze danych ----
+  ;; taz_s_st_row = (profil dlugosc material powierzchnia ilosc)
   (setq taz_s_st_row_y (- taz_s_st_y0 taz_s_st_head_h taz_s_st_row_h (/ taz_s_st_row_h 2.0)))
 
   (foreach taz_s_st_row taz_s_st_rows
@@ -267,7 +312,11 @@
       (+ taz_s_st_col_x (/ taz_s_st_col_material 2.0)) taz_s_st_row_y taz_s_st_z0 taz_s_st_h_txt)
     (setq taz_s_st_col_x (+ taz_s_st_col_x taz_s_st_col_material))
 
-    (taz_s_st_write_cell (itoa (nth 3 taz_s_st_row))
+    (taz_s_st_write_cell (rtos (nth 3 taz_s_st_row) 2 2)
+      (+ taz_s_st_col_x (/ taz_s_st_col_powierzchnia 2.0)) taz_s_st_row_y taz_s_st_z0 taz_s_st_h_txt)
+    (setq taz_s_st_col_x (+ taz_s_st_col_x taz_s_st_col_powierzchnia))
+
+    (taz_s_st_write_cell (itoa (nth 4 taz_s_st_row))
       (+ taz_s_st_col_x (/ taz_s_st_col_ilosc 2.0)) taz_s_st_row_y taz_s_st_z0 taz_s_st_h_txt)
 
     (setq taz_s_st_row_y (- taz_s_st_row_y taz_s_st_row_h))
@@ -281,7 +330,7 @@
     taz_s_st_head_h
     taz_s_st_row_h
     taz_s_st_nrows
-    (list taz_s_st_col_profil taz_s_st_col_dlugosc taz_s_st_col_material taz_s_st_col_ilosc)
+    (list taz_s_st_col_profil taz_s_st_col_dlugosc taz_s_st_col_material taz_s_st_col_powierzchnia taz_s_st_col_ilosc)
   )
 
   (princ)
@@ -291,11 +340,11 @@
 ;; GLOWNA FUNKCJA: taz_s_create_steel_table
 ;;
 ;; Parametry:
-;;   taz_s_st_cut_ename  - ename bryly tnacej biezacego przypadku
-;;                          (taz_s_cutting_ename z petli glownej, PRZED skasowaniem
-;;                          przez taz_s_intersect_pairs!)
-;;   taz_s_st_orig_list   - lista wszystkich enames oryginalu (taz_s_orig_enames)
-;;   taz_s_st_zoffset     - zoffset biezacego przypadku (taz_s_zoffset)
+;;   taz_s_st_visible_handles - lista uchwytow (string) elementow widocznych
+;;                          w tym przypadku - pochodzi z taz_s_visible_handles,
+;;                          ustawionej przez taz_s_intersect_pairs. WYMAGANE
+;;                          zeby taz_s_intersect_pairs bylo wywolane wczesniej
+;;                          w tej samej iteracji petli.
 ;;   taz_s_st_ins_pt      - punkt wstawienia (lewy-gorny rog naglowka tabeli),
 ;;                          np. (list (+ taz_s_xmax 5000) taz_s_y taz_s_zoffset)
 ;;   taz_s_st_case        - "X" / "Y" / "Z" - decyduje o obrocie tabeli do
@@ -303,50 +352,47 @@
 ;;                          w taz_s_intersect_pairs)
 ;; =======================================================================================
 
-(defun taz_s_create_steel_table (taz_s_st_cut_ename taz_s_st_orig_list taz_s_st_zoffset taz_s_st_ins_pt taz_s_st_case)
+(defun taz_s_create_steel_table (taz_s_st_visible_handles taz_s_st_ins_pt taz_s_st_case)
 
-  (setq taz_s_st_rows '())  ;; lista: (profil dlugosc material ilosc)
+  (setq taz_s_st_rows '())  ;; lista: (profil dlugosc material powierzchnia ilosc)
 
-  (foreach taz_s_st_ent taz_s_st_orig_list
-    (if (taz_s_st_is_visible taz_s_st_cut_ename taz_s_st_ent taz_s_st_zoffset)
-      (progn
-        (setq taz_s_st_h        (cdr (assoc 5 (entget taz_s_st_ent))))
-        (setq taz_s_st_profile  (taz_s_st_get_profile_text taz_s_st_h))
-        (setq taz_s_st_length   (taz_s_st_get_length taz_s_st_h))
-        (setq taz_s_st_material (taz_s_st_get_material taz_s_st_h))
+  (foreach taz_s_st_h taz_s_st_visible_handles
+    (setq taz_s_st_profile  (taz_s_st_get_profile_text taz_s_st_h))
+    (setq taz_s_st_length   (taz_s_st_get_length taz_s_st_h))
+    (setq taz_s_st_material (taz_s_st_get_material taz_s_st_h))
+    (setq taz_s_st_area     (taz_s_st_get_area taz_s_st_h))
 
-        ;; szukaj czy juz mamy wiersz o tym samym profilu / dlugosci / materiale
-        (setq taz_s_st_found nil)
-        (setq taz_s_st_newrows '())
+    ;; szukaj czy juz mamy wiersz o tym samym profilu / dlugosci / materiale
+    (setq taz_s_st_found nil)
+    (setq taz_s_st_newrows '())
 
-        (foreach taz_s_st_row taz_s_st_rows
-          (if (and (not taz_s_st_found)
-                   (= (nth 0 taz_s_st_row) taz_s_st_profile)
-                   (equal (nth 1 taz_s_st_row) taz_s_st_length taz_s_st_len_tol)
-                   (= (nth 2 taz_s_st_row) taz_s_st_material)
-              )
-            (progn
-              (setq taz_s_st_row
-                (list
-                  (nth 0 taz_s_st_row)
-                  (nth 1 taz_s_st_row)
-                  (nth 2 taz_s_st_row)
-                  (1+ (nth 3 taz_s_st_row))
-                )
-              )
-              (setq taz_s_st_found T)
+    (foreach taz_s_st_row taz_s_st_rows
+      (if (and (not taz_s_st_found)
+               (= (nth 0 taz_s_st_row) taz_s_st_profile)
+               (equal (nth 1 taz_s_st_row) taz_s_st_length taz_s_st_len_tol)
+               (= (nth 2 taz_s_st_row) taz_s_st_material)
+          )
+        (progn
+          (setq taz_s_st_row
+            (list
+              (nth 0 taz_s_st_row)
+              (nth 1 taz_s_st_row)
+              (nth 2 taz_s_st_row)
+              (nth 3 taz_s_st_row)
+              (1+ (nth 4 taz_s_st_row))
             )
           )
-          (setq taz_s_st_newrows (append taz_s_st_newrows (list taz_s_st_row)))
+          (setq taz_s_st_found T)
         )
-        (setq taz_s_st_rows taz_s_st_newrows)
+      )
+      (setq taz_s_st_newrows (append taz_s_st_newrows (list taz_s_st_row)))
+    )
+    (setq taz_s_st_rows taz_s_st_newrows)
 
-        (if (not taz_s_st_found)
-          (setq taz_s_st_rows
-            (append taz_s_st_rows
-              (list (list taz_s_st_profile taz_s_st_length taz_s_st_material 1))
-            )
-          )
+    (if (not taz_s_st_found)
+      (setq taz_s_st_rows
+        (append taz_s_st_rows
+          (list (list taz_s_st_profile taz_s_st_length taz_s_st_material taz_s_st_area 1))
         )
       )
     )

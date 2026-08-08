@@ -596,6 +596,7 @@
   ;; o utworzenie bryly wynikowej czy nie.
   ;; ---------------------------------
   (defun taz_s_intersect_pairs (taz_s_cut_ename taz_s_elems_list taz_s_case)
+    (setq taz_s_visible_handles '())
     (setq taz_s_ei 0)
     (setq taz_s_total_elems (length taz_s_elems_list))
     (while (< taz_s_ei taz_s_total_elems)
@@ -625,6 +626,11 @@
         (progn
           (if taz_s_layer0_ss
             (command "ERASE" taz_s_layer0_ss "")
+          )
+          (setq taz_s_visible_handles
+            (append taz_s_visible_handles
+              (list (cdr (assoc 5 (entget taz_s_orig_ent))))
+            )
           )
           (setq taz_s_annotation_text
           (strcat
@@ -948,26 +954,21 @@
     ;; KROK 3: zbierz enames kopii biezacego przypadku
     (setq taz_s_copy_enames (taz_s_collect_copy_enames))
     
-    ;; KROK 3.5: tabela zestawienia stali dla tego przypadku
-    ;;(taz_s_create_steel_table
-      ;;taz_s_cutting_ename
-      ;;taz_s_orig_enames
-      ;;taz_s_zoffset
-      ;;(list (+ taz_s_xmax 5000.0) taz_s_y taz_s_zoffset)
-    ;;)
-    
-    (taz_s_create_steel_table
-      taz_s_cutting_ename
-      taz_s_orig_enames
-      taz_s_zoffset
-      (list (+ taz_s_xmax 5000.0) taz_s_y taz_s_zoffset)
-      "X"
-    )
-
-    ;; KROK 4: intersect parami
+    ;; KROK 4: intersect parami (zbiera tez taz_s_visible_handles)
+    (setq taz_s_visible_handles '())
     (if (> (length taz_s_copy_enames) 0)
       (taz_s_intersect_pairs taz_s_cutting_ename taz_s_copy_enames "X")
-      (princ (strcat "\nPrzypadek X nr " (itoa taz_s_copy_nr) ": brak elementow kopii - pomijam."))
+      (progn
+        (princ (strcat "\nPrzypadek X nr " (itoa taz_s_copy_nr) ": brak elementow kopii - pomijam."))
+        (entdel taz_s_cutting_ename)
+      )
+    )
+
+    ;; KROK 4.5: tabela zestawienia stali - korzysta z juz policzonej widocznosci
+    (taz_s_create_steel_table
+      taz_s_visible_handles
+      (list (+ taz_s_xmax 5000.0) taz_s_y taz_s_zoffset)
+      "X"
     )
 
     (setq taz_s_copy_nr (+ taz_s_copy_nr 1))
@@ -1076,18 +1077,21 @@
     ;; KROK 3: zbierz enames kopii biezacego przypadku
     (setq taz_s_copy_enames (taz_s_collect_copy_enames))
     
-    (taz_s_create_steel_table
-      taz_s_cutting_ename
-      taz_s_orig_enames
-      taz_s_zoffset
-      (list taz_s_x (+ taz_s_ymax 5000.0) taz_s_zoffset)
-      "Y"
-    )
-
-    ;; KROK 4: intersect parami
+    ;; KROK 4: intersect parami (zbiera tez taz_s_visible_handles)
+    (setq taz_s_visible_handles '())
     (if (> (length taz_s_copy_enames) 0)
       (taz_s_intersect_pairs taz_s_cutting_ename taz_s_copy_enames "Y")
-      (princ (strcat "\nPrzypadek Y nr " (itoa taz_s_copy_nr) ": brak elementow kopii - pomijam."))
+      (progn
+        (princ (strcat "\nPrzypadek Y nr " (itoa taz_s_copy_nr) ": brak elementow kopii - pomijam."))
+        (entdel taz_s_cutting_ename)
+      )
+    )
+
+    ;; KROK 4.5: tabela zestawienia stali
+    (taz_s_create_steel_table
+      taz_s_visible_handles
+      (list taz_s_x (+ taz_s_ymax 5000.0) taz_s_zoffset)
+      "Y"
     )
 
     (setq taz_s_copy_nr (+ taz_s_copy_nr 1))
@@ -1246,18 +1250,21 @@
     ;; KROK 3: zbierz enames kopii biezacego przypadku
     (setq taz_s_copy_enames (taz_s_collect_copy_enames))
     
-    (taz_s_create_steel_table
-      taz_s_cutting_ename
-      taz_s_orig_enames
-      taz_s_zoffset
-      (list (+ taz_s_xmax 5000.0) taz_s_ymax (+ taz_s_z taz_s_zoffset))
-      "Z"
-    )
-
-    ;; KROK 4: intersect parami
+    ;; KROK 4: intersect parami (zbiera tez taz_s_visible_handles)
+    (setq taz_s_visible_handles '())
     (if (> (length taz_s_copy_enames) 0)
       (taz_s_intersect_pairs taz_s_cutting_ename taz_s_copy_enames "Z")
-      (princ (strcat "\nPrzypadek Z nr " (itoa taz_s_copy_nr) ": brak elementow kopii - pomijam."))
+      (progn
+        (princ (strcat "\nPrzypadek Z nr " (itoa taz_s_copy_nr) ": brak elementow kopii - pomijam."))
+        (entdel taz_s_cutting_ename)
+      )
+    )
+
+    ;; KROK 4.5: tabela zestawienia stali
+    (taz_s_create_steel_table
+      taz_s_visible_handles
+      (list (+ taz_s_xmax 5000.0) taz_s_ymax (+ taz_s_z taz_s_zoffset))
+      "Z"
     )
 
     (setq taz_s_copy_nr (+ taz_s_copy_nr 1))
