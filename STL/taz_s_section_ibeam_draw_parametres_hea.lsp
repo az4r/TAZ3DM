@@ -1,11 +1,6 @@
 (defun taz_s_section_ibeam_draw_parametres_hea ()
 
-
-  ;; ============================================================
-  ;;   HEA – KAŻDY TYP OSOBNY IF
-  ;; ============================================================
-
-  ;; HEA100
+;; HEA100
   (if (and (= taz_s_family "HEA")
            (= taz_s_type "100"))
     (progn
@@ -14,10 +9,10 @@
       (setq taz_s_tw 5.0)
       (setq taz_s_tf 8.0)
       (setq taz_s_r1 12.0)
+      (setq taz_s_section_area 21.20)
     )
   )
-
-  ;; HEA120
+;; HEA120
   (if (and (= taz_s_family "HEA")
            (= taz_s_type "120"))
     (progn
@@ -26,10 +21,10 @@
       (setq taz_s_tw 5.0)
       (setq taz_s_tf 8.0)
       (setq taz_s_r1 12.0)
+      (setq taz_s_section_area 25.30)
     )
   )
-
-  ;; HEA140
+;; HEA140
   (if (and (= taz_s_family "HEA")
            (= taz_s_type "140"))
     (progn
@@ -38,10 +33,10 @@
       (setq taz_s_tw 5.5)
       (setq taz_s_tf 8.5)
       (setq taz_s_r1 12.0)
+      (setq taz_s_section_area 31.40)
     )
   )
-
-  ;; HEA160
+;; HEA160
   (if (and (= taz_s_family "HEA")
            (= taz_s_type "160"))
     (progn
@@ -50,10 +45,10 @@
       (setq taz_s_tw 6.0)
       (setq taz_s_tf 9.0)
       (setq taz_s_r1 15.0)
+      (setq taz_s_section_area 38.80)
     )
   )
-
-  ;; HEA180
+;; HEA180
   (if (and (= taz_s_family "HEA")
            (= taz_s_type "180"))
     (progn
@@ -62,10 +57,10 @@
       (setq taz_s_tw 6.0)
       (setq taz_s_tf 9.5)
       (setq taz_s_r1 15.0)
+      (setq taz_s_section_area 45.30)
     )
   )
-
-  ;; HEA200
+;; HEA200
   (if (and (= taz_s_family "HEA")
            (= taz_s_type "200"))
     (progn
@@ -74,10 +69,10 @@
       (setq taz_s_tw 6.5)
       (setq taz_s_tf 10.0)
       (setq taz_s_r1 18.0)
+      (setq taz_s_section_area 53.80)
     )
   )
-
-  ;; HEA220
+;; HEA220
   (if (and (= taz_s_family "HEA")
            (= taz_s_type "220"))
     (progn
@@ -86,10 +81,10 @@
       (setq taz_s_tw 7.0)
       (setq taz_s_tf 11.0)
       (setq taz_s_r1 18.0)
+      (setq taz_s_section_area 64.30)
     )
   )
-
-  ;; HEA240
+;; HEA240
   (if (and (= taz_s_family "HEA")
            (= taz_s_type "240"))
     (progn
@@ -98,10 +93,10 @@
       (setq taz_s_tw 7.5)
       (setq taz_s_tf 12.0)
       (setq taz_s_r1 21.0)
+      (setq taz_s_section_area 76.80)
     )
   )
-
-  ;; HEA260
+;; HEA260
   (if (and (= taz_s_family "HEA")
            (= taz_s_type "260"))
     (progn
@@ -110,10 +105,10 @@
       (setq taz_s_tw 7.5)
       (setq taz_s_tf 12.5)
       (setq taz_s_r1 24.0)
+      (setq taz_s_section_area 86.80)
     )
   )
-
-  ;; HEA280
+;; HEA280
   (if (and (= taz_s_family "HEA")
            (= taz_s_type "280"))
     (progn
@@ -122,10 +117,10 @@
       (setq taz_s_tw 8.0)
       (setq taz_s_tf 13.0)
       (setq taz_s_r1 24.0)
+      (setq taz_s_section_area 97.30)
     )
   )
-
-  ;; HEA300
+;; HEA300
   (if (and (= taz_s_family "HEA")
            (= taz_s_type "300"))
     (progn
@@ -134,10 +129,10 @@
       (setq taz_s_tw 8.5)
       (setq taz_s_tf 14.0)
       (setq taz_s_r1 27.0)
+      (setq taz_s_section_area 113.00)
     )
   )
-
-  ;; HEA320
+;; HEA320
   (if (and (= taz_s_family "HEA")
            (= taz_s_type "320"))
     (progn
@@ -146,10 +141,10 @@
       (setq taz_s_tw 9.0)
       (setq taz_s_tf 15.5)
       (setq taz_s_r1 27.0)
+      (setq taz_s_section_area 124.00)
     )
   )
-
-  ;; HEA340
+;; HEA340
   (if (and (= taz_s_family "HEA")
            (= taz_s_type "340"))
     (progn
@@ -158,10 +153,10 @@
       (setq taz_s_tw 9.5)
       (setq taz_s_tf 16.5)
       (setq taz_s_r1 27.0)
+      (setq taz_s_section_area 133.00)
     )
   )
-
-  ;; HEA360
+;; HEA360
   (if (and (= taz_s_family "HEA")
            (= taz_s_type "360"))
     (progn
@@ -170,10 +165,10 @@
       (setq taz_s_tw 10.0)
       (setq taz_s_tf 17.5)
       (setq taz_s_r1 27.0)
+      (setq taz_s_section_area 143.00)
     )
   )
-
-  ;; HEA400
+;; HEA400
   (if (and (= taz_s_family "HEA")
            (= taz_s_type "400"))
     (progn
@@ -182,10 +177,10 @@
       (setq taz_s_tw 11.0)
       (setq taz_s_tf 19.0)
       (setq taz_s_r1 27.0)
+      (setq taz_s_section_area 159.00)
     )
   )
-
-  ;; HEA450
+;; HEA450
   (if (and (= taz_s_family "HEA")
            (= taz_s_type "450"))
     (progn
@@ -194,10 +189,10 @@
       (setq taz_s_tw 11.5)
       (setq taz_s_tf 21.0)
       (setq taz_s_r1 27.0)
+      (setq taz_s_section_area 178.00)
     )
   )
-
-  ;; HEA500
+;; HEA500
   (if (and (= taz_s_family "HEA")
            (= taz_s_type "500"))
     (progn
@@ -206,10 +201,10 @@
       (setq taz_s_tw 12.0)
       (setq taz_s_tf 23.0)
       (setq taz_s_r1 27.0)
+      (setq taz_s_section_area 198.00)
     )
   )
-
-  ;; HEA550
+;; HEA550
   (if (and (= taz_s_family "HEA")
            (= taz_s_type "550"))
     (progn
@@ -218,10 +213,10 @@
       (setq taz_s_tw 12.5)
       (setq taz_s_tf 24.0)
       (setq taz_s_r1 27.0)
+      (setq taz_s_section_area 212.00)
     )
   )
-
-  ;; HEA600
+;; HEA600
   (if (and (= taz_s_family "HEA")
            (= taz_s_type "600"))
     (progn
@@ -230,10 +225,10 @@
       (setq taz_s_tw 13.0)
       (setq taz_s_tf 25.0)
       (setq taz_s_r1 27.0)
+      (setq taz_s_section_area 226.00)
     )
   )
-
-  ;; HEA650
+;; HEA650
   (if (and (= taz_s_family "HEA")
            (= taz_s_type "650"))
     (progn
@@ -242,10 +237,10 @@
       (setq taz_s_tw 13.5)
       (setq taz_s_tf 26.0)
       (setq taz_s_r1 27.0)
+      (setq taz_s_section_area 242.00)
     )
   )
-
-  ;; HEA700
+;; HEA700
   (if (and (= taz_s_family "HEA")
            (= taz_s_type "700"))
     (progn
@@ -254,10 +249,10 @@
       (setq taz_s_tw 14.5)
       (setq taz_s_tf 27.0)
       (setq taz_s_r1 27.0)
+      (setq taz_s_section_area 260.00)
     )
   )
-
-  ;; HEA800
+;; HEA800
   (if (and (= taz_s_family "HEA")
            (= taz_s_type "800"))
     (progn
@@ -266,10 +261,10 @@
       (setq taz_s_tw 15.0)
       (setq taz_s_tf 28.0)
       (setq taz_s_r1 30.0)
+      (setq taz_s_section_area 286.00)
     )
   )
-
-  ;; HEA900
+;; HEA900
   (if (and (= taz_s_family "HEA")
            (= taz_s_type "900"))
     (progn
@@ -278,10 +273,10 @@
       (setq taz_s_tw 16.0)
       (setq taz_s_tf 30.0)
       (setq taz_s_r1 30.0)
+      (setq taz_s_section_area 321.00)
     )
   )
-
-  ;; HEA1000
+;; HEA1000
   (if (and (= taz_s_family "HEA")
            (= taz_s_type "1000"))
     (progn
@@ -290,6 +285,7 @@
       (setq taz_s_tw 16.5)
       (setq taz_s_tf 31.0)
       (setq taz_s_r1 30.0)
+      (setq taz_s_section_area 347.00)
     )
   )
 )
