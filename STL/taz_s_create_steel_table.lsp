@@ -53,7 +53,7 @@
 (setq taz_s_st_col_profil       1200.0)
 (setq taz_s_st_col_dlugosc       800.0)
 (setq taz_s_st_col_material      800.0)
-(setq taz_s_st_col_powierzchnia  700.0)
+(setq taz_s_st_col_powierzchnia  1200.0)
 (setq taz_s_st_col_ilosc         500.0)
 
 ;; wysokosci wierszy
