@@ -1,9 +1,5 @@
 (defun taz_s_section_lbeam_draw_parametres_katownik_nierownoramienny ()
 
-;; ============================================
-;; KĄTOWNIKI NIERÓWNORAMIENNE – CZĘŚĆ 1
-;; ============================================
-
 ;; L 30x20x3
 (if (and (= taz_s_family "LN")
          (= taz_s_type "30x20x3"))
@@ -15,9 +11,9 @@
     (setq taz_s_r2 2.0)
     (setq taz_s_ey 5.0)
     (setq taz_s_ex 20.1)
+    (setq taz_s_section_area 1.42)
   )
 )
-
 ;; L 30x20x4
 (if (and (= taz_s_family "LN")
          (= taz_s_type "30x20x4"))
@@ -29,9 +25,9 @@
     (setq taz_s_r2 2.0)
     (setq taz_s_ey 5.4)
     (setq taz_s_ex 19.7)
+    (setq taz_s_section_area 1.85)
   )
 )
-
 ;; L 40x20x3
 (if (and (= taz_s_family "LN")
          (= taz_s_type "40x20x3"))
@@ -43,9 +39,9 @@
     (setq taz_s_r2 2.0)
     (setq taz_s_ey 4.4)
     (setq taz_s_ex 25.7)
+    (setq taz_s_section_area 1.72)
   )
 )
-
 ;; L 40x20x4
 (if (and (= taz_s_family "LN")
          (= taz_s_type "40x20x4"))
@@ -57,9 +53,9 @@
     (setq taz_s_r2 2.0)
     (setq taz_s_ey 4.8)
     (setq taz_s_ex 25.3)
+    (setq taz_s_section_area 2.25)
   )
 )
-
 ;; L 40x25x4
 (if (and (= taz_s_family "LN")
          (= taz_s_type "40x25x4"))
@@ -71,9 +67,9 @@
     (setq taz_s_r2 2.0)
     (setq taz_s_ey 6.2)
     (setq taz_s_ex 26.4)
+    (setq taz_s_section_area 2.40)
   )
 )
-
 ;; L 45x30x3
 (if (and (= taz_s_family "LN")
          (= taz_s_type "45x30x3"))
@@ -85,9 +81,9 @@
     (setq taz_s_r2 2.0)
     (setq taz_s_ey 7.0)
     (setq taz_s_ex 30.7)
+    (setq taz_s_section_area 2.19)
   )
 )
-
 ;; L 45x30x4
 (if (and (= taz_s_family "LN")
          (= taz_s_type "45x30x4"))
@@ -99,9 +95,9 @@
     (setq taz_s_r2 2.0)
     (setq taz_s_ey 7.4)
     (setq taz_s_ex 30.2)
+    (setq taz_s_section_area 2.87)
   )
 )
-
 ;; L 45x30x5
 (if (and (= taz_s_family "LN")
          (= taz_s_type "45x30x5"))
@@ -113,9 +109,9 @@
     (setq taz_s_r2 2.0)
     (setq taz_s_ey 7.8)
     (setq taz_s_ex 29.8)
+    (setq taz_s_section_area 3.53)
   )
 )
-
 ;; L 50x30x4
 (if (and (= taz_s_family "LN")
          (= taz_s_type "50x30x4"))
@@ -127,9 +123,9 @@
     (setq taz_s_r2 2.0)
     (setq taz_s_ey 7.0)
     (setq taz_s_ex 33.1)
+    (setq taz_s_section_area 3.07)
   )
 )
-
 ;; L 50x30x5
 (if (and (= taz_s_family "LN")
          (= taz_s_type "50x30x5"))
@@ -141,13 +137,9 @@
     (setq taz_s_r2 2.0)
     (setq taz_s_ey 7.4)
     (setq taz_s_ex 32.7)
+    (setq taz_s_section_area 3.78)
   )
 )
-
-;; ============================================
-;; KĄTOWNIKI NIERÓWNORAMIENNE – CZĘŚĆ 2
-;; ============================================
-
 ;; L 50x40x4
 (if (and (= taz_s_family "LN")
          (= taz_s_type "50x40x4"))
@@ -159,9 +151,9 @@
     (setq taz_s_r2 2.0)
     (setq taz_s_ey 10.3)
     (setq taz_s_ex 34.8)
+    (setq taz_s_section_area 3.46)
   )
 )
-
 ;; L 50x40x5
 (if (and (= taz_s_family "LN")
          (= taz_s_type "50x40x5"))
@@ -173,9 +165,9 @@
     (setq taz_s_r2 2.0)
     (setq taz_s_ey 10.7)
     (setq taz_s_ex 34.4)
+    (setq taz_s_section_area 4.27)
   )
 )
-
 ;; L 60x30x5
 (if (and (= taz_s_family "LN")
          (= taz_s_type "60x30x5"))
@@ -187,9 +179,9 @@
     (setq taz_s_r2 3.0)
     (setq taz_s_ey 6.8)
     (setq taz_s_ex 38.5)
+    (setq taz_s_section_area 4.29)
   )
 )
-
 ;; L 60x40x5
 (if (and (= taz_s_family "LN")
          (= taz_s_type "60x40x5"))
@@ -201,9 +193,9 @@
     (setq taz_s_r2 3.0)
     (setq taz_s_ey 9.7)
     (setq taz_s_ex 40.4)
+    (setq taz_s_section_area 4.79)
   )
 )
-
 ;; L 60x40x6
 (if (and (= taz_s_family "LN")
          (= taz_s_type "60x40x6"))
@@ -215,9 +207,9 @@
     (setq taz_s_r2 3.0)
     (setq taz_s_ey 10.1)
     (setq taz_s_ex 40.0)
+    (setq taz_s_section_area 5.68)
   )
 )
-
 ;; L 60x40x7
 (if (and (= taz_s_family "LN")
          (= taz_s_type "60x40x7"))
@@ -229,9 +221,9 @@
     (setq taz_s_r2 3.0)
     (setq taz_s_ey 10.5)
     (setq taz_s_ex 39.6)
+    (setq taz_s_section_area 6.55)
   )
 )
-
 ;; L 65x50x5
 (if (and (= taz_s_family "LN")
          (= taz_s_type "65x50x5"))
@@ -243,9 +235,9 @@
     (setq taz_s_r2 3.5)
     (setq taz_s_ey 12.5)
     (setq taz_s_ex 45.1)
+    (setq taz_s_section_area 5.54)
   )
 )
-
 ;; L 65x50x7
 (if (and (= taz_s_family "LN")
          (= taz_s_type "65x50x7"))
@@ -257,9 +249,9 @@
     (setq taz_s_r2 3.5)
     (setq taz_s_ey 13.3)
     (setq taz_s_ex 44.3)
+    (setq taz_s_section_area 7.60)
   )
 )
-
 ;; L 65x50x9
 (if (and (= taz_s_family "LN")
          (= taz_s_type "65x50x9"))
@@ -271,9 +263,9 @@
     (setq taz_s_r2 3.5)
     (setq taz_s_ey 14.1)
     (setq taz_s_ex 43.5)
+    (setq taz_s_section_area 9.58)
   )
 )
-
 ;; L 70x50x6
 (if (and (= taz_s_family "LN")
          (= taz_s_type "70x50x6"))
@@ -285,9 +277,9 @@
     (setq taz_s_r2 3.0)
     (setq taz_s_ey 12.5)
     (setq taz_s_ex 47.6)
+    (setq taz_s_section_area 6.88)
   )
 )
-
 ;; L 75x50x7
 (if (and (= taz_s_family "LN")
          (= taz_s_type "75x50x7"))
@@ -299,9 +291,9 @@
     (setq taz_s_r2 3.5)
     (setq taz_s_ey 12.5)
     (setq taz_s_ex 50.2)
+    (setq taz_s_section_area 8.30)
   )
 )
-
 ;; L 75x50x9
 (if (and (= taz_s_family "LN")
          (= taz_s_type "75x50x9"))
@@ -313,9 +305,9 @@
     (setq taz_s_r2 3.5)
     (setq taz_s_ey 13.2)
     (setq taz_s_ex 49.4)
+    (setq taz_s_section_area 10.50)
   )
 )
-
 ;; L 75x55x5
 (if (and (= taz_s_family "LN")
          (= taz_s_type "75x55x5"))
@@ -327,9 +319,9 @@
     (setq taz_s_r2 3.5)
     (setq taz_s_ey 13.3)
     (setq taz_s_ex 51.9)
+    (setq taz_s_section_area 6.30)
   )
 )
-
 ;; L 75x55x7
 (if (and (= taz_s_family "LN")
          (= taz_s_type "75x55x7"))
@@ -341,9 +333,9 @@
     (setq taz_s_r2 3.5)
     (setq taz_s_ey 14.1)
     (setq taz_s_ex 51.1)
+    (setq taz_s_section_area 8.66)
   )
 )
-
 ;; L 75x55x9
 (if (and (= taz_s_family "LN")
          (= taz_s_type "75x55x9"))
@@ -355,13 +347,9 @@
     (setq taz_s_r2 3.5)
     (setq taz_s_ey 14.8)
     (setq taz_s_ex 50.3)
+    (setq taz_s_section_area 10.90)
   )
 )
-
-;; ============================================
-;; KĄTOWNIKI NIERÓWNORAMIENNE – CZĘŚĆ 3
-;; ============================================
-
 ;; L 80x40x6
 (if (and (= taz_s_family "LN")
          (= taz_s_type "80x40x6"))
@@ -373,9 +361,9 @@
     (setq taz_s_r2 3.5)
     (setq taz_s_ey 8.8)
     (setq taz_s_ex 51.5)
+    (setq taz_s_section_area 6.89)
   )
 )
-
 ;; L 80x40x8
 (if (and (= taz_s_family "LN")
          (= taz_s_type "80x40x8"))
@@ -387,9 +375,9 @@
     (setq taz_s_r2 3.5)
     (setq taz_s_ey 9.6)
     (setq taz_s_ex 50.6)
+    (setq taz_s_section_area 9.01)
   )
 )
-
 ;; L 80x60x7
 (if (and (= taz_s_family "LN")
          (= taz_s_type "80x60x7"))
@@ -401,9 +389,9 @@
     (setq taz_s_r2 4.0)
     (setq taz_s_ey 15.2)
     (setq taz_s_ex 54.9)
+    (setq taz_s_section_area 9.38)
   )
 )
-
 ;; L 80x65x8
 (if (and (= taz_s_family "LN")
          (= taz_s_type "80x65x8"))
@@ -415,9 +403,9 @@
     (setq taz_s_r2 4.0)
     (setq taz_s_ey 17.3)
     (setq taz_s_ex 55.3)
+    (setq taz_s_section_area 11.00)
   )
 )
-
 ;; L 80x65x10
 (if (and (= taz_s_family "LN")
          (= taz_s_type "80x65x10"))
@@ -429,9 +417,9 @@
     (setq taz_s_r2 4.0)
     (setq taz_s_ey 18.1)
     (setq taz_s_ex 54.5)
+    (setq taz_s_section_area 13.60)
   )
 )
-
 ;; L 90x60x6
 (if (and (= taz_s_family "LN")
          (= taz_s_type "90x60x6"))
@@ -443,9 +431,9 @@
     (setq taz_s_r2 3.5)
     (setq taz_s_ey 14.1)
     (setq taz_s_ex 61.1)
+    (setq taz_s_section_area 8.69)
   )
 )
-
 ;; L 90x60x8
 (if (and (= taz_s_family "LN")
          (= taz_s_type "90x60x8"))
@@ -457,9 +445,9 @@
     (setq taz_s_r2 3.5)
     (setq taz_s_ey 14.9)
     (setq taz_s_ex 60.3)
+    (setq taz_s_section_area 11.40)
   )
 )
-
 ;; L 100x50x6
 (if (and (= taz_s_family "LN")
          (= taz_s_type "100x50x6"))
@@ -471,9 +459,9 @@
     (setq taz_s_r2 4.5)
     (setq taz_s_ey 10.4)
     (setq taz_s_ex 65.1)
+    (setq taz_s_section_area 8.73)
   )
 )
-
 ;; L 100x50x8
 (if (and (= taz_s_family "LN")
          (= taz_s_type "100x50x8"))
@@ -485,9 +473,9 @@
     (setq taz_s_r2 4.5)
     (setq taz_s_ey 11.2)
     (setq taz_s_ex 64.1)
+    (setq taz_s_section_area 11.50)
   )
 )
-
 ;; L 100x50x10
 (if (and (= taz_s_family "LN")
          (= taz_s_type "100x50x10"))
@@ -499,13 +487,9 @@
     (setq taz_s_r2 4.5)
     (setq taz_s_ey 12.0)
     (setq taz_s_ex 63.3)
+    (setq taz_s_section_area 14.10)
   )
 )
-
-;; ============================================
-;; KĄTOWNIKI NIERÓWNORAMIENNE – CZĘŚĆ 4
-;; ============================================
-
 ;; L 100x65x7
 (if (and (= taz_s_family "LN")
          (= taz_s_type "100x65x7"))
@@ -517,9 +501,9 @@
     (setq taz_s_r2 5.0)
     (setq taz_s_ey 15.1)
     (setq taz_s_ex 67.7)
+    (setq taz_s_section_area 11.20)
   )
 )
-
 ;; L 100x65x9
 (if (and (= taz_s_family "LN")
          (= taz_s_type "100x65x9"))
@@ -531,9 +515,9 @@
     (setq taz_s_r2 5.0)
     (setq taz_s_ey 15.9)
     (setq taz_s_ex 66.8)
+    (setq taz_s_section_area 14.20)
   )
 )
-
 ;; L 100x65x11
 (if (and (= taz_s_family "LN")
          (= taz_s_type "100x65x11"))
@@ -545,9 +529,9 @@
     (setq taz_s_r2 5.0)
     (setq taz_s_ey 16.7)
     (setq taz_s_ex 66.0)
+    (setq taz_s_section_area 17.10)
   )
 )
-
 ;; L 100x75x7
 (if (and (= taz_s_family "LN")
          (= taz_s_type "100x75x7"))
@@ -559,9 +543,9 @@
     (setq taz_s_r2 5.0)
     (setq taz_s_ey 18.3)
     (setq taz_s_ex 69.4)
+    (setq taz_s_section_area 11.90)
   )
 )
-
 ;; L 100x75x9
 (if (and (= taz_s_family "LN")
          (= taz_s_type "100x75x9"))
@@ -573,9 +557,9 @@
     (setq taz_s_r2 5.0)
     (setq taz_s_ey 19.1)
     (setq taz_s_ex 68.5)
+    (setq taz_s_section_area 15.10)
   )
 )
-
 ;; L 100x75x11
 (if (and (= taz_s_family "LN")
          (= taz_s_type "100x75x11"))
@@ -587,9 +571,9 @@
     (setq taz_s_r2 5.0)
     (setq taz_s_ey 19.9)
     (setq taz_s_ex 67.7)
+    (setq taz_s_section_area 18.20)
   )
 )
-
 ;; L 120x80x8
 (if (and (= taz_s_family "LN")
          (= taz_s_type "120x80x8"))
@@ -601,9 +585,9 @@
     (setq taz_s_r2 5.5)
     (setq taz_s_ey 18.7)
     (setq taz_s_ex 81.7)
+    (setq taz_s_section_area 15.50)
   )
 )
-
 ;; L 120x80x10
 (if (and (= taz_s_family "LN")
          (= taz_s_type "120x80x10"))
@@ -615,9 +599,9 @@
     (setq taz_s_r2 5.5)
     (setq taz_s_ey 19.5)
     (setq taz_s_ex 80.8)
+    (setq taz_s_section_area 19.10)
   )
 )
-
 ;; L 120x80x12
 (if (and (= taz_s_family "LN")
          (= taz_s_type "120x80x12"))
@@ -629,9 +613,9 @@
     (setq taz_s_r2 5.5)
     (setq taz_s_ey 20.3)
     (setq taz_s_ex 80.0)
+    (setq taz_s_section_area 22.70)
   )
 )
-
 ;; L 120x80x14
 (if (and (= taz_s_family "LN")
          (= taz_s_type "120x80x14"))
@@ -643,9 +627,9 @@
     (setq taz_s_r2 5.5)
     (setq taz_s_ey 21.0)
     (setq taz_s_ex 79.2)
+    (setq taz_s_section_area 26.20)
   )
 )
-
 ;; L 130x65x8
 (if (and (= taz_s_family "LN")
          (= taz_s_type "130x65x8"))
@@ -657,9 +641,9 @@
     (setq taz_s_r2 5.5)
     (setq taz_s_ey 13.7)
     (setq taz_s_ex 84.4)
+    (setq taz_s_section_area 15.10)
   )
 )
-
 ;; L 130x65x10
 (if (and (= taz_s_family "LN")
          (= taz_s_type "130x65x10"))
@@ -671,9 +655,9 @@
     (setq taz_s_r2 5.5)
     (setq taz_s_ey 14.5)
     (setq taz_s_ex 83.5)
+    (setq taz_s_section_area 18.60)
   )
 )
-
 ;; L 130x65x12
 (if (and (= taz_s_family "LN")
          (= taz_s_type "130x65x12"))
@@ -685,13 +669,9 @@
     (setq taz_s_r2 5.5)
     (setq taz_s_ey 15.3)
     (setq taz_s_ex 82.6)
+    (setq taz_s_section_area 22.10)
   )
 )
-  
-;; ============================================
-;; KĄTOWNIKI NIERÓWNORAMIENNE – CZĘŚĆ 5
-;; ============================================
-
 ;; L 130x90x12
 (if (and (= taz_s_family "LN")
          (= taz_s_type "130x90x12"))
@@ -703,9 +683,9 @@
     (setq taz_s_r2 6.0)
     (setq taz_s_ey 22.6)
     (setq taz_s_ex 87.6)
+    (setq taz_s_section_area 25.10)
   )
 )
-
 ;; L 150x75x9
 (if (and (= taz_s_family "LN")
          (= taz_s_type "150x75x9"))
@@ -717,9 +697,9 @@
     (setq taz_s_r2 5.5)
     (setq taz_s_ey 15.7)
     (setq taz_s_ex 97.2)
+    (setq taz_s_section_area 19.50)
   )
 )
-
 ;; L 150x75x11
 (if (and (= taz_s_family "LN")
          (= taz_s_type "150x75x11"))
@@ -731,9 +711,9 @@
     (setq taz_s_r2 5.5)
     (setq taz_s_ey 16.5)
     (setq taz_s_ex 96.3)
+    (setq taz_s_section_area 23.60)
   )
 )
-
 ;; L 150x100x10
 (if (and (= taz_s_family "LN")
          (= taz_s_type "150x100x10"))
@@ -745,9 +725,9 @@
     (setq taz_s_r2 6.5)
     (setq taz_s_ey 23.4)
     (setq taz_s_ex 102.0)
+    (setq taz_s_section_area 24.20)
   )
 )
-
 ;; L 150x100x12
 (if (and (= taz_s_family "LN")
          (= taz_s_type "150x100x12"))
@@ -759,9 +739,9 @@
     (setq taz_s_r2 6.5)
     (setq taz_s_ey 24.2)
     (setq taz_s_ex 101.1)
+    (setq taz_s_section_area 28.70)
   )
 )
-
 ;; L 150x100x14
 (if (and (= taz_s_family "LN")
          (= taz_s_type "150x100x14"))
@@ -773,9 +753,9 @@
     (setq taz_s_r2 6.5)
     (setq taz_s_ey 25.0)
     (setq taz_s_ex 100.3)
+    (setq taz_s_section_area 33.20)
   )
 )
-
 ;; L 160x80x12
 (if (and (= taz_s_family "LN")
          (= taz_s_type "160x80x12"))
@@ -787,9 +767,9 @@
     (setq taz_s_r2 6.5)
     (setq taz_s_ey 17.7)
     (setq taz_s_ex 102.8)
+    (setq taz_s_section_area 27.50)
   )
 )
-
 ;; L 180x90x10
 (if (and (= taz_s_family "LN")
          (= taz_s_type "180x90x10"))
@@ -801,9 +781,9 @@
     (setq taz_s_r2 7.0)
     (setq taz_s_ey 18.5)
     (setq taz_s_ex 117.2)
+    (setq taz_s_section_area 26.20)
   )
 )
-
 ;; L 180x90x12
 (if (and (= taz_s_family "LN")
          (= taz_s_type "180x90x12"))
@@ -815,9 +795,9 @@
     (setq taz_s_r2 7.0)
     (setq taz_s_ey 19.3)
     (setq taz_s_ex 116.3)
+    (setq taz_s_section_area 31.20)
   )
 )
-
 ;; L 200x100x10
 (if (and (= taz_s_family "LN")
          (= taz_s_type "200x100x10"))
@@ -829,9 +809,9 @@
     (setq taz_s_r2 7.5)
     (setq taz_s_ey 20.1)
     (setq taz_s_ex 130.7)
+    (setq taz_s_section_area 29.20)
   )
 )
-
 ;; L 200x100x12
 (if (and (= taz_s_family "LN")
          (= taz_s_type "200x100x12"))
@@ -843,9 +823,9 @@
     (setq taz_s_r2 7.5)
     (setq taz_s_ey 21.0)
     (setq taz_s_ex 129.7)
+    (setq taz_s_section_area 34.80)
   )
 )
-
 ;; L 200x100x14
 (if (and (= taz_s_family "LN")
          (= taz_s_type "200x100x14"))
@@ -857,9 +837,9 @@
     (setq taz_s_r2 7.5)
     (setq taz_s_ey 21.8)
     (setq taz_s_ex 128.8)
+    (setq taz_s_section_area 40.30)
   )
 )
-
 ;; L 200x100x16
 (if (and (= taz_s_family "LN")
          (= taz_s_type "200x100x16"))
@@ -871,13 +851,9 @@
     (setq taz_s_r2 7.5)
     (setq taz_s_ey 22.6)
     (setq taz_s_ex 128.0)
+    (setq taz_s_section_area 45.70)
   )
 )
-
-;; ============================================
-;; KĄTOWNIKI NIERÓWNORAMIENNE – CZĘŚĆ 6 (OSTATNIA)
-;; ============================================
-
 ;; L 250x90x10
 (if (and (= taz_s_family "LN")
          (= taz_s_type "250x90x10"))
@@ -889,9 +865,9 @@
     (setq taz_s_r2 7.5)
     (setq taz_s_ey 15.6)
     (setq taz_s_ex 155.5)
+    (setq taz_s_section_area 33.20)
   )
 )
-
 ;; L 250x90x12
 (if (and (= taz_s_family "LN")
          (= taz_s_type "250x90x12"))
@@ -903,9 +879,9 @@
     (setq taz_s_r2 7.5)
     (setq taz_s_ey 16.5)
     (setq taz_s_ex 154.5)
+    (setq taz_s_section_area 39.60)
   )
 )
-
 ;; L 250x90x14
 (if (and (= taz_s_family "LN")
          (= taz_s_type "250x90x14"))
@@ -917,9 +893,9 @@
     (setq taz_s_r2 7.5)
     (setq taz_s_ey 17.3)
     (setq taz_s_ex 153.5)
+    (setq taz_s_section_area 45.90)
   )
 )
-
 ;; L 250x90x16
 (if (and (= taz_s_family "LN")
          (= taz_s_type "250x90x16"))
@@ -931,7 +907,7 @@
     (setq taz_s_r2 7.5)
     (setq taz_s_ey 18.1)
     (setq taz_s_ex 152.6)
+    (setq taz_s_section_area 52.10)
   )
-)
-  
+)  
 )
