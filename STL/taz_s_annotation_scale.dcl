@@ -4,21 +4,20 @@ taz_s_annotation_scale_dialog : dialog {
   : column {
 
     : row {
+      alignment = centered;
+
       : text {
         label = "Skala opisu:";
         width = 20;
         fixed_width = true;
       }
-    }
 
-    : row {
       : popup_list {
         key = "taz_s_annotation_scale_popup";
         width = 20;
         fixed_width = true;
       }
     }
-
   }
 
   ok_cancel;
