@@ -1,9 +1,5 @@
 (defun taz_s_section_hsbeam_draw_parametres_rura_prostokatna ()
 
-;; ============================================
-;; RURY PROSTOKĄTNE RHS – CZĘŚĆ 1
-;; ============================================
-
 ;; RHS 50x25x2.5
 (if (and (= taz_s_family "RHS")
          (= taz_s_type "50x25x2.5"))
@@ -13,9 +9,9 @@
     (setq taz_s_t 2.5)
     (setq taz_s_r1 5.0)
     (setq taz_s_r2 2.5)
+    (setq taz_s_section_area 3.34)
   )
 )
-
 ;; RHS 50x25x3
 (if (and (= taz_s_family "RHS")
          (= taz_s_type "50x25x3"))
@@ -25,9 +21,9 @@
     (setq taz_s_t 3.0)
     (setq taz_s_r1 6.0)
     (setq taz_s_r2 3.0)
+    (setq taz_s_section_area 3.91)
   )
 )
-
 ;; RHS 50x25x3.5
 (if (and (= taz_s_family "RHS")
          (= taz_s_type "50x25x3.5"))
@@ -37,9 +33,9 @@
     (setq taz_s_t 3.5)
     (setq taz_s_r1 7.0)
     (setq taz_s_r2 3.5)
+    (setq taz_s_section_area 4.44)
   )
 )
-
 ;; RHS 60x40x2.5
 (if (and (= taz_s_family "RHS")
          (= taz_s_type "60x40x2.5"))
@@ -49,9 +45,9 @@
     (setq taz_s_t 2.5)
     (setq taz_s_r1 5.0)
     (setq taz_s_r2 2.5)
+    (setq taz_s_section_area 4.59)
   )
 )
-
 ;; RHS 60x40x3
 (if (and (= taz_s_family "RHS")
          (= taz_s_type "60x40x3"))
@@ -61,9 +57,9 @@
     (setq taz_s_t 3.0)
     (setq taz_s_r1 6.0)
     (setq taz_s_r2 3.0)
+    (setq taz_s_section_area 5.41)
   )
 )
-
 ;; RHS 60x40x3.5
 (if (and (= taz_s_family "RHS")
          (= taz_s_type "60x40x3.5"))
@@ -73,9 +69,9 @@
     (setq taz_s_t 3.5)
     (setq taz_s_r1 7.0)
     (setq taz_s_r2 3.5)
+    (setq taz_s_section_area 6.19)
   )
 )
-
 ;; RHS 60x40x4
 (if (and (= taz_s_family "RHS")
          (= taz_s_type "60x40x4"))
@@ -85,9 +81,9 @@
     (setq taz_s_t 4.0)
     (setq taz_s_r1 8.0)
     (setq taz_s_r2 4.0)
+    (setq taz_s_section_area 6.95)
   )
 )
-
 ;; RHS 60x40x4.5
 (if (and (= taz_s_family "RHS")
          (= taz_s_type "60x40x4.5"))
@@ -97,13 +93,9 @@
     (setq taz_s_t 4.5)
     (setq taz_s_r1 9.0)
     (setq taz_s_r2 4.5)
+    (setq taz_s_section_area 7.67)
   )
 )
-
-;; ============================================
-;; RURY PROSTOKĄTNE RHS – CZĘŚĆ 2
-;; ============================================
-
 ;; RHS 76x38x2.5
 (if (and (= taz_s_family "RHS")
          (= taz_s_type "76x38x2.5"))
@@ -113,9 +105,9 @@
     (setq taz_s_t 2.5)
     (setq taz_s_r1 5.0)
     (setq taz_s_r2 2.5)
+    (setq taz_s_section_area 5.29)
   )
 )
-
 ;; RHS 76x38x3
 (if (and (= taz_s_family "RHS")
          (= taz_s_type "76x38x3"))
@@ -125,9 +117,9 @@
     (setq taz_s_t 3.0)
     (setq taz_s_r1 6.0)
     (setq taz_s_r2 3.0)
+    (setq taz_s_section_area 6.25)
   )
 )
-
 ;; RHS 76x38x3.5
 (if (and (= taz_s_family "RHS")
          (= taz_s_type "76x38x3.5"))
@@ -137,9 +129,9 @@
     (setq taz_s_t 3.5)
     (setq taz_s_r1 7.0)
     (setq taz_s_r2 3.5)
+    (setq taz_s_section_area 7.17)
   )
 )
-
 ;; RHS 76x38x4
 (if (and (= taz_s_family "RHS")
          (= taz_s_type "76x38x4"))
@@ -149,9 +141,9 @@
     (setq taz_s_t 4.0)
     (setq taz_s_r1 8.0)
     (setq taz_s_r2 4.0)
+    (setq taz_s_section_area 8.07)
   )
 )
-
 ;; RHS 76x38x4.5
 (if (and (= taz_s_family "RHS")
          (= taz_s_type "76x38x4.5"))
@@ -161,9 +153,9 @@
     (setq taz_s_t 4.5)
     (setq taz_s_r1 9.0)
     (setq taz_s_r2 4.5)
+    (setq taz_s_section_area 8.93)
   )
 )
-
 ;; RHS 80x40x2.5
 (if (and (= taz_s_family "RHS")
          (= taz_s_type "80x40x2.5"))
@@ -173,9 +165,9 @@
     (setq taz_s_t 2.5)
     (setq taz_s_r1 5.0)
     (setq taz_s_r2 2.5)
+    (setq taz_s_section_area 5.59)
   )
 )
-
 ;; RHS 80x40x3
 (if (and (= taz_s_family "RHS")
          (= taz_s_type "80x40x3"))
@@ -185,9 +177,9 @@
     (setq taz_s_t 3.0)
     (setq taz_s_r1 6.0)
     (setq taz_s_r2 3.0)
+    (setq taz_s_section_area 6.61)
   )
 )
-
 ;; RHS 80x40x3.5
 (if (and (= taz_s_family "RHS")
          (= taz_s_type "80x40x3.5"))
@@ -197,9 +189,9 @@
     (setq taz_s_t 3.5)
     (setq taz_s_r1 7.0)
     (setq taz_s_r2 3.5)
+    (setq taz_s_section_area 7.59)
   )
 )
-
 ;; RHS 80x40x4
 (if (and (= taz_s_family "RHS")
          (= taz_s_type "80x40x4"))
@@ -209,9 +201,9 @@
     (setq taz_s_t 4.0)
     (setq taz_s_r1 8.0)
     (setq taz_s_r2 4.0)
+    (setq taz_s_section_area 8.55)
   )
 )
-
 ;; RHS 80x40x4.5
 (if (and (= taz_s_family "RHS")
          (= taz_s_type "80x40x4.5"))
@@ -221,9 +213,9 @@
     (setq taz_s_t 4.5)
     (setq taz_s_r1 9.0)
     (setq taz_s_r2 4.5)
+    (setq taz_s_section_area 9.47)
   )
 )
-
 ;; RHS 100x50x2.5
 (if (and (= taz_s_family "RHS")
          (= taz_s_type "100x50x2.5"))
@@ -233,9 +225,9 @@
     (setq taz_s_t 2.5)
     (setq taz_s_r1 5.0)
     (setq taz_s_r2 2.5)
+    (setq taz_s_section_area 7.09)
   )
 )
-
 ;; RHS 100x50x3
 (if (and (= taz_s_family "RHS")
          (= taz_s_type "100x50x3"))
@@ -245,9 +237,9 @@
     (setq taz_s_t 3.0)
     (setq taz_s_r1 6.0)
     (setq taz_s_r2 3.0)
+    (setq taz_s_section_area 8.41)
   )
 )
-
 ;; RHS 100x50x3.5
 (if (and (= taz_s_family "RHS")
          (= taz_s_type "100x50x3.5"))
@@ -257,9 +249,9 @@
     (setq taz_s_t 3.5)
     (setq taz_s_r1 7.0)
     (setq taz_s_r2 3.5)
+    (setq taz_s_section_area 9.69)
   )
 )
-
 ;; RHS 100x50x4
 (if (and (= taz_s_family "RHS")
          (= taz_s_type "100x50x4"))
@@ -269,9 +261,9 @@
     (setq taz_s_t 4.0)
     (setq taz_s_r1 8.0)
     (setq taz_s_r2 4.0)
+    (setq taz_s_section_area 10.90)
   )
 )
-
 ;; RHS 100x50x4.5
 (if (and (= taz_s_family "RHS")
          (= taz_s_type "100x50x4.5"))
@@ -281,9 +273,9 @@
     (setq taz_s_t 4.5)
     (setq taz_s_r1 9.0)
     (setq taz_s_r2 4.5)
+    (setq taz_s_section_area 12.20)
   )
 )
-
 ;; RHS 100x50x5
 (if (and (= taz_s_family "RHS")
          (= taz_s_type "100x50x5"))
@@ -293,9 +285,9 @@
     (setq taz_s_t 5.0)
     (setq taz_s_r1 10.0)
     (setq taz_s_r2 5.0)
+    (setq taz_s_section_area 13.40)
   )
 )
-
 ;; RHS 100x50x6
 (if (and (= taz_s_family "RHS")
          (= taz_s_type "100x50x6"))
@@ -305,13 +297,9 @@
     (setq taz_s_t 6.0)
     (setq taz_s_r1 12.0)
     (setq taz_s_r2 6.0)
+    (setq taz_s_section_area 15.60)
   )
 )
-
-;; ============================================
-;; RURY PROSTOKĄTNE RHS – CZĘŚĆ 3
-;; ============================================
-
 ;; RHS 120x60x3
 (if (and (= taz_s_family "RHS")
          (= taz_s_type "120x60x3"))
@@ -321,9 +309,9 @@
     (setq taz_s_t 3.0)
     (setq taz_s_r1 6.0)
     (setq taz_s_r2 3.0)
+    (setq taz_s_section_area 10.20)
   )
 )
-
 ;; RHS 120x60x3.5
 (if (and (= taz_s_family "RHS")
          (= taz_s_type "120x60x3.5"))
@@ -333,9 +321,9 @@
     (setq taz_s_t 3.5)
     (setq taz_s_r1 7.0)
     (setq taz_s_r2 3.5)
+    (setq taz_s_section_area 11.80)
   )
 )
-
 ;; RHS 120x60x4
 (if (and (= taz_s_family "RHS")
          (= taz_s_type "120x60x4"))
@@ -345,9 +333,9 @@
     (setq taz_s_t 4.0)
     (setq taz_s_r1 8.0)
     (setq taz_s_r2 4.0)
+    (setq taz_s_section_area 13.30)
   )
 )
-
 ;; RHS 120x60x4.5
 (if (and (= taz_s_family "RHS")
          (= taz_s_type "120x60x4.5"))
@@ -357,9 +345,9 @@
     (setq taz_s_t 4.5)
     (setq taz_s_r1 9.0)
     (setq taz_s_r2 4.5)
+    (setq taz_s_section_area 14.90)
   )
 )
-
 ;; RHS 120x60x5
 (if (and (= taz_s_family "RHS")
          (= taz_s_type "120x60x5"))
@@ -369,9 +357,9 @@
     (setq taz_s_t 5.0)
     (setq taz_s_r1 10.0)
     (setq taz_s_r2 5.0)
+    (setq taz_s_section_area 16.40)
   )
 )
-
 ;; RHS 120x60x6
 (if (and (= taz_s_family "RHS")
          (= taz_s_type "120x60x6"))
@@ -381,9 +369,9 @@
     (setq taz_s_t 6.0)
     (setq taz_s_r1 12.0)
     (setq taz_s_r2 6.0)
+    (setq taz_s_section_area 19.20)
   )
 )
-
 ;; RHS 150x100x3
 (if (and (= taz_s_family "RHS")
          (= taz_s_type "150x100x3"))
@@ -393,9 +381,9 @@
     (setq taz_s_t 3.0)
     (setq taz_s_r1 6.0)
     (setq taz_s_r2 3.0)
+    (setq taz_s_section_area 14.40)
   )
 )
-
 ;; RHS 150x100x3.5
 (if (and (= taz_s_family "RHS")
          (= taz_s_type "150x100x3.5"))
@@ -405,9 +393,9 @@
     (setq taz_s_t 3.5)
     (setq taz_s_r1 7.0)
     (setq taz_s_r2 3.5)
+    (setq taz_s_section_area 16.70)
   )
 )
-
 ;; RHS 150x100x4
 (if (and (= taz_s_family "RHS")
          (= taz_s_type "150x100x4"))
@@ -417,9 +405,9 @@
     (setq taz_s_t 4.0)
     (setq taz_s_r1 8.0)
     (setq taz_s_r2 4.0)
+    (setq taz_s_section_area 18.90)
   )
 )
-
 ;; RHS 150x100x4.5
 (if (and (= taz_s_family "RHS")
          (= taz_s_type "150x100x4.5"))
@@ -429,9 +417,9 @@
     (setq taz_s_t 4.5)
     (setq taz_s_r1 9.0)
     (setq taz_s_r2 4.5)
+    (setq taz_s_section_area 21.20)
   )
 )
-
 ;; RHS 150x100x5
 (if (and (= taz_s_family "RHS")
          (= taz_s_type "150x100x5"))
@@ -441,9 +429,9 @@
     (setq taz_s_t 5.0)
     (setq taz_s_r1 10.0)
     (setq taz_s_r2 5.0)
+    (setq taz_s_section_area 23.40)
   )
 )
-
 ;; RHS 150x100x6
 (if (and (= taz_s_family "RHS")
          (= taz_s_type "150x100x6"))
@@ -453,9 +441,9 @@
     (setq taz_s_t 6.0)
     (setq taz_s_r1 12.0)
     (setq taz_s_r2 6.0)
+    (setq taz_s_section_area 27.60)
   )
 )
-
 ;; RHS 160x80x3
 (if (and (= taz_s_family "RHS")
          (= taz_s_type "160x80x3"))
@@ -465,9 +453,9 @@
     (setq taz_s_t 3.0)
     (setq taz_s_r1 6.0)
     (setq taz_s_r2 3.0)
+    (setq taz_s_section_area 13.80)
   )
 )
-
 ;; RHS 160x80x3.5
 (if (and (= taz_s_family "RHS")
          (= taz_s_type "160x80x3.5"))
@@ -477,9 +465,9 @@
     (setq taz_s_t 3.5)
     (setq taz_s_r1 7.0)
     (setq taz_s_r2 3.5)
+    (setq taz_s_section_area 16.00)
   )
 )
-
 ;; RHS 160x80x4
 (if (and (= taz_s_family "RHS")
          (= taz_s_type "160x80x4"))
@@ -489,9 +477,9 @@
     (setq taz_s_t 4.0)
     (setq taz_s_r1 8.0)
     (setq taz_s_r2 4.0)
+    (setq taz_s_section_area 18.10)
   )
 )
-
 ;; RHS 160x80x4.5
 (if (and (= taz_s_family "RHS")
          (= taz_s_type "160x80x4.5"))
@@ -501,9 +489,9 @@
     (setq taz_s_t 4.5)
     (setq taz_s_r1 9.0)
     (setq taz_s_r2 4.5)
+    (setq taz_s_section_area 20.30)
   )
 )
-
 ;; RHS 160x80x5
 (if (and (= taz_s_family "RHS")
          (= taz_s_type "160x80x5"))
@@ -513,9 +501,9 @@
     (setq taz_s_t 5.0)
     (setq taz_s_r1 10.0)
     (setq taz_s_r2 5.0)
+    (setq taz_s_section_area 22.40)
   )
 )
-
 ;; RHS 160x80x6
 (if (and (= taz_s_family "RHS")
          (= taz_s_type "160x80x6"))
@@ -525,13 +513,9 @@
     (setq taz_s_t 6.0)
     (setq taz_s_r1 12.0)
     (setq taz_s_r2 6.0)
+    (setq taz_s_section_area 26.40)
   )
 )
-
-;; ============================================
-;; RURY PROSTOKĄTNE RHS – CZĘŚĆ 4
-;; ============================================
-
 ;; RHS 200x100x4
 (if (and (= taz_s_family "RHS")
          (= taz_s_type "200x100x4"))
@@ -541,9 +525,9 @@
     (setq taz_s_t 4.0)
     (setq taz_s_r1 8.0)
     (setq taz_s_r2 4.0)
+    (setq taz_s_section_area 22.90)
   )
 )
-
 ;; RHS 200x100x4.5
 (if (and (= taz_s_family "RHS")
          (= taz_s_type "200x100x4.5"))
@@ -553,9 +537,9 @@
     (setq taz_s_t 4.5)
     (setq taz_s_r1 9.0)
     (setq taz_s_r2 4.5)
+    (setq taz_s_section_area 25.70)
   )
 )
-
 ;; RHS 200x100x6
 (if (and (= taz_s_family "RHS")
          (= taz_s_type "200x100x6"))
@@ -565,9 +549,9 @@
     (setq taz_s_t 6.0)
     (setq taz_s_r1 12.0)
     (setq taz_s_r2 6.0)
+    (setq taz_s_section_area 33.60)
   )
 )
-
 ;; RHS 200x100x8
 (if (and (= taz_s_family "RHS")
          (= taz_s_type "200x100x8"))
@@ -577,9 +561,9 @@
     (setq taz_s_t 8.0)
     (setq taz_s_r1 20.0)
     (setq taz_s_r2 12.0)
+    (setq taz_s_section_area 43.20)
   )
 )
-
 ;; RHS 200x100x10
 (if (and (= taz_s_family "RHS")
          (= taz_s_type "200x100x10"))
@@ -589,9 +573,9 @@
     (setq taz_s_t 10.0)
     (setq taz_s_r1 25.0)
     (setq taz_s_r2 15.0)
+    (setq taz_s_section_area 52.60)
   )
 )
-
 ;; RHS 200x150x4
 (if (and (= taz_s_family "RHS")
          (= taz_s_type "200x150x4"))
@@ -601,9 +585,9 @@
     (setq taz_s_t 4.0)
     (setq taz_s_r1 8.0)
     (setq taz_s_r2 4.0)
+    (setq taz_s_section_area 26.90)
   )
 )
-
 ;; RHS 200x150x4.5
 (if (and (= taz_s_family "RHS")
          (= taz_s_type "200x150x4.5"))
@@ -613,9 +597,9 @@
     (setq taz_s_t 4.5)
     (setq taz_s_r1 9.0)
     (setq taz_s_r2 4.5)
+    (setq taz_s_section_area 30.20)
   )
 )
-
 ;; RHS 200x150x6
 (if (and (= taz_s_family "RHS")
          (= taz_s_type "200x150x6"))
@@ -625,9 +609,9 @@
     (setq taz_s_t 6.0)
     (setq taz_s_r1 12.0)
     (setq taz_s_r2 6.0)
+    (setq taz_s_section_area 39.60)
   )
 )
-
 ;; RHS 200x150x8
 (if (and (= taz_s_family "RHS")
          (= taz_s_type "200x150x8"))
@@ -637,9 +621,9 @@
     (setq taz_s_t 8.0)
     (setq taz_s_r1 20.0)
     (setq taz_s_r2 12.0)
+    (setq taz_s_section_area 51.20)
   )
 )
-
 ;; RHS 200x150x10
 (if (and (= taz_s_family "RHS")
          (= taz_s_type "200x150x10"))
@@ -649,9 +633,9 @@
     (setq taz_s_t 10.0)
     (setq taz_s_r1 25.0)
     (setq taz_s_r2 15.0)
+    (setq taz_s_section_area 62.60)
   )
 )
-
 ;; RHS 250x100x4
 (if (and (= taz_s_family "RHS")
          (= taz_s_type "250x100x4"))
@@ -661,9 +645,9 @@
     (setq taz_s_t 4.0)
     (setq taz_s_r1 8.0)
     (setq taz_s_r2 4.0)
+    (setq taz_s_section_area 26.90)
   )
 )
-
 ;; RHS 250x100x4.5
 (if (and (= taz_s_family "RHS")
          (= taz_s_type "250x100x4.5"))
@@ -673,9 +657,9 @@
     (setq taz_s_t 4.5)
     (setq taz_s_r1 9.0)
     (setq taz_s_r2 4.5)
+    (setq taz_s_section_area 30.20)
   )
 )
-
 ;; RHS 250x100x6
 (if (and (= taz_s_family "RHS")
          (= taz_s_type "250x100x6"))
@@ -685,9 +669,9 @@
     (setq taz_s_t 6.0)
     (setq taz_s_r1 12.0)
     (setq taz_s_r2 6.0)
+    (setq taz_s_section_area 39.60)
   )
 )
-
 ;; RHS 250x100x8
 (if (and (= taz_s_family "RHS")
          (= taz_s_type "250x100x8"))
@@ -697,9 +681,9 @@
     (setq taz_s_t 8.0)
     (setq taz_s_r1 20.0)
     (setq taz_s_r2 12.0)
+    (setq taz_s_section_area 51.20)
   )
 )
-
 ;; RHS 250x100x10
 (if (and (= taz_s_family "RHS")
          (= taz_s_type "250x100x10"))
@@ -709,9 +693,9 @@
     (setq taz_s_t 10.0)
     (setq taz_s_r1 25.0)
     (setq taz_s_r2 15.0)
+    (setq taz_s_section_area 62.60)
   )
 )
-
 ;; RHS 250x150x6
 (if (and (= taz_s_family "RHS")
          (= taz_s_type "250x150x6"))
@@ -721,9 +705,9 @@
     (setq taz_s_t 6.0)
     (setq taz_s_r1 12.0)
     (setq taz_s_r2 6.0)
+    (setq taz_s_section_area 45.60)
   )
 )
-
 ;; RHS 250x150x8
 (if (and (= taz_s_family "RHS")
          (= taz_s_type "250x150x8"))
@@ -733,9 +717,9 @@
     (setq taz_s_t 8.0)
     (setq taz_s_r1 20.0)
     (setq taz_s_r2 12.0)
+    (setq taz_s_section_area 59.20)
   )
 )
-
 ;; RHS 250x150x10
 (if (and (= taz_s_family "RHS")
          (= taz_s_type "250x150x10"))
@@ -745,9 +729,9 @@
     (setq taz_s_t 10.0)
     (setq taz_s_r1 25.0)
     (setq taz_s_r2 15.0)
+    (setq taz_s_section_area 72.60)
   )
 )
-
 ;; RHS 300x140x6
 (if (and (= taz_s_family "RHS")
          (= taz_s_type "300x140x6"))
@@ -757,9 +741,9 @@
     (setq taz_s_t 6.0)
     (setq taz_s_r1 12.0)
     (setq taz_s_r2 6.0)
+    (setq taz_s_section_area 50.40)
   )
 )
-
 ;; RHS 300x140x8
 (if (and (= taz_s_family "RHS")
          (= taz_s_type "300x140x8"))
@@ -769,9 +753,9 @@
     (setq taz_s_t 8.0)
     (setq taz_s_r1 20.0)
     (setq taz_s_r2 12.0)
+    (setq taz_s_section_area 65.60)
   )
 )
-
 ;; RHS 300x140x10
 (if (and (= taz_s_family "RHS")
          (= taz_s_type "300x140x10"))
@@ -781,9 +765,9 @@
     (setq taz_s_t 10.0)
     (setq taz_s_r1 25.0)
     (setq taz_s_r2 15.0)
+    (setq taz_s_section_area 80.60)
   )
 )
-
 ;; RHS 320x200x6
 (if (and (= taz_s_family "RHS")
          (= taz_s_type "320x200x6"))
@@ -793,9 +777,9 @@
     (setq taz_s_t 6.0)
     (setq taz_s_r1 12.0)
     (setq taz_s_r2 6.0)
+    (setq taz_s_section_area 60.00)
   )
 )
-
 ;; RHS 320x200x8
 (if (and (= taz_s_family "RHS")
          (= taz_s_type "320x200x8"))
@@ -805,9 +789,9 @@
     (setq taz_s_t 8.0)
     (setq taz_s_r1 20.0)
     (setq taz_s_r2 12.0)
+    (setq taz_s_section_area 78.40)
   )
 )
-
 ;; RHS 320x200x10
 (if (and (= taz_s_family "RHS")
          (= taz_s_type "320x200x10"))
@@ -817,9 +801,9 @@
     (setq taz_s_t 10.0)
     (setq taz_s_r1 25.0)
     (setq taz_s_r2 15.0)
+    (setq taz_s_section_area 96.60)
   )
 )
-
 ;; RHS 340x180x6
 (if (and (= taz_s_family "RHS")
          (= taz_s_type "340x180x6"))
@@ -829,9 +813,9 @@
     (setq taz_s_t 6.0)
     (setq taz_s_r1 12.0)
     (setq taz_s_r2 6.0)
+    (setq taz_s_section_area 60.00)
   )
 )
-
 ;; RHS 340x180x8
 (if (and (= taz_s_family "RHS")
          (= taz_s_type "340x180x8"))
@@ -841,9 +825,9 @@
     (setq taz_s_t 8.0)
     (setq taz_s_r1 20.0)
     (setq taz_s_r2 12.0)
+    (setq taz_s_section_area 78.40)
   )
 )
-
 ;; RHS 340x180x10
 (if (and (= taz_s_family "RHS")
          (= taz_s_type "340x180x10"))
@@ -853,6 +837,7 @@
     (setq taz_s_t 10.0)
     (setq taz_s_r1 25.0)
     (setq taz_s_r2 15.0)
+    (setq taz_s_section_area 96.60)
   )
-)
+)  
 )
