@@ -1,12 +1,6 @@
 (defun taz_s_section_cbeam_draw_parametres_upe ()
 
-
-  ;; ============================================================
-  ;;   UPE – KAŻDY TYP OSOBNY IF (IDENTYCZNIE JAK HEA)
-  ;; ============================================================
-
-
-  ;; UPE 80
+;; UPE 80
   (if (and (= taz_s_family "UPE")
            (= taz_s_type "80"))
     (progn
@@ -16,10 +10,10 @@
       (setq taz_s_tf 7.0)
       (setq taz_s_r1 10.0)
       (setq taz_s_ey 18.2)
+      (setq taz_s_section_area 10.10)
     )
   )
-
-  ;; UPE 100
+;; UPE 100
   (if (and (= taz_s_family "UPE")
            (= taz_s_type "100"))
     (progn
@@ -29,10 +23,10 @@
       (setq taz_s_tf 7.5)
       (setq taz_s_r1 10.0)
       (setq taz_s_ey 19.1)
+      (setq taz_s_section_area 12.50)
     )
   )
-
-  ;; UPE 120
+;; UPE 120
   (if (and (= taz_s_family "UPE")
            (= taz_s_type "120"))
     (progn
@@ -42,10 +36,10 @@
       (setq taz_s_tf 8.0)
       (setq taz_s_r1 12.0)
       (setq taz_s_ey 19.8)
+      (setq taz_s_section_area 15.40)
     )
   )
-
-  ;; UPE 140
+;; UPE 140
   (if (and (= taz_s_family "UPE")
            (= taz_s_type "140"))
     (progn
@@ -55,10 +49,10 @@
       (setq taz_s_tf 9.0)
       (setq taz_s_r1 12.0)
       (setq taz_s_ey 21.7)
+      (setq taz_s_section_area 18.40)
     )
   )
-
-  ;; UPE 160
+;; UPE 160
   (if (and (= taz_s_family "UPE")
            (= taz_s_type "160"))
     (progn
@@ -68,10 +62,10 @@
       (setq taz_s_tf 9.5)
       (setq taz_s_r1 12.0)
       (setq taz_s_ey 22.7)
+      (setq taz_s_section_area 21.70)
     )
   )
-
-  ;; UPE 180
+;; UPE 180
   (if (and (= taz_s_family "UPE")
            (= taz_s_type "180"))
     (progn
@@ -81,10 +75,10 @@
       (setq taz_s_tf 10.5)
       (setq taz_s_r1 12.0)
       (setq taz_s_ey 24.7)
+      (setq taz_s_section_area 25.10)
     )
   )
-
-  ;; UPE 200
+;; UPE 200
   (if (and (= taz_s_family "UPE")
            (= taz_s_type "200"))
     (progn
@@ -94,10 +88,10 @@
       (setq taz_s_tf 11.0)
       (setq taz_s_r1 13.0)
       (setq taz_s_ey 25.6)
+      (setq taz_s_section_area 29.00)
     )
   )
-
-  ;; UPE 220
+;; UPE 220
   (if (and (= taz_s_family "UPE")
            (= taz_s_type "220"))
     (progn
@@ -107,10 +101,10 @@
       (setq taz_s_tf 12.0)
       (setq taz_s_r1 13.0)
       (setq taz_s_ey 27.0)
+      (setq taz_s_section_area 33.90)
     )
   )
-
-  ;; UPE 240
+;; UPE 240
   (if (and (= taz_s_family "UPE")
            (= taz_s_type "240"))
     (progn
@@ -120,10 +114,10 @@
       (setq taz_s_tf 12.5)
       (setq taz_s_r1 15.0)
       (setq taz_s_ey 27.9)
+      (setq taz_s_section_area 38.50)
     )
   )
-
-  ;; UPE 270
+;; UPE 270
   (if (and (= taz_s_family "UPE")
            (= taz_s_type "270"))
     (progn
@@ -133,10 +127,10 @@
       (setq taz_s_tf 13.5)
       (setq taz_s_r1 15.0)
       (setq taz_s_ey 28.9)
+      (setq taz_s_section_area 44.80)
     )
   )
-
-  ;; UPE 300
+;; UPE 300
   (if (and (= taz_s_family "UPE")
            (= taz_s_type "300"))
     (progn
@@ -146,10 +140,10 @@
       (setq taz_s_tf 15.0)
       (setq taz_s_r1 15.0)
       (setq taz_s_ey 28.9)
+      (setq taz_s_section_area 56.60)
     )
   )
-
-  ;; UPE 330
+;; UPE 330
   (if (and (= taz_s_family "UPE")
            (= taz_s_type "330"))
     (progn
@@ -159,10 +153,10 @@
       (setq taz_s_tf 16.0)
       (setq taz_s_r1 18.0)
       (setq taz_s_ey 29.0)
+      (setq taz_s_section_area 67.80)
     )
   )
-
-  ;; UPE 360
+;; UPE 360
   (if (and (= taz_s_family "UPE")
            (= taz_s_type "360"))
     (progn
@@ -172,10 +166,10 @@
       (setq taz_s_tf 17.0)
       (setq taz_s_r1 18.0)
       (setq taz_s_ey 29.7)
+      (setq taz_s_section_area 77.90)
     )
   )
-
-  ;; UPE 400
+;; UPE 400
   (if (and (= taz_s_family "UPE")
            (= taz_s_type "400"))
     (progn
@@ -185,7 +179,7 @@
       (setq taz_s_tf 18.0)
       (setq taz_s_r1 18.0)
       (setq taz_s_ey 29.8)
+      (setq taz_s_section_area 91.90)
     )
-  )
-
+  )  
 )

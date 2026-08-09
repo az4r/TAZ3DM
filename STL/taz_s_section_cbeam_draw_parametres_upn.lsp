@@ -1,7 +1,8 @@
 (defun taz_s_section_cbeam_draw_parametres_upn ( / )
 
   ;; UPN 50
-  (if (and (= taz_s_family "UPN") (= taz_s_type "50"))
+  (if (and (= taz_s_family "UPN")
+           (= taz_s_type "50"))
     (progn
       (setq taz_s_h  50.0)
       (setq taz_s_b  38.0)
@@ -11,11 +12,12 @@
       (setq taz_s_r2 3.5)
       (setq taz_s_sf 8.0)
       (setq taz_s_ey 13.7)
+      (setq taz_s_section_area 7.10)
     )
   )
-
-  ;; UPN 65
-  (if (and (= taz_s_family "UPN") (= taz_s_type "65"))
+;; UPN 65
+  (if (and (= taz_s_family "UPN")
+           (= taz_s_type "65"))
     (progn
       (setq taz_s_h  65.0)
       (setq taz_s_b  42.0)
@@ -25,11 +27,12 @@
       (setq taz_s_r2 4.0)
       (setq taz_s_sf 8.0)
       (setq taz_s_ey 14.2)
+      (setq taz_s_section_area 9.00)
     )
   )
-
-  ;; UPN 80
-  (if (and (= taz_s_family "UPN") (= taz_s_type "80"))
+;; UPN 80
+  (if (and (= taz_s_family "UPN")
+           (= taz_s_type "80"))
     (progn
       (setq taz_s_h  80.0)
       (setq taz_s_b  45.0)
@@ -39,11 +42,12 @@
       (setq taz_s_r2 4.0)
       (setq taz_s_sf 8.0)
       (setq taz_s_ey 14.5)
+      (setq taz_s_section_area 11.00)
     )
   )
-
-  ;; UPN 100
-  (if (and (= taz_s_family "UPN") (= taz_s_type "100"))
+;; UPN 100
+  (if (and (= taz_s_family "UPN")
+           (= taz_s_type "100"))
     (progn
       (setq taz_s_h  100.0)
       (setq taz_s_b  50.0)
@@ -53,11 +57,12 @@
       (setq taz_s_r2 4.5)
       (setq taz_s_sf 8.0)
       (setq taz_s_ey 15.5)
+      (setq taz_s_section_area 13.50)
     )
   )
-
-  ;; UPN 120
-  (if (and (= taz_s_family "UPN") (= taz_s_type "120"))
+;; UPN 120
+  (if (and (= taz_s_family "UPN")
+           (= taz_s_type "120"))
     (progn
       (setq taz_s_h  120.0)
       (setq taz_s_b  55.0)
@@ -67,11 +72,12 @@
       (setq taz_s_r2 4.5)
       (setq taz_s_sf 8.0)
       (setq taz_s_ey 16.1)
+      (setq taz_s_section_area 17.00)
     )
   )
-
-  ;; UPN 140
-  (if (and (= taz_s_family "UPN") (= taz_s_type "140"))
+;; UPN 140
+  (if (and (= taz_s_family "UPN")
+           (= taz_s_type "140"))
     (progn
       (setq taz_s_h  140.0)
       (setq taz_s_b  60.0)
@@ -81,11 +87,12 @@
       (setq taz_s_r2 5.0)
       (setq taz_s_sf 8.0)
       (setq taz_s_ey 17.6)
+      (setq taz_s_section_area 20.40)
     )
   )
-
-  ;; UPN 160
-  (if (and (= taz_s_family "UPN") (= taz_s_type "160"))
+;; UPN 160
+  (if (and (= taz_s_family "UPN")
+           (= taz_s_type "160"))
     (progn
       (setq taz_s_h  160.0)
       (setq taz_s_b  65.0)
@@ -95,11 +102,12 @@
       (setq taz_s_r2 5.5)
       (setq taz_s_sf 8.0)
       (setq taz_s_ey 18.4)
+      (setq taz_s_section_area 24.00)
     )
   )
-
-  ;; UPN 180
-  (if (and (= taz_s_family "UPN") (= taz_s_type "180"))
+;; UPN 180
+  (if (and (= taz_s_family "UPN")
+           (= taz_s_type "180"))
     (progn
       (setq taz_s_h  180.0)
       (setq taz_s_b  70.0)
@@ -109,11 +117,12 @@
       (setq taz_s_r2 5.5)
       (setq taz_s_sf 8.0)
       (setq taz_s_ey 19.3)
+      (setq taz_s_section_area 28.00)
     )
   )
-
-  ;; UPN 200
-  (if (and (= taz_s_family "UPN") (= taz_s_type "200"))
+;; UPN 200
+  (if (and (= taz_s_family "UPN")
+           (= taz_s_type "200"))
     (progn
       (setq taz_s_h  200.0)
       (setq taz_s_b  75.0)
@@ -123,11 +132,12 @@
       (setq taz_s_r2 6.0)
       (setq taz_s_sf 8.0)
       (setq taz_s_ey 20.1)
+      (setq taz_s_section_area 32.20)
     )
   )
-
-  ;; UPN 220
-  (if (and (= taz_s_family "UPN") (= taz_s_type "220"))
+;; UPN 220
+  (if (and (= taz_s_family "UPN")
+           (= taz_s_type "220"))
     (progn
       (setq taz_s_h  220.0)
       (setq taz_s_b  80.0)
@@ -137,11 +147,12 @@
       (setq taz_s_r2 6.5)
       (setq taz_s_sf 8.0)
       (setq taz_s_ey 21.4)
+      (setq taz_s_section_area 37.40)
     )
   )
-
-  ;; UPN 240
-  (if (and (= taz_s_family "UPN") (= taz_s_type "240"))
+;; UPN 240
+  (if (and (= taz_s_family "UPN")
+           (= taz_s_type "240"))
     (progn
       (setq taz_s_h  240.0)
       (setq taz_s_b  85.0)
@@ -151,11 +162,12 @@
       (setq taz_s_r2 6.5)
       (setq taz_s_sf 8.0)
       (setq taz_s_ey 22.4)
+      (setq taz_s_section_area 42.30)
     )
   )
-
-  ;; UPN 260
-  (if (and (= taz_s_family "UPN") (= taz_s_type "260"))
+;; UPN 260
+  (if (and (= taz_s_family "UPN")
+           (= taz_s_type "260"))
     (progn
       (setq taz_s_h  260.0)
       (setq taz_s_b  90.0)
@@ -165,11 +177,12 @@
       (setq taz_s_r2 7.0)
       (setq taz_s_sf 8.0)
       (setq taz_s_ey 23.7)
+      (setq taz_s_section_area 48.30)
     )
   )
-
-  ;; UPN 280
-  (if (and (= taz_s_family "UPN") (= taz_s_type "280"))
+;; UPN 280
+  (if (and (= taz_s_family "UPN")
+           (= taz_s_type "280"))
     (progn
       (setq taz_s_h  280.0)
       (setq taz_s_b  95.0)
@@ -179,11 +192,12 @@
       (setq taz_s_r2 7.5)
       (setq taz_s_sf 8.0)
       (setq taz_s_ey 25.3)
+      (setq taz_s_section_area 53.30)
     )
   )
-
-  ;; UPN 300
-  (if (and (= taz_s_family "UPN") (= taz_s_type "300"))
+;; UPN 300
+  (if (and (= taz_s_family "UPN")
+           (= taz_s_type "300"))
     (progn
       (setq taz_s_h  300.0)
       (setq taz_s_b  100.0)
@@ -193,11 +207,12 @@
       (setq taz_s_r2 8.0)
       (setq taz_s_sf 8.0)
       (setq taz_s_ey 27.0)
+      (setq taz_s_section_area 58.80)
     )
   )
-
-  ;; UPN 320
-  (if (and (= taz_s_family "UPN") (= taz_s_type "320"))
+;; UPN 320
+  (if (and (= taz_s_family "UPN")
+           (= taz_s_type "320"))
     (progn
       (setq taz_s_h  320.0)
       (setq taz_s_b  100.0)
@@ -207,11 +222,12 @@
       (setq taz_s_r2 8.8)
       (setq taz_s_sf 5.0)
       (setq taz_s_ey 26.0)
+      (setq taz_s_section_area 75.80)
     )
   )
-
-  ;; UPN 350
-  (if (and (= taz_s_family "UPN") (= taz_s_type "350"))
+;; UPN 350
+  (if (and (= taz_s_family "UPN")
+           (= taz_s_type "350"))
     (progn
       (setq taz_s_h  350.0)
       (setq taz_s_b  100.0)
@@ -221,11 +237,12 @@
       (setq taz_s_r2 8.0)
       (setq taz_s_sf 5.0)
       (setq taz_s_ey 24.0)
+      (setq taz_s_section_area 77.30)
     )
   )
-
-  ;; UPN 380
-  (if (and (= taz_s_family "UPN") (= taz_s_type "380"))
+;; UPN 380
+  (if (and (= taz_s_family "UPN")
+           (= taz_s_type "380"))
     (progn
       (setq taz_s_h  380.0)
       (setq taz_s_b  102.0)
@@ -235,11 +252,12 @@
       (setq taz_s_r2 8.0)
       (setq taz_s_sf 5.0)
       (setq taz_s_ey 23.8)
+      (setq taz_s_section_area 80.40)
     )
   )
-
-  ;; UPN 400
-  (if (and (= taz_s_family "UPN") (= taz_s_type "400"))
+;; UPN 400
+  (if (and (= taz_s_family "UPN")
+           (= taz_s_type "400"))
     (progn
       (setq taz_s_h  400.0)
       (setq taz_s_b  110.0)
@@ -249,6 +267,7 @@
       (setq taz_s_r2 9.0)
       (setq taz_s_sf 5.0)
       (setq taz_s_ey 26.8)
+      (setq taz_s_section_area 91.50)
     )
-  )
+  )  
 )
