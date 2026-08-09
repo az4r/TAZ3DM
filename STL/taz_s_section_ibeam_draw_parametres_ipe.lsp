@@ -1,11 +1,6 @@
 (defun taz_s_section_ibeam_draw_parametres_ipe ()
 
-
-  ;; ============================================================
-  ;;   IPE – KAŻDY TYP OSOBNY IF
-  ;; ============================================================
-
-  ;; IPE80
+;; IPE80
   (if (and (= taz_s_family "IPE")
            (= taz_s_type "80"))
     (progn
@@ -14,10 +9,10 @@
       (setq taz_s_tw 3.8)
       (setq taz_s_tf 5.2)
       (setq taz_s_r1 5.0)
+      (setq taz_s_section_area 7.64)
     )
   )
-
-  ;; IPE100
+;; IPE100
   (if (and (= taz_s_family "IPE")
            (= taz_s_type "100"))
     (progn
@@ -26,10 +21,10 @@
       (setq taz_s_tw 4.1)
       (setq taz_s_tf 5.7)
       (setq taz_s_r1 7.0)
+      (setq taz_s_section_area 10.32)
     )
   )
-
-  ;; IPE120
+;; IPE120
   (if (and (= taz_s_family "IPE")
            (= taz_s_type "120"))
     (progn
@@ -38,10 +33,10 @@
       (setq taz_s_tw 4.4)
       (setq taz_s_tf 6.3)
       (setq taz_s_r1 7.0)
+      (setq taz_s_section_area 13.21)
     )
   )
-
-  ;; IPE140
+;; IPE140
   (if (and (= taz_s_family "IPE")
            (= taz_s_type "140"))
     (progn
@@ -50,10 +45,10 @@
       (setq taz_s_tw 4.7)
       (setq taz_s_tf 6.9)
       (setq taz_s_r1 7.0)
+      (setq taz_s_section_area 16.43)
     )
   )
-
-  ;; IPE160
+;; IPE160
   (if (and (= taz_s_family "IPE")
            (= taz_s_type "160"))
     (progn
@@ -62,10 +57,10 @@
       (setq taz_s_tw 5.0)
       (setq taz_s_tf 7.4)
       (setq taz_s_r1 9.0)
+      (setq taz_s_section_area 20.09)
     )
   )
-
-  ;; IPE180
+;; IPE180
   (if (and (= taz_s_family "IPE")
            (= taz_s_type "180"))
     (progn
@@ -74,10 +69,10 @@
       (setq taz_s_tw 5.3)
       (setq taz_s_tf 8.0)
       (setq taz_s_r1 9.0)
+      (setq taz_s_section_area 23.95)
     )
   )
-
-  ;; IPE200
+;; IPE200
   (if (and (= taz_s_family "IPE")
            (= taz_s_type "200"))
     (progn
@@ -86,10 +81,10 @@
       (setq taz_s_tw 5.6)
       (setq taz_s_tf 8.5)
       (setq taz_s_r1 12.0)
+      (setq taz_s_section_area 28.48)
     )
   )
-
-  ;; IPE220
+;; IPE220
   (if (and (= taz_s_family "IPE")
            (= taz_s_type "220"))
     (progn
@@ -98,10 +93,10 @@
       (setq taz_s_tw 5.9)
       (setq taz_s_tf 9.2)
       (setq taz_s_r1 12.0)
+      (setq taz_s_section_area 33.37)
     )
   )
-
-  ;; IPE240
+;; IPE240
   (if (and (= taz_s_family "IPE")
            (= taz_s_type "240"))
     (progn
@@ -110,10 +105,10 @@
       (setq taz_s_tw 6.2)
       (setq taz_s_tf 9.8)
       (setq taz_s_r1 15.0)
+      (setq taz_s_section_area 39.12)
     )
   )
-
-  ;; IPE270
+;; IPE270
   (if (and (= taz_s_family "IPE")
            (= taz_s_type "270"))
     (progn
@@ -122,10 +117,10 @@
       (setq taz_s_tw 6.6)
       (setq taz_s_tf 10.2)
       (setq taz_s_r1 15.0)
+      (setq taz_s_section_area 45.95)
     )
   )
-
-  ;; IPE300
+;; IPE300
   (if (and (= taz_s_family "IPE")
            (= taz_s_type "300"))
     (progn
@@ -134,10 +129,10 @@
       (setq taz_s_tw 7.1)
       (setq taz_s_tf 10.7)
       (setq taz_s_r1 15.0)
+      (setq taz_s_section_area 53.81)
     )
   )
-
-  ;; IPE330
+;; IPE330
   (if (and (= taz_s_family "IPE")
            (= taz_s_type "330"))
     (progn
@@ -146,10 +141,10 @@
       (setq taz_s_tw 7.5)
       (setq taz_s_tf 11.5)
       (setq taz_s_r1 18.0)
+      (setq taz_s_section_area 62.61)
     )
   )
-
-  ;; IPE360
+;; IPE360
   (if (and (= taz_s_family "IPE")
            (= taz_s_type "360"))
     (progn
@@ -158,10 +153,10 @@
       (setq taz_s_tw 8.0)
       (setq taz_s_tf 12.7)
       (setq taz_s_r1 18.0)
+      (setq taz_s_section_area 72.73)
     )
   )
-
-  ;; IPE400
+;; IPE400
   (if (and (= taz_s_family "IPE")
            (= taz_s_type "400"))
     (progn
@@ -170,10 +165,10 @@
       (setq taz_s_tw 8.6)
       (setq taz_s_tf 13.5)
       (setq taz_s_r1 21.0)
+      (setq taz_s_section_area 84.46)
     )
   )
-
-  ;; IPE450
+;; IPE450
   (if (and (= taz_s_family "IPE")
            (= taz_s_type "450"))
     (progn
@@ -182,10 +177,10 @@
       (setq taz_s_tw 9.4)
       (setq taz_s_tf 14.6)
       (setq taz_s_r1 21.0)
+      (setq taz_s_section_area 98.82)
     )
   )
-
-  ;; IPE500
+;; IPE500
   (if (and (= taz_s_family "IPE")
            (= taz_s_type "500"))
     (progn
@@ -194,10 +189,10 @@
       (setq taz_s_tw 10.2)
       (setq taz_s_tf 16.0)
       (setq taz_s_r1 21.0)
+      (setq taz_s_section_area 115.50)
     )
   )
-
-  ;; IPE550
+;; IPE550
   (if (and (= taz_s_family "IPE")
            (= taz_s_type "550"))
     (progn
@@ -206,10 +201,10 @@
       (setq taz_s_tw 11.1)
       (setq taz_s_tf 17.2)
       (setq taz_s_r1 24.0)
+      (setq taz_s_section_area 134.40)
     )
   )
-
-  ;; IPE600
+;; IPE600
   (if (and (= taz_s_family "IPE")
            (= taz_s_type "600"))
     (progn
@@ -218,10 +213,10 @@
       (setq taz_s_tw 12.0)
       (setq taz_s_tf 19.0)
       (setq taz_s_r1 24.0)
+      (setq taz_s_section_area 156.00)
     )
   )
-
-  ;; IPE750x137
+;; IPE750x137
   (if (and (= taz_s_family "IPE")
            (= taz_s_type "750x137"))
     (progn
@@ -230,10 +225,10 @@
       (setq taz_s_tw 11.5)
       (setq taz_s_tf 17.0)
       (setq taz_s_r1 17.0)
+      (setq taz_s_section_area 175.00)
     )
   )
-
-  ;; IPE750x147
+;; IPE750x147
   (if (and (= taz_s_family "IPE")
            (= taz_s_type "750x147"))
     (progn
@@ -242,10 +237,10 @@
       (setq taz_s_tw 13.2)
       (setq taz_s_tf 17.0)
       (setq taz_s_r1 17.0)
+      (setq taz_s_section_area 187.50)
     )
   )
-
-  ;; IPE750x173
+;; IPE750x173
   (if (and (= taz_s_family "IPE")
            (= taz_s_type "750x173"))
     (progn
@@ -254,10 +249,10 @@
       (setq taz_s_tw 14.4)
       (setq taz_s_tf 21.6)
       (setq taz_s_r1 17.0)
+      (setq taz_s_section_area 221.30)
     )
   )
-
-  ;; IPE750x196
+;; IPE750x196
   (if (and (= taz_s_family "IPE")
            (= taz_s_type "750x196"))
     (progn
@@ -266,7 +261,7 @@
       (setq taz_s_tw 15.6)
       (setq taz_s_tf 25.4)
       (setq taz_s_r1 17.0)
+      (setq taz_s_section_area 250.80)
     )
   )
-
 )
