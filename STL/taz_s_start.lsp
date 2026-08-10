@@ -219,11 +219,23 @@
     (command "_LAYER" "_M" "taz_s_labels" "_C" "7" "" "_LO" "taz_s_labels" "")
   )
 
-  ;; Jeśli model nie jest pusty — projekt już zapisany, nic nie rób
-  (if (ssget "_X" '((410 . "Model")))
+  ;; ---------------------------------------------------------
+  ;; SPRAWDZENIE CZY PROJEKT JUZ ISTNIEJE
+  ;; Projekt uznajemy za utworzony, jezeli istnieje jego katalog danych.
+  ;; Nie sprawdzamy zawartosci Modelu, bo zapisany projekt moze byc pusty.
+  ;; ---------------------------------------------------------
+
+  (setq taz_s_existing_project_dir
+    (strcat
+      (getvar "DWGPREFIX")
+      (substr (getvar "DWGNAME") 1 (- (strlen (getvar "DWGNAME")) 4))
+    )
+  )
+
+  (if (vl-file-directory-p taz_s_existing_project_dir)
     (princ)
 
-    ;; Model pusty — nowy projekt, pytamy użytkownika o katalog
+    ;; Katalog danych nie istnieje — nowy projekt, pytamy użytkownika o katalog
     (progn
 
       ;; Użytkownik wskazuje katalog gdzie ma być zapisany projekt
@@ -287,8 +299,33 @@
     (load taz_s_axes_data_file)
   )
   
-  (setq taz_s_unit_weight_steel 7500)
-  (setq taz_s_unit_weight_concrete 2500)
+  ;; PARAMETRY PROJEKTU
+  (setq taz_s_project_parameters_data_file
+    (strcat taz_s_dwg_path
+            (substr (getvar "DWGNAME") 1 (- (strlen (getvar "DWGNAME")) 4))
+            "/"
+            "taz_s_project_parameters_data.txt"))
+
+  (if (findfile taz_s_project_parameters_data_file)
+    (load taz_s_project_parameters_data_file)
+    (progn
+      (setq taz_s_unit_weight_steel 7500)
+      (setq taz_s_unit_weight_concrete 2500)
+
+      (setq taz_s_f_project_parameters_data
+        (open taz_s_project_parameters_data_file "w"))
+
+      (write-line
+        "(setq taz_s_unit_weight_steel 7500)"
+        taz_s_f_project_parameters_data)
+
+      (write-line
+        "(setq taz_s_unit_weight_concrete 2500)"
+        taz_s_f_project_parameters_data)
+
+      (close taz_s_f_project_parameters_data)
+    )
+  )
   
   (princ)
 )
