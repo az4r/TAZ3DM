@@ -854,6 +854,8 @@
   ;; =================================================================
 
   (taz_s_annotation_scale)
+  ;; odsuniecie tabeli: 100.0 dla 1:1, czyli zachowane 5000.0 dla 1:50
+  (setq taz_s_st_offset (* 100.0 taz_s_annotation_scale))
   (setq taz_s_copy_nr 1)
   
   (defun taz_s_get_number (taz_s_txt / taz_s_i taz_s_len taz_s_pos)
@@ -967,7 +969,7 @@
     ;; KROK 4.5: tabela zestawienia stali - korzysta z juz policzonej widocznosci
     (taz_s_create_steel_table
       taz_s_visible_handles
-      (list (+ taz_s_xmax 5000.0) taz_s_y taz_s_zoffset)
+      (list (+ taz_s_xmax taz_s_st_offset) taz_s_y taz_s_zoffset)
       "X"
     )
 
@@ -1090,7 +1092,7 @@
     ;; KROK 4.5: tabela zestawienia stali
     (taz_s_create_steel_table
       taz_s_visible_handles
-      (list taz_s_x (+ taz_s_ymax 5000.0) taz_s_zoffset)
+      (list taz_s_x (+ taz_s_ymax taz_s_st_offset) taz_s_zoffset)
       "Y"
     )
 
@@ -1263,7 +1265,7 @@
     ;; KROK 4.5: tabela zestawienia stali
     (taz_s_create_steel_table
       taz_s_visible_handles
-      (list (+ taz_s_xmax 5000.0) taz_s_ymax (+ taz_s_z taz_s_zoffset))
+      (list (+ taz_s_xmax taz_s_st_offset) taz_s_ymax (+ taz_s_z taz_s_zoffset))
       "Z"
     )
 

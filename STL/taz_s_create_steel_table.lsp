@@ -50,22 +50,26 @@
 ;; pliku txt material jest pod innym numerem atrybutu - zmien ponizej.
 (setq taz_s_st_material_attr_no "8")
 
-;; wysokosci tekstu
-(setq taz_s_st_h_head 250)
-(setq taz_s_st_h_txt  125)
+;; wymiary bazowe tabeli dla skali 1:1
+;; rzeczywiste wymiary sa wyliczane w taz_s_create_steel_table
+;; przez pomnozenie ponizszych wartosci przez taz_s_annotation_scale
 
-;; szerokosci kolumn
-(setq taz_s_st_col_profil       1300.0)
-(setq taz_s_st_col_dlugosc       1200.0)
-(setq taz_s_st_col_material      1000.0)
-(setq taz_s_st_col_powierzchnia  1600.0)
-(setq taz_s_st_col_objetosc      1300.0)
-(setq taz_s_st_col_waga          1000.0)
-(setq taz_s_st_col_ilosc         900.0)
+;; wysokosci tekstu 1:1
+(setq taz_s_st_base_h_head 5.0)
+(setq taz_s_st_base_h_txt  2.5)
 
-;; wysokosci wierszy
-(setq taz_s_st_row_h  400.0)
-(setq taz_s_st_head_h 700.0)
+;; szerokosci kolumn 1:1
+(setq taz_s_st_base_col_profil       26.0)
+(setq taz_s_st_base_col_dlugosc      24.0)
+(setq taz_s_st_base_col_material     20.0)
+(setq taz_s_st_base_col_powierzchnia 32.0)
+(setq taz_s_st_base_col_objetosc     26.0)
+(setq taz_s_st_base_col_waga         20.0)
+(setq taz_s_st_base_col_ilosc        18.0)
+
+;; wysokosci wierszy 1:1
+(setq taz_s_st_base_row_h  8.0)
+(setq taz_s_st_base_head_h 14.0)
 
 ;; warstwa na ktorej rysowana jest tabela (ta sama co etykiety)
 (setq taz_s_st_layer "taz_s_labels")
@@ -393,6 +397,25 @@
 ;; =======================================================================================
 
 (defun taz_s_create_steel_table (taz_s_st_visible_handles taz_s_st_ins_pt taz_s_st_case)
+
+  ;; skalowanie tabeli zgodnie ze skala wybrana w taz_s_annotation_scale
+  ;; (wartosci bazowe powyzej odpowiadaja skali 1:1)
+  (if (boundp 'taz_s_annotation_scale)
+    (setq taz_s_st_scale taz_s_annotation_scale)
+    (setq taz_s_st_scale 1.0)
+  )
+
+  (setq taz_s_st_h_head          (* taz_s_st_base_h_head          taz_s_st_scale))
+  (setq taz_s_st_h_txt           (* taz_s_st_base_h_txt           taz_s_st_scale))
+  (setq taz_s_st_col_profil      (* taz_s_st_base_col_profil      taz_s_st_scale))
+  (setq taz_s_st_col_dlugosc     (* taz_s_st_base_col_dlugosc     taz_s_st_scale))
+  (setq taz_s_st_col_material    (* taz_s_st_base_col_material    taz_s_st_scale))
+  (setq taz_s_st_col_powierzchnia (* taz_s_st_base_col_powierzchnia taz_s_st_scale))
+  (setq taz_s_st_col_objetosc    (* taz_s_st_base_col_objetosc    taz_s_st_scale))
+  (setq taz_s_st_col_waga        (* taz_s_st_base_col_waga        taz_s_st_scale))
+  (setq taz_s_st_col_ilosc       (* taz_s_st_base_col_ilosc       taz_s_st_scale))
+  (setq taz_s_st_row_h           (* taz_s_st_base_row_h           taz_s_st_scale))
+  (setq taz_s_st_head_h          (* taz_s_st_base_head_h          taz_s_st_scale))
 
   (setq taz_s_st_rows '())  ;; lista: (profil dlugosc material powierzchnia objetosc waga ilosc)
 
