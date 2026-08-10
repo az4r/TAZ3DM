@@ -303,6 +303,10 @@
   (setq taz_s_st_nrows (length taz_s_st_rows))
   (setq taz_s_st_table_h (+ taz_s_st_head_h taz_s_st_row_h (* taz_s_st_nrows taz_s_st_row_h)))
 
+  ;; punkt wstawienia = lewy-dolny rog tabeli
+  ;; dalsze rysowanie korzysta z lewego-gornego rogu
+  (setq taz_s_st_y0 (+ taz_s_st_y0 taz_s_st_table_h))
+
   ;; ---- naglowek "ZESTAWIENIE STALI" ----
   (taz_s_st_write_cell "ZESTAWIENIE STALI"
     (+ taz_s_st_x0 (/ taz_s_st_table_w 2.0))
@@ -389,7 +393,7 @@
 ;;                          ustawionej przez taz_s_intersect_pairs. WYMAGANE
 ;;                          zeby taz_s_intersect_pairs bylo wywolane wczesniej
 ;;                          w tej samej iteracji petli.
-;;   taz_s_st_ins_pt      - punkt wstawienia (lewy-gorny rog naglowka tabeli),
+;;   taz_s_st_ins_pt      - punkt wstawienia (lewy-dolny rog tabeli),
 ;;                          np. (list (+ taz_s_xmax 5000) taz_s_y taz_s_zoffset)
 ;;   taz_s_st_case        - "X" / "Y" / "Z" - decyduje o obrocie tabeli do
 ;;                          plaszczyzny etykiet danego przypadku (tak jak
