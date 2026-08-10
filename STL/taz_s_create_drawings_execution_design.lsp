@@ -967,9 +967,15 @@
     )
 
     ;; KROK 4.5: tabela zestawienia stali - korzysta z juz policzonej widocznosci
+    ;;(taz_s_create_steel_table
+      ;;taz_s_visible_handles
+      ;;(list (+ taz_s_xmax taz_s_st_offset) taz_s_y taz_s_zoffset)
+      ;;"X"
+    ;;)
+    
     (taz_s_create_steel_table
       taz_s_visible_handles
-      (list (+ taz_s_xmax taz_s_st_offset) taz_s_y taz_s_zoffset)
+      (list (+ taz_s_xmax 5000.0) taz_s_y taz_s_zoffset)
       "X"
     )
 
@@ -1090,9 +1096,15 @@
     )
 
     ;; KROK 4.5: tabela zestawienia stali
+    ;;(taz_s_create_steel_table
+      ;;taz_s_visible_handles
+      ;;(list taz_s_x (+ taz_s_ymax taz_s_st_offset) taz_s_zoffset)
+      ;;"Y"
+    ;;)
+    
     (taz_s_create_steel_table
       taz_s_visible_handles
-      (list taz_s_x (+ taz_s_ymax taz_s_st_offset) taz_s_zoffset)
+      (list taz_s_x (+ taz_s_ymax 5000.0) taz_s_zoffset)
       "Y"
     )
 
@@ -1263,9 +1275,15 @@
     )
 
     ;; KROK 4.5: tabela zestawienia stali
+    ;;(taz_s_create_steel_table
+      ;;taz_s_visible_handles
+      ;;(list (+ taz_s_xmax taz_s_st_offset) taz_s_ymax (+ taz_s_z taz_s_zoffset))
+      ;;"Z"
+    ;;)
+    
     (taz_s_create_steel_table
       taz_s_visible_handles
-      (list (+ taz_s_xmax taz_s_st_offset) taz_s_ymax (+ taz_s_z taz_s_zoffset))
+      (list (+ taz_s_xmax 5000.0) taz_s_ymax (+ taz_s_z taz_s_zoffset))
       "Z"
     )
 
