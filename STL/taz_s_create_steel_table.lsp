@@ -8,14 +8,11 @@
 ;; taz_s_create_drawings_execution_design.lsp), ktora zbiera uchwyty
 ;; widocznych elementow do globalnej listy taz_s_visible_handles. Tabela
 ;; dostaje juz gotowa liste - dzieki temu -INTERFERE liczy sie tylko raz
-;; na element/przypadek, a nie dwa razy (jak w poprzedniej wersji, gdzie
-;; taz_s_create_steel_table robila to samo co taz_s_intersect_pairs,
-;; niezaleznie i po raz drugi - to bylo zrodlem spowolnienia).
+;; na element/przypadek, a nie dwa razy.
 ;;
 ;; Dlatego KOLEJNOSC WYWOLANIA w petli glownej musi byc:
 ;;   1. taz_s_intersect_pairs (zbiera taz_s_visible_handles)
 ;;   2. taz_s_create_steel_table (korzysta z taz_s_visible_handles)
-;; (odwrotnie niz w poprzednich wersjach tego skryptu).
 ;;
 ;; Dane profilu/dlugosci/materialu pobierane sa z globalnych zmiennych
 ;; wczytanych z taz_s_beam_data.txt (musza byc juz zaladowane - load w skrypcie
@@ -29,6 +26,14 @@
 ;; PRZED jakimkolwiek dalszym rysowaniem przekroju w tej samej iteracji.
 ;; taz_s_family/taz_s_type/taz_s_category sa zapisywane i przywracane po
 ;; odczycie, dla bezpieczenstwa.
+;;
+;; Kolumna "Objetosc": dlugosc jest w mm, powierzchnia w cm2. Zeby dostac m3:
+;;   dlugosc_m  = dlugosc_mm / 1000
+;;   pole_m2    = powierzchnia_cm2 / 10000
+;;   objetosc_m3 = dlugosc_m * pole_m2 = dlugosc_mm * powierzchnia_cm2 / 10000000
+;;
+;; Kolumna "Waga": objetosc_m3 * taz_s_unit_weight_steel (ciezar objetosciowy
+;; stali w kg/m3, zmienna juz istniejaca w projekcie) = waga w kg.
 ;;
 ;; Tabela jest rysowana plasko (w plaszczyznie X-Y przy zoffset), a nastepnie
 ;; obracana ROTATE3D dokladnie tak samo jak etykiety w taz_s_intersect_pairs
@@ -54,6 +59,8 @@
 (setq taz_s_st_col_dlugosc       800.0)
 (setq taz_s_st_col_material      800.0)
 (setq taz_s_st_col_powierzchnia  1200.0)
+(setq taz_s_st_col_objetosc      900.0)
+(setq taz_s_st_col_waga          800.0)
 (setq taz_s_st_col_ilosc         500.0)
 
 ;; wysokosci wierszy
@@ -211,6 +218,25 @@
 )
 
 ;; ---------------------------------------------------------------------
+;; POMOCNICZA: objetosc w m3
+;; taz_s_st_length_mm - dlugosc w mm, taz_s_st_area_cm2 - powierzchnia w cm2
+;; ---------------------------------------------------------------------
+
+(defun taz_s_st_get_volume (taz_s_st_length_mm taz_s_st_area_cm2)
+  (/ (* taz_s_st_length_mm taz_s_st_area_cm2) 10000000.0)
+)
+
+;; ---------------------------------------------------------------------
+;; POMOCNICZA: waga w kg
+;; taz_s_st_volume_m3 - objetosc w m3, korzysta z taz_s_unit_weight_steel
+;; (ciezar objetosciowy stali w kg/m3, zmienna juz istniejaca w projekcie)
+;; ---------------------------------------------------------------------
+
+(defun taz_s_st_get_weight (taz_s_st_volume_m3)
+  (* taz_s_st_volume_m3 taz_s_unit_weight_steel)
+)
+
+;; ---------------------------------------------------------------------
 ;; RYSOWANIE SIATKI TABELI
 ;; ---------------------------------------------------------------------
 
@@ -266,7 +292,8 @@
   (setq taz_s_st_z0 (caddr taz_s_st_ins_pt))
 
   (setq taz_s_st_table_w
-    (+ taz_s_st_col_profil taz_s_st_col_dlugosc taz_s_st_col_material taz_s_st_col_powierzchnia taz_s_st_col_ilosc)
+    (+ taz_s_st_col_profil taz_s_st_col_dlugosc taz_s_st_col_material
+       taz_s_st_col_powierzchnia taz_s_st_col_objetosc taz_s_st_col_waga taz_s_st_col_ilosc)
   )
 
   (setq taz_s_st_nrows (length taz_s_st_rows))
@@ -291,10 +318,14 @@
   (setq taz_s_st_col_x (+ taz_s_st_col_x taz_s_st_col_material))
   (taz_s_st_write_cell "Powierzchnia" (+ taz_s_st_col_x (/ taz_s_st_col_powierzchnia 2.0)) taz_s_st_row_y taz_s_st_z0 taz_s_st_h_txt)
   (setq taz_s_st_col_x (+ taz_s_st_col_x taz_s_st_col_powierzchnia))
+  (taz_s_st_write_cell "Objetosc"     (+ taz_s_st_col_x (/ taz_s_st_col_objetosc 2.0))     taz_s_st_row_y taz_s_st_z0 taz_s_st_h_txt)
+  (setq taz_s_st_col_x (+ taz_s_st_col_x taz_s_st_col_objetosc))
+  (taz_s_st_write_cell "Waga"         (+ taz_s_st_col_x (/ taz_s_st_col_waga 2.0))         taz_s_st_row_y taz_s_st_z0 taz_s_st_h_txt)
+  (setq taz_s_st_col_x (+ taz_s_st_col_x taz_s_st_col_waga))
   (taz_s_st_write_cell "Ilosc"        (+ taz_s_st_col_x (/ taz_s_st_col_ilosc 2.0))        taz_s_st_row_y taz_s_st_z0 taz_s_st_h_txt)
 
   ;; ---- wiersze danych ----
-  ;; taz_s_st_row = (profil dlugosc material powierzchnia ilosc)
+  ;; taz_s_st_row = (profil dlugosc material powierzchnia objetosc waga ilosc)
   (setq taz_s_st_row_y (- taz_s_st_y0 taz_s_st_head_h taz_s_st_row_h (/ taz_s_st_row_h 2.0)))
 
   (foreach taz_s_st_row taz_s_st_rows
@@ -316,7 +347,15 @@
       (+ taz_s_st_col_x (/ taz_s_st_col_powierzchnia 2.0)) taz_s_st_row_y taz_s_st_z0 taz_s_st_h_txt)
     (setq taz_s_st_col_x (+ taz_s_st_col_x taz_s_st_col_powierzchnia))
 
-    (taz_s_st_write_cell (itoa (nth 4 taz_s_st_row))
+    (taz_s_st_write_cell (rtos (nth 4 taz_s_st_row) 2 6)
+      (+ taz_s_st_col_x (/ taz_s_st_col_objetosc 2.0)) taz_s_st_row_y taz_s_st_z0 taz_s_st_h_txt)
+    (setq taz_s_st_col_x (+ taz_s_st_col_x taz_s_st_col_objetosc))
+
+    (taz_s_st_write_cell (rtos (nth 5 taz_s_st_row) 2 2)
+      (+ taz_s_st_col_x (/ taz_s_st_col_waga 2.0)) taz_s_st_row_y taz_s_st_z0 taz_s_st_h_txt)
+    (setq taz_s_st_col_x (+ taz_s_st_col_x taz_s_st_col_waga))
+
+    (taz_s_st_write_cell (itoa (nth 6 taz_s_st_row))
       (+ taz_s_st_col_x (/ taz_s_st_col_ilosc 2.0)) taz_s_st_row_y taz_s_st_z0 taz_s_st_h_txt)
 
     (setq taz_s_st_row_y (- taz_s_st_row_y taz_s_st_row_h))
@@ -330,7 +369,8 @@
     taz_s_st_head_h
     taz_s_st_row_h
     taz_s_st_nrows
-    (list taz_s_st_col_profil taz_s_st_col_dlugosc taz_s_st_col_material taz_s_st_col_powierzchnia taz_s_st_col_ilosc)
+    (list taz_s_st_col_profil taz_s_st_col_dlugosc taz_s_st_col_material
+          taz_s_st_col_powierzchnia taz_s_st_col_objetosc taz_s_st_col_waga taz_s_st_col_ilosc)
   )
 
   (princ)
@@ -354,13 +394,15 @@
 
 (defun taz_s_create_steel_table (taz_s_st_visible_handles taz_s_st_ins_pt taz_s_st_case)
 
-  (setq taz_s_st_rows '())  ;; lista: (profil dlugosc material powierzchnia ilosc)
+  (setq taz_s_st_rows '())  ;; lista: (profil dlugosc material powierzchnia objetosc waga ilosc)
 
   (foreach taz_s_st_h taz_s_st_visible_handles
     (setq taz_s_st_profile  (taz_s_st_get_profile_text taz_s_st_h))
     (setq taz_s_st_length   (taz_s_st_get_length taz_s_st_h))
     (setq taz_s_st_material (taz_s_st_get_material taz_s_st_h))
     (setq taz_s_st_area     (taz_s_st_get_area taz_s_st_h))
+    (setq taz_s_st_volume   (taz_s_st_get_volume taz_s_st_length taz_s_st_area))
+    (setq taz_s_st_weight   (taz_s_st_get_weight taz_s_st_volume))
 
     ;; szukaj czy juz mamy wiersz o tym samym profilu / dlugosci / materiale
     (setq taz_s_st_found nil)
@@ -379,7 +421,9 @@
               (nth 1 taz_s_st_row)
               (nth 2 taz_s_st_row)
               (nth 3 taz_s_st_row)
-              (1+ (nth 4 taz_s_st_row))
+              (nth 4 taz_s_st_row)
+              (nth 5 taz_s_st_row)
+              (1+ (nth 6 taz_s_st_row))
             )
           )
           (setq taz_s_st_found T)
@@ -392,7 +436,7 @@
     (if (not taz_s_st_found)
       (setq taz_s_st_rows
         (append taz_s_st_rows
-          (list (list taz_s_st_profile taz_s_st_length taz_s_st_material taz_s_st_area 1))
+          (list (list taz_s_st_profile taz_s_st_length taz_s_st_material taz_s_st_area taz_s_st_volume taz_s_st_weight 1))
         )
       )
     )
