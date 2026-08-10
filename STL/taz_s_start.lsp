@@ -287,6 +287,9 @@
     (load taz_s_axes_data_file)
   )
   
+  (setq taz_s_unit_weight_steel 7500)
+  (setq taz_s_unit_weight_concrete 2500)
+  
   (princ)
 )
 
