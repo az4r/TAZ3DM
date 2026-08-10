@@ -55,13 +55,13 @@
 (setq taz_s_st_h_txt  125)
 
 ;; szerokosci kolumn
-(setq taz_s_st_col_profil       1200.0)
-(setq taz_s_st_col_dlugosc       800.0)
-(setq taz_s_st_col_material      800.0)
-(setq taz_s_st_col_powierzchnia  1200.0)
-(setq taz_s_st_col_objetosc      900.0)
-(setq taz_s_st_col_waga          800.0)
-(setq taz_s_st_col_ilosc         500.0)
+(setq taz_s_st_col_profil       1300.0)
+(setq taz_s_st_col_dlugosc       1200.0)
+(setq taz_s_st_col_material      1000.0)
+(setq taz_s_st_col_powierzchnia  1600.0)
+(setq taz_s_st_col_objetosc      1300.0)
+(setq taz_s_st_col_waga          1000.0)
+(setq taz_s_st_col_ilosc         900.0)
 
 ;; wysokosci wierszy
 (setq taz_s_st_row_h  400.0)
@@ -312,17 +312,17 @@
 
   (taz_s_st_write_cell "Profil"       (+ taz_s_st_col_x (/ taz_s_st_col_profil 2.0))       taz_s_st_row_y taz_s_st_z0 taz_s_st_h_txt)
   (setq taz_s_st_col_x (+ taz_s_st_col_x taz_s_st_col_profil))
-  (taz_s_st_write_cell "Dlugosc"      (+ taz_s_st_col_x (/ taz_s_st_col_dlugosc 2.0))      taz_s_st_row_y taz_s_st_z0 taz_s_st_h_txt)
+  (taz_s_st_write_cell "Dlugosc [mm]"      (+ taz_s_st_col_x (/ taz_s_st_col_dlugosc 2.0))      taz_s_st_row_y taz_s_st_z0 taz_s_st_h_txt)
   (setq taz_s_st_col_x (+ taz_s_st_col_x taz_s_st_col_dlugosc))
   (taz_s_st_write_cell "Material"     (+ taz_s_st_col_x (/ taz_s_st_col_material 2.0))     taz_s_st_row_y taz_s_st_z0 taz_s_st_h_txt)
   (setq taz_s_st_col_x (+ taz_s_st_col_x taz_s_st_col_material))
-  (taz_s_st_write_cell "Powierzchnia" (+ taz_s_st_col_x (/ taz_s_st_col_powierzchnia 2.0)) taz_s_st_row_y taz_s_st_z0 taz_s_st_h_txt)
+  (taz_s_st_write_cell "Powierzchnia [cm2]" (+ taz_s_st_col_x (/ taz_s_st_col_powierzchnia 2.0)) taz_s_st_row_y taz_s_st_z0 taz_s_st_h_txt)
   (setq taz_s_st_col_x (+ taz_s_st_col_x taz_s_st_col_powierzchnia))
-  (taz_s_st_write_cell "Objetosc"     (+ taz_s_st_col_x (/ taz_s_st_col_objetosc 2.0))     taz_s_st_row_y taz_s_st_z0 taz_s_st_h_txt)
+  (taz_s_st_write_cell "Objetosc [m3]"     (+ taz_s_st_col_x (/ taz_s_st_col_objetosc 2.0))     taz_s_st_row_y taz_s_st_z0 taz_s_st_h_txt)
   (setq taz_s_st_col_x (+ taz_s_st_col_x taz_s_st_col_objetosc))
-  (taz_s_st_write_cell "Waga"         (+ taz_s_st_col_x (/ taz_s_st_col_waga 2.0))         taz_s_st_row_y taz_s_st_z0 taz_s_st_h_txt)
+  (taz_s_st_write_cell "Waga [kg]"         (+ taz_s_st_col_x (/ taz_s_st_col_waga 2.0))         taz_s_st_row_y taz_s_st_z0 taz_s_st_h_txt)
   (setq taz_s_st_col_x (+ taz_s_st_col_x taz_s_st_col_waga))
-  (taz_s_st_write_cell "Ilosc"        (+ taz_s_st_col_x (/ taz_s_st_col_ilosc 2.0))        taz_s_st_row_y taz_s_st_z0 taz_s_st_h_txt)
+  (taz_s_st_write_cell "Ilosc [szt.]"        (+ taz_s_st_col_x (/ taz_s_st_col_ilosc 2.0))        taz_s_st_row_y taz_s_st_z0 taz_s_st_h_txt)
 
   ;; ---- wiersze danych ----
   ;; taz_s_st_row = (profil dlugosc material powierzchnia objetosc waga ilosc)
