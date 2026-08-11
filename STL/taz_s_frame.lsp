@@ -82,7 +82,7 @@
   ;; ---------------------------------------------------------
 
   (start_list "taz_s_frame_format_popup")
-  (mapcar 'add_list '("A0" "A1" "A2"))
+  (mapcar 'add_list '("A0" "A1" "A2" "A3" "A4"))
   (end_list)
 
   ;; Domyslnie A1, czyli indeks 1
@@ -99,6 +99,8 @@
         (if (= taz_s_frame_selected_index 0) (setq taz_s_frame_format \"A0\"))
         (if (= taz_s_frame_selected_index 1) (setq taz_s_frame_format \"A1\"))
         (if (= taz_s_frame_selected_index 2) (setq taz_s_frame_format \"A2\"))
+        (if (= taz_s_frame_selected_index 3) (setq taz_s_frame_format \"A3\"))
+        (if (= taz_s_frame_selected_index 4) (setq taz_s_frame_format \"A4\"))
 
         (done_dialog 1)
     )"
@@ -158,6 +160,20 @@
     (progn
       (setq taz_s_frame_width 594.0)
       (setq taz_s_frame_height 420.0)
+    )
+  )
+
+  (if (= taz_s_frame_format "A3")
+    (progn
+      (setq taz_s_frame_width 420.0)
+      (setq taz_s_frame_height 297.0)
+    )
+  )
+
+  (if (= taz_s_frame_format "A4")
+    (progn
+      (setq taz_s_frame_width 210.0)
+      (setq taz_s_frame_height 297.0)
     )
   )
 
@@ -262,7 +278,10 @@
 
   (setq taz_s_frame_inner_p4
         (list
-          (+ taz_s_frame_x0 5.0)
+          (if (or (= taz_s_frame_format "A3") (= taz_s_frame_format "A4"))
+            (+ taz_s_frame_x0 30.0)
+            (+ taz_s_frame_x0 5.0)
+          )
           (- (+ taz_s_frame_y0 taz_s_frame_height) 5.0)
           taz_s_frame_z
         )
@@ -270,7 +289,10 @@
 
   (setq taz_s_frame_inner_p5
         (list
-          (+ taz_s_frame_x0 5.0)
+          (if (or (= taz_s_frame_format "A3") (= taz_s_frame_format "A4"))
+            (+ taz_s_frame_x0 30.0)
+            (+ taz_s_frame_x0 5.0)
+          )
           (+ taz_s_frame_y0 5.0 287.0)
           taz_s_frame_z
         )
