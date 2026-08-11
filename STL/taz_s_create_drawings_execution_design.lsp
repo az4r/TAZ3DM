@@ -205,6 +205,31 @@
 )
 
 (defun c:taz_s_create_drawings_execution_design ()
+
+  ;; ---------------------------------
+  ;; ZAPIS ORYGINALNEGO PLIKU I NAZWA PLIKU DRAWINGS
+  ;; ---------------------------------
+
+  (command "_.QSAVE")
+
+  (setq taz_s_original_dwg_name (getvar "DWGNAME"))
+  (setq taz_s_original_dwg_path (getvar "DWGPREFIX"))
+
+  (setq taz_s_original_dwg_name_no_ext
+    (substr
+      taz_s_original_dwg_name
+      1
+      (- (strlen taz_s_original_dwg_name) 4)
+    )
+  )
+
+  (setq taz_s_drawings_file
+    (strcat
+      taz_s_original_dwg_path
+      taz_s_original_dwg_name_no_ext
+      "_DRAWINGS.dwg"
+    )
+  )
   
   (taz_s_current_settings_save)
   (taz_s_unlock_all_layers)
@@ -423,6 +448,16 @@
         (cons -4 "<NOT") (cons 8 "taz_s_execution_design") (cons -4 "NOT>")
         (cons -4 "<NOT") (cons 8 "taz_s_editing_layer")    (cons -4 "NOT>")
         (cons -4 "AND>")
+      )
+    )
+  )
+
+  ;; Zapamietaj tylko osie istniejace przed tworzeniem nowych widokow
+  (setq taz_s_orig_axes_ss
+    (ssget "X"
+      (list
+        (cons 67 0)
+        (cons 8 "taz_s_axes")
       )
     )
   )
@@ -1312,7 +1347,32 @@
 
   (command "-LAYDEL" "N" "taz_s_execution_design" "" "_Y")
   (taz_s_merge_solprof_layers)
+
+  ;; ---------------------------------
+  ;; USUN ORYGINALNY MODEL I ORYGINALNE OSIE
+  ;; ---------------------------------
+
+  (command "_layout" "_S" "Model")
+
+  (if taz_s_orig_ss
+    (command "_.ERASE" taz_s_orig_ss "")
+  )
+
+  (if taz_s_orig_axes_ss
+    (command "_.ERASE" taz_s_orig_axes_ss "")
+  )
+
   (taz_s_lock_all_layers)
   (taz_s_current_settings_restore)
+
+  ;; ---------------------------------
+  ;; ZAPIS PLIKU DRAWINGS
+  ;; ---------------------------------
+  
+  (if (findfile taz_s_drawings_file)
+    (command "_.SAVEAS" "" taz_s_drawings_file "_Y")
+    (command "_.SAVEAS" "" taz_s_drawings_file)
+  )
+
   (princ)
 )
