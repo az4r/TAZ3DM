@@ -9,7 +9,7 @@
 ;; - ramka zewnetrzna = wymiar papieru
 ;; - ramka wewnetrzna = 5 mm od krawedzi papieru
 ;; - uskok po lewej stronie:
-;;   292 mm w gore od dolnej ramki wewnetrznej
+;;   287 mm w gore od dolnej ramki wewnetrznej
 ;;   i 25 mm w prawo
 ;; - wszystko powstaje na warstwie taz_s_frame
 ;;
@@ -229,7 +229,7 @@
   ;;
   ;; Uskok NIE jest skalowany razem z formatem:
   ;; - od lewej ramki wewnetrznej 25 mm w prawo
-  ;; - od dolnej ramki wewnetrznej 292 mm w gore
+  ;; - od dolnej ramki wewnetrznej 287 mm w gore
   ;;
   ;; Dla A1 daje to dokladnie:
   ;; (30,5) ... (5,297) (30,297)
@@ -271,7 +271,7 @@
   (setq taz_s_frame_inner_p5
         (list
           (+ taz_s_frame_x0 5.0)
-          (+ taz_s_frame_y0 5.0 292.0)
+          (+ taz_s_frame_y0 5.0 287.0)
           taz_s_frame_z
         )
   )
@@ -279,7 +279,7 @@
   (setq taz_s_frame_inner_p6
         (list
           (+ taz_s_frame_x0 5.0 25.0)
-          (+ taz_s_frame_y0 5.0 292.0)
+          (+ taz_s_frame_y0 5.0 287.0)
           taz_s_frame_z
         )
   )
