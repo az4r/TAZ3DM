@@ -254,20 +254,37 @@
 
         (progn
 
-          ;; *** JEDYNA ZMIANA: pobieramy sam katalog + dodajemy "/" ***
+          ;; getfiled zwraca pełną ścieżkę wraz z nazwą wpisaną przez użytkownika.
+          ;; Zachowujemy ją jako docelową nazwę pliku DWG.
+          (setq taz_s_target_dwg taz_s_chosen_dir)
+
+          ;; Szukamy ostatniego znaku \ lub / w pełnej ścieżce.
+          ;; Robimy to zwykłymi funkcjami AutoLISP, bez vl-filename-*.
+          (setq taz_s_i (strlen taz_s_target_dwg))
+          (while
+            (and
+              (> taz_s_i 0)
+              (/= (substr taz_s_target_dwg taz_s_i 1) "\\")
+              (/= (substr taz_s_target_dwg taz_s_i 1) "/")
+            )
+            (setq taz_s_i (- taz_s_i 1))
+          )
+
+          ;; Katalog wybrany przez użytkownika.
           (setq taz_s_chosen_dir
-            (strcat (vl-filename-directory taz_s_chosen_dir) "/")
+            (substr taz_s_target_dwg 1 taz_s_i)
           )
 
-          ;; Nazwa aktualnie otwartego rysunku (bez rozszerzenia)
+          ;; Nazwa pliku bez rozszerzenia .dwg.
           (setq taz_s_dwgname
-            (substr (getvar "DWGNAME") 1 (- (strlen (getvar "DWGNAME")) 4))
+            (substr
+              taz_s_target_dwg
+              (+ taz_s_i 1)
+              (- (strlen taz_s_target_dwg) taz_s_i 4)
+            )
           )
 
-          ;; Pełne ścieżki docelowe
-          (setq taz_s_target_dwg
-            (strcat taz_s_chosen_dir taz_s_dwgname ".dwg")
-          )
+          ;; Katalog danych projektu ma tę samą nazwę co zapisany plik DWG.
           (setq taz_s_target_dir
             (strcat taz_s_chosen_dir taz_s_dwgname)
           )
