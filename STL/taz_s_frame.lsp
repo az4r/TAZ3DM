@@ -3,7 +3,7 @@
 ;; ===========================================================
 ;;
 ;; Wersja poczatkowa:
-;; - skala 1:1
+;; - wybor skali ramki
 ;; - formaty A0, A1, A2
 ;; - punkt wskazany przez uzytkownika jest srodkiem arkusza
 ;; - ramka zewnetrzna = wymiar papieru
@@ -29,8 +29,11 @@
 
   (setq taz_s_frame_dcl_id nil)
   (setq taz_s_frame_selected_index 1)
+  (setq taz_s_frame_scale_selected_index 0)
   (setq taz_s_frame_dialog_result nil)
   (setq taz_s_frame_format "A1")
+  (setq taz_s_frame_scale "1:1")
+  (setq taz_s_frame_scale_factor 1.0)
 
   (setq taz_s_frame_width nil)
   (setq taz_s_frame_height nil)
@@ -93,12 +96,25 @@
   (set_tile "taz_s_frame_format_popup" "1")
 
   ;; ---------------------------------------------------------
+  ;; LISTA SKAL
+  ;; ---------------------------------------------------------
+
+  (start_list "taz_s_frame_scale_popup")
+  (mapcar 'add_list '("1:1" "1:2" "1:5" "1:10" "1:20"
+                      "1:25" "1:50" "1:100" "1:200"))
+  (end_list)
+
+  ;; Domyslnie 1:1, czyli indeks 0
+  (set_tile "taz_s_frame_scale_popup" "0")
+
+  ;; ---------------------------------------------------------
   ;; OBSLUGA OK
   ;; ---------------------------------------------------------
 
   (action_tile "accept"
     "(progn
         (setq taz_s_frame_selected_index (atoi (get_tile \"taz_s_frame_format_popup\")))
+        (setq taz_s_frame_scale_selected_index (atoi (get_tile \"taz_s_frame_scale_popup\")))
 
         (if (= taz_s_frame_selected_index 0) (setq taz_s_frame_format \"A0\"))
         (if (= taz_s_frame_selected_index 1) (setq taz_s_frame_format \"A1\"))
@@ -121,6 +137,16 @@
         (if (= taz_s_frame_selected_index 18) (setq taz_s_frame_format \"A3+2\"))
         (if (= taz_s_frame_selected_index 19) (setq taz_s_frame_format \"A3+3\"))
         (if (= taz_s_frame_selected_index 20) (setq taz_s_frame_format \"A3+4\"))
+
+        (if (= taz_s_frame_scale_selected_index 0) (progn (setq taz_s_frame_scale \"1:1\") (setq taz_s_frame_scale_factor 1.0)))
+        (if (= taz_s_frame_scale_selected_index 1) (progn (setq taz_s_frame_scale \"1:2\") (setq taz_s_frame_scale_factor 2.0)))
+        (if (= taz_s_frame_scale_selected_index 2) (progn (setq taz_s_frame_scale \"1:5\") (setq taz_s_frame_scale_factor 5.0)))
+        (if (= taz_s_frame_scale_selected_index 3) (progn (setq taz_s_frame_scale \"1:10\") (setq taz_s_frame_scale_factor 10.0)))
+        (if (= taz_s_frame_scale_selected_index 4) (progn (setq taz_s_frame_scale \"1:20\") (setq taz_s_frame_scale_factor 20.0)))
+        (if (= taz_s_frame_scale_selected_index 5) (progn (setq taz_s_frame_scale \"1:25\") (setq taz_s_frame_scale_factor 25.0)))
+        (if (= taz_s_frame_scale_selected_index 6) (progn (setq taz_s_frame_scale \"1:50\") (setq taz_s_frame_scale_factor 50.0)))
+        (if (= taz_s_frame_scale_selected_index 7) (progn (setq taz_s_frame_scale \"1:100\") (setq taz_s_frame_scale_factor 100.0)))
+        (if (= taz_s_frame_scale_selected_index 8) (progn (setq taz_s_frame_scale \"1:200\") (setq taz_s_frame_scale_factor 200.0)))
 
         (done_dialog 1)
     )"
@@ -315,11 +341,18 @@
   )
 
   ;; ---------------------------------------------------------
+  ;; SKALA RAMKI
+  ;; ---------------------------------------------------------
+
+  (setq taz_s_frame_width (* taz_s_frame_width taz_s_frame_scale_factor))
+  (setq taz_s_frame_height (* taz_s_frame_height taz_s_frame_scale_factor))
+
+  ;; ---------------------------------------------------------
   ;; PUNKT WSTAWIENIA = SRODEK ARKUSZA
   ;; ---------------------------------------------------------
 
   (setq taz_s_frame_insert_point
-        (getpoint (strcat "\nWskaz srodek ramki " taz_s_frame_format ": ")))
+        (getpoint (strcat "\nWskaz srodek ramki " taz_s_frame_format " w skali " taz_s_frame_scale ": ")))
 
   (if (null taz_s_frame_insert_point)
     (progn
@@ -380,35 +413,36 @@
   ;; ---------------------------------------------------------
   ;; Offset od papieru = 5 mm.
   ;;
-  ;; Uskok NIE jest skalowany razem z formatem:
+  ;; Uskok NIE jest zmieniany razem z formatem:
   ;; - od lewej ramki wewnetrznej 25 mm w prawo
   ;; - od dolnej ramki wewnetrznej 287 mm w gore
   ;;
-  ;; Dla A1 daje to dokladnie:
+  ;; Wszystkie te wymiary sa mnozone przez wybrana skale.
+  ;; Dla A1 w skali 1:1 daje to dokladnie:
   ;; (30,5) ... (5,297) (30,297)
   ;; gdy lewy dolny naroznik papieru jest w (0,0).
   ;; ---------------------------------------------------------
 
   (setq taz_s_frame_inner_p1
         (list
-          (+ taz_s_frame_x0 30.0)
-          (+ taz_s_frame_y0 5.0)
+          (+ taz_s_frame_x0 (* 30.0 taz_s_frame_scale_factor))
+          (+ taz_s_frame_y0 (* 5.0 taz_s_frame_scale_factor))
           taz_s_frame_z
         )
   )
 
   (setq taz_s_frame_inner_p2
         (list
-          (- (+ taz_s_frame_x0 taz_s_frame_width) 5.0)
-          (+ taz_s_frame_y0 5.0)
+          (- (+ taz_s_frame_x0 taz_s_frame_width) (* 5.0 taz_s_frame_scale_factor))
+          (+ taz_s_frame_y0 (* 5.0 taz_s_frame_scale_factor))
           taz_s_frame_z
         )
   )
 
   (setq taz_s_frame_inner_p3
         (list
-          (- (+ taz_s_frame_x0 taz_s_frame_width) 5.0)
-          (- (+ taz_s_frame_y0 taz_s_frame_height) 5.0)
+          (- (+ taz_s_frame_x0 taz_s_frame_width) (* 5.0 taz_s_frame_scale_factor))
+          (- (+ taz_s_frame_y0 taz_s_frame_height) (* 5.0 taz_s_frame_scale_factor))
           taz_s_frame_z
         )
   )
@@ -421,10 +455,10 @@
                   (= taz_s_frame_format "A3+3")
                   (= taz_s_frame_format "A3+4")
                   (= taz_s_frame_format "A4"))
-            (+ taz_s_frame_x0 30.0)
-            (+ taz_s_frame_x0 5.0)
+            (+ taz_s_frame_x0 (* 30.0 taz_s_frame_scale_factor))
+            (+ taz_s_frame_x0 (* 5.0 taz_s_frame_scale_factor))
           )
-          (- (+ taz_s_frame_y0 taz_s_frame_height) 5.0)
+          (- (+ taz_s_frame_y0 taz_s_frame_height) (* 5.0 taz_s_frame_scale_factor))
           taz_s_frame_z
         )
   )
@@ -437,18 +471,24 @@
                   (= taz_s_frame_format "A3+3")
                   (= taz_s_frame_format "A3+4")
                   (= taz_s_frame_format "A4"))
-            (+ taz_s_frame_x0 30.0)
-            (+ taz_s_frame_x0 5.0)
+            (+ taz_s_frame_x0 (* 30.0 taz_s_frame_scale_factor))
+            (+ taz_s_frame_x0 (* 5.0 taz_s_frame_scale_factor))
           )
-          (+ taz_s_frame_y0 5.0 287.0)
+          (+ taz_s_frame_y0
+             (* 5.0 taz_s_frame_scale_factor)
+             (* 287.0 taz_s_frame_scale_factor))
           taz_s_frame_z
         )
   )
 
   (setq taz_s_frame_inner_p6
         (list
-          (+ taz_s_frame_x0 5.0 25.0)
-          (+ taz_s_frame_y0 5.0 287.0)
+          (+ taz_s_frame_x0
+             (* 5.0 taz_s_frame_scale_factor)
+             (* 25.0 taz_s_frame_scale_factor))
+          (+ taz_s_frame_y0
+             (* 5.0 taz_s_frame_scale_factor)
+             (* 287.0 taz_s_frame_scale_factor))
           taz_s_frame_z
         )
   )
@@ -516,7 +556,7 @@
 
   (taz_s_current_settings_restore)
 
-  (princ (strcat "\nWstawiono ramke rysunkowa " taz_s_frame_format "."))
+  (princ (strcat "\nWstawiono ramke rysunkowa " taz_s_frame_format " w skali " taz_s_frame_scale "."))
   (princ)
 )
 

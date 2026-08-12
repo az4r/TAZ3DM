@@ -18,6 +18,22 @@ taz_s_frame_dialog : dialog {
         fixed_width = true;
       }
     }
+
+    : row {
+      alignment = centered;
+
+      : text {
+        label = "Skala:";
+        width = 20;
+        fixed_width = true;
+      }
+
+      : popup_list {
+        key = "taz_s_frame_scale_popup";
+        width = 20;
+        fixed_width = true;
+      }
+    }
   }
 
   ok_cancel;
