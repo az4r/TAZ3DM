@@ -82,7 +82,11 @@
   ;; ---------------------------------------------------------
 
   (start_list "taz_s_frame_format_popup")
-  (mapcar 'add_list '("A0" "A1" "A2" "A3" "A4"))
+  (mapcar 'add_list '("A0" "A1" "A2" "A3" "A4"
+                      "A0+1" "A0+2" "A0+3" "A0+4"
+                      "A1+1" "A1+2" "A1+3" "A1+4"
+                      "A2+1" "A2+2" "A2+3" "A2+4"
+                      "A3+1" "A3+2" "A3+3" "A3+4"))
   (end_list)
 
   ;; Domyslnie A1, czyli indeks 1
@@ -101,6 +105,22 @@
         (if (= taz_s_frame_selected_index 2) (setq taz_s_frame_format \"A2\"))
         (if (= taz_s_frame_selected_index 3) (setq taz_s_frame_format \"A3\"))
         (if (= taz_s_frame_selected_index 4) (setq taz_s_frame_format \"A4\"))
+        (if (= taz_s_frame_selected_index 5) (setq taz_s_frame_format \"A0+1\"))
+        (if (= taz_s_frame_selected_index 6) (setq taz_s_frame_format \"A0+2\"))
+        (if (= taz_s_frame_selected_index 7) (setq taz_s_frame_format \"A0+3\"))
+        (if (= taz_s_frame_selected_index 8) (setq taz_s_frame_format \"A0+4\"))
+        (if (= taz_s_frame_selected_index 9) (setq taz_s_frame_format \"A1+1\"))
+        (if (= taz_s_frame_selected_index 10) (setq taz_s_frame_format \"A1+2\"))
+        (if (= taz_s_frame_selected_index 11) (setq taz_s_frame_format \"A1+3\"))
+        (if (= taz_s_frame_selected_index 12) (setq taz_s_frame_format \"A1+4\"))
+        (if (= taz_s_frame_selected_index 13) (setq taz_s_frame_format \"A2+1\"))
+        (if (= taz_s_frame_selected_index 14) (setq taz_s_frame_format \"A2+2\"))
+        (if (= taz_s_frame_selected_index 15) (setq taz_s_frame_format \"A2+3\"))
+        (if (= taz_s_frame_selected_index 16) (setq taz_s_frame_format \"A2+4\"))
+        (if (= taz_s_frame_selected_index 17) (setq taz_s_frame_format \"A3+1\"))
+        (if (= taz_s_frame_selected_index 18) (setq taz_s_frame_format \"A3+2\"))
+        (if (= taz_s_frame_selected_index 19) (setq taz_s_frame_format \"A3+3\"))
+        (if (= taz_s_frame_selected_index 20) (setq taz_s_frame_format \"A3+4\"))
 
         (done_dialog 1)
     )"
@@ -173,6 +193,123 @@
   (if (= taz_s_frame_format "A4")
     (progn
       (setq taz_s_frame_width 210.0)
+      (setq taz_s_frame_height 297.0)
+    )
+  )
+
+  ;; ---------------------------------------------------------
+  ;; FORMATY PRZEDLUZONE
+  ;; Kazde +1 wydluza arkusz poziomo o 210 mm.
+  ;; ---------------------------------------------------------
+
+  (if (= taz_s_frame_format "A0+1")
+    (progn
+      (setq taz_s_frame_width (+ 1189.0 (* 1.0 210.0)))
+      (setq taz_s_frame_height 841.0)
+    )
+  )
+
+  (if (= taz_s_frame_format "A0+2")
+    (progn
+      (setq taz_s_frame_width (+ 1189.0 (* 2.0 210.0)))
+      (setq taz_s_frame_height 841.0)
+    )
+  )
+
+  (if (= taz_s_frame_format "A0+3")
+    (progn
+      (setq taz_s_frame_width (+ 1189.0 (* 3.0 210.0)))
+      (setq taz_s_frame_height 841.0)
+    )
+  )
+
+  (if (= taz_s_frame_format "A0+4")
+    (progn
+      (setq taz_s_frame_width (+ 1189.0 (* 4.0 210.0)))
+      (setq taz_s_frame_height 841.0)
+    )
+  )
+
+  (if (= taz_s_frame_format "A1+1")
+    (progn
+      (setq taz_s_frame_width (+ 841.0 (* 1.0 210.0)))
+      (setq taz_s_frame_height 594.0)
+    )
+  )
+
+  (if (= taz_s_frame_format "A1+2")
+    (progn
+      (setq taz_s_frame_width (+ 841.0 (* 2.0 210.0)))
+      (setq taz_s_frame_height 594.0)
+    )
+  )
+
+  (if (= taz_s_frame_format "A1+3")
+    (progn
+      (setq taz_s_frame_width (+ 841.0 (* 3.0 210.0)))
+      (setq taz_s_frame_height 594.0)
+    )
+  )
+
+  (if (= taz_s_frame_format "A1+4")
+    (progn
+      (setq taz_s_frame_width (+ 841.0 (* 4.0 210.0)))
+      (setq taz_s_frame_height 594.0)
+    )
+  )
+
+  (if (= taz_s_frame_format "A2+1")
+    (progn
+      (setq taz_s_frame_width (+ 594.0 (* 1.0 210.0)))
+      (setq taz_s_frame_height 420.0)
+    )
+  )
+
+  (if (= taz_s_frame_format "A2+2")
+    (progn
+      (setq taz_s_frame_width (+ 594.0 (* 2.0 210.0)))
+      (setq taz_s_frame_height 420.0)
+    )
+  )
+
+  (if (= taz_s_frame_format "A2+3")
+    (progn
+      (setq taz_s_frame_width (+ 594.0 (* 3.0 210.0)))
+      (setq taz_s_frame_height 420.0)
+    )
+  )
+
+  (if (= taz_s_frame_format "A2+4")
+    (progn
+      (setq taz_s_frame_width (+ 594.0 (* 4.0 210.0)))
+      (setq taz_s_frame_height 420.0)
+    )
+  )
+
+  (if (= taz_s_frame_format "A3+1")
+    (progn
+      (setq taz_s_frame_width (+ 420.0 (* 1.0 210.0)))
+      (setq taz_s_frame_height 297.0)
+    )
+  )
+
+  (if (= taz_s_frame_format "A3+2")
+    (progn
+      (setq taz_s_frame_width (+ 420.0 (* 2.0 210.0)))
+      (setq taz_s_frame_height 297.0)
+    )
+  )
+
+  (if (= taz_s_frame_format "A3+3")
+    (progn
+      (setq taz_s_frame_width (+ 420.0 (* 3.0 210.0)))
+      (setq taz_s_frame_height 297.0)
+    )
+  )
+
+  (if (= taz_s_frame_format "A3+4")
+    (progn
+      (setq taz_s_frame_width (+ 420.0 (* 4.0 210.0)))
       (setq taz_s_frame_height 297.0)
     )
   )
@@ -278,7 +415,12 @@
 
   (setq taz_s_frame_inner_p4
         (list
-          (if (or (= taz_s_frame_format "A3") (= taz_s_frame_format "A4"))
+          (if (or (= taz_s_frame_format "A3")
+                  (= taz_s_frame_format "A3+1")
+                  (= taz_s_frame_format "A3+2")
+                  (= taz_s_frame_format "A3+3")
+                  (= taz_s_frame_format "A3+4")
+                  (= taz_s_frame_format "A4"))
             (+ taz_s_frame_x0 30.0)
             (+ taz_s_frame_x0 5.0)
           )
@@ -289,7 +431,12 @@
 
   (setq taz_s_frame_inner_p5
         (list
-          (if (or (= taz_s_frame_format "A3") (= taz_s_frame_format "A4"))
+          (if (or (= taz_s_frame_format "A3")
+                  (= taz_s_frame_format "A3+1")
+                  (= taz_s_frame_format "A3+2")
+                  (= taz_s_frame_format "A3+3")
+                  (= taz_s_frame_format "A3+4")
+                  (= taz_s_frame_format "A4"))
             (+ taz_s_frame_x0 30.0)
             (+ taz_s_frame_x0 5.0)
           )
