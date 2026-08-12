@@ -85,15 +85,16 @@
   ;; ---------------------------------------------------------
 
   (start_list "taz_s_frame_format_popup")
-  (mapcar 'add_list '("A0" "A1" "A2" "A3" "A4"
+  (mapcar 'add_list '("A0"
                       "A0+1" "A0+2" "A0+3" "A0+4"
-                      "A1+1" "A1+2" "A1+3" "A1+4"
-                      "A2+1" "A2+2" "A2+3" "A2+4"
-                      "A3+1" "A3+2" "A3+3" "A3+4"))
+                      "A1" "A1+1" "A1+2" "A1+3" "A1+4"
+                      "A2" "A2+1" "A2+2" "A2+3" "A2+4"
+                      "A3" "A3+1" "A3+2" "A3+3" "A3+4"
+                      "A4"))
   (end_list)
 
-  ;; Domyslnie A1, czyli indeks 1
-  (set_tile "taz_s_frame_format_popup" "1")
+  ;; Domyslnie A1, czyli indeks 5
+  (set_tile "taz_s_frame_format_popup" "5")
 
   ;; ---------------------------------------------------------
   ;; LISTA SKAL
@@ -117,26 +118,26 @@
         (setq taz_s_frame_scale_selected_index (atoi (get_tile \"taz_s_frame_scale_popup\")))
 
         (if (= taz_s_frame_selected_index 0) (setq taz_s_frame_format \"A0\"))
-        (if (= taz_s_frame_selected_index 1) (setq taz_s_frame_format \"A1\"))
-        (if (= taz_s_frame_selected_index 2) (setq taz_s_frame_format \"A2\"))
-        (if (= taz_s_frame_selected_index 3) (setq taz_s_frame_format \"A3\"))
-        (if (= taz_s_frame_selected_index 4) (setq taz_s_frame_format \"A4\"))
-        (if (= taz_s_frame_selected_index 5) (setq taz_s_frame_format \"A0+1\"))
-        (if (= taz_s_frame_selected_index 6) (setq taz_s_frame_format \"A0+2\"))
-        (if (= taz_s_frame_selected_index 7) (setq taz_s_frame_format \"A0+3\"))
-        (if (= taz_s_frame_selected_index 8) (setq taz_s_frame_format \"A0+4\"))
-        (if (= taz_s_frame_selected_index 9) (setq taz_s_frame_format \"A1+1\"))
-        (if (= taz_s_frame_selected_index 10) (setq taz_s_frame_format \"A1+2\"))
-        (if (= taz_s_frame_selected_index 11) (setq taz_s_frame_format \"A1+3\"))
-        (if (= taz_s_frame_selected_index 12) (setq taz_s_frame_format \"A1+4\"))
-        (if (= taz_s_frame_selected_index 13) (setq taz_s_frame_format \"A2+1\"))
-        (if (= taz_s_frame_selected_index 14) (setq taz_s_frame_format \"A2+2\"))
-        (if (= taz_s_frame_selected_index 15) (setq taz_s_frame_format \"A2+3\"))
-        (if (= taz_s_frame_selected_index 16) (setq taz_s_frame_format \"A2+4\"))
-        (if (= taz_s_frame_selected_index 17) (setq taz_s_frame_format \"A3+1\"))
-        (if (= taz_s_frame_selected_index 18) (setq taz_s_frame_format \"A3+2\"))
-        (if (= taz_s_frame_selected_index 19) (setq taz_s_frame_format \"A3+3\"))
-        (if (= taz_s_frame_selected_index 20) (setq taz_s_frame_format \"A3+4\"))
+        (if (= taz_s_frame_selected_index 1) (setq taz_s_frame_format \"A0+1\"))
+        (if (= taz_s_frame_selected_index 2) (setq taz_s_frame_format \"A0+2\"))
+        (if (= taz_s_frame_selected_index 3) (setq taz_s_frame_format \"A0+3\"))
+        (if (= taz_s_frame_selected_index 4) (setq taz_s_frame_format \"A0+4\"))
+        (if (= taz_s_frame_selected_index 5) (setq taz_s_frame_format \"A1\"))
+        (if (= taz_s_frame_selected_index 6) (setq taz_s_frame_format \"A1+1\"))
+        (if (= taz_s_frame_selected_index 7) (setq taz_s_frame_format \"A1+2\"))
+        (if (= taz_s_frame_selected_index 8) (setq taz_s_frame_format \"A1+3\"))
+        (if (= taz_s_frame_selected_index 9) (setq taz_s_frame_format \"A1+4\"))
+        (if (= taz_s_frame_selected_index 10) (setq taz_s_frame_format \"A2\"))
+        (if (= taz_s_frame_selected_index 11) (setq taz_s_frame_format \"A2+1\"))
+        (if (= taz_s_frame_selected_index 12) (setq taz_s_frame_format \"A2+2\"))
+        (if (= taz_s_frame_selected_index 13) (setq taz_s_frame_format \"A2+3\"))
+        (if (= taz_s_frame_selected_index 14) (setq taz_s_frame_format \"A2+4\"))
+        (if (= taz_s_frame_selected_index 15) (setq taz_s_frame_format \"A3\"))
+        (if (= taz_s_frame_selected_index 16) (setq taz_s_frame_format \"A3+1\"))
+        (if (= taz_s_frame_selected_index 17) (setq taz_s_frame_format \"A3+2\"))
+        (if (= taz_s_frame_selected_index 18) (setq taz_s_frame_format \"A3+3\"))
+        (if (= taz_s_frame_selected_index 19) (setq taz_s_frame_format \"A3+4\"))
+        (if (= taz_s_frame_selected_index 20) (setq taz_s_frame_format \"A4\"))
 
         (if (= taz_s_frame_scale_selected_index 0) (progn (setq taz_s_frame_scale \"1:1\") (setq taz_s_frame_scale_factor 1.0)))
         (if (= taz_s_frame_scale_selected_index 1) (progn (setq taz_s_frame_scale \"1:2\") (setq taz_s_frame_scale_factor 2.0)))
