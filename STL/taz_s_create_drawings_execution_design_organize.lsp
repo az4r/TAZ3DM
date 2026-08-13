@@ -1,7 +1,7 @@
 ;; ============================================================================
 ;; taz_s_create_drawings_execution_design_organize.lsp
 ;;
-;; Wersja 8 porzadkowania widokow wykonanych przez:
+;; Wersja 9 porzadkowania widokow wykonanych przez:
 ;; taz_s_create_drawings_execution_design
 ;;
 ;; ZALOZENIA:
@@ -11,7 +11,9 @@
 ;;   ich geometrii, bez sprawdzania nazw warstw,
 ;; - po uporzadkowaniu wszystkie przypadki maja lezec na globalnej XY,
 ;; - pierwszy przypadek trafia do 0,0,0,
-;; - kazdy kolejny trafia o 100000 w prawo po osi X.
+;; - kazdy kolejny trafia o 100000 w prawo po osi X,
+;; - kazdy punkt przekazywany do ALIGN jest poprzedzony _NON, aby aktywny
+;;   OSNAP nie zmienial wspolrzednych wyliczonych przez skrypt.
 ;;
 ;; Skrypt celowo jest napisany prosto:
 ;; - setq,
