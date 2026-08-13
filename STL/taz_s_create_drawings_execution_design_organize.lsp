@@ -1,7 +1,7 @@
 ;; ============================================================================
 ;; taz_s_create_drawings_execution_design_organize.lsp
 ;;
-;; Wersja 7 porzadkowania widokow wykonanych przez:
+;; Wersja 8 porzadkowania widokow wykonanych przez:
 ;; taz_s_create_drawings_execution_design
 ;;
 ;; ZALOZENIA:
@@ -1341,15 +1341,27 @@
               )
             )
 
+            ;; --------------------------------------------------------------
+            ;; _NON przed kazdym punktem wylacza OSNAP tylko dla tego punktu.
+            ;; Jest to szczegolnie wazne dla pierwszego przypadku, ktory trafia
+            ;; w okolice 0,0,0 i moze znajdowac sie blisko oryginalnego modelu.
+            ;; --------------------------------------------------------------
+
             (command
               "_.ALIGN"
               taz_s_organize_case_ss
               ""
+              "_NON"
               taz_s_organize_source_1
+              "_NON"
               taz_s_organize_destination_1
+              "_NON"
               taz_s_organize_source_2
+              "_NON"
               taz_s_organize_destination_2
+              "_NON"
               taz_s_organize_source_3
+              "_NON"
               taz_s_organize_destination_3
             )
 
@@ -1470,15 +1482,27 @@
               )
             )
 
+            ;; --------------------------------------------------------------
+            ;; _NON przed kazdym punktem wylacza OSNAP tylko dla tego punktu.
+            ;; Jest to szczegolnie wazne dla pierwszego przypadku, ktory trafia
+            ;; w okolice 0,0,0 i moze znajdowac sie blisko oryginalnego modelu.
+            ;; --------------------------------------------------------------
+
             (command
               "_.ALIGN"
               taz_s_organize_case_ss
               ""
+              "_NON"
               taz_s_organize_source_1
+              "_NON"
               taz_s_organize_destination_1
+              "_NON"
               taz_s_organize_source_2
+              "_NON"
               taz_s_organize_destination_2
+              "_NON"
               taz_s_organize_source_3
+              "_NON"
               taz_s_organize_destination_3
             )
 
@@ -1588,15 +1612,27 @@
               )
             )
 
+            ;; --------------------------------------------------------------
+            ;; _NON przed kazdym punktem wylacza OSNAP tylko dla tego punktu.
+            ;; Jest to szczegolnie wazne dla pierwszego przypadku, ktory trafia
+            ;; w okolice 0,0,0 i moze znajdowac sie blisko oryginalnego modelu.
+            ;; --------------------------------------------------------------
+
             (command
               "_.ALIGN"
               taz_s_organize_case_ss
               ""
+              "_NON"
               taz_s_organize_source_1
+              "_NON"
               taz_s_organize_destination_1
+              "_NON"
               taz_s_organize_source_2
+              "_NON"
               taz_s_organize_destination_2
+              "_NON"
               taz_s_organize_source_3
+              "_NON"
               taz_s_organize_destination_3
             )
 
