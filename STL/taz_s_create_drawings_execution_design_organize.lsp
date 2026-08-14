@@ -1272,10 +1272,199 @@
 
 
 ;; ============================================================================
+;; LEWY DOLNY NAROZNIK GRUPY TABELI - BEZ VL / COM
+;; ============================================================================
+;; Po ALIGN przechodzimy po geometrii tabeli i szukamy najmniejszego X oraz Y.
+;; Logika: SETQ + IF + WHILE + ENTGET / ENTNEXT.
+;; ============================================================================
+
+(defun taz_s_organize_table_check_point (taz_s_organize_table_point_arg)
+
+  (if taz_s_organize_table_point_arg
+    (progn
+
+      (setq taz_s_organize_table_point_x
+        (car taz_s_organize_table_point_arg)
+      )
+
+      (setq taz_s_organize_table_point_y
+        (cadr taz_s_organize_table_point_arg)
+      )
+
+      (if (= taz_s_organize_table_xmin nil)
+        (setq taz_s_organize_table_xmin taz_s_organize_table_point_x)
+        (if (< taz_s_organize_table_point_x taz_s_organize_table_xmin)
+          (setq taz_s_organize_table_xmin taz_s_organize_table_point_x)
+        )
+      )
+
+      (if (= taz_s_organize_table_ymin nil)
+        (setq taz_s_organize_table_ymin taz_s_organize_table_point_y)
+        (if (< taz_s_organize_table_point_y taz_s_organize_table_ymin)
+          (setq taz_s_organize_table_ymin taz_s_organize_table_point_y)
+        )
+      )
+    )
+  )
+)
+
+
+(defun taz_s_organize_get_table_group_lower_left
+  (taz_s_organize_table_group_arg)
+
+  (setq taz_s_organize_table_xmin nil)
+  (setq taz_s_organize_table_ymin nil)
+  (setq taz_s_organize_table_tmp taz_s_organize_table_group_arg)
+
+  (while taz_s_organize_table_tmp
+
+    (setq taz_s_organize_table_ent
+      (car taz_s_organize_table_tmp)
+    )
+
+    (if
+      (and
+        taz_s_organize_table_ent
+        (entget taz_s_organize_table_ent)
+      )
+      (progn
+
+        (setq taz_s_organize_table_data
+          (entget taz_s_organize_table_ent)
+        )
+
+        (setq taz_s_organize_table_type
+          (cdr (assoc 0 taz_s_organize_table_data))
+        )
+
+        (if (= taz_s_organize_table_type "LINE")
+          (progn
+            (taz_s_organize_table_check_point
+              (cdr (assoc 10 taz_s_organize_table_data))
+            )
+            (taz_s_organize_table_check_point
+              (cdr (assoc 11 taz_s_organize_table_data))
+            )
+          )
+        )
+
+        (if (= taz_s_organize_table_type "LWPOLYLINE")
+          (progn
+
+            (setq taz_s_organize_table_dxf_tmp
+              taz_s_organize_table_data
+            )
+
+            (while taz_s_organize_table_dxf_tmp
+
+              (setq taz_s_organize_table_dxf_item
+                (car taz_s_organize_table_dxf_tmp)
+              )
+
+              (if (= (car taz_s_organize_table_dxf_item) 10)
+                (taz_s_organize_table_check_point
+                  (cdr taz_s_organize_table_dxf_item)
+                )
+              )
+
+              (setq taz_s_organize_table_dxf_tmp
+                (cdr taz_s_organize_table_dxf_tmp)
+              )
+            )
+          )
+        )
+
+        (if (= taz_s_organize_table_type "POLYLINE")
+          (progn
+
+            (setq taz_s_organize_table_poly_next
+              (entnext taz_s_organize_table_ent)
+            )
+
+            (setq taz_s_organize_table_poly_done nil)
+
+            (while
+              (and
+                taz_s_organize_table_poly_next
+                (= taz_s_organize_table_poly_done nil)
+              )
+
+              (setq taz_s_organize_table_poly_data
+                (entget taz_s_organize_table_poly_next)
+              )
+
+              (setq taz_s_organize_table_poly_type
+                (cdr (assoc 0 taz_s_organize_table_poly_data))
+              )
+
+              (if (= taz_s_organize_table_poly_type "VERTEX")
+                (taz_s_organize_table_check_point
+                  (cdr (assoc 10 taz_s_organize_table_poly_data))
+                )
+              )
+
+              (if (= taz_s_organize_table_poly_type "SEQEND")
+                (setq taz_s_organize_table_poly_done T)
+              )
+
+              (if (= taz_s_organize_table_poly_done nil)
+                (setq taz_s_organize_table_poly_next
+                  (entnext taz_s_organize_table_poly_next)
+                )
+              )
+            )
+          )
+        )
+
+        (if
+          (or
+            (= taz_s_organize_table_type "SOLID")
+            (= taz_s_organize_table_type "TRACE")
+            (= taz_s_organize_table_type "3DFACE")
+          )
+          (progn
+            (taz_s_organize_table_check_point
+              (cdr (assoc 10 taz_s_organize_table_data))
+            )
+            (taz_s_organize_table_check_point
+              (cdr (assoc 11 taz_s_organize_table_data))
+            )
+            (taz_s_organize_table_check_point
+              (cdr (assoc 12 taz_s_organize_table_data))
+            )
+            (taz_s_organize_table_check_point
+              (cdr (assoc 13 taz_s_organize_table_data))
+            )
+          )
+        )
+      )
+    )
+
+    (setq taz_s_organize_table_tmp
+      (cdr taz_s_organize_table_tmp)
+    )
+  )
+
+  (if
+    (and
+      taz_s_organize_table_xmin
+      taz_s_organize_table_ymin
+    )
+    (list
+      taz_s_organize_table_xmin
+      taz_s_organize_table_ymin
+      0.0
+    )
+    nil
+  )
+)
+
+
+;; ============================================================================
 ;; KONCOWE PRZESUNIECIE TABELI DO NAROZNIKA RAMKI
 ;; ============================================================================
-;; Przesuwamy komplet obiektow tabeli z jej zapamietanej kotwy po ALIGN
-;; do lewego dolnego narożnika zewnetrznej ramki.
+;; Przesuwamy komplet obiektow tabeli z jej rzeczywistego lewego dolnego
+;; naroznika po ALIGN do lewego dolnego naroznika wewnetrznej ramki.
 ;; Warstwy tabeli sa odblokowywane tylko na czas MOVE i ponownie blokowane
 ;; wyłącznie wtedy, gdy byly zablokowane przed przesunieciem.
 ;; ============================================================================
@@ -2258,17 +2447,11 @@
 
         (c:taz_s_frame)
 
-        ;; Zapamietaj lewy dolny naroznik zewnetrznej ramki.
+        ;; Zapamietaj lewy dolny naroznik wewnetrznej ramki.
         (setq taz_s_organize_frame_lower_left_points
           (append
             taz_s_organize_frame_lower_left_points
-            (list
-              (list
-                taz_s_frame_x0
-                taz_s_frame_y0
-                taz_s_frame_z
-              )
-            )
+            (list taz_s_frame_inner_p1)
           )
         )
 
@@ -2282,9 +2465,9 @@
       (setq taz_s_frame_known_scale_factor nil)
 
       ;; --------------------------------------------------------------------
-      ;; NA SAM KONIEC: TABELA -> LEWY DOLNY NAROZNIK RAMKI
+      ;; NA SAM KONIEC: LEWY DOLNY TABELI -> LEWY DOLNY RAMKI WEWNETRZNEJ
       ;; --------------------------------------------------------------------
-      ;; Uzywamy punktu kotwiczenia tabeli po ALIGN oraz punktu x0,y0 ramki.
+      ;; Lewy dolny tabeli liczymy z punktow geometrii po ALIGN.
       ;; Przesuwany jest caly komplet obiektow utworzonych przez
       ;; taz_s_create_steel_table dla danego przypadku.
 
@@ -2315,7 +2498,21 @@
           )
         )
 
-        (if taz_s_organize_table_anchor_points_after
+        ;; Rzeczywisty lewy dolny naroznik tabeli po ALIGN.
+        (if taz_s_organize_table_move_group
+          (setq taz_s_organize_table_move_source
+            (taz_s_organize_get_table_group_lower_left
+              taz_s_organize_table_move_group
+            )
+          )
+        )
+
+        ;; Stara kotwa zostaje tylko jako awaryjny punkt zrodlowy.
+        (if
+          (and
+            (= taz_s_organize_table_move_source nil)
+            taz_s_organize_table_anchor_points_after
+          )
           (setq taz_s_organize_table_move_source
             (nth
               taz_s_organize_table_move_index
