@@ -1123,6 +1123,314 @@
 
 
 ;; ============================================================================
+;; TABELA ZESTAWIENIA STALI - PRZYGOTOWANIE PRZYPADKU
+;; ============================================================================
+;; Jesli taz_s_create_drawings_execution_design zapamietal obiekty tabeli
+;; oraz jej punkt kotwiczenia, dodajemy te obiekty jawnie do selection setu
+;; przypadku. Dodatkowo tworzymy tymczasowy POINT dokladnie w punkcie
+;; kotwiczenia tabeli. POINT przechodzi przez ten sam ALIGN co caly przypadek,
+;; dzieki czemu po uporzadkowaniu znamy dokladne nowe polozenie kotwy tabeli.
+;; ============================================================================
+
+(defun taz_s_organize_prepare_table_case
+  (taz_s_organize_table_case_nr_arg taz_s_organize_table_case_ss_arg)
+
+  (setq taz_s_organize_current_table_group nil)
+  (setq taz_s_organize_current_table_anchor nil)
+  (setq taz_s_organize_current_table_marker nil)
+
+  (if
+    (and
+      (boundp 'taz_s_execution_design_table_groups)
+      taz_s_execution_design_table_groups
+    )
+    (setq taz_s_organize_current_table_group
+      (nth
+        (- taz_s_organize_table_case_nr_arg 1)
+        taz_s_execution_design_table_groups
+      )
+    )
+  )
+
+  (if
+    (and
+      (boundp 'taz_s_execution_design_table_anchor_points)
+      taz_s_execution_design_table_anchor_points
+    )
+    (setq taz_s_organize_current_table_anchor
+      (nth
+        (- taz_s_organize_table_case_nr_arg 1)
+        taz_s_execution_design_table_anchor_points
+      )
+    )
+  )
+
+  ;; Jawnie dodajemy wszystkie obiekty tabeli do przypadku.
+  ;; Jesli juz byly w selection secie, SSADD ich nie dubluje.
+  (setq taz_s_organize_table_group_tmp
+    taz_s_organize_current_table_group
+  )
+
+  (while taz_s_organize_table_group_tmp
+
+    (setq taz_s_organize_table_group_ent
+      (car taz_s_organize_table_group_tmp)
+    )
+
+    (if
+      (and
+        taz_s_organize_table_group_ent
+        (entget taz_s_organize_table_group_ent)
+      )
+      (ssadd
+        taz_s_organize_table_group_ent
+        taz_s_organize_table_case_ss_arg
+      )
+    )
+
+    (setq taz_s_organize_table_group_tmp
+      (cdr taz_s_organize_table_group_tmp)
+    )
+  )
+
+  ;; Tymczasowy marker punktu kotwiczenia tabeli.
+  (if
+    (and
+      taz_s_organize_current_table_group
+      taz_s_organize_current_table_anchor
+    )
+    (progn
+
+      (setq taz_s_organize_current_table_marker
+        (entmakex
+          (list
+            '(0 . "POINT")
+            '(8 . "0")
+            (cons 10 taz_s_organize_current_table_anchor)
+          )
+        )
+      )
+
+      (if taz_s_organize_current_table_marker
+        (ssadd
+          taz_s_organize_current_table_marker
+          taz_s_organize_table_case_ss_arg
+        )
+      )
+    )
+  )
+
+  taz_s_organize_table_case_ss_arg
+)
+
+
+;; ============================================================================
+;; TABELA ZESTAWIENIA STALI - ZAKONCZENIE PRZYPADKU
+;; ============================================================================
+;; Po ALIGN odczytujemy nowe polozenie tymczasowego POINT, usuwamy go z
+;; selection setu oraz z rysunku i zapamietujemy nowe polozenie kotwy tabeli.
+;; Lista ma taka sama kolejnosc jak przypadki X, Y, Z.
+;; ============================================================================
+
+(defun taz_s_organize_finish_table_case (taz_s_organize_table_case_ss_arg)
+
+  (setq taz_s_organize_current_table_anchor_after nil)
+
+  (if taz_s_organize_current_table_marker
+    (progn
+
+      (setq taz_s_organize_table_marker_data
+        (entget taz_s_organize_current_table_marker)
+      )
+
+      (if
+        (and
+          taz_s_organize_table_marker_data
+          (assoc 10 taz_s_organize_table_marker_data)
+        )
+        (setq taz_s_organize_current_table_anchor_after
+          (cdr (assoc 10 taz_s_organize_table_marker_data))
+        )
+      )
+
+      (ssdel
+        taz_s_organize_current_table_marker
+        taz_s_organize_table_case_ss_arg
+      )
+
+      (entdel taz_s_organize_current_table_marker)
+    )
+  )
+
+  (setq taz_s_organize_table_anchor_points_after
+    (append
+      taz_s_organize_table_anchor_points_after
+      (list taz_s_organize_current_table_anchor_after)
+    )
+  )
+)
+
+
+;; ============================================================================
+;; KONCOWE PRZESUNIECIE TABELI DO NAROZNIKA RAMKI
+;; ============================================================================
+;; Przesuwamy komplet obiektow tabeli z jej zapamietanej kotwy po ALIGN
+;; do lewego dolnego narożnika zewnetrznej ramki.
+;; Warstwy tabeli sa odblokowywane tylko na czas MOVE i ponownie blokowane
+;; wyłącznie wtedy, gdy byly zablokowane przed przesunieciem.
+;; ============================================================================
+
+(defun taz_s_organize_move_table_group
+  (
+    taz_s_organize_move_table_group_arg
+    taz_s_organize_move_table_source_arg
+    taz_s_organize_move_table_target_arg
+  )
+
+  (setq taz_s_organize_move_table_ss (ssadd))
+  (setq taz_s_organize_move_table_layers '())
+  (setq taz_s_organize_move_table_relock_layers '())
+
+  (setq taz_s_organize_move_table_tmp
+    taz_s_organize_move_table_group_arg
+  )
+
+  (while taz_s_organize_move_table_tmp
+
+    (setq taz_s_organize_move_table_ent
+      (car taz_s_organize_move_table_tmp)
+    )
+
+    (if
+      (and
+        taz_s_organize_move_table_ent
+        (entget taz_s_organize_move_table_ent)
+      )
+      (progn
+
+        (ssadd
+          taz_s_organize_move_table_ent
+          taz_s_organize_move_table_ss
+        )
+
+        (setq taz_s_organize_move_table_data
+          (entget taz_s_organize_move_table_ent)
+        )
+
+        (setq taz_s_organize_move_table_layer
+          (cdr (assoc 8 taz_s_organize_move_table_data))
+        )
+
+        (if
+          (and
+            taz_s_organize_move_table_layer
+            (not
+              (member
+                taz_s_organize_move_table_layer
+                taz_s_organize_move_table_layers
+              )
+            )
+          )
+          (setq taz_s_organize_move_table_layers
+            (append
+              taz_s_organize_move_table_layers
+              (list taz_s_organize_move_table_layer)
+            )
+          )
+        )
+      )
+    )
+
+    (setq taz_s_organize_move_table_tmp
+      (cdr taz_s_organize_move_table_tmp)
+    )
+  )
+
+  ;; Zapamietaj stan blokady warstw i odblokuj je na czas MOVE.
+  (setq taz_s_organize_move_table_layer_tmp
+    taz_s_organize_move_table_layers
+  )
+
+  (while taz_s_organize_move_table_layer_tmp
+
+    (setq taz_s_organize_move_table_layer_name
+      (car taz_s_organize_move_table_layer_tmp)
+    )
+
+    (setq taz_s_organize_move_table_layer_rec
+      (tblsearch "LAYER" taz_s_organize_move_table_layer_name)
+    )
+
+    (if
+      (and
+        taz_s_organize_move_table_layer_rec
+        (= 
+          (logand
+            (cdr (assoc 70 taz_s_organize_move_table_layer_rec))
+            4
+          )
+          4
+        )
+      )
+      (setq taz_s_organize_move_table_relock_layers
+        (append
+          taz_s_organize_move_table_relock_layers
+          (list taz_s_organize_move_table_layer_name)
+        )
+      )
+    )
+
+    (command
+      "_.-LAYER"
+      "_UNLOCK"
+      taz_s_organize_move_table_layer_name
+      ""
+    )
+
+    (setq taz_s_organize_move_table_layer_tmp
+      (cdr taz_s_organize_move_table_layer_tmp)
+    )
+  )
+
+  (if
+    (and
+      (> (sslength taz_s_organize_move_table_ss) 0)
+      taz_s_organize_move_table_source_arg
+      taz_s_organize_move_table_target_arg
+    )
+    (command
+      "_.MOVE"
+      taz_s_organize_move_table_ss
+      ""
+      "_NON"
+      taz_s_organize_move_table_source_arg
+      "_NON"
+      taz_s_organize_move_table_target_arg
+    )
+  )
+
+  ;; Przywroc blokade tylko tam, gdzie byla przed przesunieciem.
+  (setq taz_s_organize_move_table_layer_tmp
+    taz_s_organize_move_table_relock_layers
+  )
+
+  (while taz_s_organize_move_table_layer_tmp
+
+    (command
+      "_.-LAYER"
+      "_LOCK"
+      (car taz_s_organize_move_table_layer_tmp)
+      ""
+    )
+
+    (setq taz_s_organize_move_table_layer_tmp
+      (cdr taz_s_organize_move_table_layer_tmp)
+    )
+  )
+)
+
+
+;; ============================================================================
 ;; CICHE PRZERWANIE ORGANIZERA
 ;; ============================================================================
 ;; Uzywane m.in. po wybraniu ANULUJ w nowym oknie formatu arkusza.
@@ -1275,6 +1583,10 @@
       (setq taz_s_organize_case_nr 1)
       (setq taz_s_organize_total_moved 0)
 
+      ;; Nowe polozenia punktow kotwiczenia tabel po ALIGN.
+      ;; Po jednym wpisie dla kazdego przypadku.
+      (setq taz_s_organize_table_anchor_points_after '())
+
       ;; ======================================================================
       ;; PRZYPADKI X
       ;;
@@ -1313,6 +1625,13 @@
           (taz_s_organize_collect_case_z_range
             taz_s_organize_case_range_min
             taz_s_organize_case_range_max
+          )
+        )
+
+        (setq taz_s_organize_case_ss
+          (taz_s_organize_prepare_table_case
+            taz_s_organize_case_nr
+            taz_s_organize_case_ss
           )
         )
 
@@ -1390,8 +1709,19 @@
               taz_s_organize_destination_3
             )
 
+            (setq taz_s_organize_case_object_count
+              (sslength taz_s_organize_case_ss)
+            )
+
+            ;; Tymczasowego POINT tabeli nie liczymy jako przeniesionego obiektu.
+            (if taz_s_organize_current_table_marker
+              (setq taz_s_organize_case_object_count
+                (- taz_s_organize_case_object_count 1)
+              )
+            )
+
             (setq taz_s_organize_total_moved
-              (+ taz_s_organize_total_moved (sslength taz_s_organize_case_ss))
+              (+ taz_s_organize_total_moved taz_s_organize_case_object_count)
             )
 
             (princ
@@ -1399,7 +1729,7 @@
                 "\nX - przypadek "
                 (itoa taz_s_organize_case_nr)
                 " - przeniesiono obiektow: "
-                (itoa (sslength taz_s_organize_case_ss))
+                (itoa taz_s_organize_case_object_count)
               )
             )
           )
@@ -1411,6 +1741,8 @@
             )
           )
         )
+
+        (taz_s_organize_finish_table_case taz_s_organize_case_ss)
 
         (setq taz_s_organize_case_nr (+ taz_s_organize_case_nr 1))
         (setq taz_s_organize_tmp (cdr taz_s_organize_tmp))
@@ -1454,6 +1786,13 @@
           (taz_s_organize_collect_case_z_range
             taz_s_organize_case_range_min
             taz_s_organize_case_range_max
+          )
+        )
+
+        (setq taz_s_organize_case_ss
+          (taz_s_organize_prepare_table_case
+            taz_s_organize_case_nr
+            taz_s_organize_case_ss
           )
         )
 
@@ -1531,8 +1870,19 @@
               taz_s_organize_destination_3
             )
 
+            (setq taz_s_organize_case_object_count
+              (sslength taz_s_organize_case_ss)
+            )
+
+            ;; Tymczasowego POINT tabeli nie liczymy jako przeniesionego obiektu.
+            (if taz_s_organize_current_table_marker
+              (setq taz_s_organize_case_object_count
+                (- taz_s_organize_case_object_count 1)
+              )
+            )
+
             (setq taz_s_organize_total_moved
-              (+ taz_s_organize_total_moved (sslength taz_s_organize_case_ss))
+              (+ taz_s_organize_total_moved taz_s_organize_case_object_count)
             )
 
             (princ
@@ -1540,7 +1890,7 @@
                 "\nY - przypadek "
                 (itoa taz_s_organize_case_nr)
                 " - przeniesiono obiektow: "
-                (itoa (sslength taz_s_organize_case_ss))
+                (itoa taz_s_organize_case_object_count)
               )
             )
           )
@@ -1552,6 +1902,8 @@
             )
           )
         )
+
+        (taz_s_organize_finish_table_case taz_s_organize_case_ss)
 
         (setq taz_s_organize_case_nr (+ taz_s_organize_case_nr 1))
         (setq taz_s_organize_tmp (cdr taz_s_organize_tmp))
@@ -1585,6 +1937,13 @@
 
         (setq taz_s_organize_case_ss
           (taz_s_organize_collect_case taz_s_organize_case_z)
+        )
+
+        (setq taz_s_organize_case_ss
+          (taz_s_organize_prepare_table_case
+            taz_s_organize_case_nr
+            taz_s_organize_case_ss
+          )
         )
 
         (if (> (sslength taz_s_organize_case_ss) 0)
@@ -1661,8 +2020,19 @@
               taz_s_organize_destination_3
             )
 
+            (setq taz_s_organize_case_object_count
+              (sslength taz_s_organize_case_ss)
+            )
+
+            ;; Tymczasowego POINT tabeli nie liczymy jako przeniesionego obiektu.
+            (if taz_s_organize_current_table_marker
+              (setq taz_s_organize_case_object_count
+                (- taz_s_organize_case_object_count 1)
+              )
+            )
+
             (setq taz_s_organize_total_moved
-              (+ taz_s_organize_total_moved (sslength taz_s_organize_case_ss))
+              (+ taz_s_organize_total_moved taz_s_organize_case_object_count)
             )
 
             (princ
@@ -1670,7 +2040,7 @@
                 "\nZ - przypadek "
                 (itoa taz_s_organize_case_nr)
                 " - przeniesiono obiektow: "
-                (itoa (sslength taz_s_organize_case_ss))
+                (itoa taz_s_organize_case_object_count)
               )
             )
           )
@@ -1682,6 +2052,8 @@
             )
           )
         )
+
+        (taz_s_organize_finish_table_case taz_s_organize_case_ss)
 
         (setq taz_s_organize_case_nr (+ taz_s_organize_case_nr 1))
         (setq taz_s_organize_tmp (cdr taz_s_organize_tmp))
@@ -1859,6 +2231,7 @@
       ;; --------------------------------------------------------------------
 
       (setq taz_s_organize_frame_case_nr 1)
+      (setq taz_s_organize_frame_lower_left_points '())
 
       (while (< taz_s_organize_frame_case_nr taz_s_organize_case_nr)
 
@@ -1885,6 +2258,20 @@
 
         (c:taz_s_frame)
 
+        ;; Zapamietaj lewy dolny naroznik zewnetrznej ramki.
+        (setq taz_s_organize_frame_lower_left_points
+          (append
+            taz_s_organize_frame_lower_left_points
+            (list
+              (list
+                taz_s_frame_x0
+                taz_s_frame_y0
+                taz_s_frame_z
+              )
+            )
+          )
+        )
+
         (setq taz_s_organize_frame_case_nr
           (+ taz_s_organize_frame_case_nr 1)
         )
@@ -1893,6 +2280,76 @@
       (setq taz_s_frame_known_insert_point nil)
       (setq taz_s_frame_known_format nil)
       (setq taz_s_frame_known_scale_factor nil)
+
+      ;; --------------------------------------------------------------------
+      ;; NA SAM KONIEC: TABELA -> LEWY DOLNY NAROZNIK RAMKI
+      ;; --------------------------------------------------------------------
+      ;; Uzywamy punktu kotwiczenia tabeli po ALIGN oraz punktu x0,y0 ramki.
+      ;; Przesuwany jest caly komplet obiektow utworzonych przez
+      ;; taz_s_create_steel_table dla danego przypadku.
+
+      (command "_.UCS" "_W")
+
+      (setq taz_s_organize_table_move_index 0)
+
+      (while
+        (<
+          taz_s_organize_table_move_index
+          (length taz_s_organize_frame_lower_left_points)
+        )
+
+        (setq taz_s_organize_table_move_group nil)
+        (setq taz_s_organize_table_move_source nil)
+        (setq taz_s_organize_table_move_target nil)
+
+        (if
+          (and
+            (boundp 'taz_s_execution_design_table_groups)
+            taz_s_execution_design_table_groups
+          )
+          (setq taz_s_organize_table_move_group
+            (nth
+              taz_s_organize_table_move_index
+              taz_s_execution_design_table_groups
+            )
+          )
+        )
+
+        (if taz_s_organize_table_anchor_points_after
+          (setq taz_s_organize_table_move_source
+            (nth
+              taz_s_organize_table_move_index
+              taz_s_organize_table_anchor_points_after
+            )
+          )
+        )
+
+        (setq taz_s_organize_table_move_target
+          (nth
+            taz_s_organize_table_move_index
+            taz_s_organize_frame_lower_left_points
+          )
+        )
+
+        (if
+          (and
+            taz_s_organize_table_move_group
+            taz_s_organize_table_move_source
+            taz_s_organize_table_move_target
+          )
+          (taz_s_organize_move_table_group
+            taz_s_organize_table_move_group
+            taz_s_organize_table_move_source
+            taz_s_organize_table_move_target
+          )
+        )
+
+        (setq taz_s_organize_table_move_index
+          (+ taz_s_organize_table_move_index 1)
+        )
+      )
+
+      (command "_.REGEN")
     )
   )
 

@@ -204,6 +204,95 @@
   (princ)
 )
 
+;; =================================================================
+;; PRAWDZIWY OSTATNI ENAME W BAZIE RYSUNKU
+;; =================================================================
+;; ENTLAST zwraca ostatni obiekt glowny, ale stara POLYLINE lub INSERT
+;; moze miec jeszcze podobiekty dostepne przez ENTNEXT. Ta funkcja dochodzi
+;; do rzeczywistego konca bazy przed utworzeniem tabeli.
+;; =================================================================
+
+(defun taz_s_execution_design_get_last_entity ()
+
+  (setq taz_s_execution_design_last_ent (entlast))
+
+  (if taz_s_execution_design_last_ent
+    (progn
+      (setq taz_s_execution_design_last_next
+        (entnext taz_s_execution_design_last_ent)
+      )
+
+      (while taz_s_execution_design_last_next
+        (setq taz_s_execution_design_last_ent
+          taz_s_execution_design_last_next
+        )
+        (setq taz_s_execution_design_last_next
+          (entnext taz_s_execution_design_last_ent)
+        )
+      )
+    )
+  )
+
+  taz_s_execution_design_last_ent
+)
+
+
+;; =================================================================
+;; ZBIERANIE OBIEKTOW UTWORZONYCH PO WSKAZANYM ENAME
+;; =================================================================
+;; Uzywane do zapamietania kompletnej tabeli zestawienia stali.
+;; Funkcja zwraca liste wszystkich nowych obiektow utworzonych po
+;; taz_s_execution_design_before_arg.
+;; =================================================================
+
+(defun taz_s_execution_design_collect_new_entities
+  (taz_s_execution_design_before_arg)
+
+  (setq taz_s_execution_design_new_entities '())
+
+  (if taz_s_execution_design_before_arg
+    (setq taz_s_execution_design_new_ent
+      (entnext taz_s_execution_design_before_arg)
+    )
+    (setq taz_s_execution_design_new_ent (entnext))
+  )
+
+  (while taz_s_execution_design_new_ent
+
+    (setq taz_s_execution_design_new_data
+      (entget taz_s_execution_design_new_ent)
+    )
+
+    (setq taz_s_execution_design_new_type
+      (cdr (assoc 0 taz_s_execution_design_new_data))
+    )
+
+    ;; Nie zapisujemy podobiektow starej POLYLINE ani atrybutow INSERT.
+    ;; Do selection setu potrzebne sa obiekty glowne.
+    (if
+      (not
+        (member
+          taz_s_execution_design_new_type
+          '("VERTEX" "SEQEND" "ATTRIB")
+        )
+      )
+      (setq taz_s_execution_design_new_entities
+        (append
+          taz_s_execution_design_new_entities
+          (list taz_s_execution_design_new_ent)
+        )
+      )
+    )
+
+    (setq taz_s_execution_design_new_ent
+      (entnext taz_s_execution_design_new_ent)
+    )
+  )
+
+  taz_s_execution_design_new_entities
+)
+
+
 (defun c:taz_s_create_drawings_execution_design ()
 
   ;; ---------------------------------
@@ -904,6 +993,19 @@
 
   ;; odsuniecie tabeli: 100.0 dla 1:1, czyli zachowane 5000.0 dla 1:50
   (setq taz_s_st_offset (* 100.0 taz_s_annotation_scale))
+
+  ;; ---------------------------------
+  ;; ZAPAMIETANIE TABEL DLA ORGANIZERA
+  ;; ---------------------------------
+  ;; Dla kazdego przypadku przechowujemy:
+  ;; - liste wszystkich obiektow utworzonych przez taz_s_create_steel_table,
+  ;; - punkt kotwiczenia przekazany do tej funkcji.
+  ;;
+  ;; Listy maja dokladnie taka sama kolejnosc jak przypadki X, Y, Z.
+
+  (setq taz_s_execution_design_table_groups '())
+  (setq taz_s_execution_design_table_anchor_points '())
+
   (setq taz_s_copy_nr 1)
   
   (defun taz_s_get_number (taz_s_txt / taz_s_i taz_s_len taz_s_pos)
@@ -1021,10 +1123,42 @@
       ;;"X"
     ;;)
     
+    (setq taz_s_table_anchor_point
+      (list (+ taz_s_xmax 5000.0) taz_s_y taz_s_zoffset)
+    )
+
+    (setq taz_s_table_before (taz_s_execution_design_get_last_entity))
+
     (taz_s_create_steel_table
       taz_s_visible_handles
-      (list (+ taz_s_xmax 5000.0) taz_s_y taz_s_zoffset)
+      taz_s_table_anchor_point
       "X"
+    )
+
+    (setq taz_s_table_group
+      (taz_s_execution_design_collect_new_entities taz_s_table_before)
+    )
+
+    (setq taz_s_execution_design_table_groups
+      (append
+        taz_s_execution_design_table_groups
+        (list taz_s_table_group)
+      )
+    )
+
+    (if taz_s_table_group
+      (setq taz_s_execution_design_table_anchor_points
+        (append
+          taz_s_execution_design_table_anchor_points
+          (list taz_s_table_anchor_point)
+        )
+      )
+      (setq taz_s_execution_design_table_anchor_points
+        (append
+          taz_s_execution_design_table_anchor_points
+          (list nil)
+        )
+      )
     )
 
     (setq taz_s_copy_nr (+ taz_s_copy_nr 1))
@@ -1150,10 +1284,42 @@
       ;;"Y"
     ;;)
     
+    (setq taz_s_table_anchor_point
+      (list taz_s_x (+ taz_s_ymax 5000.0) taz_s_zoffset)
+    )
+
+    (setq taz_s_table_before (taz_s_execution_design_get_last_entity))
+
     (taz_s_create_steel_table
       taz_s_visible_handles
-      (list taz_s_x (+ taz_s_ymax 5000.0) taz_s_zoffset)
+      taz_s_table_anchor_point
       "Y"
+    )
+
+    (setq taz_s_table_group
+      (taz_s_execution_design_collect_new_entities taz_s_table_before)
+    )
+
+    (setq taz_s_execution_design_table_groups
+      (append
+        taz_s_execution_design_table_groups
+        (list taz_s_table_group)
+      )
+    )
+
+    (if taz_s_table_group
+      (setq taz_s_execution_design_table_anchor_points
+        (append
+          taz_s_execution_design_table_anchor_points
+          (list taz_s_table_anchor_point)
+        )
+      )
+      (setq taz_s_execution_design_table_anchor_points
+        (append
+          taz_s_execution_design_table_anchor_points
+          (list nil)
+        )
+      )
     )
 
     (setq taz_s_copy_nr (+ taz_s_copy_nr 1))
@@ -1329,10 +1495,42 @@
       ;;"Z"
     ;;)
     
+    (setq taz_s_table_anchor_point
+      (list (+ taz_s_xmax 5000.0) taz_s_ymax (+ taz_s_z taz_s_zoffset))
+    )
+
+    (setq taz_s_table_before (taz_s_execution_design_get_last_entity))
+
     (taz_s_create_steel_table
       taz_s_visible_handles
-      (list (+ taz_s_xmax 5000.0) taz_s_ymax (+ taz_s_z taz_s_zoffset))
+      taz_s_table_anchor_point
       "Z"
+    )
+
+    (setq taz_s_table_group
+      (taz_s_execution_design_collect_new_entities taz_s_table_before)
+    )
+
+    (setq taz_s_execution_design_table_groups
+      (append
+        taz_s_execution_design_table_groups
+        (list taz_s_table_group)
+      )
+    )
+
+    (if taz_s_table_group
+      (setq taz_s_execution_design_table_anchor_points
+        (append
+          taz_s_execution_design_table_anchor_points
+          (list taz_s_table_anchor_point)
+        )
+      )
+      (setq taz_s_execution_design_table_anchor_points
+        (append
+          taz_s_execution_design_table_anchor_points
+          (list nil)
+        )
+      )
     )
 
     (setq taz_s_copy_nr (+ taz_s_copy_nr 1))
