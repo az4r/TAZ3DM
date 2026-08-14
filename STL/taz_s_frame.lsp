@@ -39,6 +39,25 @@
   (setq taz_s_frame_height nil)
 
   (setq taz_s_frame_insert_point nil)
+
+  ;; Jesli organizer przekazal znany srodek przypadku,
+  ;; zapamietaj go lokalnie dla tego uruchomienia ramki
+  ;; i od razu wyczysc zmienna przekazujaca.
+  (setq taz_s_frame_known_insert_point_local nil)
+
+  (if
+    (and
+      (boundp 'taz_s_frame_known_insert_point)
+      taz_s_frame_known_insert_point
+    )
+    (progn
+      (setq taz_s_frame_known_insert_point_local
+        taz_s_frame_known_insert_point
+      )
+      (setq taz_s_frame_known_insert_point nil)
+    )
+  )
+
   (setq taz_s_frame_x nil)
   (setq taz_s_frame_y nil)
   (setq taz_s_frame_z nil)
@@ -352,8 +371,20 @@
   ;; PUNKT WSTAWIENIA = SRODEK ARKUSZA
   ;; ---------------------------------------------------------
 
-  (setq taz_s_frame_insert_point
-        (getpoint (strcat "\nWskaz srodek ramki " taz_s_frame_format " w skali " taz_s_frame_scale ": ")))
+  (if taz_s_frame_known_insert_point_local
+    (setq taz_s_frame_insert_point taz_s_frame_known_insert_point_local)
+    (setq taz_s_frame_insert_point
+      (getpoint
+        (strcat
+          "\nWskaz srodek ramki "
+          taz_s_frame_format
+          " w skali "
+          taz_s_frame_scale
+          ": "
+        )
+      )
+    )
+  )
 
   (if (null taz_s_frame_insert_point)
     (progn

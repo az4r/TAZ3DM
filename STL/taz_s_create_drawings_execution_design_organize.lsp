@@ -1689,6 +1689,43 @@
 
   (setvar "CMDECHO" taz_s_organize_old_cmdecho)
 
+  ;; ----------------------------------------------------------------------
+  ;; RAMKI DLA KOLEJNYCH PRZYPADKOW
+  ;;
+  ;; Po uporzadkowaniu srodek pierwszego przypadku jest w 0,0,0,
+  ;; a kazdy kolejny lezy o taz_s_organize_spacing dalej po osi X.
+  ;; Punkt jest przekazywany do taz_s_frame przez zmienna globalna.
+  ;; ----------------------------------------------------------------------
+
+  (if taz_s_organize_can_run
+    (progn
+
+      (setq taz_s_organize_frame_case_nr 1)
+
+      (while (< taz_s_organize_frame_case_nr taz_s_organize_case_nr)
+
+        (setq taz_s_frame_known_insert_point
+          (list
+            (*
+              (- taz_s_organize_frame_case_nr 1)
+              taz_s_organize_spacing
+            )
+            0.0
+            0.0
+          )
+        )
+
+        (c:taz_s_frame)
+
+        (setq taz_s_organize_frame_case_nr
+          (+ taz_s_organize_frame_case_nr 1)
+        )
+      )
+
+      (setq taz_s_frame_known_insert_point nil)
+    )
+  )
+
   (princ)
 )
 
