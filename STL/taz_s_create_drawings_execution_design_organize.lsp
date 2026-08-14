@@ -322,6 +322,47 @@
   )
 
   ;; ----------------------------------------------------------
+  ;; ELLIPSE
+  ;; Punkt 10 elipsy jest zapisany bezposrednio w WCS.
+  ;; ----------------------------------------------------------
+
+  (if
+    (and
+      (= taz_s_organize_entity_z nil)
+      (= taz_s_organize_entity_type "ELLIPSE")
+    )
+    (progn
+
+      (setq taz_s_organize_entity_point
+        (cdr (assoc 10 taz_s_organize_entity_data))
+      )
+
+      (if taz_s_organize_entity_point
+        (progn
+
+          (if (= (caddr taz_s_organize_entity_point) nil)
+            (setq taz_s_organize_entity_point
+              (list
+                (car taz_s_organize_entity_point)
+                (cadr taz_s_organize_entity_point)
+                0.0
+              )
+            )
+          )
+
+          (setq taz_s_organize_entity_point_wcs
+            taz_s_organize_entity_point
+          )
+
+          (setq taz_s_organize_entity_z
+            (caddr taz_s_organize_entity_point_wcs)
+          )
+        )
+      )
+    )
+  )
+
+  ;; ----------------------------------------------------------
   ;; POZOSTALE OBIEKTY
   ;; ----------------------------------------------------------
 
@@ -474,7 +515,8 @@
 ;; - LWPOLYLINE -> wszystkie wierzcholki,
 ;; - TEXT       -> punkty 10 i 11,
 ;; - MTEXT      -> punkt wstawienia,
-;; - CIRCLE/ARC -> srodek i promien.
+;; - CIRCLE/ARC -> srodek i promien,
+;; - ELLIPSE    -> srodek i polowa osi glownej.
 ;; ----------------------------------------------------------------------------
 
 (defun taz_s_organize_get_entity_z_range (taz_s_organize_range_entity_arg)
@@ -820,6 +862,61 @@
 
           (taz_s_organize_update_entity_z_value
             (+ taz_s_organize_range_center_z taz_s_organize_range_radius)
+          )
+        )
+      )
+    )
+  )
+
+  ;; --------------------------------------------------------------------------
+  ;; ELLIPSE
+  ;;
+  ;; Punkt 10 oraz wektor osi glownej 11 sa zapisane w WCS.
+  ;; Do zakresu Z bierzemy srodek oraz bezpieczny zakres +/- polowa osi
+  ;; glownej. Dzieki temu elipsa trafia do wyboru tak samo jak CIRCLE/ARC.
+  ;; --------------------------------------------------------------------------
+
+  (if (= taz_s_organize_range_type "ELLIPSE")
+    (progn
+
+      (setq taz_s_organize_range_point_wcs nil)
+
+      (taz_s_organize_update_entity_z_from_point
+        (cdr (assoc 10 taz_s_organize_range_data))
+        taz_s_organize_range_entity_arg
+        T
+      )
+
+      (setq taz_s_organize_range_ellipse_radius 0.0)
+
+      (if (assoc 11 taz_s_organize_range_data)
+        (setq taz_s_organize_range_ellipse_radius
+          (distance
+            '(0.0 0.0 0.0)
+            (cdr (assoc 11 taz_s_organize_range_data))
+          )
+        )
+      )
+
+      (if taz_s_organize_range_point_wcs
+        (progn
+
+          (setq taz_s_organize_range_center_z
+            (caddr taz_s_organize_range_point_wcs)
+          )
+
+          (taz_s_organize_update_entity_z_value
+            (-
+              taz_s_organize_range_center_z
+              taz_s_organize_range_ellipse_radius
+            )
+          )
+
+          (taz_s_organize_update_entity_z_value
+            (+
+              taz_s_organize_range_center_z
+              taz_s_organize_range_ellipse_radius
+            )
           )
         )
       )
