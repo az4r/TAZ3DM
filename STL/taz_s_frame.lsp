@@ -40,6 +40,56 @@
 
   (setq taz_s_frame_insert_point nil)
 
+  ;; Jesli organizer przekazal znany format i skale,
+  ;; zapamietaj je lokalnie dla tego uruchomienia ramki
+  ;; i od razu wyczysc zmienne przekazujace.
+  (setq taz_s_frame_known_format_local nil)
+  (setq taz_s_frame_known_scale_factor_local nil)
+
+  (if
+    (and
+      (boundp 'taz_s_frame_known_format)
+      taz_s_frame_known_format
+    )
+    (progn
+      (setq taz_s_frame_known_format_local
+        taz_s_frame_known_format
+      )
+      (setq taz_s_frame_known_format nil)
+    )
+  )
+
+  (if
+    (and
+      (boundp 'taz_s_frame_known_scale_factor)
+      taz_s_frame_known_scale_factor
+    )
+    (progn
+      (setq taz_s_frame_known_scale_factor_local
+        taz_s_frame_known_scale_factor
+      )
+      (setq taz_s_frame_known_scale_factor nil)
+    )
+  )
+
+  (if taz_s_frame_known_format_local
+    (setq taz_s_frame_format taz_s_frame_known_format_local)
+  )
+
+  (if taz_s_frame_known_scale_factor_local
+    (progn
+      (setq taz_s_frame_scale_factor
+        taz_s_frame_known_scale_factor_local
+      )
+      (setq taz_s_frame_scale
+        (strcat
+          "1:"
+          (itoa (fix taz_s_frame_scale_factor))
+        )
+      )
+    )
+  )
+
   ;; Jesli organizer przekazal znany srodek przypadku,
   ;; zapamietaj go lokalnie dla tego uruchomienia ramki
   ;; i od razu wyczysc zmienna przekazujaca.
@@ -77,124 +127,140 @@
   (setq taz_s_frame_inner_p6 nil)
 
   ;; ---------------------------------------------------------
-  ;; WCZYTANIE PLIKU DCL
+  ;; OKNO DCL TYLKO GDY FORMAT LUB SKALA NIE SA ZNANE
   ;; ---------------------------------------------------------
+  ;; Przy wywolaniu z organizera oba parametry sa przekazane,
+  ;; dlatego okno taz_s_frame.dcl nie jest wtedy wyswietlane.
+  ;; Przy recznym uruchomieniu taz_s_frame zachowanie pozostaje stare.
 
-  (setq taz_s_frame_dcl_id (load_dialog "taz_s_frame.dcl"))
-
-  (if (< taz_s_frame_dcl_id 0)
-    (progn
-      (alert "Nie moge zaladowac pliku taz_s_frame.dcl.")
-      (taz_s_current_settings_restore)
-      (taz_s_frame_exit)
+  (if
+    (or
+      (= taz_s_frame_known_format_local nil)
+      (= taz_s_frame_known_scale_factor_local nil)
     )
-  )
-
-  (if (not (new_dialog "taz_s_frame_dialog" taz_s_frame_dcl_id))
     (progn
-      (alert "Nie moge zaladowac okienka DCL.")
+      ;; ---------------------------------------------------------
+      ;; WCZYTANIE PLIKU DCL
+      ;; ---------------------------------------------------------
+
+      (setq taz_s_frame_dcl_id (load_dialog "taz_s_frame.dcl"))
+
+      (if (< taz_s_frame_dcl_id 0)
+        (progn
+          (alert "Nie moge zaladowac pliku taz_s_frame.dcl.")
+          (taz_s_current_settings_restore)
+          (taz_s_frame_exit)
+        )
+      )
+
+      (if (not (new_dialog "taz_s_frame_dialog" taz_s_frame_dcl_id))
+        (progn
+          (alert "Nie moge zaladowac okienka DCL.")
+          (unload_dialog taz_s_frame_dcl_id)
+          (taz_s_current_settings_restore)
+          (taz_s_frame_exit)
+        )
+      )
+
+      ;; ---------------------------------------------------------
+      ;; LISTA FORMATOW
+      ;; ---------------------------------------------------------
+
+      (start_list "taz_s_frame_format_popup")
+      (mapcar 'add_list '("A0"
+                          "A0+1" "A0+2" "A0+3" "A0+4"
+                          "A1" "A1+1" "A1+2" "A1+3" "A1+4"
+                          "A2" "A2+1" "A2+2" "A2+3" "A2+4"
+                          "A3" "A3+1" "A3+2" "A3+3" "A3+4"
+                          "A4"))
+      (end_list)
+
+      ;; Domyslnie A1, czyli indeks 5
+      (set_tile "taz_s_frame_format_popup" "5")
+
+      ;; ---------------------------------------------------------
+      ;; LISTA SKAL
+      ;; ---------------------------------------------------------
+
+      (start_list "taz_s_frame_scale_popup")
+      (mapcar 'add_list '("1:1" "1:2" "1:5" "1:10" "1:20"
+                          "1:25" "1:50" "1:100" "1:200"))
+      (end_list)
+
+      ;; Domyslnie 1:1, czyli indeks 0
+      (set_tile "taz_s_frame_scale_popup" "0")
+
+      ;; ---------------------------------------------------------
+      ;; OBSLUGA OK
+      ;; ---------------------------------------------------------
+
+      (action_tile "accept"
+        "(progn
+            (setq taz_s_frame_selected_index (atoi (get_tile \"taz_s_frame_format_popup\")))
+            (setq taz_s_frame_scale_selected_index (atoi (get_tile \"taz_s_frame_scale_popup\")))
+
+            (if (= taz_s_frame_selected_index 0) (setq taz_s_frame_format \"A0\"))
+            (if (= taz_s_frame_selected_index 1) (setq taz_s_frame_format \"A0+1\"))
+            (if (= taz_s_frame_selected_index 2) (setq taz_s_frame_format \"A0+2\"))
+            (if (= taz_s_frame_selected_index 3) (setq taz_s_frame_format \"A0+3\"))
+            (if (= taz_s_frame_selected_index 4) (setq taz_s_frame_format \"A0+4\"))
+            (if (= taz_s_frame_selected_index 5) (setq taz_s_frame_format \"A1\"))
+            (if (= taz_s_frame_selected_index 6) (setq taz_s_frame_format \"A1+1\"))
+            (if (= taz_s_frame_selected_index 7) (setq taz_s_frame_format \"A1+2\"))
+            (if (= taz_s_frame_selected_index 8) (setq taz_s_frame_format \"A1+3\"))
+            (if (= taz_s_frame_selected_index 9) (setq taz_s_frame_format \"A1+4\"))
+            (if (= taz_s_frame_selected_index 10) (setq taz_s_frame_format \"A2\"))
+            (if (= taz_s_frame_selected_index 11) (setq taz_s_frame_format \"A2+1\"))
+            (if (= taz_s_frame_selected_index 12) (setq taz_s_frame_format \"A2+2\"))
+            (if (= taz_s_frame_selected_index 13) (setq taz_s_frame_format \"A2+3\"))
+            (if (= taz_s_frame_selected_index 14) (setq taz_s_frame_format \"A2+4\"))
+            (if (= taz_s_frame_selected_index 15) (setq taz_s_frame_format \"A3\"))
+            (if (= taz_s_frame_selected_index 16) (setq taz_s_frame_format \"A3+1\"))
+            (if (= taz_s_frame_selected_index 17) (setq taz_s_frame_format \"A3+2\"))
+            (if (= taz_s_frame_selected_index 18) (setq taz_s_frame_format \"A3+3\"))
+            (if (= taz_s_frame_selected_index 19) (setq taz_s_frame_format \"A3+4\"))
+            (if (= taz_s_frame_selected_index 20) (setq taz_s_frame_format \"A4\"))
+
+            (if (= taz_s_frame_scale_selected_index 0) (progn (setq taz_s_frame_scale \"1:1\") (setq taz_s_frame_scale_factor 1.0)))
+            (if (= taz_s_frame_scale_selected_index 1) (progn (setq taz_s_frame_scale \"1:2\") (setq taz_s_frame_scale_factor 2.0)))
+            (if (= taz_s_frame_scale_selected_index 2) (progn (setq taz_s_frame_scale \"1:5\") (setq taz_s_frame_scale_factor 5.0)))
+            (if (= taz_s_frame_scale_selected_index 3) (progn (setq taz_s_frame_scale \"1:10\") (setq taz_s_frame_scale_factor 10.0)))
+            (if (= taz_s_frame_scale_selected_index 4) (progn (setq taz_s_frame_scale \"1:20\") (setq taz_s_frame_scale_factor 20.0)))
+            (if (= taz_s_frame_scale_selected_index 5) (progn (setq taz_s_frame_scale \"1:25\") (setq taz_s_frame_scale_factor 25.0)))
+            (if (= taz_s_frame_scale_selected_index 6) (progn (setq taz_s_frame_scale \"1:50\") (setq taz_s_frame_scale_factor 50.0)))
+            (if (= taz_s_frame_scale_selected_index 7) (progn (setq taz_s_frame_scale \"1:100\") (setq taz_s_frame_scale_factor 100.0)))
+            (if (= taz_s_frame_scale_selected_index 8) (progn (setq taz_s_frame_scale \"1:200\") (setq taz_s_frame_scale_factor 200.0)))
+
+            (done_dialog 1)
+        )"
+      )
+
+      ;; ---------------------------------------------------------
+      ;; OBSLUGA ANULUJ
+      ;; ---------------------------------------------------------
+
+      (action_tile "cancel"
+        "(progn
+            (done_dialog 0)
+        )"
+      )
+
+      ;; ---------------------------------------------------------
+      ;; URUCHOM OKNO DCL
+      ;; ---------------------------------------------------------
+
+      (setq taz_s_frame_dialog_result (start_dialog))
+
       (unload_dialog taz_s_frame_dcl_id)
-      (taz_s_current_settings_restore)
-      (taz_s_frame_exit)
-    )
-  )
 
-  ;; ---------------------------------------------------------
-  ;; LISTA FORMATOW
-  ;; ---------------------------------------------------------
+      ;; Jesli anulowano - przywroc ustawienia i przerwij skrypt
+      (if (= taz_s_frame_dialog_result 0)
+        (progn
+          (taz_s_current_settings_restore)
+          (taz_s_frame_exit)
+        )
+      )
 
-  (start_list "taz_s_frame_format_popup")
-  (mapcar 'add_list '("A0"
-                      "A0+1" "A0+2" "A0+3" "A0+4"
-                      "A1" "A1+1" "A1+2" "A1+3" "A1+4"
-                      "A2" "A2+1" "A2+2" "A2+3" "A2+4"
-                      "A3" "A3+1" "A3+2" "A3+3" "A3+4"
-                      "A4"))
-  (end_list)
-
-  ;; Domyslnie A1, czyli indeks 5
-  (set_tile "taz_s_frame_format_popup" "5")
-
-  ;; ---------------------------------------------------------
-  ;; LISTA SKAL
-  ;; ---------------------------------------------------------
-
-  (start_list "taz_s_frame_scale_popup")
-  (mapcar 'add_list '("1:1" "1:2" "1:5" "1:10" "1:20"
-                      "1:25" "1:50" "1:100" "1:200"))
-  (end_list)
-
-  ;; Domyslnie 1:1, czyli indeks 0
-  (set_tile "taz_s_frame_scale_popup" "0")
-
-  ;; ---------------------------------------------------------
-  ;; OBSLUGA OK
-  ;; ---------------------------------------------------------
-
-  (action_tile "accept"
-    "(progn
-        (setq taz_s_frame_selected_index (atoi (get_tile \"taz_s_frame_format_popup\")))
-        (setq taz_s_frame_scale_selected_index (atoi (get_tile \"taz_s_frame_scale_popup\")))
-
-        (if (= taz_s_frame_selected_index 0) (setq taz_s_frame_format \"A0\"))
-        (if (= taz_s_frame_selected_index 1) (setq taz_s_frame_format \"A0+1\"))
-        (if (= taz_s_frame_selected_index 2) (setq taz_s_frame_format \"A0+2\"))
-        (if (= taz_s_frame_selected_index 3) (setq taz_s_frame_format \"A0+3\"))
-        (if (= taz_s_frame_selected_index 4) (setq taz_s_frame_format \"A0+4\"))
-        (if (= taz_s_frame_selected_index 5) (setq taz_s_frame_format \"A1\"))
-        (if (= taz_s_frame_selected_index 6) (setq taz_s_frame_format \"A1+1\"))
-        (if (= taz_s_frame_selected_index 7) (setq taz_s_frame_format \"A1+2\"))
-        (if (= taz_s_frame_selected_index 8) (setq taz_s_frame_format \"A1+3\"))
-        (if (= taz_s_frame_selected_index 9) (setq taz_s_frame_format \"A1+4\"))
-        (if (= taz_s_frame_selected_index 10) (setq taz_s_frame_format \"A2\"))
-        (if (= taz_s_frame_selected_index 11) (setq taz_s_frame_format \"A2+1\"))
-        (if (= taz_s_frame_selected_index 12) (setq taz_s_frame_format \"A2+2\"))
-        (if (= taz_s_frame_selected_index 13) (setq taz_s_frame_format \"A2+3\"))
-        (if (= taz_s_frame_selected_index 14) (setq taz_s_frame_format \"A2+4\"))
-        (if (= taz_s_frame_selected_index 15) (setq taz_s_frame_format \"A3\"))
-        (if (= taz_s_frame_selected_index 16) (setq taz_s_frame_format \"A3+1\"))
-        (if (= taz_s_frame_selected_index 17) (setq taz_s_frame_format \"A3+2\"))
-        (if (= taz_s_frame_selected_index 18) (setq taz_s_frame_format \"A3+3\"))
-        (if (= taz_s_frame_selected_index 19) (setq taz_s_frame_format \"A3+4\"))
-        (if (= taz_s_frame_selected_index 20) (setq taz_s_frame_format \"A4\"))
-
-        (if (= taz_s_frame_scale_selected_index 0) (progn (setq taz_s_frame_scale \"1:1\") (setq taz_s_frame_scale_factor 1.0)))
-        (if (= taz_s_frame_scale_selected_index 1) (progn (setq taz_s_frame_scale \"1:2\") (setq taz_s_frame_scale_factor 2.0)))
-        (if (= taz_s_frame_scale_selected_index 2) (progn (setq taz_s_frame_scale \"1:5\") (setq taz_s_frame_scale_factor 5.0)))
-        (if (= taz_s_frame_scale_selected_index 3) (progn (setq taz_s_frame_scale \"1:10\") (setq taz_s_frame_scale_factor 10.0)))
-        (if (= taz_s_frame_scale_selected_index 4) (progn (setq taz_s_frame_scale \"1:20\") (setq taz_s_frame_scale_factor 20.0)))
-        (if (= taz_s_frame_scale_selected_index 5) (progn (setq taz_s_frame_scale \"1:25\") (setq taz_s_frame_scale_factor 25.0)))
-        (if (= taz_s_frame_scale_selected_index 6) (progn (setq taz_s_frame_scale \"1:50\") (setq taz_s_frame_scale_factor 50.0)))
-        (if (= taz_s_frame_scale_selected_index 7) (progn (setq taz_s_frame_scale \"1:100\") (setq taz_s_frame_scale_factor 100.0)))
-        (if (= taz_s_frame_scale_selected_index 8) (progn (setq taz_s_frame_scale \"1:200\") (setq taz_s_frame_scale_factor 200.0)))
-
-        (done_dialog 1)
-    )"
-  )
-
-  ;; ---------------------------------------------------------
-  ;; OBSLUGA ANULUJ
-  ;; ---------------------------------------------------------
-
-  (action_tile "cancel"
-    "(progn
-        (done_dialog 0)
-    )"
-  )
-
-  ;; ---------------------------------------------------------
-  ;; URUCHOM OKNO DCL
-  ;; ---------------------------------------------------------
-
-  (setq taz_s_frame_dialog_result (start_dialog))
-
-  (unload_dialog taz_s_frame_dcl_id)
-
-  ;; Jesli anulowano - przywroc ustawienia i przerwij skrypt
-  (if (= taz_s_frame_dialog_result 0)
-    (progn
-      (taz_s_current_settings_restore)
-      (taz_s_frame_exit)
     )
   )
 

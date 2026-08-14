@@ -1123,6 +1123,29 @@
 
 
 ;; ============================================================================
+;; CICHE PRZERWANIE ORGANIZERA
+;; ============================================================================
+;; Uzywane m.in. po wybraniu ANULUJ w nowym oknie formatu arkusza.
+;; Podmieniamy na chwile *error*, wywolujemy exit i nie pokazujemy
+;; komunikatu "quit / exit abort".
+;; ============================================================================
+
+(defun taz_s_organize_exit ()
+
+  (setq taz_s_organize_old_error *error*)
+
+  (setq *error*
+    (lambda (taz_s_organize_error_message)
+      (setq *error* taz_s_organize_old_error)
+      (princ "")
+    )
+  )
+
+  (exit)
+)
+
+
+;; ============================================================================
 ;; GLOWNA KOMENDA
 ;; ============================================================================
 
@@ -1694,11 +1717,146 @@
   ;;
   ;; Po uporzadkowaniu srodek pierwszego przypadku jest w 0,0,0,
   ;; a kazdy kolejny lezy o taz_s_organize_spacing dalej po osi X.
-  ;; Punkt jest przekazywany do taz_s_frame przez zmienna globalna.
+  ;;
+  ;; Format arkusza wybieramy tutaj TYLKO RAZ.
+  ;; Skala pochodzi z taz_s_create_drawings_execution_design.
+  ;; Format, skala i srodek sa przekazywane do taz_s_frame przez
+  ;; zmienne globalne, dlatego taz_s_frame nie wyswietla swojego DCL.
   ;; ----------------------------------------------------------------------
 
   (if taz_s_organize_can_run
     (progn
+
+      ;; --------------------------------------------------------------------
+      ;; SKALA Z taz_s_create_drawings_execution_design
+      ;; --------------------------------------------------------------------
+
+      (setq taz_s_organize_frame_scale_factor nil)
+
+      (if
+        (and
+          (boundp 'taz_s_execution_design_frame_scale_factor)
+          taz_s_execution_design_frame_scale_factor
+        )
+        (setq taz_s_organize_frame_scale_factor
+          taz_s_execution_design_frame_scale_factor
+        )
+        (if
+          (and
+            (boundp 'taz_s_annotation_scale)
+            taz_s_annotation_scale
+          )
+          (setq taz_s_organize_frame_scale_factor
+            taz_s_annotation_scale
+          )
+        )
+      )
+
+      ;; --------------------------------------------------------------------
+      ;; JEDNORAZOWY WYBOR FORMATU ARKUSZA
+      ;; --------------------------------------------------------------------
+
+      (setq taz_s_organize_frame_dcl_id nil)
+      (setq taz_s_organize_frame_dialog_result nil)
+      (setq taz_s_organize_frame_selected_index 5)
+      (setq taz_s_organize_frame_format "A1")
+
+      (setq taz_s_organize_frame_dcl_id
+        (load_dialog "taz_s_create_drawings_execution_design_organize.dcl")
+      )
+
+      (if (< taz_s_organize_frame_dcl_id 0)
+        (progn
+          (alert "Nie moge zaladowac pliku taz_s_create_drawings_execution_design_organize.dcl.")
+          (taz_s_organize_exit)
+        )
+      )
+
+      (if
+        (not
+          (new_dialog
+            "taz_s_create_drawings_execution_design_organize_dialog"
+            taz_s_organize_frame_dcl_id
+          )
+        )
+        (progn
+          (alert "Nie moge zaladowac okienka DCL wyboru formatu arkusza.")
+          (unload_dialog taz_s_organize_frame_dcl_id)
+          (taz_s_organize_exit)
+        )
+      )
+
+      (start_list "taz_s_organize_frame_format_popup")
+      (mapcar 'add_list '(
+        "A0"
+        "A0+1" "A0+2" "A0+3" "A0+4"
+        "A1" "A1+1" "A1+2" "A1+3" "A1+4"
+        "A2" "A2+1" "A2+2" "A2+3" "A2+4"
+        "A3" "A3+1" "A3+2" "A3+3" "A3+4"
+        "A4"
+      ))
+      (end_list)
+
+      ;; Domyslnie A1, czyli indeks 5
+      (set_tile "taz_s_organize_frame_format_popup" "5")
+
+      ;; --------------------------------------------------------------------
+      ;; OBSLUGA OK
+      ;; --------------------------------------------------------------------
+
+      (action_tile "accept"
+        "(progn
+            (setq taz_s_organize_frame_selected_index
+              (atoi (get_tile \"taz_s_organize_frame_format_popup\"))
+            )
+
+            (if (= taz_s_organize_frame_selected_index 0) (setq taz_s_organize_frame_format \"A0\"))
+            (if (= taz_s_organize_frame_selected_index 1) (setq taz_s_organize_frame_format \"A0+1\"))
+            (if (= taz_s_organize_frame_selected_index 2) (setq taz_s_organize_frame_format \"A0+2\"))
+            (if (= taz_s_organize_frame_selected_index 3) (setq taz_s_organize_frame_format \"A0+3\"))
+            (if (= taz_s_organize_frame_selected_index 4) (setq taz_s_organize_frame_format \"A0+4\"))
+            (if (= taz_s_organize_frame_selected_index 5) (setq taz_s_organize_frame_format \"A1\"))
+            (if (= taz_s_organize_frame_selected_index 6) (setq taz_s_organize_frame_format \"A1+1\"))
+            (if (= taz_s_organize_frame_selected_index 7) (setq taz_s_organize_frame_format \"A1+2\"))
+            (if (= taz_s_organize_frame_selected_index 8) (setq taz_s_organize_frame_format \"A1+3\"))
+            (if (= taz_s_organize_frame_selected_index 9) (setq taz_s_organize_frame_format \"A1+4\"))
+            (if (= taz_s_organize_frame_selected_index 10) (setq taz_s_organize_frame_format \"A2\"))
+            (if (= taz_s_organize_frame_selected_index 11) (setq taz_s_organize_frame_format \"A2+1\"))
+            (if (= taz_s_organize_frame_selected_index 12) (setq taz_s_organize_frame_format \"A2+2\"))
+            (if (= taz_s_organize_frame_selected_index 13) (setq taz_s_organize_frame_format \"A2+3\"))
+            (if (= taz_s_organize_frame_selected_index 14) (setq taz_s_organize_frame_format \"A2+4\"))
+            (if (= taz_s_organize_frame_selected_index 15) (setq taz_s_organize_frame_format \"A3\"))
+            (if (= taz_s_organize_frame_selected_index 16) (setq taz_s_organize_frame_format \"A3+1\"))
+            (if (= taz_s_organize_frame_selected_index 17) (setq taz_s_organize_frame_format \"A3+2\"))
+            (if (= taz_s_organize_frame_selected_index 18) (setq taz_s_organize_frame_format \"A3+3\"))
+            (if (= taz_s_organize_frame_selected_index 19) (setq taz_s_organize_frame_format \"A3+4\"))
+            (if (= taz_s_organize_frame_selected_index 20) (setq taz_s_organize_frame_format \"A4\"))
+
+            (done_dialog 1)
+        )"
+      )
+
+      ;; --------------------------------------------------------------------
+      ;; OBSLUGA ANULUJ
+      ;; --------------------------------------------------------------------
+
+      (action_tile "cancel"
+        "(progn
+            (done_dialog 0)
+        )"
+      )
+
+      (setq taz_s_organize_frame_dialog_result (start_dialog))
+
+      (unload_dialog taz_s_organize_frame_dcl_id)
+
+      (if (= taz_s_organize_frame_dialog_result 0)
+        (taz_s_organize_exit)
+      )
+
+      ;; --------------------------------------------------------------------
+      ;; KOLEJNE RAMKI - TEN SAM FORMAT I TA SAMA SKALA
+      ;; --------------------------------------------------------------------
 
       (setq taz_s_organize_frame_case_nr 1)
 
@@ -1715,6 +1873,16 @@
           )
         )
 
+        (setq taz_s_frame_known_format
+          taz_s_organize_frame_format
+        )
+
+        (if taz_s_organize_frame_scale_factor
+          (setq taz_s_frame_known_scale_factor
+            taz_s_organize_frame_scale_factor
+          )
+        )
+
         (c:taz_s_frame)
 
         (setq taz_s_organize_frame_case_nr
@@ -1723,6 +1891,8 @@
       )
 
       (setq taz_s_frame_known_insert_point nil)
+      (setq taz_s_frame_known_format nil)
+      (setq taz_s_frame_known_scale_factor nil)
     )
   )
 

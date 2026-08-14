@@ -889,6 +889,19 @@
   ;; =================================================================
 
   (taz_s_annotation_scale)
+
+  ;; ---------------------------------
+  ;; ZAPAMIETANIE SKALI DLA POZNIEJSZYCH RAMEK
+  ;; ---------------------------------
+  ;; taz_s_annotation_scale jest mnoznikiem skali:
+  ;; 1.0 = 1:1, 50.0 = 1:50 itd.
+  ;; Zachowujemy te wartosc osobno, aby organizer mogl przekazac
+  ;; dokladnie te sama skale do taz_s_frame.
+
+  (setq taz_s_execution_design_frame_scale_factor
+    taz_s_annotation_scale
+  )
+
   ;; odsuniecie tabeli: 100.0 dla 1:1, czyli zachowane 5000.0 dla 1:50
   (setq taz_s_st_offset (* 100.0 taz_s_annotation_scale))
   (setq taz_s_copy_nr 1)
