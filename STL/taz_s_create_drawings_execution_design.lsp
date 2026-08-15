@@ -1549,6 +1549,91 @@
     )
   )
 
+  ;; -------------------------------------------------------
+  ;; IZO - TYTUL WIDOKU 3D
+  ;;
+  ;; Tresc: WIDOK 3D
+  ;; Wysokosc: 5.0 w skali 1:1, skalowana przez taz_s_annotation_scale
+  ;; Polozenie: centralnie, 500 jednostek nad gorna krawedzia
+  ;;             rzutu w aktualnym UCS izometrycznym
+  ;; Warstwa: taz_s_labels
+  ;;
+  ;; Gorna krawedz jest wyznaczana z 8 naroznikow obwiedni przypadku
+  ;; po przeliczeniu ich do tego samego UCS, ktorego uzywa SOLPROF.
+  ;; -------------------------------------------------------
+
+  (setq taz_s_izo_title_corners
+    (list
+      (list taz_s_xmin taz_s_ymin (+ taz_s_zmin taz_s_izo_zoffset))
+      (list taz_s_xmin taz_s_ymin (+ taz_s_zmax taz_s_izo_zoffset))
+      (list taz_s_xmin taz_s_ymax (+ taz_s_zmin taz_s_izo_zoffset))
+      (list taz_s_xmin taz_s_ymax (+ taz_s_zmax taz_s_izo_zoffset))
+      (list taz_s_xmax taz_s_ymin (+ taz_s_zmin taz_s_izo_zoffset))
+      (list taz_s_xmax taz_s_ymin (+ taz_s_zmax taz_s_izo_zoffset))
+      (list taz_s_xmax taz_s_ymax (+ taz_s_zmin taz_s_izo_zoffset))
+      (list taz_s_xmax taz_s_ymax (+ taz_s_zmax taz_s_izo_zoffset))
+    )
+  )
+
+  (setq taz_s_izo_title_xmin nil)
+  (setq taz_s_izo_title_xmax nil)
+  (setq taz_s_izo_title_ymax nil)
+  (setq taz_s_izo_title_tmp taz_s_izo_title_corners)
+
+  (while taz_s_izo_title_tmp
+    (setq taz_s_izo_title_corner_ucs
+      (trans (car taz_s_izo_title_tmp) 0 1)
+    )
+
+    (if (or (null taz_s_izo_title_xmin)
+            (< (car taz_s_izo_title_corner_ucs) taz_s_izo_title_xmin))
+      (setq taz_s_izo_title_xmin (car taz_s_izo_title_corner_ucs))
+    )
+
+    (if (or (null taz_s_izo_title_xmax)
+            (> (car taz_s_izo_title_corner_ucs) taz_s_izo_title_xmax))
+      (setq taz_s_izo_title_xmax (car taz_s_izo_title_corner_ucs))
+    )
+
+    (if (or (null taz_s_izo_title_ymax)
+            (> (cadr taz_s_izo_title_corner_ucs) taz_s_izo_title_ymax))
+      (setq taz_s_izo_title_ymax (cadr taz_s_izo_title_corner_ucs))
+    )
+
+    (setq taz_s_izo_title_tmp (cdr taz_s_izo_title_tmp))
+  )
+
+  (if (and taz_s_izo_title_xmin taz_s_izo_title_xmax taz_s_izo_title_ymax)
+    (progn
+      (setq taz_s_izo_title_pt
+        (trans
+          (list
+            (/ (+ taz_s_izo_title_xmin taz_s_izo_title_xmax) 2.0)
+            (+ taz_s_izo_title_ymax 500.0)
+            0.0
+          )
+          1
+          0
+        )
+      )
+
+      (entmake
+        (list
+          (cons 0 "MTEXT")
+          (cons 10 taz_s_izo_title_pt)
+          (cons 1 "WIDOK 3D")
+          (cons 7 "Standard")
+          (cons 8 "taz_s_labels")
+          (cons 40 (* 5.0 taz_s_annotation_scale))
+          (cons 71 5)
+          (cons 90 16)
+          (cons 11 taz_s_izo_label_xdir)
+          (cons 210 taz_s_izo_label_normal)
+        )
+      )
+    )
+  )
+
   (setq taz_s_izo_orig_tmp taz_s_orig_enames)
 
   (while taz_s_izo_orig_tmp
