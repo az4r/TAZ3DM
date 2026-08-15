@@ -1065,6 +1065,66 @@
     (princ)
   )
 
+  ;; ---------------------------------
+  ;; POMOCNICZA: TYTUL RZUTU DLA PRZYPADKOW Z
+  ;;
+  ;; Poziom jest pobierany bezposrednio z taz_s_z, czyli z tej samej
+  ;; wartosci, ktora steruje plaszczyzna ciecia danego przypadku Z.
+  ;; Dane osi sa w mm, dlatego do tytulu poziom jest dzielony przez 1000.0.
+  ;; Tresc:  RZUT POZIOMU [poziom w m]
+  ;; Wysokosc: 5.0 w skali 1:1, skalowana przez taz_s_annotation_scale
+  ;; Polozenie: centralnie, 500 jednostek nad gorna krawedzia przypadku
+  ;; Warstwa: taz_s_labels
+  ;; ---------------------------------
+
+  (defun taz_s_create_level_title (taz_s_level_mm)
+
+    ;; RTOS respektuje DIMZIN, ktory moze ukrywac koncowe zera.
+    ;; Na czas formatowania poziomu wymuszamy pelne 3 miejsca po przecinku,
+    ;; a nastepnie przywracamy ustawienie uzytkownika.
+    (setq taz_s_level_title_old_dimzin (getvar "DIMZIN"))
+    (setvar "DIMZIN" 0)
+    (setq taz_s_level_title_value
+      (rtos (/ taz_s_level_mm 1000.0) 2 3)
+    )
+    (setvar "DIMZIN" taz_s_level_title_old_dimzin)
+
+    (setq taz_s_level_title_text
+      (strcat
+        "RZUT POZIOMU "
+        taz_s_level_title_value
+        " m"
+      )
+    )
+
+    (setq taz_s_level_title_height
+      (* 5.0 taz_s_annotation_scale)
+    )
+
+    (setq taz_s_level_title_pt
+      (list
+        (/ (+ taz_s_xmin taz_s_xmax) 2.0)
+        (+ taz_s_ymax 500.0)
+        (+ taz_s_level_mm taz_s_zoffset)
+      )
+    )
+
+    (entmake
+      (list
+        (cons 0 "MTEXT")
+        (cons 10 taz_s_level_title_pt)
+        (cons 1 taz_s_level_title_text)
+        (cons 7 "Standard")
+        (cons 8 "taz_s_labels")
+        (cons 40 taz_s_level_title_height)
+        (cons 71 5)
+        (cons 90 16)
+      )
+    )
+
+    (princ)
+  )
+
   ;; =================================================================
   ;; GLOWNA PETLA - jeden przypadek na raz:
   ;;   1. Narysuj bryle tnaca w strefie Z tego przypadku
@@ -2068,6 +2128,9 @@
         (entdel taz_s_cutting_ename)
       )
     )
+
+    ;; KROK 4.25: tytul rzutu poziomu
+    (taz_s_create_level_title taz_s_z)
 
     ;; KROK 4.5: tabela zestawienia stali
     ;;(taz_s_create_steel_table
