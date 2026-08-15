@@ -970,10 +970,38 @@
   )
 
   ;; ---------------------------------
+  ;; POMOCNICZA: TEKST SKALI POD TYTULEM
+  ;;
+  ;; taz_s_annotation_scale jest mnoznikiem skali:
+  ;; 1.0 = 1:1, 50.0 = 1:50 itd.
+  ;; Zwracamy tekst np. "Skala 1:50".
+  ;; Druga linia tytulu ma w MTEXT wysokosc 0.5x wysokosci tytulu,
+  ;; czyli 2.5 w skali 1:1 i proporcjonalnie dla pozostalych skal.
+  ;; ---------------------------------
+
+  (defun taz_s_get_scale_title_text ()
+
+    (setq taz_s_scale_title_value
+      (if
+        (equal
+          taz_s_annotation_scale
+          (float (fix taz_s_annotation_scale))
+          1e-8
+        )
+        (itoa (fix taz_s_annotation_scale))
+        (rtos taz_s_annotation_scale 2 3)
+      )
+    )
+
+    (strcat "Skala 1:" taz_s_scale_title_value)
+  )
+
+  ;; ---------------------------------
   ;; POMOCNICZA: TYTUL WIDOKU DLA PRZYPADKOW X / Y
   ;;
-  ;; Tresc:  WIDOK [nazwa osi]
-  ;; Wysokosc: 5.0 w skali 1:1, skalowana przez taz_s_annotation_scale
+  ;; Tresc:  PRZEKROJ [nazwa osi] - [nazwa osi] + druga linia "Skala 1:X"
+  ;; Wysokosc: tytul 5.0, skala 2.5 w skali 1:1; obie skalowane
+  ;;            przez taz_s_annotation_scale
   ;; Polozenie: centralnie, 500 jednostek nad gorna krawedzia przypadku
   ;; Warstwa: taz_s_labels
   ;; ---------------------------------
@@ -983,7 +1011,14 @@
     (setq taz_s_view_title_pt nil)
 
     (setq taz_s_view_title_text
-      (strcat "PRZEKROJ " taz_s_axis_name_arg " - " taz_s_axis_name_arg)
+      (strcat
+        "PRZEKROJ "
+        taz_s_axis_name_arg
+        " - "
+        taz_s_axis_name_arg
+        "\\P\\H0.5x;"
+        (taz_s_get_scale_title_text)
+      )
     )
 
     (setq taz_s_view_title_height
@@ -1071,8 +1106,9 @@
   ;; Poziom jest pobierany bezposrednio z taz_s_z, czyli z tej samej
   ;; wartosci, ktora steruje plaszczyzna ciecia danego przypadku Z.
   ;; Dane osi sa w mm, dlatego do tytulu poziom jest dzielony przez 1000.0.
-  ;; Tresc:  RZUT POZIOMU [poziom w m]
-  ;; Wysokosc: 5.0 w skali 1:1, skalowana przez taz_s_annotation_scale
+  ;; Tresc:  RZUT POZIOMU [poziom w m] + druga linia "Skala 1:X"
+  ;; Wysokosc: tytul 5.0, skala 2.5 w skali 1:1; obie skalowane
+  ;;            przez taz_s_annotation_scale
   ;; Polozenie: centralnie, 500 jednostek nad gorna krawedzia przypadku
   ;; Warstwa: taz_s_labels
   ;; ---------------------------------
@@ -1094,6 +1130,8 @@
         "RZUT POZIOMU "
         taz_s_level_title_value
         " m"
+        "\\P\\H0.5x;"
+        (taz_s_get_scale_title_text)
       )
     )
 
@@ -1552,8 +1590,9 @@
   ;; -------------------------------------------------------
   ;; IZO - TYTUL WIDOKU 3D
   ;;
-  ;; Tresc: WIDOK 3D
-  ;; Wysokosc: 5.0 w skali 1:1, skalowana przez taz_s_annotation_scale
+  ;; Tresc: WIDOK 3D + druga linia "Skala 1:X"
+  ;; Wysokosc: tytul 5.0, skala 2.5 w skali 1:1; obie skalowane
+  ;;            przez taz_s_annotation_scale
   ;; Polozenie: centralnie, 500 jednostek nad gorna krawedzia
   ;;             rzutu w aktualnym UCS izometrycznym
   ;; Warstwa: taz_s_labels
@@ -1621,7 +1660,14 @@
         (list
           (cons 0 "MTEXT")
           (cons 10 taz_s_izo_title_pt)
-          (cons 1 "WIDOK 3D")
+          (cons
+            1
+            (strcat
+              "WIDOK 3D"
+              "\\P\\H0.5x;"
+              (taz_s_get_scale_title_text)
+            )
+          )
           (cons 7 "Standard")
           (cons 8 "taz_s_labels")
           (cons 40 (* 5.0 taz_s_annotation_scale))
