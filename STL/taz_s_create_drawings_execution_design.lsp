@@ -1190,7 +1190,7 @@
   (taz_s_create_steel_table
     taz_s_visible_handles
     taz_s_table_anchor_point
-    "Z"
+    "IZO"
   )
 
   (setq taz_s_table_group

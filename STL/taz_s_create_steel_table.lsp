@@ -66,6 +66,7 @@
 (setq taz_s_st_base_col_objetosc     26.0)
 (setq taz_s_st_base_col_waga         20.0)
 (setq taz_s_st_base_col_ilosc        18.0)
+(setq taz_s_st_base_col_waga_calkowita 32.0)
 
 ;; wysokosci wierszy 1:1
 (setq taz_s_st_base_row_h  8.0)
@@ -286,10 +287,24 @@
 )
 
 ;; ---------------------------------------------------------------------
+;; POMOCNICZA: rozpoznanie przypadku IZO
+;; ---------------------------------------------------------------------
+
+(defun taz_s_st_is_izo_case (taz_s_st_case / taz_s_st_case_upper)
+  (if (= (type taz_s_st_case) 'STR)
+    (progn
+      (setq taz_s_st_case_upper (strcase taz_s_st_case))
+      (= taz_s_st_case_upper "IZO")
+    )
+    (= taz_s_st_case 'IZO)
+  )
+)
+
+;; ---------------------------------------------------------------------
 ;; RYSOWANIE TABELI Z DANYCH (naglowek + naglowki kolumn + wiersze)
 ;; ---------------------------------------------------------------------
 
-(defun taz_s_st_draw_table (taz_s_st_rows taz_s_st_ins_pt)
+(defun taz_s_st_draw_table (taz_s_st_rows taz_s_st_ins_pt taz_s_st_case)
 
   (setq taz_s_st_x0 (car   taz_s_st_ins_pt))
   (setq taz_s_st_y0 (cadr  taz_s_st_ins_pt))
@@ -297,7 +312,8 @@
 
   (setq taz_s_st_table_w
     (+ taz_s_st_col_profil taz_s_st_col_dlugosc taz_s_st_col_material
-       taz_s_st_col_powierzchnia taz_s_st_col_objetosc taz_s_st_col_waga taz_s_st_col_ilosc)
+       taz_s_st_col_powierzchnia taz_s_st_col_objetosc taz_s_st_col_waga taz_s_st_col_ilosc
+       (if (taz_s_st_is_izo_case taz_s_st_case) taz_s_st_col_waga_calkowita 0.0))
   )
 
   (setq taz_s_st_nrows (length taz_s_st_rows))
@@ -331,6 +347,16 @@
   (taz_s_st_write_cell "Objetosc [m3]"     (+ taz_s_st_col_x (/ taz_s_st_col_objetosc 2.0))     taz_s_st_row_y taz_s_st_z0 taz_s_st_h_txt)
   (setq taz_s_st_col_x (+ taz_s_st_col_x taz_s_st_col_objetosc))
   (taz_s_st_write_cell "Waga [kg]"         (+ taz_s_st_col_x (/ taz_s_st_col_waga 2.0))         taz_s_st_row_y taz_s_st_z0 taz_s_st_h_txt)
+
+  ;; dodatkowa kolumna tylko dla przypadku IZO
+  (if (taz_s_st_is_izo_case taz_s_st_case)
+    (progn
+      (setq taz_s_st_col_x (+ taz_s_st_col_x taz_s_st_col_waga))
+      (taz_s_st_write_cell "Waga calkowita [kg]"
+        (+ taz_s_st_col_x (/ taz_s_st_col_waga_calkowita 2.0))
+        taz_s_st_row_y taz_s_st_z0 taz_s_st_h_txt)
+    )
+  )
 
   ;; ---- wiersze danych ----
   ;; taz_s_st_row = (profil dlugosc material powierzchnia objetosc waga ilosc)
@@ -366,6 +392,15 @@
     (taz_s_st_write_cell (rtos (nth 5 taz_s_st_row) 2 2)
       (+ taz_s_st_col_x (/ taz_s_st_col_waga 2.0)) taz_s_st_row_y taz_s_st_z0 taz_s_st_h_txt)
 
+    ;; Waga calkowita = Ilosc * Waga, tylko dla IZO
+    (if (taz_s_st_is_izo_case taz_s_st_case)
+      (progn
+        (setq taz_s_st_col_x (+ taz_s_st_col_x taz_s_st_col_waga))
+        (taz_s_st_write_cell (rtos (* (nth 6 taz_s_st_row) (nth 5 taz_s_st_row)) 2 2)
+          (+ taz_s_st_col_x (/ taz_s_st_col_waga_calkowita 2.0)) taz_s_st_row_y taz_s_st_z0 taz_s_st_h_txt)
+      )
+    )
+
     (setq taz_s_st_row_y (- taz_s_st_row_y taz_s_st_row_h))
   )
 
@@ -377,8 +412,12 @@
     taz_s_st_head_h
     taz_s_st_row_h
     taz_s_st_nrows
-    (list taz_s_st_col_profil taz_s_st_col_ilosc taz_s_st_col_material taz_s_st_col_dlugosc
-          taz_s_st_col_powierzchnia taz_s_st_col_objetosc taz_s_st_col_waga)
+    (if (taz_s_st_is_izo_case taz_s_st_case)
+      (list taz_s_st_col_profil taz_s_st_col_ilosc taz_s_st_col_material taz_s_st_col_dlugosc
+            taz_s_st_col_powierzchnia taz_s_st_col_objetosc taz_s_st_col_waga taz_s_st_col_waga_calkowita)
+      (list taz_s_st_col_profil taz_s_st_col_ilosc taz_s_st_col_material taz_s_st_col_dlugosc
+            taz_s_st_col_powierzchnia taz_s_st_col_objetosc taz_s_st_col_waga)
+    )
   )
 
   (princ)
@@ -395,9 +434,10 @@
 ;;                          w tej samej iteracji petli.
 ;;   taz_s_st_ins_pt      - punkt wstawienia (lewy-gorny rog naglowka tabeli),
 ;;                          np. (list (+ taz_s_xmax 5000) taz_s_y taz_s_zoffset)
-;;   taz_s_st_case        - "X" / "Y" / "Z" - decyduje o obrocie tabeli do
+;;   taz_s_st_case        - "X" / "Y" / "Z" / "IZO" - decyduje o obrocie tabeli do
 ;;                          plaszczyzny etykiet danego przypadku (tak jak
-;;                          w taz_s_intersect_pairs)
+;;                          w taz_s_intersect_pairs; "IZO" zachowuje geometrie jak "Z"
+;;                          i dodaje kolumne "Waga calkowita [kg]"
 ;; =======================================================================================
 
 (defun taz_s_create_steel_table (taz_s_st_visible_handles taz_s_st_ins_pt taz_s_st_case)
@@ -418,6 +458,7 @@
   (setq taz_s_st_col_objetosc    (* taz_s_st_base_col_objetosc    taz_s_st_scale))
   (setq taz_s_st_col_waga        (* taz_s_st_base_col_waga        taz_s_st_scale))
   (setq taz_s_st_col_ilosc       (* taz_s_st_base_col_ilosc       taz_s_st_scale))
+  (setq taz_s_st_col_waga_calkowita (* taz_s_st_base_col_waga_calkowita taz_s_st_scale))
   (setq taz_s_st_row_h           (* taz_s_st_base_row_h           taz_s_st_scale))
   (setq taz_s_st_head_h          (* taz_s_st_base_head_h          taz_s_st_scale))
 
@@ -474,7 +515,7 @@
       ;; nowy, pusty zbior - do niego trafia kazda encja tabeli (linie + teksty)
       (setq taz_s_st_created_ss (ssadd))
 
-      (taz_s_st_draw_table taz_s_st_rows taz_s_st_ins_pt)
+      (taz_s_st_draw_table taz_s_st_rows taz_s_st_ins_pt taz_s_st_case)
 
       ;; ---- obrot calej tabeli do plaszczyzny etykiet danego przypadku ----
       ;; identyczna logika jak przy obrocie etykiet w taz_s_intersect_pairs
