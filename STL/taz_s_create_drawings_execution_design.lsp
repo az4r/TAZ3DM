@@ -969,6 +969,102 @@
     taz_s_nres
   )
 
+  ;; ---------------------------------
+  ;; POMOCNICZA: TYTUL WIDOKU DLA PRZYPADKOW X / Y
+  ;;
+  ;; Tresc:  WIDOK [nazwa osi]
+  ;; Wysokosc: 5.0 w skali 1:1, skalowana przez taz_s_annotation_scale
+  ;; Polozenie: centralnie, 500 jednostek nad gorna krawedzia przypadku
+  ;; Warstwa: taz_s_labels
+  ;; ---------------------------------
+
+  (defun taz_s_create_view_title (taz_s_case taz_s_axis_name_arg)
+
+    (setq taz_s_view_title_pt nil)
+
+    (setq taz_s_view_title_text
+      (strcat "PRZEKROJ " taz_s_axis_name_arg " - " taz_s_axis_name_arg)
+    )
+
+    (setq taz_s_view_title_height
+      (* 5.0 taz_s_annotation_scale)
+    )
+
+    (cond
+      ((= taz_s_case "X")
+        (setq taz_s_view_title_pt
+          (list
+            (/ (+ taz_s_xmin taz_s_xmax) 2.0)
+            taz_s_y
+            (+ taz_s_zmax taz_s_zoffset 500.0)
+          )
+        )
+      )
+
+      ((= taz_s_case "Y")
+        (setq taz_s_view_title_pt
+          (list
+            taz_s_x
+            (/ (+ taz_s_ymin taz_s_ymax) 2.0)
+            (+ taz_s_zmax taz_s_zoffset 500.0)
+          )
+        )
+      )
+    )
+
+    (if taz_s_view_title_pt
+      (progn
+        (entmake
+          (list
+            (cons 0 "MTEXT")
+            (cons 10 taz_s_view_title_pt)
+            (cons 1 taz_s_view_title_text)
+            (cons 7 "Standard")
+            (cons 8 "taz_s_labels")
+            (cons 40 taz_s_view_title_height)
+            (cons 71 5)
+            (cons 90 16)
+          )
+        )
+
+        ;; Ustaw tekst w tej samej plaszczyznie co dany widok.
+        (cond
+          ((= taz_s_case "X")
+            (command
+              "_.ROTATE3D"
+              (entlast)
+              ""
+              "X"
+              taz_s_view_title_pt
+              "90"
+            )
+          )
+
+          ((= taz_s_case "Y")
+            (command
+              "_.ROTATE3D"
+              (entlast)
+              ""
+              "Y"
+              taz_s_view_title_pt
+              "90"
+            )
+            (command
+              "_.ROTATE3D"
+              (entlast)
+              ""
+              "X"
+              taz_s_view_title_pt
+              "90"
+            )
+          )
+        )
+      )
+    )
+
+    (princ)
+  )
+
   ;; =================================================================
   ;; GLOWNA PETLA - jeden przypadek na raz:
   ;;   1. Narysuj bryle tnaca w strefie Z tego przypadku
@@ -1589,6 +1685,12 @@
       )
     )
 
+    ;; KROK 4.25: tytul widoku
+    (taz_s_create_view_title
+      "X"
+      (taz_s_get_axis_name taz_s_row)
+    )
+
     ;; KROK 4.5: tabela zestawienia stali - korzysta z juz policzonej widocznosci
     ;;(taz_s_create_steel_table
       ;;taz_s_visible_handles
@@ -1748,6 +1850,12 @@
         (princ (strcat "\nPrzypadek Y nr " (itoa taz_s_copy_nr) ": brak elementow kopii - pomijam."))
         (entdel taz_s_cutting_ename)
       )
+    )
+
+    ;; KROK 4.25: tytul widoku
+    (taz_s_create_view_title
+      "Y"
+      (taz_s_get_axis_name taz_s_row)
     )
 
     ;; KROK 4.5: tabela zestawienia stali
