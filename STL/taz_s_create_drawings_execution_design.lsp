@@ -1056,9 +1056,30 @@
   (setq taz_s_view_name (strcat "taz_s_view_" taz_s_view_axis_name))
 
   ;; -------------------------------------------------------
+  ;; IZO - PLASZCZYZNA RZUTU SOLPROF
+  ;; Ten sam punkt poczatkowy UCS jest pozniej uzywany przy SOLPROF.
+  ;; Etykiety rzutujemy na plaszczyzne przechodzaca przez ten punkt
+  ;; i prostopadla do kierunku izometrycznego 1,-1,1.
+  ;; -------------------------------------------------------
+
+  (setq taz_s_izo_ucs_origin
+    (list
+      (/ (+ taz_s_xmin_nomargin taz_s_xmax_nomargin) 2.0)
+      (/ (+ taz_s_ymin_nomargin taz_s_ymax_nomargin) 2.0)
+      (+ (/ (+ taz_s_zmin_nomargin taz_s_zmax_nomargin) 2.0)
+         taz_s_izo_zoffset)
+    )
+  )
+
+  ;; -------------------------------------------------------
   ;; IZO - WSZYSTKIE ELEMENTY = WIDOCZNE
   ;; Zbieramy handle wszystkich oryginalnych bryl 3DSOLID.
   ;; Ta lista zasila pozniej tabele zestawienia stali.
+  ;;
+  ;; Etykiet NIE tworzymy jeszcze tutaj.
+  ;; Powstana dopiero po ustawieniu dokladnie tego samego UCS,
+  ;; z ktorego korzysta SOLPROF IZO. Dzieki temu ich polozenie
+  ;; i obrot beda dokladnie zgodne z plaszczyzna wyniku SOLPROF.
   ;; -------------------------------------------------------
 
   (setq taz_s_visible_handles '())
@@ -1072,92 +1093,10 @@
 
     (if (= taz_s_izo_orig_type "3DSOLID")
       (progn
-
         (setq taz_s_izo_orig_h (cdr (assoc 5 taz_s_izo_orig_data)))
 
         (setq taz_s_visible_handles
           (append taz_s_visible_handles (list taz_s_izo_orig_h))
-        )
-
-        ;; ---------------------------------------------------
-        ;; ETYKIETA ELEMENTU IZO
-        ;; Tresc identyczna jak w przypadkach X/Y/Z.
-        ;; ---------------------------------------------------
-
-        (setq taz_s_izo_attr6_sym
-          (read (strcat "taz_s_" taz_s_izo_orig_h "_attr6"))
-        )
-        (setq taz_s_izo_attr7_sym
-          (read (strcat "taz_s_" taz_s_izo_orig_h "_attr7"))
-        )
-
-        (if
-          (and
-            (boundp taz_s_izo_attr6_sym)
-            (boundp taz_s_izo_attr7_sym)
-          )
-          (progn
-
-            (setq taz_s_annotation_text
-              (strcat
-                (eval taz_s_izo_attr6_sym)
-                " "
-                (eval taz_s_izo_attr7_sym)
-              )
-            )
-
-            (if (= (eval taz_s_izo_attr6_sym) "LR")
-              (setq taz_s_annotation_text
-                (strcat "L " (eval taz_s_izo_attr7_sym))
-              )
-            )
-
-            (if (= (eval taz_s_izo_attr6_sym) "LN")
-              (setq taz_s_annotation_text
-                (strcat "L " (eval taz_s_izo_attr7_sym))
-              )
-            )
-
-            ;; Srodek elementu z zapisanej sciezki sweep,
-            ;; przesuniety do strefy Z przypadku IZO.
-            (setq taz_s_annotation_ins_pt
-              (taz_s_get_center taz_s_izo_orig_ent)
-            )
-
-            (entmake
-              (list
-                (cons 0 "MTEXT")
-                (cons 10 taz_s_annotation_ins_pt)
-                (cons 1 taz_s_annotation_text)
-                (cons 7 "Standard")
-                (cons 8 "taz_s_labels")
-                (cons 40 taz_s_annotation_scale_label)
-                (cons 71 5)
-                (cons 90 16)
-              )
-            )
-
-            ;; Ustawienie plaszczyzny tekstu prostopadle do kierunku
-            ;; izometrycznego VPOINT 1,-1,1.
-            ;; Bez VL - zwykly ROTATE3D wokol osi [1,1,0].
-            (setq taz_s_izo_label_ent (entlast))
-            (setq taz_s_izo_rot_p1 taz_s_annotation_ins_pt)
-            (setq taz_s_izo_rot_p2
-              (list
-                (+ (car taz_s_annotation_ins_pt) 1.0)
-                (+ (cadr taz_s_annotation_ins_pt) 1.0)
-                (caddr taz_s_annotation_ins_pt)
-              )
-            )
-            (command
-              "_.ROTATE3D"
-              taz_s_izo_label_ent
-              ""
-              taz_s_izo_rot_p1
-              taz_s_izo_rot_p2
-              "54.735610317"
-            )
-          )
         )
       )
     )
@@ -1260,14 +1199,8 @@
   ;; PLAN Current ustawia widok prostopadle do tej plaszczyzny.
   ;; -------------------------------------------------------
 
-  (setq taz_s_izo_ucs_origin
-    (list
-      (/ (+ taz_s_xmin_nomargin taz_s_xmax_nomargin) 2.0)
-      (/ (+ taz_s_ymin_nomargin taz_s_ymax_nomargin) 2.0)
-      (+ (/ (+ taz_s_zmin_nomargin taz_s_zmax_nomargin) 2.0)
-         taz_s_izo_zoffset)
-    )
-  )
+  ;; taz_s_izo_ucs_origin zostal wyliczony wyzej przed tworzeniem
+  ;; etykiet, aby etykiety i SOLPROF korzystaly z tej samej plaszczyzny.
 
   (command "_layout" "_N" taz_s_view_name)
   (command "_layout" "_S" taz_s_view_name)
@@ -1278,6 +1211,138 @@
   (command "_UCS" "_X" 45)
   (command "_UCS" "_Y" 35.264389683)
   (command "_PLAN" "_C")
+
+
+  ;; -------------------------------------------------------
+  ;; IZO - ETYKIETY DOKLADNIE NA PLASZCZYZNIE SOLPROF
+  ;;
+  ;; W tym miejscu aktywny jest juz DOKLADNIE ten sam UCS,
+  ;; z ktorego za chwile korzysta SOLPROF.
+  ;;
+  ;; Dla kazdego elementu:
+  ;; 1. pobieramy jego srodek w WCS,
+  ;; 2. przeliczamy punkt do aktualnego UCS,
+  ;; 3. ustawiamy Z=0 w tym UCS,
+  ;; 4. przeliczamy punkt z powrotem do WCS.
+  ;;
+  ;; To daje punkt dokladnie na plaszczyznie XY aktualnego UCS,
+  ;; czyli na tej samej plaszczyznie, na ktorej powstaje SOLPROF.
+  ;;
+  ;; Kierunek osi X MTEXT i normalna tekstu sa pobierane rowniez
+  ;; bezposrednio z aktualnego UCS. Dlatego tekst jest poziomy
+  ;; w widoku IZO i nie wymaga zadnego ROTATE3D.
+  ;; -------------------------------------------------------
+
+  ;; Normalna plaszczyzny etykiet = os Z aktualnego UCS IZO.
+  (setq taz_s_izo_label_normal
+    (trans (list 0.0 0.0 1.0) 1 0 T)
+  )
+
+  ;; Rotation = 0 dla MTEXT oznacza os X jego wlasnego OCS.
+  ;; TRANS przyjmuje wektor normalny jako definicje OCS, dlatego
+  ;; pobieramy os X tego OCS i zapisujemy ja jako wektor 11 w WCS.
+  ;; Nie zgadujemy zadnego kata - kierunek wylicza sam CAD.
+  (setq taz_s_izo_label_xdir
+    (trans
+      (list 1.0 0.0 0.0)
+      taz_s_izo_label_normal
+      0
+      T
+    )
+  )
+
+  (setq taz_s_izo_orig_tmp taz_s_orig_enames)
+
+  (while taz_s_izo_orig_tmp
+
+    (setq taz_s_izo_orig_ent (car taz_s_izo_orig_tmp))
+    (setq taz_s_izo_orig_data (entget taz_s_izo_orig_ent))
+    (setq taz_s_izo_orig_type (cdr (assoc 0 taz_s_izo_orig_data)))
+
+    (if (= taz_s_izo_orig_type "3DSOLID")
+      (progn
+
+        (setq taz_s_izo_orig_h (cdr (assoc 5 taz_s_izo_orig_data)))
+
+        (setq taz_s_izo_attr6_sym
+          (read (strcat "taz_s_" taz_s_izo_orig_h "_attr6"))
+        )
+
+        (setq taz_s_izo_attr7_sym
+          (read (strcat "taz_s_" taz_s_izo_orig_h "_attr7"))
+        )
+
+        (if
+          (and
+            (boundp taz_s_izo_attr6_sym)
+            (boundp taz_s_izo_attr7_sym)
+          )
+          (progn
+
+            (setq taz_s_annotation_text
+              (strcat
+                (eval taz_s_izo_attr6_sym)
+                " "
+                (eval taz_s_izo_attr7_sym)
+              )
+            )
+
+            (if (= (eval taz_s_izo_attr6_sym) "LR")
+              (setq taz_s_annotation_text
+                (strcat "L " (eval taz_s_izo_attr7_sym))
+              )
+            )
+
+            (if (= (eval taz_s_izo_attr6_sym) "LN")
+              (setq taz_s_annotation_text
+                (strcat "L " (eval taz_s_izo_attr7_sym))
+              )
+            )
+
+            ;; Srodek elementu w strefie IZO - WCS
+            (setq taz_s_izo_label_center_wcs
+              (taz_s_get_center taz_s_izo_orig_ent)
+            )
+
+            ;; Ten sam punkt w aktualnym UCS SOLPROF
+            (setq taz_s_izo_label_center_ucs
+              (trans taz_s_izo_label_center_wcs 0 1)
+            )
+
+            ;; Dokladnie plaszczyzna XY aktualnego UCS: Z = 0
+            (setq taz_s_annotation_ins_pt
+              (trans
+                (list
+                  (car taz_s_izo_label_center_ucs)
+                  (cadr taz_s_izo_label_center_ucs)
+                  0.0
+                )
+                1
+                0
+              )
+            )
+
+            (entmake
+              (list
+                (cons 0 "MTEXT")
+                (cons 10 taz_s_annotation_ins_pt)
+                (cons 1 taz_s_annotation_text)
+                (cons 7 "Standard")
+                (cons 8 "taz_s_labels")
+                (cons 40 taz_s_annotation_scale_label)
+                (cons 71 5)
+                (cons 90 16)
+                (cons 11 taz_s_izo_label_xdir)
+                (cons 210 taz_s_izo_label_normal)
+              )
+            )
+          )
+        )
+      )
+    )
+
+    (setq taz_s_izo_orig_tmp (cdr taz_s_izo_orig_tmp))
+  )
 
   (if (> (sslength taz_s_izo_ss) 0)
     (progn
