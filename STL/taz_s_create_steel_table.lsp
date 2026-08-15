@@ -332,9 +332,9 @@
   )
 
   (setq taz_s_st_nrows (length taz_s_st_rows))
-  ;; tylko IZO dostaje dwa dodatkowe, koncowe wiersze podsumowania
+  ;; tylko IZO dostaje trzy dodatkowe, koncowe wiersze podsumowania
   (setq taz_s_st_grid_nrows
-    (+ taz_s_st_nrows (if (taz_s_st_is_izo_case taz_s_st_case) 2 0))
+    (+ taz_s_st_nrows (if (taz_s_st_is_izo_case taz_s_st_case) 3 0))
   )
   (setq taz_s_st_table_h (+ taz_s_st_head_h taz_s_st_row_h (* taz_s_st_grid_nrows taz_s_st_row_h)))
   
@@ -453,6 +453,29 @@
       (taz_s_st_write_cell (rtos taz_s_additional_mass 2 2)
         (+ taz_s_st_x0 taz_s_st_summary_left_w (/ taz_s_st_col_waga_calkowita 2.0))
         taz_s_st_row_y taz_s_st_z0 taz_s_st_h_txt)
+
+      ;; przejscie do kolejnego wiersza podsumowania
+      (setq taz_s_st_row_y (- taz_s_st_row_y taz_s_st_row_h))
+
+      ;; waga naddatku = waga konstrukcji * naddatek [%] / 100
+      (setq taz_s_st_additional_weight
+        (* taz_s_st_total_weight (/ taz_s_additional_mass 100.0))
+      )
+
+      ;; waga calkowita konstrukcji = waga konstrukcji + waga naddatku
+      (setq taz_s_st_total_structure_weight
+        (+ taz_s_st_total_weight taz_s_st_additional_weight)
+      )
+
+      ;; scalona komorka od Profil do Waga
+      (taz_s_st_write_cell "Waga calkowita konstrukcji [kg]"
+        (+ taz_s_st_x0 (/ taz_s_st_summary_left_w 2.0))
+        taz_s_st_row_y taz_s_st_z0 taz_s_st_h_txt)
+
+      ;; obliczona waga calkowita konstrukcji
+      (taz_s_st_write_cell (rtos taz_s_st_total_structure_weight 2 2)
+        (+ taz_s_st_x0 taz_s_st_summary_left_w (/ taz_s_st_col_waga_calkowita 2.0))
+        taz_s_st_row_y taz_s_st_z0 taz_s_st_h_txt)
     )
   )
 
@@ -470,7 +493,7 @@
       (list taz_s_st_col_profil taz_s_st_col_ilosc taz_s_st_col_material taz_s_st_col_dlugosc
             taz_s_st_col_powierzchnia taz_s_st_col_objetosc taz_s_st_col_waga)
     )
-    (if (taz_s_st_is_izo_case taz_s_st_case) 2 0)
+    (if (taz_s_st_is_izo_case taz_s_st_case) 3 0)
   )
 
   (princ)
