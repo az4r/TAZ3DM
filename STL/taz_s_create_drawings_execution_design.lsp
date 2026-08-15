@@ -1029,6 +1029,272 @@
   )
 
   ;; -------------------------------------------------------
+  ;; PRZYPADEK IZO
+  ;; Oryginalny model bez ciecia, pokazany w izometrii.
+  ;; Wszystkie elementy konstrukcji sa traktowane jako widoczne:
+  ;; - kazdy dostaje etykiete,
+  ;; - wszystkie trafiaja do tabeli zestawienia stali.
+  ;; Przypadek jest umieszczony nad wszystkimi przypadkami X/Y/Z.
+  ;; Nie zmieniamy taz_s_copy_nr, dzieki czemu dotychczasowe
+  ;; polozenia i numeracja przypadkow X/Y/Z pozostaja bez zmian.
+  ;; -------------------------------------------------------
+
+  (setq taz_s_izo_zoffset
+    (*
+      (+
+        (length taz_s_x_data)
+        (length taz_s_y_data)
+        (length taz_s_z_data)
+        1
+      )
+      100000
+    )
+  )
+
+  (setq taz_s_zoffset taz_s_izo_zoffset)
+  (setq taz_s_view_axis_name "IZO")
+  (setq taz_s_view_name (strcat "taz_s_view_" taz_s_view_axis_name))
+
+  ;; -------------------------------------------------------
+  ;; IZO - WSZYSTKIE ELEMENTY = WIDOCZNE
+  ;; Zbieramy handle wszystkich oryginalnych bryl 3DSOLID.
+  ;; Ta lista zasila pozniej tabele zestawienia stali.
+  ;; -------------------------------------------------------
+
+  (setq taz_s_visible_handles '())
+  (setq taz_s_izo_orig_tmp taz_s_orig_enames)
+
+  (while taz_s_izo_orig_tmp
+
+    (setq taz_s_izo_orig_ent (car taz_s_izo_orig_tmp))
+    (setq taz_s_izo_orig_data (entget taz_s_izo_orig_ent))
+    (setq taz_s_izo_orig_type (cdr (assoc 0 taz_s_izo_orig_data)))
+
+    (if (= taz_s_izo_orig_type "3DSOLID")
+      (progn
+
+        (setq taz_s_izo_orig_h (cdr (assoc 5 taz_s_izo_orig_data)))
+
+        (setq taz_s_visible_handles
+          (append taz_s_visible_handles (list taz_s_izo_orig_h))
+        )
+
+        ;; ---------------------------------------------------
+        ;; ETYKIETA ELEMENTU IZO
+        ;; Tresc identyczna jak w przypadkach X/Y/Z.
+        ;; ---------------------------------------------------
+
+        (setq taz_s_izo_attr6_sym
+          (read (strcat "taz_s_" taz_s_izo_orig_h "_attr6"))
+        )
+        (setq taz_s_izo_attr7_sym
+          (read (strcat "taz_s_" taz_s_izo_orig_h "_attr7"))
+        )
+
+        (if
+          (and
+            (boundp taz_s_izo_attr6_sym)
+            (boundp taz_s_izo_attr7_sym)
+          )
+          (progn
+
+            (setq taz_s_annotation_text
+              (strcat
+                (eval taz_s_izo_attr6_sym)
+                " "
+                (eval taz_s_izo_attr7_sym)
+              )
+            )
+
+            (if (= (eval taz_s_izo_attr6_sym) "LR")
+              (setq taz_s_annotation_text
+                (strcat "L " (eval taz_s_izo_attr7_sym))
+              )
+            )
+
+            (if (= (eval taz_s_izo_attr6_sym) "LN")
+              (setq taz_s_annotation_text
+                (strcat "L " (eval taz_s_izo_attr7_sym))
+              )
+            )
+
+            ;; Srodek elementu z zapisanej sciezki sweep,
+            ;; przesuniety do strefy Z przypadku IZO.
+            (setq taz_s_annotation_ins_pt
+              (taz_s_get_center taz_s_izo_orig_ent)
+            )
+
+            (entmake
+              (list
+                (cons 0 "MTEXT")
+                (cons 10 taz_s_annotation_ins_pt)
+                (cons 1 taz_s_annotation_text)
+                (cons 7 "Standard")
+                (cons 8 "taz_s_labels")
+                (cons 40 taz_s_annotation_scale_label)
+                (cons 71 5)
+                (cons 90 16)
+              )
+            )
+
+            ;; Ustawienie plaszczyzny tekstu prostopadle do kierunku
+            ;; izometrycznego VPOINT 1,-1,1.
+            ;; Bez VL - zwykly ROTATE3D wokol osi [1,1,0].
+            (setq taz_s_izo_label_ent (entlast))
+            (setq taz_s_izo_rot_p1 taz_s_annotation_ins_pt)
+            (setq taz_s_izo_rot_p2
+              (list
+                (+ (car taz_s_annotation_ins_pt) 1.0)
+                (+ (cadr taz_s_annotation_ins_pt) 1.0)
+                (caddr taz_s_annotation_ins_pt)
+              )
+            )
+            (command
+              "_.ROTATE3D"
+              taz_s_izo_label_ent
+              ""
+              taz_s_izo_rot_p1
+              taz_s_izo_rot_p2
+              "54.735610317"
+            )
+          )
+        )
+      )
+    )
+
+    (setq taz_s_izo_orig_tmp (cdr taz_s_izo_orig_tmp))
+  )
+
+  ;; -------------------------------------------------------
+  ;; IZO - TABELA ZESTAWIENIA STALI
+  ;; Pelna lista taz_s_visible_handles = cala konstrukcja.
+  ;; Uzywamy wariantu "Z", aby tabela byla tworzona w poziomie.
+  ;; -------------------------------------------------------
+
+  (setq taz_s_table_anchor_point
+    (list
+      (+ taz_s_xmax 5000.0)
+      taz_s_ymax
+      (+ taz_s_zmax taz_s_izo_zoffset)
+    )
+  )
+
+  (setq taz_s_table_before
+    (taz_s_execution_design_get_last_entity)
+  )
+
+  (taz_s_create_steel_table
+    taz_s_visible_handles
+    taz_s_table_anchor_point
+    "Z"
+  )
+
+  (setq taz_s_table_group
+    (taz_s_execution_design_collect_new_entities taz_s_table_before)
+  )
+
+  ;; IZO jest pierwszym przypadkiem, wiec jego tabela jest pierwsza
+  ;; na listach przekazywanych pozniej do organizera.
+  (setq taz_s_execution_design_table_groups
+    (append
+      taz_s_execution_design_table_groups
+      (list taz_s_table_group)
+    )
+  )
+
+  (if taz_s_table_group
+    (setq taz_s_execution_design_table_anchor_points
+      (append
+        taz_s_execution_design_table_anchor_points
+        (list taz_s_table_anchor_point)
+      )
+    )
+    (setq taz_s_execution_design_table_anchor_points
+      (append
+        taz_s_execution_design_table_anchor_points
+        (list nil)
+      )
+    )
+  )
+
+  ;; -------------------------------------------------------
+  ;; IZO - KOPIA MODELU DO SOLPROF
+  ;; Bez bryly tnacej i bez INTERSECT.
+  ;; -------------------------------------------------------
+
+  (if taz_s_orig_ss
+    (command "COPY" taz_s_orig_ss "" "0,0,0" (list 0 0 taz_s_izo_zoffset))
+  )
+
+  ;; Zbierz tylko skopiowane bryly 3DSOLID
+  (setq taz_s_izo_enames (taz_s_collect_copy_enames))
+  (setq taz_s_izo_ss (ssadd))
+  (setq taz_s_izo_tmp taz_s_izo_enames)
+
+  (while taz_s_izo_tmp
+    (ssadd (car taz_s_izo_tmp) taz_s_izo_ss)
+    (setq taz_s_izo_tmp (cdr taz_s_izo_tmp))
+  )
+
+  ;; SOLPROF w dalszej czesci skryptu pracuje na tej warstwie,
+  ;; dlatego tylko kopie IZO przenosimy tymczasowo na execution_design.
+  (if (> (sslength taz_s_izo_ss) 0)
+    (command "_.CHPROP" taz_s_izo_ss "" "LA" "taz_s_execution_design" "")
+  )
+
+  ;; -------------------------------------------------------
+  ;; IZO - LAYOUT I PRAWIDLOWA PLASZCZYZNA SOLPROF
+  ;;
+  ;; Nie uzywamy UCS 3-punktowego - GstarCAD w tym miejscu
+  ;; potrafil potraktowac punkty jako zbieżne.
+  ;;
+  ;; Korzystamy tylko z operacji UCS, ktore sa juz uzywane
+  ;; w dzialajacych przypadkach X/Y/Z:
+  ;;   1. UCS WORLD
+  ;;   2. UCS ORIGIN w srodku kopii IZO
+  ;;   3. obrot UCS wokol X o 45 stopni
+  ;;   4. obrot UCS wokol Y o 35.264389683 stopnia
+  ;;
+  ;; Po tych obrotach os Z UCS ma kierunek 1,-1,1,
+  ;; czyli plaszczyzna XY UCS jest plaszczyzna izometryczna.
+  ;; PLAN Current ustawia widok prostopadle do tej plaszczyzny.
+  ;; -------------------------------------------------------
+
+  (setq taz_s_izo_ucs_origin
+    (list
+      (/ (+ taz_s_xmin_nomargin taz_s_xmax_nomargin) 2.0)
+      (/ (+ taz_s_ymin_nomargin taz_s_ymax_nomargin) 2.0)
+      (+ (/ (+ taz_s_zmin_nomargin taz_s_zmax_nomargin) 2.0)
+         taz_s_izo_zoffset)
+    )
+  )
+
+  (command "_layout" "_N" taz_s_view_name)
+  (command "_layout" "_S" taz_s_view_name)
+  (command "_mspace")
+
+  (command "_UCS" "_W")
+  (command "_UCS" "_O" taz_s_izo_ucs_origin)
+  (command "_UCS" "_X" 45)
+  (command "_UCS" "_Y" 35.264389683)
+  (command "_PLAN" "_C")
+
+  (if (> (sslength taz_s_izo_ss) 0)
+    (progn
+      (command "_ZOOM" "_OBJECT" taz_s_izo_ss "")
+      (command "-VIEW" "_S" taz_s_view_name)
+      (command "_.SOLPROF")
+      (command taz_s_izo_ss)
+      (command "" "_Y" "_Y" "_Y")
+      (command "_.ERASE" taz_s_izo_ss "")
+    )
+  )
+
+  (command "_pspace")
+  (command "_layout" "_S" "Model")
+  (command "_UCS" "_W")
+
+  ;; -------------------------------------------------------
   ;; PRZYPADKI X
   ;; Plaszczyzna prostopadla do osi Y
   ;; -------------------------------------------------------
