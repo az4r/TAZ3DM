@@ -1107,16 +1107,81 @@
   ;; -------------------------------------------------------
   ;; IZO - TABELA ZESTAWIENIA STALI
   ;; Pelna lista taz_s_visible_handles = cala konstrukcja.
-  ;; Uzywamy wariantu "Z", aby tabela byla tworzona w poziomie.
+  ;;
+  ;; Tabele tworzymy nadal wariantem "Z", czyli poziomo.
+  ;; Tym razem jednak:
+  ;; - najpierw wyznaczamy DOKLADNA plaszczyzne IZO,
+  ;; - punkt kotwiczenia od razu ustawiamy na tej plaszczyznie,
+  ;; - tabela jest obracana wokol tego SAMEGO punktu.
+  ;;
+  ;; Nie ma zadnego dodatkowego przesuniecia tabeli.
+  ;; ALIGN zmienia tylko jej orientacje.
   ;; -------------------------------------------------------
 
-  (setq taz_s_table_anchor_point
+  ;; Punkt referencyjny zachowuje dotychczasowe polozenie tabeli
+  ;; wzgledem modelu.
+  (setq taz_s_izo_table_anchor_reference
     (list
       (+ taz_s_xmax 5000.0)
       taz_s_ymax
       (+ taz_s_zmax taz_s_izo_zoffset)
     )
   )
+
+  ;; Chwilowo ustawiamy dokladnie ten sam UCS IZO co dla
+  ;; etykiet i SOLPROF, tylko po to aby pobrac jego geometrie.
+  (command "_UCS" "_W")
+  (command "_UCS" "_O" taz_s_izo_ucs_origin)
+  (command "_UCS" "_X" 45)
+  (command "_UCS" "_Y" 35.264389683)
+
+  ;; Normalna identyczna jak dla etykiet IZO.
+  (setq taz_s_izo_table_normal
+    (trans (list 0.0 0.0 1.0) 1 0 T)
+  )
+
+  ;; Os X identyczna z Rotation = 0 etykiet IZO.
+  (setq taz_s_izo_table_xdir
+    (trans
+      (list 1.0 0.0 0.0)
+      taz_s_izo_table_normal
+      0
+      T
+    )
+  )
+
+  ;; Os Y tego samego OCS.
+  (setq taz_s_izo_table_ydir
+    (trans
+      (list 0.0 1.0 0.0)
+      taz_s_izo_table_normal
+      0
+      T
+    )
+  )
+
+  ;; Punkt referencyjny przeliczamy do UCS IZO i ustawiamy Z=0.
+  ;; To daje punkt DOKLADNIE na tej samej plaszczyznie co
+  ;; etykiety oraz wynik SOLPROF.
+  (setq taz_s_izo_table_anchor_ucs
+    (trans taz_s_izo_table_anchor_reference 0 1)
+  )
+
+  (setq taz_s_table_anchor_point
+    (trans
+      (list
+        (car taz_s_izo_table_anchor_ucs)
+        (cadr taz_s_izo_table_anchor_ucs)
+        0.0
+      )
+      1
+      0
+    )
+  )
+
+  ;; Wracamy do WORLD. Tabela powstaje poziomo w WCS,
+  ;; ale od razu w swoim OSTATECZNYM punkcie kotwiczenia.
+  (command "_UCS" "_W")
 
   (setq taz_s_table_before
     (taz_s_execution_design_get_last_entity)
@@ -1130,6 +1195,83 @@
 
   (setq taz_s_table_group
     (taz_s_execution_design_collect_new_entities taz_s_table_before)
+  )
+
+  ;; Obracamy cala gotowa tabele wokol nieruchomego kotwiczenia.
+  ;; Wszystkie punkty ALIGN sa podane w WCS.
+  (if taz_s_table_group
+    (progn
+
+      (setq taz_s_izo_table_ss (ssadd))
+      (setq taz_s_izo_table_tmp taz_s_table_group)
+
+      (while taz_s_izo_table_tmp
+        (if (entget (car taz_s_izo_table_tmp))
+          (ssadd (car taz_s_izo_table_tmp) taz_s_izo_table_ss)
+        )
+        (setq taz_s_izo_table_tmp (cdr taz_s_izo_table_tmp))
+      )
+
+      ;; Baza zrodlowa: pozioma XY WCS.
+      (setq taz_s_izo_table_src1 taz_s_table_anchor_point)
+
+      (setq taz_s_izo_table_src2
+        (list
+          (+ (car taz_s_table_anchor_point) 1000.0)
+          (cadr taz_s_table_anchor_point)
+          (caddr taz_s_table_anchor_point)
+        )
+      )
+
+      (setq taz_s_izo_table_src3
+        (list
+          (car taz_s_table_anchor_point)
+          (+ (cadr taz_s_table_anchor_point) 1000.0)
+          (caddr taz_s_table_anchor_point)
+        )
+      )
+
+      ;; Baza docelowa: DOKLADNIE OCS etykiet IZO.
+      ;; Punkt 1 jest TEN SAM, wiec tabela nie moze odjechac.
+      (setq taz_s_izo_table_dst1 taz_s_table_anchor_point)
+
+      (setq taz_s_izo_table_dst2
+        (list
+          (+ (car   taz_s_table_anchor_point)
+             (* 1000.0 (car   taz_s_izo_table_xdir)))
+          (+ (cadr  taz_s_table_anchor_point)
+             (* 1000.0 (cadr  taz_s_izo_table_xdir)))
+          (+ (caddr taz_s_table_anchor_point)
+             (* 1000.0 (caddr taz_s_izo_table_xdir)))
+        )
+      )
+
+      (setq taz_s_izo_table_dst3
+        (list
+          (+ (car   taz_s_table_anchor_point)
+             (* 1000.0 (car   taz_s_izo_table_ydir)))
+          (+ (cadr  taz_s_table_anchor_point)
+             (* 1000.0 (cadr  taz_s_izo_table_ydir)))
+          (+ (caddr taz_s_table_anchor_point)
+             (* 1000.0 (caddr taz_s_izo_table_ydir)))
+        )
+      )
+
+      (if (> (sslength taz_s_izo_table_ss) 0)
+        (command
+          "_.ALIGN"
+          taz_s_izo_table_ss
+          ""
+          taz_s_izo_table_src1
+          taz_s_izo_table_dst1
+          taz_s_izo_table_src2
+          taz_s_izo_table_dst2
+          taz_s_izo_table_src3
+          taz_s_izo_table_dst3
+          "_N"
+        )
+      )
+    )
   )
 
   ;; IZO jest pierwszym przypadkiem, wiec jego tabela jest pierwsza
