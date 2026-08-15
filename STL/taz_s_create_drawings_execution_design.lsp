@@ -1058,7 +1058,6 @@
             (cons 8 "taz_s_labels")
             (cons 40 taz_s_view_title_height)
             (cons 71 5)
-            (cons 90 16)
           )
         )
 
@@ -1156,7 +1155,6 @@
         (cons 8 "taz_s_labels")
         (cons 40 taz_s_level_title_height)
         (cons 71 5)
-        (cons 90 16)
       )
     )
 
@@ -1672,7 +1670,6 @@
           (cons 8 "taz_s_labels")
           (cons 40 (* 5.0 taz_s_annotation_scale))
           (cons 71 5)
-          (cons 90 16)
           (cons 11 taz_s_izo_label_xdir)
           (cons 210 taz_s_izo_label_normal)
         )
