@@ -247,7 +247,7 @@
 
 (defun taz_s_st_draw_grid (taz_s_st_top taz_s_st_w taz_s_st_h
                             taz_s_st_head_h taz_s_st_row_h taz_s_st_nrows
-                            taz_s_st_colwidths taz_s_st_merge_last_row)
+                            taz_s_st_colwidths taz_s_st_merge_bottom_rows)
 
   (setq taz_s_st_x0 (car   taz_s_st_top))
   (setq taz_s_st_y0 (cadr  taz_s_st_top))
@@ -276,8 +276,8 @@
   )
 
   ;; linie pionowe kolumn (od naglowkow kolumn do dolu tabeli)
-  ;; dla IZO w ostatnim wierszu komorki od Profil do Waga sa scalone,
-  ;; wiec wewnetrzne podzialy tych kolumn koncza sie nad ostatnim wierszem
+  ;; dla IZO w koncowych wierszach komorki od Profil do Waga sa scalone,
+  ;; wiec wewnetrzne podzialy tych kolumn koncza sie nad tymi wierszami
   (setq taz_s_st_x taz_s_st_x0)
   (setq taz_s_st_col_index 0)
   (setq taz_s_st_col_count (length taz_s_st_colwidths))
@@ -287,9 +287,10 @@
     (taz_s_st_line
       (list taz_s_st_x (- taz_s_st_y0 taz_s_st_head_h) taz_s_st_z0)
       (list taz_s_st_x
-        (if (and taz_s_st_merge_last_row
+        (if (and (> taz_s_st_merge_bottom_rows 0)
                  (< taz_s_st_col_index (- taz_s_st_col_count 1)))
-          (+ (- taz_s_st_y0 taz_s_st_h) taz_s_st_row_h)
+          (+ (- taz_s_st_y0 taz_s_st_h)
+             (* taz_s_st_merge_bottom_rows taz_s_st_row_h))
           (- taz_s_st_y0 taz_s_st_h)
         )
         taz_s_st_z0
@@ -331,9 +332,9 @@
   )
 
   (setq taz_s_st_nrows (length taz_s_st_rows))
-  ;; tylko IZO dostaje dodatkowy, koncowy wiersz z suma wagi konstrukcji
+  ;; tylko IZO dostaje dwa dodatkowe, koncowe wiersze podsumowania
   (setq taz_s_st_grid_nrows
-    (+ taz_s_st_nrows (if (taz_s_st_is_izo_case taz_s_st_case) 1 0))
+    (+ taz_s_st_nrows (if (taz_s_st_is_izo_case taz_s_st_case) 2 0))
   )
   (setq taz_s_st_table_h (+ taz_s_st_head_h taz_s_st_row_h (* taz_s_st_grid_nrows taz_s_st_row_h)))
   
@@ -439,6 +440,19 @@
       (taz_s_st_write_cell (rtos taz_s_st_total_weight 2 2)
         (+ taz_s_st_x0 taz_s_st_summary_left_w (/ taz_s_st_col_waga_calkowita 2.0))
         taz_s_st_row_y taz_s_st_z0 taz_s_st_h_txt)
+
+      ;; przejscie do kolejnego wiersza podsumowania
+      (setq taz_s_st_row_y (- taz_s_st_row_y taz_s_st_row_h))
+
+      ;; scalona komorka od Profil do Waga
+      (taz_s_st_write_cell "Naddatek na polaczenia [%]"
+        (+ taz_s_st_x0 (/ taz_s_st_summary_left_w 2.0))
+        taz_s_st_row_y taz_s_st_z0 taz_s_st_h_txt)
+
+      ;; wartosc parametru taz_s_additional_mass
+      (taz_s_st_write_cell (rtos taz_s_additional_mass 2 2)
+        (+ taz_s_st_x0 taz_s_st_summary_left_w (/ taz_s_st_col_waga_calkowita 2.0))
+        taz_s_st_row_y taz_s_st_z0 taz_s_st_h_txt)
     )
   )
 
@@ -456,7 +470,7 @@
       (list taz_s_st_col_profil taz_s_st_col_ilosc taz_s_st_col_material taz_s_st_col_dlugosc
             taz_s_st_col_powierzchnia taz_s_st_col_objetosc taz_s_st_col_waga)
     )
-    (taz_s_st_is_izo_case taz_s_st_case)
+    (if (taz_s_st_is_izo_case taz_s_st_case) 2 0)
   )
 
   (princ)
