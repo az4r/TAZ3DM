@@ -2908,6 +2908,9 @@
     )
   )
 
+  (command "_.PLAN" "_World")
+  (command "_.ZOOM" "_Extents")
+
   (princ)
 )
 
