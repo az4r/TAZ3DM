@@ -1220,6 +1220,44 @@
 
 
 ;; ============================================================================
+;; MAPOWANIE NUMERU PRZYPADKU ORGANIZERA NA INDEKS TABELI
+;; ============================================================================
+;; Generator zapisuje tabele w kolejnosci:
+;;   IZO, X, Y, Z
+;;
+;; Organizer pozostaje w kolejnosci:
+;;   X, Y, Z, IZO
+;;
+;; Dla X/Y/Z:
+;;   numer organizera 1..N -> indeks listy 1..N
+;;
+;; Dla IZO:
+;;   numer organizera N+1 -> indeks listy 0
+;; ============================================================================
+
+(defun taz_s_organize_get_table_list_index
+  (taz_s_organize_table_case_nr_arg)
+
+  (setq taz_s_organize_table_section_count
+    (+
+      (length taz_s_organize_x_data)
+      (length taz_s_organize_y_data)
+      (length taz_s_organize_z_data)
+    )
+  )
+
+  (if
+    (=
+      taz_s_organize_table_case_nr_arg
+      (+ taz_s_organize_table_section_count 1)
+    )
+    0
+    taz_s_organize_table_case_nr_arg
+  )
+)
+
+
+;; ============================================================================
 ;; TABELA ZESTAWIENIA STALI - PRZYGOTOWANIE PRZYPADKU
 ;; ============================================================================
 ;; Jesli taz_s_create_drawings_execution_design zapamietal obiekty tabeli
@@ -1243,7 +1281,9 @@
     )
     (setq taz_s_organize_current_table_group
       (nth
-        (- taz_s_organize_table_case_nr_arg 1)
+        (taz_s_organize_get_table_list_index
+          taz_s_organize_table_case_nr_arg
+        )
         taz_s_execution_design_table_groups
       )
     )
@@ -1256,7 +1296,9 @@
     )
     (setq taz_s_organize_current_table_anchor
       (nth
-        (- taz_s_organize_table_case_nr_arg 1)
+        (taz_s_organize_get_table_list_index
+          taz_s_organize_table_case_nr_arg
+        )
         taz_s_execution_design_table_anchor_points
       )
     )
@@ -1326,7 +1368,7 @@
 ;; ============================================================================
 ;; Po ALIGN odczytujemy nowe polozenie tymczasowego POINT, usuwamy go z
 ;; selection setu oraz z rysunku i zapamietujemy nowe polozenie kotwy tabeli.
-;; Lista ma taka sama kolejnosc jak przypadki X, Y, Z.
+;; Lista ma kolejnosc organizera: X, Y, Z, IZO.
 ;; ============================================================================
 
 (defun taz_s_organize_finish_table_case (taz_s_organize_table_case_ss_arg)
@@ -1862,6 +1904,27 @@
       )
 
       ;; ----------------------------------------------------------------------
+      ;; SRODEK KONSTRUKCJI W Z
+      ;; Uzywany tylko przez dodatkowy przypadek IZO.
+      ;; ----------------------------------------------------------------------
+
+      (setq taz_s_organize_z_center 0.0)
+
+      (if taz_s_organize_z_values
+        (progn
+          (setq taz_s_organize_z_min
+            (taz_s_organize_min taz_s_organize_z_values)
+          )
+          (setq taz_s_organize_z_max
+            (taz_s_organize_max taz_s_organize_z_values)
+          )
+          (setq taz_s_organize_z_center
+            (/ (+ taz_s_organize_z_min taz_s_organize_z_max) 2.0)
+          )
+        )
+      )
+
+      ;; ----------------------------------------------------------------------
       ;; NUMER PRZYPADKU
       ;; Odpowiada taz_s_copy_nr ze skryptu tworzacego widoki.
       ;; ----------------------------------------------------------------------
@@ -2346,6 +2409,202 @@
       )
 
       ;; ----------------------------------------------------------------------
+      ;; PRZYPADEK IZO - DODANY NA SAMYM KONCU
+      ;;
+      ;; Dotychczasowe przypadki X/Y/Z powyzej pozostaja bez zmian.
+      ;;
+      ;; W generatorze IZO znajduje sie na:
+      ;;   (liczba X + liczba Y + liczba Z + 1) * 100000
+      ;;
+      ;; W tym miejscu taz_s_organize_case_nr ma juz dokladnie te wartosc
+      ;; numeru przypadku.
+      ;;
+      ;; Po uporzadkowaniu IZO trafia za ostatni przypadek Z.
+      ;; ======================================================================
+
+      (setq taz_s_organize_izo_case_z
+        (* taz_s_organize_case_nr taz_s_organize_spacing)
+      )
+
+      (setq taz_s_organize_destination_x
+        (* (- taz_s_organize_case_nr 1) taz_s_organize_spacing)
+      )
+
+      ;; Dokladny poczatek UCS IZO — taki sam jak w generatorze.
+      (setq taz_s_organize_izo_ucs_origin
+        (list
+          taz_s_organize_x_center
+          taz_s_organize_y_center
+          (+ taz_s_organize_z_center taz_s_organize_izo_case_z)
+        )
+      )
+
+      ;; Odtworzenie dokładnie tej samej płaszczyzny IZO.
+      (command "_.UCS" "_W")
+      (command "_.UCS" "_O" taz_s_organize_izo_ucs_origin)
+      (command "_.UCS" "_X" 45)
+      (command "_.UCS" "_Y" 35.264389683)
+
+      (setq taz_s_organize_izo_normal
+        (trans (list 0.0 0.0 1.0) 1 0 T)
+      )
+
+      ;; Os X OCS — ta sama, która daje Rotation = 0 etykiet IZO.
+      (setq taz_s_organize_izo_xdir
+        (trans
+          (list 1.0 0.0 0.0)
+          taz_s_organize_izo_normal
+          0
+          T
+        )
+      )
+
+      ;; Os Y tego samego OCS.
+      (setq taz_s_organize_izo_ydir
+        (trans
+          (list 0.0 1.0 0.0)
+          taz_s_organize_izo_normal
+          0
+          T
+        )
+      )
+
+      (command "_.UCS" "_W")
+
+      ;; Zbieramy geometrię najwyższego przypadku IZO.
+      (setq taz_s_organize_case_ss
+        (taz_s_organize_collect_case_z_range
+          (- taz_s_organize_izo_case_z taz_s_organize_case_half_range)
+          (+ taz_s_organize_izo_case_z taz_s_organize_case_half_range)
+        )
+      )
+
+      ;; Jawnie dopinamy właściwą tabelę IZO i jej marker.
+      ;; Funkcja mapująca pobiera dla tego ostatniego przypadku indeks 0.
+      (setq taz_s_organize_case_ss
+        (taz_s_organize_prepare_table_case
+          taz_s_organize_case_nr
+          taz_s_organize_case_ss
+        )
+      )
+
+      (if (> (sslength taz_s_organize_case_ss) 0)
+        (progn
+
+          ;; Punkt bazowy leży dokładnie na płaszczyźnie IZO.
+          (setq taz_s_organize_source_1
+            taz_s_organize_izo_ucs_origin
+          )
+
+          ;; Poziom źródłowy = oś X OCS IZO.
+          (setq taz_s_organize_source_2
+            (list
+              (+ (car taz_s_organize_izo_ucs_origin)
+                 (* taz_s_organize_align_size
+                    (car taz_s_organize_izo_xdir)))
+              (+ (cadr taz_s_organize_izo_ucs_origin)
+                 (* taz_s_organize_align_size
+                    (cadr taz_s_organize_izo_xdir)))
+              (+ (caddr taz_s_organize_izo_ucs_origin)
+                 (* taz_s_organize_align_size
+                    (caddr taz_s_organize_izo_xdir)))
+            )
+          )
+
+          ;; Pion źródłowy = oś Y OCS IZO.
+          (setq taz_s_organize_source_3
+            (list
+              (+ (car taz_s_organize_izo_ucs_origin)
+                 (* taz_s_organize_align_size
+                    (car taz_s_organize_izo_ydir)))
+              (+ (cadr taz_s_organize_izo_ucs_origin)
+                 (* taz_s_organize_align_size
+                    (cadr taz_s_organize_izo_ydir)))
+              (+ (caddr taz_s_organize_izo_ucs_origin)
+                 (* taz_s_organize_align_size
+                    (caddr taz_s_organize_izo_ydir)))
+            )
+          )
+
+          ;; Docelowo IZO trafia za ostatni przypadek Z.
+          (setq taz_s_organize_destination_1
+            (list taz_s_organize_destination_x 0.0 0.0)
+          )
+
+          (setq taz_s_organize_destination_2
+            (list
+              (+ taz_s_organize_destination_x taz_s_organize_align_size)
+              0.0
+              0.0
+            )
+          )
+
+          (setq taz_s_organize_destination_3
+            (list
+              taz_s_organize_destination_x
+              taz_s_organize_align_size
+              0.0
+            )
+          )
+
+          (command
+            "_.ALIGN"
+            taz_s_organize_case_ss
+            ""
+            "_NON"
+            taz_s_organize_source_1
+            "_NON"
+            taz_s_organize_destination_1
+            "_NON"
+            taz_s_organize_source_2
+            "_NON"
+            taz_s_organize_destination_2
+            "_NON"
+            taz_s_organize_source_3
+            "_NON"
+            taz_s_organize_destination_3
+          )
+
+          (setq taz_s_organize_case_object_count
+            (sslength taz_s_organize_case_ss)
+          )
+
+          ;; Tymczasowego POINT tabeli nie liczymy jako przeniesionego obiektu.
+          (if taz_s_organize_current_table_marker
+            (setq taz_s_organize_case_object_count
+              (- taz_s_organize_case_object_count 1)
+            )
+          )
+
+          (setq taz_s_organize_total_moved
+            (+ taz_s_organize_total_moved taz_s_organize_case_object_count)
+          )
+
+          (princ
+            (strcat
+              "\nIZO - przypadek "
+              (itoa taz_s_organize_case_nr)
+              " - przeniesiono obiektow: "
+              (itoa taz_s_organize_case_object_count)
+            )
+          )
+        )
+        (princ
+          (strcat
+            "\nIZO - przypadek "
+            (itoa taz_s_organize_case_nr)
+            " - nie znaleziono obiektow."
+          )
+        )
+      )
+
+      ;; Oryginalna funkcja zapisuje kotwę po ALIGN w kolejności organizera.
+      (taz_s_organize_finish_table_case taz_s_organize_case_ss)
+
+      ;; Dzięki temu istniejąca pętla ramek utworzy jeszcze jedną ramkę dla IZO.
+      (setq taz_s_organize_case_nr (+ taz_s_organize_case_nr 1))
+
+      ;; ----------------------------------------------------------------------
       ;; KONIEC
       ;; ----------------------------------------------------------------------
 
@@ -2589,7 +2848,9 @@
           )
           (setq taz_s_organize_table_move_group
             (nth
-              taz_s_organize_table_move_index
+              (taz_s_organize_get_table_list_index
+                (+ taz_s_organize_table_move_index 1)
+              )
               taz_s_execution_design_table_groups
             )
           )
