@@ -1585,18 +1585,35 @@
     )
   )
 
+  ;; Os Y tego samego OCS.
+  ;; Jest to dokladnie ten sam kierunek, ktorego organizer uzywa
+  ;; pozniej jako pionowego kierunku zrodlowego przy ALIGN przypadku IZO.
+  (setq taz_s_izo_label_ydir
+    (trans
+      (list 0.0 1.0 0.0)
+      taz_s_izo_label_normal
+      0
+      T
+    )
+  )
+
   ;; -------------------------------------------------------
   ;; IZO - TYTUL WIDOKU 3D
   ;;
   ;; Tresc: WIDOK 3D + druga linia "Skala 1:X"
   ;; Wysokosc: tytul 5.0, skala 2.5 w skali 1:1; obie skalowane
   ;;            przez taz_s_annotation_scale
-  ;; Polozenie: centralnie, 500 jednostek nad gorna krawedzia
-  ;;             rzutu w aktualnym UCS izometrycznym
+  ;; Polozenie: centralnie, 500 jednostek nad gorna krawedzia rzutu.
   ;; Warstwa: taz_s_labels
   ;;
-  ;; Gorna krawedz jest wyznaczana z 8 naroznikow obwiedni przypadku
-  ;; po przeliczeniu ich do tego samego UCS, ktorego uzywa SOLPROF.
+  ;; WAZNE:
+  ;; Punkt tytulu liczymy w bazie OCS etykiet IZO, czyli DOKLADNIE
+  ;; w tej samej bazie, ktorej organizer uzywa pozniej przy ALIGN.
+  ;; Poczatkiem tej bazy jest taz_s_izo_ucs_origin - ten sam punkt,
+  ;; ktory po uporzadkowaniu trafia w srodek przypadku / ramki.
+  ;;
+  ;; Dlatego wspolrzedna pozioma tytulu wzgledem tego punktu wynosi 0.0.
+  ;; Nie powstaje juz pozioma skladowa przesuniecia po ALIGN.
   ;; -------------------------------------------------------
 
   (setq taz_s_izo_title_corners
@@ -1612,45 +1629,79 @@
     )
   )
 
-  (setq taz_s_izo_title_xmin nil)
-  (setq taz_s_izo_title_xmax nil)
+  ;; Maksymalna wspolrzedna pionowa obwiedni w bazie OCS IZO.
+  ;; Liczymy ja wzgledem taz_s_izo_ucs_origin, aby punkt tytulu mial
+  ;; dokladnie X=0.0 w tej samej bazie, ktora organizer prostuje ALIGN-em.
   (setq taz_s_izo_title_ymax nil)
   (setq taz_s_izo_title_tmp taz_s_izo_title_corners)
 
   (while taz_s_izo_title_tmp
-    (setq taz_s_izo_title_corner_ucs
-      (trans (car taz_s_izo_title_tmp) 0 1)
+
+    (setq taz_s_izo_title_corner_wcs
+      (car taz_s_izo_title_tmp)
     )
 
-    (if (or (null taz_s_izo_title_xmin)
-            (< (car taz_s_izo_title_corner_ucs) taz_s_izo_title_xmin))
-      (setq taz_s_izo_title_xmin (car taz_s_izo_title_corner_ucs))
+    (setq taz_s_izo_title_corner_vec
+      (list
+        (- (car taz_s_izo_title_corner_wcs)
+           (car taz_s_izo_ucs_origin))
+        (- (cadr taz_s_izo_title_corner_wcs)
+           (cadr taz_s_izo_ucs_origin))
+        (- (caddr taz_s_izo_title_corner_wcs)
+           (caddr taz_s_izo_ucs_origin))
+      )
     )
 
-    (if (or (null taz_s_izo_title_xmax)
-            (> (car taz_s_izo_title_corner_ucs) taz_s_izo_title_xmax))
-      (setq taz_s_izo_title_xmax (car taz_s_izo_title_corner_ucs))
+    ;; Iloczyn skalarny z osia Y OCS IZO = pion po pozniejszym ALIGN.
+    (setq taz_s_izo_title_corner_y
+      (+
+        (* (car taz_s_izo_title_corner_vec)
+           (car taz_s_izo_label_ydir))
+        (* (cadr taz_s_izo_title_corner_vec)
+           (cadr taz_s_izo_label_ydir))
+        (* (caddr taz_s_izo_title_corner_vec)
+           (caddr taz_s_izo_label_ydir))
+      )
     )
 
-    (if (or (null taz_s_izo_title_ymax)
-            (> (cadr taz_s_izo_title_corner_ucs) taz_s_izo_title_ymax))
-      (setq taz_s_izo_title_ymax (cadr taz_s_izo_title_corner_ucs))
+    (if
+      (or
+        (null taz_s_izo_title_ymax)
+        (> taz_s_izo_title_corner_y taz_s_izo_title_ymax)
+      )
+      (setq taz_s_izo_title_ymax taz_s_izo_title_corner_y)
     )
 
     (setq taz_s_izo_title_tmp (cdr taz_s_izo_title_tmp))
   )
 
-  (if (and taz_s_izo_title_xmin taz_s_izo_title_xmax taz_s_izo_title_ymax)
+  (if taz_s_izo_title_ymax
     (progn
+
+      ;; Punkt tytulu = srodek przypadku + tylko skladowa pionowa.
+      ;; Brak skladowej taz_s_izo_label_xdir oznacza, ze po ALIGN
+      ;; tytul trafi dokladnie nad X srodka przypadku / ramki.
+      (setq taz_s_izo_title_offset_y
+        (+ taz_s_izo_title_ymax 500.0)
+      )
+
       (setq taz_s_izo_title_pt
-        (trans
-          (list
-            (/ (+ taz_s_izo_title_xmin taz_s_izo_title_xmax) 2.0)
-            (+ taz_s_izo_title_ymax 500.0)
-            0.0
+        (list
+          (+
+            (car taz_s_izo_ucs_origin)
+            (* taz_s_izo_title_offset_y
+               (car taz_s_izo_label_ydir))
           )
-          1
-          0
+          (+
+            (cadr taz_s_izo_ucs_origin)
+            (* taz_s_izo_title_offset_y
+               (cadr taz_s_izo_label_ydir))
+          )
+          (+
+            (caddr taz_s_izo_ucs_origin)
+            (* taz_s_izo_title_offset_y
+               (caddr taz_s_izo_label_ydir))
+          )
         )
       )
 
