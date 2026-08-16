@@ -1781,6 +1781,1273 @@
 )
 
 
+
+     
+
+;; ============================================================================
+;; LAYOUTY - FUNKCJE POMOCNICZE
+;; ============================================================================
+;; Ten fragment jest wykonywany dopiero na samym koncu organizera.
+;; Styl: SETQ + IF + WHILE + ENTGET / ENTMOD + COMMAND.
+;;
+;; Bez VL / VLA / VLAX / COM.
+;;
+;; Plotter:
+;; - najpierw probujemy bezposrednio "DWG To PDF.pc3",
+;; - jezeli CAD nie przyjmie tej nazwy -> ustawiamy "None".
+;; ============================================================================
+
+
+(defun taz_s_organize_layout_get_last_entity ()
+
+  (setq taz_s_organize_layout_last_ent (entlast))
+
+  (if taz_s_organize_layout_last_ent
+    (progn
+      (setq taz_s_organize_layout_last_next
+        (entnext taz_s_organize_layout_last_ent)
+      )
+
+      (while taz_s_organize_layout_last_next
+        (setq taz_s_organize_layout_last_ent
+          taz_s_organize_layout_last_next
+        )
+        (setq taz_s_organize_layout_last_next
+          (entnext taz_s_organize_layout_last_ent)
+        )
+      )
+    )
+  )
+
+  taz_s_organize_layout_last_ent
+)
+
+
+(defun taz_s_organize_layout_collect_new_entities
+  (taz_s_organize_layout_before_arg)
+
+  (setq taz_s_organize_layout_new_entities '())
+
+  (if taz_s_organize_layout_before_arg
+    (setq taz_s_organize_layout_new_ent
+      (entnext taz_s_organize_layout_before_arg)
+    )
+    (setq taz_s_organize_layout_new_ent (entnext))
+  )
+
+  (while taz_s_organize_layout_new_ent
+
+    (setq taz_s_organize_layout_new_data
+      (entget taz_s_organize_layout_new_ent)
+    )
+
+    (setq taz_s_organize_layout_new_type
+      (cdr (assoc 0 taz_s_organize_layout_new_data))
+    )
+
+    (if
+      (not
+        (member
+          taz_s_organize_layout_new_type
+          '("VERTEX" "SEQEND" "ATTRIB")
+        )
+      )
+      (setq taz_s_organize_layout_new_entities
+        (append
+          taz_s_organize_layout_new_entities
+          (list taz_s_organize_layout_new_ent)
+        )
+      )
+    )
+
+    (setq taz_s_organize_layout_new_ent
+      (entnext taz_s_organize_layout_new_ent)
+    )
+  )
+
+  taz_s_organize_layout_new_entities
+)
+
+
+;; ----------------------------------------------------------------------------
+;; GRANICE GEOMETRII RAMKI - BEZ VL
+;; ----------------------------------------------------------------------------
+
+(defun taz_s_organize_layout_check_bound_point
+  (taz_s_organize_layout_bound_point_arg)
+
+  (if taz_s_organize_layout_bound_point_arg
+    (progn
+
+      (setq taz_s_organize_layout_bound_point_x
+        (car taz_s_organize_layout_bound_point_arg)
+      )
+      (setq taz_s_organize_layout_bound_point_y
+        (cadr taz_s_organize_layout_bound_point_arg)
+      )
+
+      (if (= taz_s_organize_layout_bound_xmin nil)
+        (setq taz_s_organize_layout_bound_xmin
+          taz_s_organize_layout_bound_point_x
+        )
+        (if
+          (<
+            taz_s_organize_layout_bound_point_x
+            taz_s_organize_layout_bound_xmin
+          )
+          (setq taz_s_organize_layout_bound_xmin
+            taz_s_organize_layout_bound_point_x
+          )
+        )
+      )
+
+      (if (= taz_s_organize_layout_bound_ymin nil)
+        (setq taz_s_organize_layout_bound_ymin
+          taz_s_organize_layout_bound_point_y
+        )
+        (if
+          (<
+            taz_s_organize_layout_bound_point_y
+            taz_s_organize_layout_bound_ymin
+          )
+          (setq taz_s_organize_layout_bound_ymin
+            taz_s_organize_layout_bound_point_y
+          )
+        )
+      )
+
+      (if (= taz_s_organize_layout_bound_xmax nil)
+        (setq taz_s_organize_layout_bound_xmax
+          taz_s_organize_layout_bound_point_x
+        )
+        (if
+          (>
+            taz_s_organize_layout_bound_point_x
+            taz_s_organize_layout_bound_xmax
+          )
+          (setq taz_s_organize_layout_bound_xmax
+            taz_s_organize_layout_bound_point_x
+          )
+        )
+      )
+
+      (if (= taz_s_organize_layout_bound_ymax nil)
+        (setq taz_s_organize_layout_bound_ymax
+          taz_s_organize_layout_bound_point_y
+        )
+        (if
+          (>
+            taz_s_organize_layout_bound_point_y
+            taz_s_organize_layout_bound_ymax
+          )
+          (setq taz_s_organize_layout_bound_ymax
+            taz_s_organize_layout_bound_point_y
+          )
+        )
+      )
+    )
+  )
+)
+
+
+(defun taz_s_organize_layout_get_group_bounds
+  (taz_s_organize_layout_group_arg)
+
+  (setq taz_s_organize_layout_bound_xmin nil)
+  (setq taz_s_organize_layout_bound_ymin nil)
+  (setq taz_s_organize_layout_bound_xmax nil)
+  (setq taz_s_organize_layout_bound_ymax nil)
+
+  (setq taz_s_organize_layout_bound_tmp
+    taz_s_organize_layout_group_arg
+  )
+
+  (while taz_s_organize_layout_bound_tmp
+
+    (setq taz_s_organize_layout_bound_ent
+      (car taz_s_organize_layout_bound_tmp)
+    )
+
+    (if
+      (and
+        taz_s_organize_layout_bound_ent
+        (entget taz_s_organize_layout_bound_ent)
+      )
+      (progn
+
+        (setq taz_s_organize_layout_bound_data
+          (entget taz_s_organize_layout_bound_ent)
+        )
+        (setq taz_s_organize_layout_bound_type
+          (cdr (assoc 0 taz_s_organize_layout_bound_data))
+        )
+
+        (if (= taz_s_organize_layout_bound_type "LINE")
+          (progn
+            (taz_s_organize_layout_check_bound_point
+              (cdr (assoc 10 taz_s_organize_layout_bound_data))
+            )
+            (taz_s_organize_layout_check_bound_point
+              (cdr (assoc 11 taz_s_organize_layout_bound_data))
+            )
+          )
+        )
+
+        (if (= taz_s_organize_layout_bound_type "LWPOLYLINE")
+          (progn
+
+            (setq taz_s_organize_layout_bound_dxf_tmp
+              taz_s_organize_layout_bound_data
+            )
+
+            (while taz_s_organize_layout_bound_dxf_tmp
+
+              (setq taz_s_organize_layout_bound_dxf_item
+                (car taz_s_organize_layout_bound_dxf_tmp)
+              )
+
+              (if (= (car taz_s_organize_layout_bound_dxf_item) 10)
+                (taz_s_organize_layout_check_bound_point
+                  (cdr taz_s_organize_layout_bound_dxf_item)
+                )
+              )
+
+              (setq taz_s_organize_layout_bound_dxf_tmp
+                (cdr taz_s_organize_layout_bound_dxf_tmp)
+              )
+            )
+          )
+        )
+
+        (if (= taz_s_organize_layout_bound_type "POLYLINE")
+          (progn
+
+            (setq taz_s_organize_layout_bound_poly_next
+              (entnext taz_s_organize_layout_bound_ent)
+            )
+            (setq taz_s_organize_layout_bound_poly_done nil)
+
+            (while
+              (and
+                taz_s_organize_layout_bound_poly_next
+                (= taz_s_organize_layout_bound_poly_done nil)
+              )
+
+              (setq taz_s_organize_layout_bound_poly_data
+                (entget taz_s_organize_layout_bound_poly_next)
+              )
+              (setq taz_s_organize_layout_bound_poly_type
+                (cdr
+                  (assoc
+                    0
+                    taz_s_organize_layout_bound_poly_data
+                  )
+                )
+              )
+
+              (if (= taz_s_organize_layout_bound_poly_type "VERTEX")
+                (taz_s_organize_layout_check_bound_point
+                  (cdr
+                    (assoc
+                      10
+                      taz_s_organize_layout_bound_poly_data
+                    )
+                  )
+                )
+              )
+
+              (if (= taz_s_organize_layout_bound_poly_type "SEQEND")
+                (setq taz_s_organize_layout_bound_poly_done T)
+              )
+
+              (if (= taz_s_organize_layout_bound_poly_done nil)
+                (setq taz_s_organize_layout_bound_poly_next
+                  (entnext taz_s_organize_layout_bound_poly_next)
+                )
+              )
+            )
+          )
+        )
+
+        (if
+          (or
+            (= taz_s_organize_layout_bound_type "SOLID")
+            (= taz_s_organize_layout_bound_type "TRACE")
+            (= taz_s_organize_layout_bound_type "3DFACE")
+          )
+          (progn
+            (taz_s_organize_layout_check_bound_point
+              (cdr (assoc 10 taz_s_organize_layout_bound_data))
+            )
+            (taz_s_organize_layout_check_bound_point
+              (cdr (assoc 11 taz_s_organize_layout_bound_data))
+            )
+            (taz_s_organize_layout_check_bound_point
+              (cdr (assoc 12 taz_s_organize_layout_bound_data))
+            )
+            (taz_s_organize_layout_check_bound_point
+              (cdr (assoc 13 taz_s_organize_layout_bound_data))
+            )
+          )
+        )
+      )
+    )
+
+    (setq taz_s_organize_layout_bound_tmp
+      (cdr taz_s_organize_layout_bound_tmp)
+    )
+  )
+
+  (if
+    (and
+      taz_s_organize_layout_bound_xmin
+      taz_s_organize_layout_bound_ymin
+      taz_s_organize_layout_bound_xmax
+      taz_s_organize_layout_bound_ymax
+    )
+    (list
+      taz_s_organize_layout_bound_xmin
+      taz_s_organize_layout_bound_ymin
+      taz_s_organize_layout_bound_xmax
+      taz_s_organize_layout_bound_ymax
+    )
+    nil
+  )
+)
+
+
+;; ----------------------------------------------------------------------------
+;; NAZWY LAYOUTOW
+;; ----------------------------------------------------------------------------
+
+(defun taz_s_organize_layout_get_axis_name
+  (taz_s_organize_layout_row_arg)
+
+  (setq taz_s_organize_layout_name_i 2)
+  (setq taz_s_organize_layout_axis_name "")
+
+  (while
+    (and
+      (<=
+        taz_s_organize_layout_name_i
+        (strlen taz_s_organize_layout_row_arg)
+      )
+      (/=
+        (substr
+          taz_s_organize_layout_row_arg
+          taz_s_organize_layout_name_i
+          1
+        )
+        "]"
+      )
+    )
+
+    (setq taz_s_organize_layout_axis_name
+      (strcat
+        taz_s_organize_layout_axis_name
+        (substr
+          taz_s_organize_layout_row_arg
+          taz_s_organize_layout_name_i
+          1
+        )
+      )
+    )
+
+    (setq taz_s_organize_layout_name_i
+      (+ taz_s_organize_layout_name_i 1)
+    )
+  )
+
+  taz_s_organize_layout_axis_name
+)
+
+
+(defun taz_s_organize_layout_make_names ()
+
+  (setq taz_s_organize_layout_names '())
+
+  (setq taz_s_organize_layout_names_tmp
+    taz_s_organize_x_data
+  )
+
+  (while taz_s_organize_layout_names_tmp
+
+    (setq taz_s_organize_layout_axis_name
+      (taz_s_organize_layout_get_axis_name
+        (car taz_s_organize_layout_names_tmp)
+      )
+    )
+
+    (setq taz_s_organize_layout_names
+      (append
+        taz_s_organize_layout_names
+        (list
+          (strcat
+            taz_s_organize_layout_axis_name
+            "-"
+            taz_s_organize_layout_axis_name
+          )
+        )
+      )
+    )
+
+    (setq taz_s_organize_layout_names_tmp
+      (cdr taz_s_organize_layout_names_tmp)
+    )
+  )
+
+  (setq taz_s_organize_layout_names_tmp
+    taz_s_organize_y_data
+  )
+
+  (while taz_s_organize_layout_names_tmp
+
+    (setq taz_s_organize_layout_axis_name
+      (taz_s_organize_layout_get_axis_name
+        (car taz_s_organize_layout_names_tmp)
+      )
+    )
+
+    (setq taz_s_organize_layout_names
+      (append
+        taz_s_organize_layout_names
+        (list
+          (strcat
+            taz_s_organize_layout_axis_name
+            "-"
+            taz_s_organize_layout_axis_name
+          )
+        )
+      )
+    )
+
+    (setq taz_s_organize_layout_names_tmp
+      (cdr taz_s_organize_layout_names_tmp)
+    )
+  )
+
+  (setq taz_s_organize_layout_old_dimzin (getvar "DIMZIN"))
+  (setvar "DIMZIN" 0)
+
+  (setq taz_s_organize_layout_names_tmp
+    taz_s_organize_z_data
+  )
+
+  (while taz_s_organize_layout_names_tmp
+
+    (setq taz_s_organize_layout_level_mm
+      (taz_s_organize_get_dist
+        (car taz_s_organize_layout_names_tmp)
+      )
+    )
+
+    (setq taz_s_organize_layout_names
+      (append
+        taz_s_organize_layout_names
+        (list
+          (rtos
+            (/ taz_s_organize_layout_level_mm 1000.0)
+            2
+            3
+          )
+        )
+      )
+    )
+
+    (setq taz_s_organize_layout_names_tmp
+      (cdr taz_s_organize_layout_names_tmp)
+    )
+  )
+
+  (setvar "DIMZIN" taz_s_organize_layout_old_dimzin)
+
+  (setq taz_s_organize_layout_names
+    (append
+      taz_s_organize_layout_names
+      (list "3D")
+    )
+  )
+
+  taz_s_organize_layout_names
+)
+
+
+;; ----------------------------------------------------------------------------
+;; LAYOUT Z ACAD_LAYOUT
+;; ----------------------------------------------------------------------------
+
+(defun taz_s_organize_layout_get_layout_entity
+  (taz_s_organize_layout_name_arg)
+
+  (setq taz_s_organize_layout_entity nil)
+
+  (setq taz_s_organize_layout_dictionary_data
+    (dictsearch
+      (namedobjdict)
+      "ACAD_LAYOUT"
+    )
+  )
+
+  (if taz_s_organize_layout_dictionary_data
+    (progn
+
+      (setq taz_s_organize_layout_dictionary_ent
+        (cdr
+          (assoc
+            -1
+            taz_s_organize_layout_dictionary_data
+          )
+        )
+      )
+
+      (if taz_s_organize_layout_dictionary_ent
+        (progn
+
+          (setq taz_s_organize_layout_record_data
+            (dictsearch
+              taz_s_organize_layout_dictionary_ent
+              taz_s_organize_layout_name_arg
+            )
+          )
+
+          (if taz_s_organize_layout_record_data
+            (setq taz_s_organize_layout_entity
+              (cdr
+                (assoc
+                  -1
+                  taz_s_organize_layout_record_data
+                )
+              )
+            )
+          )
+        )
+      )
+    )
+  )
+
+  taz_s_organize_layout_entity
+)
+
+
+(defun taz_s_organize_layout_set_dxf
+  (
+    taz_s_organize_layout_code_arg
+    taz_s_organize_layout_value_arg
+    taz_s_organize_layout_data_arg
+  )
+
+  (if
+    (assoc
+      taz_s_organize_layout_code_arg
+      taz_s_organize_layout_data_arg
+    )
+    (subst
+      (cons
+        taz_s_organize_layout_code_arg
+        taz_s_organize_layout_value_arg
+      )
+      (assoc
+        taz_s_organize_layout_code_arg
+        taz_s_organize_layout_data_arg
+      )
+      taz_s_organize_layout_data_arg
+    )
+    taz_s_organize_layout_data_arg
+  )
+)
+
+
+;; ----------------------------------------------------------------------------
+;; STANDARDOWE A0-A4 W MM, ORIENTACJA POZIOMA
+;; ----------------------------------------------------------------------------
+
+(defun taz_s_organize_layout_get_standard_paper_size
+  (taz_s_organize_layout_format_arg)
+
+  (setq taz_s_organize_layout_standard_paper nil)
+
+  (if (= taz_s_organize_layout_format_arg "A0")
+    (setq taz_s_organize_layout_standard_paper
+      (list 1189.0 841.0)
+    )
+  )
+  (if (= taz_s_organize_layout_format_arg "A1")
+    (setq taz_s_organize_layout_standard_paper
+      (list 841.0 594.0)
+    )
+  )
+  (if (= taz_s_organize_layout_format_arg "A2")
+    (setq taz_s_organize_layout_standard_paper
+      (list 594.0 420.0)
+    )
+  )
+  (if (= taz_s_organize_layout_format_arg "A3")
+    (setq taz_s_organize_layout_standard_paper
+      (list 420.0 297.0)
+    )
+  )
+  (if (= taz_s_organize_layout_format_arg "A4")
+    (setq taz_s_organize_layout_standard_paper
+      (list 297.0 210.0)
+    )
+  )
+
+  taz_s_organize_layout_standard_paper
+)
+
+
+;; ----------------------------------------------------------------------------
+;; STANDARDOWE A0-A4 - NAZWA PAPIERU ISO FULL BLEED
+;; ----------------------------------------------------------------------------
+
+(defun taz_s_organize_layout_get_full_bleed_paper_name
+  (taz_s_organize_layout_format_arg)
+
+  (setq taz_s_organize_layout_full_bleed_paper_name nil)
+
+  (if (= taz_s_organize_layout_format_arg "A0")
+    (setq taz_s_organize_layout_full_bleed_paper_name
+      "ISO_full_bleed_A0_(1189.00_x_841.00_MM)"
+    )
+  )
+  (if (= taz_s_organize_layout_format_arg "A1")
+    (setq taz_s_organize_layout_full_bleed_paper_name
+      "ISO_full_bleed_A1_(841.00_x_594.00_MM)"
+    )
+  )
+  (if (= taz_s_organize_layout_format_arg "A2")
+    (setq taz_s_organize_layout_full_bleed_paper_name
+      "ISO_full_bleed_A2_(594.00_x_420.00_MM)"
+    )
+  )
+  (if (= taz_s_organize_layout_format_arg "A3")
+    (setq taz_s_organize_layout_full_bleed_paper_name
+      "ISO_full_bleed_A3_(420.00_x_297.00_MM)"
+    )
+  )
+  (if (= taz_s_organize_layout_format_arg "A4")
+    (setq taz_s_organize_layout_full_bleed_paper_name
+      "ISO_full_bleed_A4_(297.00_x_210.00_MM)"
+    )
+  )
+
+  taz_s_organize_layout_full_bleed_paper_name
+)
+
+
+;; ----------------------------------------------------------------------------
+;; PLOTER + ROZMIAR PAPIERU
+;; ----------------------------------------------------------------------------
+
+(defun taz_s_organize_layout_set_paper
+  (
+    taz_s_organize_layout_name_arg
+    taz_s_organize_layout_format_arg
+    taz_s_organize_layout_frame_paper_w_arg
+    taz_s_organize_layout_frame_paper_h_arg
+  )
+
+  ;; Na Linuxie FINDFILE moze nie znalezc PC3 mimo ze GstarCAD
+  ;; pokazuje go na liscie ploterow. Dlatego najpierw probujemy
+  ;; wpisac nazwe wbudowanego plotera bezposrednio do layoutu.
+  (setq taz_s_organize_layout_plotter_name
+    "DWG To PDF.pc3"
+  )
+
+  ;; Zwykle A0-A4 zawsze z dokladnych wymiarow ISO.
+  ;; Format wydluzony bierze wymiar rzeczywistej ramki.
+  (setq taz_s_organize_layout_standard_paper
+    (taz_s_organize_layout_get_standard_paper_size
+      taz_s_organize_layout_format_arg
+    )
+  )
+
+  (setq taz_s_organize_layout_full_bleed_paper_name
+    (taz_s_organize_layout_get_full_bleed_paper_name
+      taz_s_organize_layout_format_arg
+    )
+  )
+
+  (if taz_s_organize_layout_standard_paper
+    (progn
+      (setq taz_s_organize_layout_paper_w
+        (car taz_s_organize_layout_standard_paper)
+      )
+      (setq taz_s_organize_layout_paper_h
+        (cadr taz_s_organize_layout_standard_paper)
+      )
+    )
+    (progn
+      (setq taz_s_organize_layout_paper_w
+        taz_s_organize_layout_frame_paper_w_arg
+      )
+      (setq taz_s_organize_layout_paper_h
+        taz_s_organize_layout_frame_paper_h_arg
+      )
+    )
+  )
+
+  (setq taz_s_organize_layout_layout_ent
+    (taz_s_organize_layout_get_layout_entity
+      taz_s_organize_layout_name_arg
+    )
+  )
+
+  (if taz_s_organize_layout_layout_ent
+    (progn
+      (setq taz_s_organize_layout_layout_data
+        (entget taz_s_organize_layout_layout_ent)
+      )
+
+      (setq taz_s_organize_layout_layout_data
+        (taz_s_organize_layout_set_dxf
+          2
+          taz_s_organize_layout_plotter_name
+          taz_s_organize_layout_layout_data
+        )
+      )
+
+      ;; Dla standardowych A0-A4 wybieramy wariant ISO FULL BLEED.
+      (if taz_s_organize_layout_full_bleed_paper_name
+        (setq taz_s_organize_layout_layout_data
+          (taz_s_organize_layout_set_dxf
+            4
+            taz_s_organize_layout_full_bleed_paper_name
+            taz_s_organize_layout_layout_data
+          )
+        )
+      )
+
+      ;; Marginesy papieru = 0.
+      (setq taz_s_organize_layout_layout_data
+        (taz_s_organize_layout_set_dxf
+          40
+          0.0
+          taz_s_organize_layout_layout_data
+        )
+      )
+      (setq taz_s_organize_layout_layout_data
+        (taz_s_organize_layout_set_dxf
+          41
+          0.0
+          taz_s_organize_layout_layout_data
+        )
+      )
+      (setq taz_s_organize_layout_layout_data
+        (taz_s_organize_layout_set_dxf
+          42
+          0.0
+          taz_s_organize_layout_layout_data
+        )
+      )
+      (setq taz_s_organize_layout_layout_data
+        (taz_s_organize_layout_set_dxf
+          43
+          0.0
+          taz_s_organize_layout_layout_data
+        )
+      )
+
+      (setq taz_s_organize_layout_layout_data
+        (taz_s_organize_layout_set_dxf
+          44
+          taz_s_organize_layout_paper_w
+          taz_s_organize_layout_layout_data
+        )
+      )
+      (setq taz_s_organize_layout_layout_data
+        (taz_s_organize_layout_set_dxf
+          45
+          taz_s_organize_layout_paper_h
+          taz_s_organize_layout_layout_data
+        )
+      )
+      (setq taz_s_organize_layout_layout_data
+        (taz_s_organize_layout_set_dxf
+          46
+          0.0
+          taz_s_organize_layout_layout_data
+        )
+      )
+      (setq taz_s_organize_layout_layout_data
+        (taz_s_organize_layout_set_dxf
+          47
+          0.0
+          taz_s_organize_layout_layout_data
+        )
+      )
+      (setq taz_s_organize_layout_layout_data
+        (taz_s_organize_layout_set_dxf
+          72
+          1
+          taz_s_organize_layout_layout_data
+        )
+      )
+      (setq taz_s_organize_layout_layout_data
+        (taz_s_organize_layout_set_dxf
+          73
+          0
+          taz_s_organize_layout_layout_data
+        )
+      )
+
+      (entmod taz_s_organize_layout_layout_data)
+
+      ;; Kontrola tego co faktycznie zostalo zapisane przez CAD.
+      (setq taz_s_organize_layout_layout_data
+        (entget taz_s_organize_layout_layout_ent)
+      )
+      (setq taz_s_organize_layout_plotter_check
+        (cdr (assoc 2 taz_s_organize_layout_layout_data))
+      )
+
+      (if
+        (or
+          (= taz_s_organize_layout_plotter_check nil)
+          (/=
+            (strcase taz_s_organize_layout_plotter_check)
+            (strcase "DWG To PDF.pc3")
+          )
+        )
+        (progn
+          (setq taz_s_organize_layout_plotter_name "None")
+          (setq taz_s_organize_layout_layout_data
+            (taz_s_organize_layout_set_dxf
+              2
+              "None"
+              taz_s_organize_layout_layout_data
+            )
+          )
+          (entmod taz_s_organize_layout_layout_data)
+        )
+      )
+    )
+  )
+
+  (list
+    taz_s_organize_layout_paper_w
+    taz_s_organize_layout_paper_h
+    taz_s_organize_layout_plotter_name
+  )
+)
+
+
+;; ----------------------------------------------------------------------------
+;; PIERWSZA RZUTNIA UZYTKOWA NA DANYM LAYOUTCIE
+;; ----------------------------------------------------------------------------
+
+(defun taz_s_organize_layout_get_viewport
+  (taz_s_organize_layout_name_arg)
+
+  (setq taz_s_organize_layout_viewport_ent nil)
+
+  (setq taz_s_organize_layout_viewport_ss
+    (ssget
+      "X"
+      (list
+        (cons 0 "VIEWPORT")
+        (cons 410 taz_s_organize_layout_name_arg)
+      )
+    )
+  )
+
+  (if taz_s_organize_layout_viewport_ss
+    (progn
+
+      (setq taz_s_organize_layout_viewport_i 0)
+
+      (while
+        (and
+          (<
+            taz_s_organize_layout_viewport_i
+            (sslength taz_s_organize_layout_viewport_ss)
+          )
+          (= taz_s_organize_layout_viewport_ent nil)
+        )
+
+        (setq taz_s_organize_layout_viewport_test_ent
+          (ssname
+            taz_s_organize_layout_viewport_ss
+            taz_s_organize_layout_viewport_i
+          )
+        )
+        (setq taz_s_organize_layout_viewport_test_data
+          (entget taz_s_organize_layout_viewport_test_ent)
+        )
+        (setq taz_s_organize_layout_viewport_number
+          (cdr
+            (assoc
+              69
+              taz_s_organize_layout_viewport_test_data
+            )
+          )
+        )
+
+        (if
+          (and
+            taz_s_organize_layout_viewport_number
+            (> taz_s_organize_layout_viewport_number 1)
+          )
+          (setq taz_s_organize_layout_viewport_ent
+            taz_s_organize_layout_viewport_test_ent
+          )
+        )
+
+        (setq taz_s_organize_layout_viewport_i
+          (+ taz_s_organize_layout_viewport_i 1)
+        )
+      )
+    )
+  )
+
+  taz_s_organize_layout_viewport_ent
+)
+
+
+;; ----------------------------------------------------------------------------
+;; DOSTOSOWANIE JEDNEGO LAYOUTU
+;; ----------------------------------------------------------------------------
+
+(defun taz_s_organize_layout_configure_one
+  (
+    taz_s_organize_layout_name_arg
+    taz_s_organize_layout_bounds_arg
+    taz_s_organize_layout_insert_point_arg
+    taz_s_organize_layout_scale_arg
+    taz_s_organize_layout_format_arg
+  )
+
+  (setq taz_s_organize_layout_configured nil)
+
+  (if
+    (and
+      taz_s_organize_layout_name_arg
+      taz_s_organize_layout_bounds_arg
+      taz_s_organize_layout_insert_point_arg
+      taz_s_organize_layout_scale_arg
+      (> taz_s_organize_layout_scale_arg 0.0)
+      (member taz_s_organize_layout_name_arg (layoutlist))
+    )
+    (progn
+
+      ;; Bounding box ramki jest uzywany tylko do formatu wydluzonego.
+      (setq taz_s_organize_layout_xmin
+        (nth 0 taz_s_organize_layout_bounds_arg)
+      )
+      (setq taz_s_organize_layout_ymin
+        (nth 1 taz_s_organize_layout_bounds_arg)
+      )
+      (setq taz_s_organize_layout_xmax
+        (nth 2 taz_s_organize_layout_bounds_arg)
+      )
+      (setq taz_s_organize_layout_ymax
+        (nth 3 taz_s_organize_layout_bounds_arg)
+      )
+
+      (setq taz_s_organize_layout_model_w
+        (- taz_s_organize_layout_xmax taz_s_organize_layout_xmin)
+      )
+      (setq taz_s_organize_layout_model_h
+        (- taz_s_organize_layout_ymax taz_s_organize_layout_ymin)
+      )
+
+      (setq taz_s_organize_layout_frame_paper_w
+        (/ taz_s_organize_layout_model_w taz_s_organize_layout_scale_arg)
+      )
+      (setq taz_s_organize_layout_frame_paper_h
+        (/ taz_s_organize_layout_model_h taz_s_organize_layout_scale_arg)
+      )
+
+      (setq taz_s_organize_layout_paper_result
+        (taz_s_organize_layout_set_paper
+          taz_s_organize_layout_name_arg
+          taz_s_organize_layout_format_arg
+          taz_s_organize_layout_frame_paper_w
+          taz_s_organize_layout_frame_paper_h
+        )
+      )
+
+      (setq taz_s_organize_layout_paper_w
+        (car taz_s_organize_layout_paper_result)
+      )
+      (setq taz_s_organize_layout_paper_h
+        (cadr taz_s_organize_layout_paper_result)
+      )
+      (setq taz_s_organize_layout_plotter_name
+        (caddr taz_s_organize_layout_paper_result)
+      )
+
+      (setvar "CTAB" taz_s_organize_layout_name_arg)
+      (command "_.PSPACE")
+
+      ;; Na tym layoucie docelowo ma zostac tylko jedna nowa rzutnia.
+      ;; Warstwy mogly zostac ponownie zablokowane wczesniej przez organizer,
+      ;; dlatego na czas czyszczenia odblokowujemy wszystkie warstwy.
+      (command "_.-LAYER" "_UNLOCK" "*" "")
+
+      ;; Usuwamy wszystko z paperspace przed utworzeniem docelowej rzutni.
+      (command "_.ERASE" "_ALL" "")
+
+      ;; Rzutnia ma byc zawsze na warstwie 0.
+      (if (tblsearch "LAYER" "0")
+        (setvar "CLAYER" "0")
+      )
+
+      ;; Przywracamy blokady warstw zapamietane przy starcie organizera.
+      (taz_s_organize_restore_locked_layers)
+
+      ;; Pobieramy rzeczywiste marginesy niedrukowalne aktualnego layoutu.
+      ;; W paperspace punkt 0,0 odpowiada poczatkowi obszaru drukowalnego,
+      ;; dlatego fizyczna kartka zaczyna sie o lewy/dolny margines wczesniej.
+      (setq taz_s_organize_layout_layout_ent
+        (taz_s_organize_layout_get_layout_entity
+          taz_s_organize_layout_name_arg
+        )
+      )
+
+      (setq taz_s_organize_layout_margin_left 0.0)
+      (setq taz_s_organize_layout_margin_bottom 0.0)
+
+      (if taz_s_organize_layout_layout_ent
+        (progn
+          (setq taz_s_organize_layout_layout_data
+            (entget taz_s_organize_layout_layout_ent)
+          )
+
+          (if (assoc 40 taz_s_organize_layout_layout_data)
+            (setq taz_s_organize_layout_margin_left
+              (cdr (assoc 40 taz_s_organize_layout_layout_data))
+            )
+          )
+
+          (if (assoc 41 taz_s_organize_layout_layout_data)
+            (setq taz_s_organize_layout_margin_bottom
+              (cdr (assoc 41 taz_s_organize_layout_layout_data))
+            )
+          )
+        )
+      )
+
+      (setq taz_s_organize_layout_viewport_p1
+        (list
+          (- 0.0 taz_s_organize_layout_margin_left)
+          (- 0.0 taz_s_organize_layout_margin_bottom)
+        )
+      )
+
+      (setq taz_s_organize_layout_viewport_p2
+        (list
+          (-
+            taz_s_organize_layout_paper_w
+            taz_s_organize_layout_margin_left
+          )
+          (-
+            taz_s_organize_layout_paper_h
+            taz_s_organize_layout_margin_bottom
+          )
+        )
+      )
+
+      ;; Nowa rzutnia pokrywa dokladnie fizyczna kartke.
+      (command
+        "_.MVIEW"
+        "_NON"
+        taz_s_organize_layout_viewport_p1
+        "_NON"
+        taz_s_organize_layout_viewport_p2
+      )
+
+      (setq taz_s_organize_layout_viewport_ent
+        (taz_s_organize_layout_get_viewport
+          taz_s_organize_layout_name_arg
+        )
+      )
+
+      (if taz_s_organize_layout_viewport_ent
+        (progn
+          (command
+            "_.CHPROP"
+            taz_s_organize_layout_viewport_ent
+            ""
+            "_LA"
+            "0"
+            ""
+          )
+
+          ;; Ustawienie widoku zwyklymi komendami GstarCAD.
+          (command "_.MSPACE")
+          (command "_.UCS" "_W")
+          (command "_.PLAN" "_W")
+
+          ;; Punkt wstawienia ramki jest srodkiem danego przypadku.
+          ;; Nie uzywamy juz srodka bounding boxa calej geometrii ramki.
+          (setq taz_s_organize_layout_model_center
+            (list
+              (car taz_s_organize_layout_insert_point_arg)
+              (cadr taz_s_organize_layout_insert_point_arg)
+              0.0
+            )
+          )
+
+          ;; Dokladna skala 1:S:
+          ;; wysokosc widoku modelu = wysokosc papieru * S.
+          (setq taz_s_organize_layout_view_height
+            (*
+              taz_s_organize_layout_paper_h
+              taz_s_organize_layout_scale_arg
+            )
+          )
+
+          (command
+            "_.ZOOM"
+            "_C"
+            "_NON"
+            taz_s_organize_layout_model_center
+            taz_s_organize_layout_view_height
+          )
+
+          (command "_.PSPACE")
+
+          ;; Blokada gotowej rzutni = bit 16384.
+          (setq taz_s_organize_layout_viewport_data
+            (entget taz_s_organize_layout_viewport_ent)
+          )
+          (setq taz_s_organize_layout_viewport_flags
+            (cdr (assoc 90 taz_s_organize_layout_viewport_data))
+          )
+          (if (= taz_s_organize_layout_viewport_flags nil)
+            (setq taz_s_organize_layout_viewport_flags 0)
+          )
+          (setq taz_s_organize_layout_viewport_data
+            (taz_s_organize_layout_set_dxf
+              90
+              (logior taz_s_organize_layout_viewport_flags 16384)
+              taz_s_organize_layout_viewport_data
+            )
+          )
+          (entmod taz_s_organize_layout_viewport_data)
+          (entupd taz_s_organize_layout_viewport_ent)
+
+          (setq taz_s_organize_layout_configured T)
+
+          (princ
+            (strcat
+              "\nLayout "
+              taz_s_organize_layout_name_arg
+              " - plotter: "
+              taz_s_organize_layout_plotter_name
+              ", skala 1:"
+              (rtos taz_s_organize_layout_scale_arg 2 3)
+              "."
+            )
+          )
+        )
+      )
+    )
+  )
+
+  taz_s_organize_layout_configured
+)
+
+
+(defun taz_s_organize_finalize_layouts ()
+
+  (setq taz_s_organize_layout_old_ctab
+    (getvar "CTAB")
+  )
+
+  (setq taz_s_organize_layout_old_clayer
+    (getvar "CLAYER")
+  )
+
+  (setq taz_s_organize_layout_names
+    (taz_s_organize_layout_make_names)
+  )
+
+  (setq taz_s_organize_layout_index 0)
+
+  (while
+    (and
+      (<
+        taz_s_organize_layout_index
+        (length taz_s_organize_layout_names)
+      )
+      (<
+        taz_s_organize_layout_index
+        (length taz_s_organize_frame_bounds)
+      )
+      (<
+        taz_s_organize_layout_index
+        (length taz_s_organize_frame_insert_points)
+      )
+      (<
+        taz_s_organize_layout_index
+        (length taz_s_organize_frame_scale_factors)
+      )
+      (<
+        taz_s_organize_layout_index
+        (length taz_s_organize_frame_formats)
+      )
+    )
+
+    (taz_s_organize_layout_configure_one
+      (nth
+        taz_s_organize_layout_index
+        taz_s_organize_layout_names
+      )
+      (nth
+        taz_s_organize_layout_index
+        taz_s_organize_frame_bounds
+      )
+      (nth
+        taz_s_organize_layout_index
+        taz_s_organize_frame_insert_points
+      )
+      (nth
+        taz_s_organize_layout_index
+        taz_s_organize_frame_scale_factors
+      )
+      (nth
+        taz_s_organize_layout_index
+        taz_s_organize_frame_formats
+      )
+    )
+
+    (setq taz_s_organize_layout_index
+      (+ taz_s_organize_layout_index 1)
+    )
+  )
+
+  (if
+    (member
+      taz_s_organize_layout_old_ctab
+      (append
+        (layoutlist)
+        (list "Model")
+      )
+    )
+    (setvar
+      "CTAB"
+      taz_s_organize_layout_old_ctab
+    )
+  )
+
+  (if
+    (and
+      taz_s_organize_layout_old_clayer
+      (tblsearch "LAYER" taz_s_organize_layout_old_clayer)
+    )
+    (setvar
+      "CLAYER"
+      taz_s_organize_layout_old_clayer
+    )
+  )
+
+  (command "_.UCS" "_W")
+  (command "_.REGENALL")
+)
+
+
 ;; ============================================================================
 ;; GLOWNA KOMENDA
 ;; ============================================================================
@@ -2778,6 +4045,13 @@
       (setq taz_s_organize_frame_case_nr 1)
       (setq taz_s_organize_frame_lower_left_points '())
 
+      ;; Dane potrzebne pozniej do koncowego dostosowania layoutow.
+      ;; Kazda lista ma ten sam indeks co przypadek organizera: X, Y, Z, IZO.
+      (setq taz_s_organize_frame_bounds '())
+      (setq taz_s_organize_frame_insert_points '())
+      (setq taz_s_organize_frame_scale_factors '())
+      (setq taz_s_organize_frame_formats '())
+
       (while (< taz_s_organize_frame_case_nr taz_s_organize_case_nr)
 
         (setq taz_s_frame_known_insert_point
@@ -2801,7 +4075,64 @@
           )
         )
 
+        ;; Zapamietujemy dane przekazane do taz_s_frame oraz stan bazy
+        ;; tuz przed ramka. Dzieki temu nie zalezymy od tego, czy taz_s_frame
+        ;; pozostawi zmienne wejściowe po swoim zakonczeniu.
+        (setq taz_s_organize_frame_current_insert_point
+          taz_s_frame_known_insert_point
+        )
+        (setq taz_s_organize_frame_current_scale_factor
+          taz_s_organize_frame_scale_factor
+        )
+        (setq taz_s_organize_frame_current_format
+          taz_s_organize_frame_format
+        )
+
+        (setq taz_s_organize_frame_before_entity
+          (taz_s_organize_layout_get_last_entity)
+        )
+
         (c:taz_s_frame)
+
+        (setq taz_s_organize_frame_new_entities
+          (taz_s_organize_layout_collect_new_entities
+            taz_s_organize_frame_before_entity
+          )
+        )
+
+        (setq taz_s_organize_frame_current_bounds
+          (taz_s_organize_layout_get_group_bounds
+            taz_s_organize_frame_new_entities
+          )
+        )
+
+        (setq taz_s_organize_frame_bounds
+          (append
+            taz_s_organize_frame_bounds
+            (list taz_s_organize_frame_current_bounds)
+          )
+        )
+
+        (setq taz_s_organize_frame_insert_points
+          (append
+            taz_s_organize_frame_insert_points
+            (list taz_s_organize_frame_current_insert_point)
+          )
+        )
+
+        (setq taz_s_organize_frame_scale_factors
+          (append
+            taz_s_organize_frame_scale_factors
+            (list taz_s_organize_frame_current_scale_factor)
+          )
+        )
+
+        (setq taz_s_organize_frame_formats
+          (append
+            taz_s_organize_frame_formats
+            (list taz_s_organize_frame_current_format)
+          )
+        )
 
         ;; Zapamietaj lewy dolny naroznik wewnetrznej ramki.
         (setq taz_s_organize_frame_lower_left_points
@@ -2903,6 +4234,17 @@
           (+ taz_s_organize_table_move_index 1)
         )
       )
+
+      ;; --------------------------------------------------------------------
+      ;; OSTATNI KROK: DOSTOSOWANIE LAYOUTOW DO GOTOWYCH PRZYPADKOW
+      ;; --------------------------------------------------------------------
+      ;; Na tym etapie:
+      ;; - wszystkie przypadki sa juz ulozone,
+      ;; - ramki istnieja,
+      ;; - tabele sa juz dosuniete do ramek.
+      ;; Dopiero teraz ustawiamy papier i rzutnie layoutow.
+
+      (taz_s_organize_finalize_layouts)
 
       (command "_.REGEN")
     )
