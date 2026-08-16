@@ -1536,8 +1536,8 @@
   ;; taz_s_izo_ucs_origin zostal wyliczony wyzej przed tworzeniem
   ;; etykiet, aby etykiety i SOLPROF korzystaly z tej samej plaszczyzny.
 
-  (command "_layout" "_N" taz_s_view_name)
-  (command "_layout" "_S" taz_s_view_name)
+  (command "_layout" "_N" "3D")
+  (command "_layout" "_S" "3D")
   (command "_mspace")
 
   (command "_UCS" "_W")
@@ -1978,8 +1978,8 @@
     (setq taz_s_copy_nr (+ taz_s_copy_nr 1))
     (setq taz_s_tmp (cdr taz_s_tmp))
     
-    (command "_layout" "_N" taz_s_view_name)
-    (command "_layout" "_S" taz_s_view_name)
+    (command "_layout" "_N" (strcat taz_s_view_axis_name "-" taz_s_view_axis_name))
+    (command "_layout" "_S" (strcat taz_s_view_axis_name "-" taz_s_view_axis_name))
     (command "_mspace")
     ;;(command "-VIEW" "_R" taz_s_view_name)
     
@@ -2145,8 +2145,8 @@
     (setq taz_s_copy_nr (+ taz_s_copy_nr 1))
     (setq taz_s_tmp (cdr taz_s_tmp))
     
-    (command "_layout" "_N" taz_s_view_name)
-    (command "_layout" "_S" taz_s_view_name)
+    (command "_layout" "_N" (strcat taz_s_view_axis_name "-" taz_s_view_axis_name))
+    (command "_layout" "_S" (strcat taz_s_view_axis_name "-" taz_s_view_axis_name))
     (command "_mspace")
     ;;(command "-VIEW" "_R" taz_s_view_name)
     
@@ -2359,8 +2359,8 @@
     (setq taz_s_copy_nr (+ taz_s_copy_nr 1))
     (setq taz_s_tmp (cdr taz_s_tmp))
     
-    (command "_layout" "_N" taz_s_view_name)
-    (command "_layout" "_S" taz_s_view_name)
+    (command "_layout" "_N" taz_s_level_title_value)
+    (command "_layout" "_S" taz_s_level_title_value)
     (command "_mspace")
     ;;(command "-VIEW" "_R" taz_s_view_name)
     
