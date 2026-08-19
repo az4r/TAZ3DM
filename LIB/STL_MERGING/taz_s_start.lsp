@@ -330,21 +330,31 @@
             "/"
             "taz_s_project_parameters_data.txt"))
 
-  (if (findfile taz_s_project_parameters_data_file)
-    (load taz_s_project_parameters_data_file)
-    (progn
-      (setq taz_s_unit_weight_steel 7500)
-      (setq taz_s_unit_weight_concrete 2500)
+  ;; wartości domyślne zawsze najpierw trafiają do pamięci
+  (setq taz_s_unit_weight_steel 7500.0)
+  (setq taz_s_unit_weight_concrete 2500.0)
+  (setq taz_s_additional_mass 10.0)
 
+  (if (findfile taz_s_project_parameters_data_file)
+
+    ;; jeżeli plik istnieje, jego wartości nadpiszą domyślne
+    (load taz_s_project_parameters_data_file)
+
+    ;; jeżeli nie istnieje, tworzymy go ze wszystkimi parametrami
+    (progn
       (setq taz_s_f_project_parameters_data
         (open taz_s_project_parameters_data_file "w"))
 
       (write-line
-        "(setq taz_s_unit_weight_steel 7500)"
+        "(setq taz_s_unit_weight_steel 7500.0)"
         taz_s_f_project_parameters_data)
 
       (write-line
-        "(setq taz_s_unit_weight_concrete 2500)"
+        "(setq taz_s_unit_weight_concrete 2500.0)"
+        taz_s_f_project_parameters_data)
+
+      (write-line
+        "(setq taz_s_additional_mass 10.0)"
         taz_s_f_project_parameters_data)
 
       (close taz_s_f_project_parameters_data)
