@@ -319,15 +319,6 @@
       "_DRAWINGS.dwg"
     )
   )
-  
-  (taz_s_current_settings_save)
-  (taz_s_unlock_all_layers)
-
-  ;; ---------------------------------
-  ;; UCS WORLD
-  ;; ---------------------------------
-
-  (command "_UCS" "_W")
 
   ;; ---------------------------------
   ;; WCZYTANIE DANYCH
@@ -364,6 +355,492 @@
       (setq *error* taz_s_old_error)
     )    
   )
+
+
+  ;; =================================================================
+  ;; PREFLIGHT DCL - WSZYSTKIE USTAWIENIA PRZED JAKAKOLWIEK GENERACJA
+  ;; =================================================================
+  ;; Na tym etapie sa tylko wczytane dane konstrukcji i osi.
+  ;; Nie tworzymy jeszcze warstw roboczych, nie kasujemy obiektow,
+  ;; nie kopiujemy modelu, nie tworzymy layoutow i nie uruchamiamy SOLPROF.
+  ;;
+  ;; Najpierw zbieramy ustawienia dla calej sekwencji:
+  ;;   IZO, wszystkie X, wszystkie Y, wszystkie Z.
+  ;; Dopiero po zaakceptowaniu ostatniego wymaganego okna skrypt przechodzi
+  ;; do przygotowania rysunku i generowania przypadkow.
+  ;; =================================================================
+
+  (setq taz_s_execution_design_dcl_id nil)
+  (setq taz_s_execution_design_dialog_result nil)
+  (setq taz_s_execution_design_scale_selected_index 0)
+  (setq taz_s_execution_design_frame_selected_index 5)
+  (setq taz_s_execution_design_frame_format "A1")
+  (setq taz_s_execution_design_apply_to_all nil)
+  (setq taz_s_execution_design_apply_all_requested nil)
+  (setq taz_s_execution_design_apply_all_checkbox_state T)
+
+  (setq taz_s_execution_design_scale_values
+    '(1 2 5 10 20 25 50 100 200)
+  )
+
+  (setq taz_s_execution_design_frame_formats_list
+    '("A0"
+      "A0+1" "A0+2" "A0+3" "A0+4"
+      "A1" "A1+1" "A1+2" "A1+3" "A1+4"
+      "A2" "A2+1" "A2+2" "A2+3" "A2+4"
+      "A3" "A3+1" "A3+2" "A3+3" "A3+4"
+      "A4")
+  )
+
+  ;; Kolejnosc generatora: IZO, wszystkie X, wszystkie Y, wszystkie Z.
+  (setq taz_s_execution_design_case_scale_factors '())
+  (setq taz_s_execution_design_case_frame_formats '())
+
+  ;; Jesli skala byla juz ustawiona, zachowaj ja jako propozycje.
+  (if (not taz_s_annotation_scale)
+    (setq taz_s_annotation_scale 1)
+  )
+
+  (if (= taz_s_annotation_scale 1)   (setq taz_s_execution_design_scale_selected_index 0))
+  (if (= taz_s_annotation_scale 2)   (setq taz_s_execution_design_scale_selected_index 1))
+  (if (= taz_s_annotation_scale 5)   (setq taz_s_execution_design_scale_selected_index 2))
+  (if (= taz_s_annotation_scale 10)  (setq taz_s_execution_design_scale_selected_index 3))
+  (if (= taz_s_annotation_scale 20)  (setq taz_s_execution_design_scale_selected_index 4))
+  (if (= taz_s_annotation_scale 25)  (setq taz_s_execution_design_scale_selected_index 5))
+  (if (= taz_s_annotation_scale 50)  (setq taz_s_execution_design_scale_selected_index 6))
+  (if (= taz_s_annotation_scale 100) (setq taz_s_execution_design_scale_selected_index 7))
+  (if (= taz_s_annotation_scale 200) (setq taz_s_execution_design_scale_selected_index 8))
+
+  ;; ---------------------------------
+  ;; POMOCNICZA: NAZWA OSI Z WIERSZA
+  ;; ---------------------------------
+
+  (defun taz_s_execution_design_get_axis_name_from_row
+    (taz_s_execution_design_row_arg
+     /
+     taz_s_execution_design_i
+     taz_s_execution_design_len
+     taz_s_execution_design_result)
+
+    (setq taz_s_execution_design_i 2)
+    (setq taz_s_execution_design_len (strlen taz_s_execution_design_row_arg))
+    (setq taz_s_execution_design_result "")
+
+    (while
+      (and
+        (<= taz_s_execution_design_i taz_s_execution_design_len)
+        (/= (substr taz_s_execution_design_row_arg taz_s_execution_design_i 1) "]")
+      )
+      (setq taz_s_execution_design_result
+        (strcat
+          taz_s_execution_design_result
+          (substr taz_s_execution_design_row_arg taz_s_execution_design_i 1)
+        )
+      )
+      (setq taz_s_execution_design_i (+ taz_s_execution_design_i 1))
+    )
+
+    taz_s_execution_design_result
+  )
+
+  ;; ---------------------------------
+  ;; POMOCNICZA: WARTOSC LICZBOWA Z WIERSZA OSI
+  ;; ---------------------------------
+  ;; Wiersz ma postac np. "[Z1]  3500.0".
+  ;; Funkcja nie zmienia zadnego obiektu CAD - sluzy tylko do tytulu DCL.
+
+  (defun taz_s_execution_design_get_value_from_row
+    (taz_s_execution_design_row_arg
+     /
+     taz_s_execution_design_i
+     taz_s_execution_design_len)
+
+    (setq taz_s_execution_design_i 1)
+    (setq taz_s_execution_design_len (strlen taz_s_execution_design_row_arg))
+
+    (while
+      (and
+        (<= taz_s_execution_design_i taz_s_execution_design_len)
+        (/= (substr taz_s_execution_design_row_arg taz_s_execution_design_i 1) "]")
+      )
+      (setq taz_s_execution_design_i (+ taz_s_execution_design_i 1))
+    )
+
+    ;; Przejdz za "]" i pomin dowolna liczbe spacji.
+    (setq taz_s_execution_design_i (+ taz_s_execution_design_i 1))
+    (while
+      (and
+        (<= taz_s_execution_design_i taz_s_execution_design_len)
+        (= (substr taz_s_execution_design_row_arg taz_s_execution_design_i 1) " ")
+      )
+      (setq taz_s_execution_design_i (+ taz_s_execution_design_i 1))
+    )
+
+    (if (<= taz_s_execution_design_i taz_s_execution_design_len)
+      (atof (substr taz_s_execution_design_row_arg taz_s_execution_design_i))
+      0.0
+    )
+  )
+
+  ;; ---------------------------------
+  ;; POMOCNICZA: FORMAT POZIOMU DO TYTULU / DCL
+  ;; ---------------------------------
+
+  (defun taz_s_execution_design_get_level_title_value
+    (taz_s_execution_design_level_mm_arg
+     /
+     taz_s_execution_design_level_old_dimzin
+     taz_s_execution_design_level_value)
+
+    (setq taz_s_execution_design_level_old_dimzin (getvar "DIMZIN"))
+    (setvar "DIMZIN" 0)
+    (setq taz_s_execution_design_level_value
+      (rtos (/ taz_s_execution_design_level_mm_arg 1000.0) 2 3)
+    )
+    (setvar "DIMZIN" taz_s_execution_design_level_old_dimzin)
+
+    taz_s_execution_design_level_value
+  )
+
+  ;; ---------------------------------
+  ;; POMOCNICZA: DOKLADNY TYTUL PRZYPADKU
+  ;; ---------------------------------
+
+  (defun taz_s_execution_design_get_case_title
+    (taz_s_execution_design_case_arg
+     taz_s_execution_design_axis_name_arg
+     taz_s_execution_design_level_mm_arg)
+
+    (cond
+      ((= taz_s_execution_design_case_arg "IZO")
+        "WIDOK 3D"
+      )
+
+      ((or
+         (= taz_s_execution_design_case_arg "X")
+         (= taz_s_execution_design_case_arg "Y")
+       )
+        (strcat
+          "PRZEKROJ "
+          taz_s_execution_design_axis_name_arg
+          " - "
+          taz_s_execution_design_axis_name_arg
+        )
+      )
+
+      ((= taz_s_execution_design_case_arg "Z")
+        (strcat
+          "RZUT POZIOMU "
+          (taz_s_execution_design_get_level_title_value
+            taz_s_execution_design_level_mm_arg
+          )
+          " m"
+        )
+      )
+
+      (T "")
+    )
+  )
+
+  ;; ---------------------------------
+  ;; POMOCNICZA: ZAPIS USTAWIEN BIEZACEGO PRZYPADKU
+  ;; ---------------------------------
+  ;; Tutaj tylko zapisujemy dane. Nie uruchamiamy jeszcze funkcji skali,
+  ;; nie rysujemy i nie zmieniamy geometrii.
+
+  (defun taz_s_execution_design_store_current_case_settings ()
+
+    (setq taz_s_execution_design_case_scale_factors
+      (append
+        taz_s_execution_design_case_scale_factors
+        (list taz_s_annotation_scale)
+      )
+    )
+
+    (setq taz_s_execution_design_case_frame_formats
+      (append
+        taz_s_execution_design_case_frame_formats
+        (list taz_s_execution_design_frame_format)
+      )
+    )
+
+    (princ)
+  )
+
+  ;; ---------------------------------
+  ;; POMOCNICZA: DCL DLA JEDNEGO PRZYPADKU
+  ;; ---------------------------------
+
+  (defun taz_s_execution_design_show_case_dialog
+    (taz_s_execution_design_case_title_arg)
+
+    ;; Po "Zastosuj do wszystkich" nie wyswietlamy kolejnych okien,
+    ;; ale nadal dopisujemy odziedziczone ustawienia do list.
+    (if (= taz_s_execution_design_apply_to_all nil)
+      (progn
+
+        (setq taz_s_execution_design_dcl_id
+          (load_dialog "taz_s_create_drawings_execution_design.dcl")
+        )
+
+        (if (< taz_s_execution_design_dcl_id 0)
+          (progn
+            (alert "Nie moge zaladowac pliku taz_s_create_drawings_execution_design.dcl.")
+            (exit)
+          )
+        )
+
+        (if
+          (not
+            (new_dialog
+              "taz_s_create_drawings_execution_design_organize_dialog"
+              taz_s_execution_design_dcl_id
+            )
+          )
+          (progn
+            (alert "Nie moge zaladowac okienka DCL.")
+            (unload_dialog taz_s_execution_design_dcl_id)
+            (exit)
+          )
+        )
+
+        (set_tile
+          "taz_s_execution_design_case_label"
+          taz_s_execution_design_case_title_arg
+        )
+
+        (start_list "taz_s_annotation_scale_popup")
+        (mapcar
+          'add_list
+          '("1:1" "1:2" "1:5" "1:10" "1:20" "1:25" "1:50" "1:100" "1:200")
+        )
+        (end_list)
+        (set_tile
+          "taz_s_annotation_scale_popup"
+          (itoa taz_s_execution_design_scale_selected_index)
+        )
+
+        (start_list "taz_s_organize_frame_format_popup")
+        (mapcar 'add_list taz_s_execution_design_frame_formats_list)
+        (end_list)
+        (set_tile
+          "taz_s_organize_frame_format_popup"
+          (itoa taz_s_execution_design_frame_selected_index)
+        )
+
+        (if taz_s_execution_design_apply_all_checkbox_state
+          (set_tile "taz_s_execution_design_apply_all_toggle" "1")
+          (set_tile "taz_s_execution_design_apply_all_toggle" "0")
+        )
+        (setq taz_s_execution_design_apply_all_requested nil)
+
+        (action_tile "accept"
+          "(progn
+              (setq taz_s_execution_design_scale_selected_index
+                (atoi (get_tile \"taz_s_annotation_scale_popup\"))
+              )
+              (setq taz_s_execution_design_frame_selected_index
+                (atoi (get_tile \"taz_s_organize_frame_format_popup\"))
+              )
+              (setq taz_s_execution_design_apply_all_requested
+                (= (get_tile \"taz_s_execution_design_apply_all_toggle\") \"1\")
+              )
+              (done_dialog 1)
+          )"
+        )
+
+        (action_tile "cancel"
+          "(done_dialog 0)"
+        )
+
+        (setq taz_s_execution_design_dialog_result (start_dialog))
+        (unload_dialog taz_s_execution_design_dcl_id)
+
+        ;; Na tym etapie nie zostal jeszcze utworzony zaden przypadek.
+        (if (= taz_s_execution_design_dialog_result 0)
+          (progn
+            (setq taz_s_old_error *error*)
+            (setq *error* (lambda (msg) (princ "")))
+            (exit)
+          )
+        )
+
+        (setq taz_s_annotation_scale
+          (nth
+            taz_s_execution_design_scale_selected_index
+            taz_s_execution_design_scale_values
+          )
+        )
+
+        (setq taz_s_execution_design_frame_format
+          (nth
+            taz_s_execution_design_frame_selected_index
+            taz_s_execution_design_frame_formats_list
+          )
+        )
+
+        (setq taz_s_execution_design_apply_all_checkbox_state
+          taz_s_execution_design_apply_all_requested
+        )
+
+        (if taz_s_execution_design_apply_all_requested
+          (setq taz_s_execution_design_apply_to_all T)
+        )
+      )
+    )
+
+    (taz_s_execution_design_store_current_case_settings)
+    (princ)
+  )
+
+  ;; ---------------------------------
+  ;; PREFLIGHT: PRZEJDZ PO WSZYSTKICH PRZYPADKACH
+  ;; ---------------------------------
+
+  (defun taz_s_execution_design_run_settings_preflight
+    (/
+     taz_s_execution_design_preflight_tmp
+     taz_s_execution_design_preflight_row
+     taz_s_execution_design_preflight_level)
+
+    ;; IZO
+    (taz_s_execution_design_show_case_dialog
+      (taz_s_execution_design_get_case_title "IZO" nil nil)
+    )
+
+    ;; X
+    (setq taz_s_execution_design_preflight_tmp taz_s_x_data)
+    (while taz_s_execution_design_preflight_tmp
+      (setq taz_s_execution_design_preflight_row
+        (car taz_s_execution_design_preflight_tmp)
+      )
+      (taz_s_execution_design_show_case_dialog
+        (taz_s_execution_design_get_case_title
+          "X"
+          (taz_s_execution_design_get_axis_name_from_row
+            taz_s_execution_design_preflight_row
+          )
+          nil
+        )
+      )
+      (setq taz_s_execution_design_preflight_tmp
+        (cdr taz_s_execution_design_preflight_tmp)
+      )
+    )
+
+    ;; Y
+    (setq taz_s_execution_design_preflight_tmp taz_s_y_data)
+    (while taz_s_execution_design_preflight_tmp
+      (setq taz_s_execution_design_preflight_row
+        (car taz_s_execution_design_preflight_tmp)
+      )
+      (taz_s_execution_design_show_case_dialog
+        (taz_s_execution_design_get_case_title
+          "Y"
+          (taz_s_execution_design_get_axis_name_from_row
+            taz_s_execution_design_preflight_row
+          )
+          nil
+        )
+      )
+      (setq taz_s_execution_design_preflight_tmp
+        (cdr taz_s_execution_design_preflight_tmp)
+      )
+    )
+
+    ;; Z
+    (setq taz_s_execution_design_preflight_tmp taz_s_z_data)
+    (while taz_s_execution_design_preflight_tmp
+      (setq taz_s_execution_design_preflight_row
+        (car taz_s_execution_design_preflight_tmp)
+      )
+      (setq taz_s_execution_design_preflight_level
+        (taz_s_execution_design_get_value_from_row
+          taz_s_execution_design_preflight_row
+        )
+      )
+      (taz_s_execution_design_show_case_dialog
+        (taz_s_execution_design_get_case_title
+          "Z"
+          nil
+          taz_s_execution_design_preflight_level
+        )
+      )
+      (setq taz_s_execution_design_preflight_tmp
+        (cdr taz_s_execution_design_preflight_tmp)
+      )
+    )
+
+    (princ)
+  )
+
+  ;; ---------------------------------
+  ;; POMOCNICZA: UZYJ USTAWIEN KOLEJNEGO PRZYPADKU
+  ;; ---------------------------------
+  ;; Wywolywana podczas generowania. Nie wyswietla DCL.
+
+  (defun taz_s_execution_design_use_next_case_settings ()
+
+    (if
+      (and
+        (<
+          taz_s_execution_design_current_case_settings_index
+          (length taz_s_execution_design_case_scale_factors)
+        )
+        (<
+          taz_s_execution_design_current_case_settings_index
+          (length taz_s_execution_design_case_frame_formats)
+        )
+      )
+      (progn
+        (setq taz_s_annotation_scale
+          (nth
+            taz_s_execution_design_current_case_settings_index
+            taz_s_execution_design_case_scale_factors
+          )
+        )
+
+        (setq taz_s_execution_design_frame_format
+          (nth
+            taz_s_execution_design_current_case_settings_index
+            taz_s_execution_design_case_frame_formats
+          )
+        )
+
+        (taz_s_annotation_scale_apply)
+
+        (setq taz_s_execution_design_frame_scale_factor
+          taz_s_annotation_scale
+        )
+
+        (setq taz_s_st_offset (* 100.0 taz_s_annotation_scale))
+
+        (setq taz_s_execution_design_current_case_settings_index
+          (+ taz_s_execution_design_current_case_settings_index 1)
+        )
+      )
+      (progn
+        (alert "Brak zapisanych ustawien dla kolejnego przypadku.")
+        (exit)
+      )
+    )
+
+    (princ)
+  )
+
+  ;; Wszystkie pytania sa wykonywane TERAZ.
+  (taz_s_execution_design_run_settings_preflight)
+  (setq taz_s_execution_design_current_case_settings_index 0)
+
+  ;; ---------------------------------
+  ;; DOPIERO TERAZ PRZYGOTOWANIE RYSUNKU
+  ;; ---------------------------------
+
+  (taz_s_current_settings_save)
+  (taz_s_unlock_all_layers)
+
+  ;; UCS WORLD
+  (command "_UCS" "_W")
 
   ;; ---------------------------------
   ;; POBRANIE ODLEGLOSCI
@@ -1165,294 +1642,6 @@
   ;; =================================================================
 
   ;; ---------------------------------
-  ;; USTAWIENIA DCL OSOBNO DLA KAZDEGO PRZYPADKU
-  ;; ---------------------------------
-  ;; DCL jest wyswietlany przed kazdym przypadkiem IZO / X / Y / Z.
-  ;; Jesli uzytkownik pozostawi zaznaczone "Zastosuj do wszystkich",
-  ;; biezaca skala i format zostaja uzyte dla wszystkich pozostalych
-  ;; przypadkow i kolejne okna nie sa juz wyswietlane.
-  ;;
-  ;; Ustawienia kazdego przypadku sa dodatkowo zapisywane na listach
-  ;; w kolejnosci generatora: IZO, X, Y, Z. Organizer mapuje pozniej
-  ;; te listy na swoja kolejnosc X, Y, Z, IZO.
-
-  (setq taz_s_execution_design_dcl_id nil)
-  (setq taz_s_execution_design_dialog_result nil)
-  (setq taz_s_execution_design_scale_selected_index 0)
-  (setq taz_s_execution_design_frame_selected_index 5)
-  (setq taz_s_execution_design_frame_format "A1")
-  (setq taz_s_execution_design_apply_to_all nil)
-  (setq taz_s_execution_design_apply_all_requested nil)
-  (setq taz_s_execution_design_apply_all_checkbox_state T)
-
-  (setq taz_s_execution_design_scale_values
-    '(1 2 5 10 20 25 50 100 200)
-  )
-
-  (setq taz_s_execution_design_frame_formats_list
-    '("A0"
-      "A0+1" "A0+2" "A0+3" "A0+4"
-      "A1" "A1+1" "A1+2" "A1+3" "A1+4"
-      "A2" "A2+1" "A2+2" "A2+3" "A2+4"
-      "A3" "A3+1" "A3+2" "A3+3" "A3+4"
-      "A4")
-  )
-
-  ;; Osobne ustawienia dla kolejnych przypadkow - kolejnosc generatora:
-  ;; IZO, wszystkie X, wszystkie Y, wszystkie Z.
-  (setq taz_s_execution_design_case_scale_factors '())
-  (setq taz_s_execution_design_case_frame_formats '())
-
-  ;; Jesli skala byla juz ustawiona, zachowaj ja jako propozycje.
-  (if (not taz_s_annotation_scale)
-    (setq taz_s_annotation_scale 1)
-  )
-
-  (if (= taz_s_annotation_scale 1)   (setq taz_s_execution_design_scale_selected_index 0))
-  (if (= taz_s_annotation_scale 2)   (setq taz_s_execution_design_scale_selected_index 1))
-  (if (= taz_s_annotation_scale 5)   (setq taz_s_execution_design_scale_selected_index 2))
-  (if (= taz_s_annotation_scale 10)  (setq taz_s_execution_design_scale_selected_index 3))
-  (if (= taz_s_annotation_scale 20)  (setq taz_s_execution_design_scale_selected_index 4))
-  (if (= taz_s_annotation_scale 25)  (setq taz_s_execution_design_scale_selected_index 5))
-  (if (= taz_s_annotation_scale 50)  (setq taz_s_execution_design_scale_selected_index 6))
-  (if (= taz_s_annotation_scale 100) (setq taz_s_execution_design_scale_selected_index 7))
-  (if (= taz_s_annotation_scale 200) (setq taz_s_execution_design_scale_selected_index 8))
-
-  ;; ---------------------------------
-  ;; POMOCNICZA: FORMAT POZIOMU DO TYTULU / DCL
-  ;; ---------------------------------
-  ;; Identyczne formatowanie jak w tytule przypadku Z.
-
-  (defun taz_s_execution_design_get_level_title_value
-    (taz_s_execution_design_level_mm_arg)
-
-    (setq taz_s_execution_design_level_old_dimzin (getvar "DIMZIN"))
-    (setvar "DIMZIN" 0)
-    (setq taz_s_execution_design_level_value
-      (rtos (/ taz_s_execution_design_level_mm_arg 1000.0) 2 3)
-    )
-    (setvar "DIMZIN" taz_s_execution_design_level_old_dimzin)
-
-    taz_s_execution_design_level_value
-  )
-
-  ;; ---------------------------------
-  ;; POMOCNICZA: DOKLADNY TYTUL PRZYPADKU
-  ;; ---------------------------------
-  ;; Zwraca pierwsza linie tekstu, ktora pozniej pojawia sie nad przypadkiem.
-
-  (defun taz_s_execution_design_get_case_title
-    (taz_s_execution_design_case_arg
-     taz_s_execution_design_axis_name_arg
-     taz_s_execution_design_level_mm_arg)
-
-    (cond
-      ((= taz_s_execution_design_case_arg "IZO")
-        "WIDOK 3D"
-      )
-
-      ((or
-         (= taz_s_execution_design_case_arg "X")
-         (= taz_s_execution_design_case_arg "Y")
-       )
-        (strcat
-          "PRZEKROJ "
-          taz_s_execution_design_axis_name_arg
-          " - "
-          taz_s_execution_design_axis_name_arg
-        )
-      )
-
-      ((= taz_s_execution_design_case_arg "Z")
-        (strcat
-          "RZUT POZIOMU "
-          (taz_s_execution_design_get_level_title_value
-            taz_s_execution_design_level_mm_arg
-          )
-          " m"
-        )
-      )
-
-      (T "")
-    )
-  )
-
-  ;; ---------------------------------
-  ;; POMOCNICZA: ZASTOSUJ I ZAPAMIETAJ USTAWIENIA BIEZACEGO PRZYPADKU
-  ;; ---------------------------------
-
-  (defun taz_s_execution_design_apply_current_case_settings ()
-
-    ;; Przeliczenie wartosci pochodnych skali: label / axis itd.
-    (taz_s_annotation_scale_apply)
-
-    ;; Zachowujemy takze wartosci zgodne ze starym interfejsem,
-    ;; aby pozostale funkcje mogly nadal korzystac z globalnych zmiennych.
-    (setq taz_s_execution_design_frame_scale_factor
-      taz_s_annotation_scale
-    )
-
-    (setq taz_s_st_offset (* 100.0 taz_s_annotation_scale))
-
-    ;; Lista przypadkow jest w kolejnosci generatora: IZO, X, Y, Z.
-    (setq taz_s_execution_design_case_scale_factors
-      (append
-        taz_s_execution_design_case_scale_factors
-        (list taz_s_annotation_scale)
-      )
-    )
-
-    (setq taz_s_execution_design_case_frame_formats
-      (append
-        taz_s_execution_design_case_frame_formats
-        (list taz_s_execution_design_frame_format)
-      )
-    )
-  )
-
-  ;; ---------------------------------
-  ;; POMOCNICZA: DCL DLA JEDNEGO PRZYPADKU
-  ;; ---------------------------------
-
-  (defun taz_s_execution_design_show_case_dialog
-    (taz_s_execution_design_case_title_arg)
-
-    ;; Gdy w ktoryms poprzednim oknie wybrano "Zastosuj do wszystkich",
-    ;; nie pytamy juz o kolejne przypadki, ale nadal zapisujemy dla nich
-    ;; te same ustawienia na listach organizera.
-    (if (= taz_s_execution_design_apply_to_all nil)
-      (progn
-
-        (setq taz_s_execution_design_dcl_id
-          (load_dialog "taz_s_create_drawings_execution_design.dcl")
-        )
-
-        (if (< taz_s_execution_design_dcl_id 0)
-          (progn
-            (alert "Nie moge zaladowac pliku taz_s_create_drawings_execution_design.dcl.")
-            (exit)
-          )
-        )
-
-        (if
-          (not
-            (new_dialog
-              "taz_s_create_drawings_execution_design_organize_dialog"
-              taz_s_execution_design_dcl_id
-            )
-          )
-          (progn
-            (alert "Nie moge zaladowac okienka DCL.")
-            (unload_dialog taz_s_execution_design_dcl_id)
-            (exit)
-          )
-        )
-
-        ;; Nazwa przypadku - dokladnie ta sama pierwsza linia co nad rysunkiem.
-        (set_tile
-          "taz_s_execution_design_case_label"
-          taz_s_execution_design_case_title_arg
-        )
-
-        ;; Lista skal opisu.
-        (start_list "taz_s_annotation_scale_popup")
-        (mapcar
-          'add_list
-          '("1:1" "1:2" "1:5" "1:10" "1:20" "1:25" "1:50" "1:100" "1:200")
-        )
-        (end_list)
-        (set_tile
-          "taz_s_annotation_scale_popup"
-          (itoa taz_s_execution_design_scale_selected_index)
-        )
-
-        ;; Lista formatow arkusza.
-        (start_list "taz_s_organize_frame_format_popup")
-        (mapcar 'add_list taz_s_execution_design_frame_formats_list)
-        (end_list)
-        (set_tile
-          "taz_s_organize_frame_format_popup"
-          (itoa taz_s_execution_design_frame_selected_index)
-        )
-
-        ;; Checkbox jest zaznaczony przy pierwszym oknie. Jesli uzytkownik
-        ;; go odznaczy, stan pozostaje odznaczony w kolejnych przypadkach.
-        ;; Mozna go zaznaczyc ponownie w dowolnym pozniejszym przypadku.
-        (if taz_s_execution_design_apply_all_checkbox_state
-          (set_tile "taz_s_execution_design_apply_all_toggle" "1")
-          (set_tile "taz_s_execution_design_apply_all_toggle" "0")
-        )
-        (setq taz_s_execution_design_apply_all_requested nil)
-
-        ;; Obsluga OK.
-        (action_tile "accept"
-          "(progn
-              (setq taz_s_execution_design_scale_selected_index
-                (atoi (get_tile \"taz_s_annotation_scale_popup\"))
-              )
-              (setq taz_s_execution_design_frame_selected_index
-                (atoi (get_tile \"taz_s_organize_frame_format_popup\"))
-              )
-              (setq taz_s_execution_design_apply_all_requested
-                (= (get_tile \"taz_s_execution_design_apply_all_toggle\") \"1\")
-              )
-              (done_dialog 1)
-          )"
-        )
-
-        ;; Obsluga ANULUJ.
-        (action_tile "cancel"
-          "(done_dialog 0)"
-        )
-
-        (setq taz_s_execution_design_dialog_result (start_dialog))
-        (unload_dialog taz_s_execution_design_dcl_id)
-
-        ;; Anulowanie dowolnego przypadku przerywa caly skrypt.
-        (if (= taz_s_execution_design_dialog_result 0)
-          (progn
-            (setq taz_s_old_error *error*)
-            (setq *error* (lambda (msg) (princ "")))
-            (exit)
-          )
-        )
-
-        ;; Zamiana indeksow DCL na rzeczywiste wartosci.
-        (setq taz_s_annotation_scale
-          (nth
-            taz_s_execution_design_scale_selected_index
-            taz_s_execution_design_scale_values
-          )
-        )
-
-        (setq taz_s_execution_design_frame_format
-          (nth
-            taz_s_execution_design_frame_selected_index
-            taz_s_execution_design_frame_formats_list
-          )
-        )
-
-        ;; Zapamietaj stan checkboxa. Po odznaczeniu pozostaje odznaczony
-        ;; w kolejnych oknach; po ponownym zaznaczeniu wlacza tryb "do konca".
-        (setq taz_s_execution_design_apply_all_checkbox_state
-          taz_s_execution_design_apply_all_requested
-        )
-
-        ;; Jesli checkbox byl zaznaczony, od tego miejsca nie pytamy juz dalej.
-        (if taz_s_execution_design_apply_all_requested
-          (setq taz_s_execution_design_apply_to_all T)
-        )
-      )
-    )
-
-    ;; Niezaleznie od tego, czy DCL byl pokazany czy ustawienia zostaly
-    ;; odziedziczone przez "Zastosuj do wszystkich", przygotuj biezacy przypadek.
-    (taz_s_execution_design_apply_current_case_settings)
-
-    (princ)
-  )
-
-  ;; ---------------------------------
   ;; ZAPAMIETANIE TABEL DLA ORGANIZERA
   ;; ---------------------------------
   ;; Dla kazdego przypadku przechowujemy:
@@ -1513,10 +1702,8 @@
   (setq taz_s_view_axis_name "IZO")
   (setq taz_s_view_name (strcat "taz_s_view_" taz_s_view_axis_name))
 
-  ;; Ustawienia indywidualne dla przypadku IZO.
-  (taz_s_execution_design_show_case_dialog
-    (taz_s_execution_design_get_case_title "IZO" nil nil)
-  )
+  ;; Ustawienia IZO zostaly zebrane w preflight DCL.
+  (taz_s_execution_design_use_next_case_settings)
 
   ;; -------------------------------------------------------
   ;; IZO - PLASZCZYZNA RZUTU SOLPROF
@@ -2123,14 +2310,8 @@
     (setq taz_s_y taz_s_val)
     (setq taz_s_zoffset (* taz_s_copy_nr 100000))
 
-    ;; Ustawienia indywidualne dla biezacego przekroju X.
-    (taz_s_execution_design_show_case_dialog
-      (taz_s_execution_design_get_case_title
-        "X"
-        (taz_s_get_axis_name taz_s_row)
-        nil
-      )
-    )
+    ;; Ustawienia tego przekroju X zostaly zebrane w preflight DCL.
+    (taz_s_execution_design_use_next_case_settings)
 
     ;; KROK 1: narysuj bryle tnaca i osie
     (setvar "CLAYER" "taz_s_execution_design")
@@ -2299,14 +2480,8 @@
     (setq taz_s_x taz_s_val)
     (setq taz_s_zoffset (* taz_s_copy_nr 100000))
 
-    ;; Ustawienia indywidualne dla biezacego przekroju Y.
-    (taz_s_execution_design_show_case_dialog
-      (taz_s_execution_design_get_case_title
-        "Y"
-        (taz_s_get_axis_name taz_s_row)
-        nil
-      )
-    )
+    ;; Ustawienia tego przekroju Y zostaly zebrane w preflight DCL.
+    (taz_s_execution_design_use_next_case_settings)
 
     ;; KROK 1: narysuj bryle tnaca i osie
     (setvar "CLAYER" "taz_s_execution_design")
@@ -2471,10 +2646,8 @@
     (setq taz_s_z taz_s_val)
     (setq taz_s_zoffset (* taz_s_copy_nr 100000))
 
-    ;; Ustawienia indywidualne dla biezacego rzutu poziomu.
-    (taz_s_execution_design_show_case_dialog
-      (taz_s_execution_design_get_case_title "Z" nil taz_s_z)
-    )
+    ;; Ustawienia tego rzutu Z zostaly zebrane w preflight DCL.
+    (taz_s_execution_design_use_next_case_settings)
 
     ;; KROK 1: narysuj bryle tnaca i osie
     (setvar "CLAYER" "taz_s_execution_design")
