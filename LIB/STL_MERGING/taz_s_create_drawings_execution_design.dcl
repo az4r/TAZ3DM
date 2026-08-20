@@ -3,6 +3,16 @@ taz_s_create_drawings_execution_design_organize_dialog : dialog {
 
   : column {
 
+    : text {
+      key = "taz_s_execution_design_case_label";
+      label = "Przypadek";
+      alignment = centered;
+      width = 42;
+      fixed_width = true;
+    }
+
+    spacer;
+
     : row {
       alignment = centered;
 
@@ -33,6 +43,13 @@ taz_s_create_drawings_execution_design_organize_dialog : dialog {
         width = 20;
         fixed_width = true;
       }
+    }
+
+    : toggle {
+      key = "taz_s_execution_design_apply_all_toggle";
+      label = "Zastosuj do wszystkich";
+      value = "1";
+      alignment = centered;
     }
   }
 
